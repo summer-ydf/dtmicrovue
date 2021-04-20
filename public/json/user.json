@@ -1,0 +1,68 @@
+{
+	"code": 200,
+	"data": {
+		"userInfo" : {
+			"userName":"Admin"
+		},
+		"menuList" : [
+			{
+				"name": "组件",
+				"path": "/vab",
+				"meta": {
+					"icon":"el-icon-takeaway-box"
+				},
+				"children": [
+					{
+						"path": "/vab/list",
+						"name": "列表",
+						"meta": {},
+						"component": "list"
+					},
+					{
+						"path": "/vab/show",
+						"name": "详情",
+						"meta": {},
+						"component": "show"
+					},
+					{
+						"path": "/vab/lala",
+						"name": "404",
+						"meta": {},
+						"component": "lala"
+					}
+				]
+			},
+			{
+				"name": "其他",
+				"path": "/other",
+				"meta": {
+					"icon":"el-icon-more"
+				},
+				"children": [
+					{
+						"path": "/other/1",
+						"name": "other1",
+						"meta": {},
+						"component": "list"
+					}
+				]
+			},
+			{
+				"name": "配置",
+				"path": "/setting",
+				"meta": {
+					"icon":"el-icon-setting"
+				},
+				"children": [
+					{
+						"path": "/setting/1",
+						"name": "setting1",
+						"meta": {},
+						"component": "lala"
+					}
+				]
+			}
+		]
+	},
+	"message": ""
+}

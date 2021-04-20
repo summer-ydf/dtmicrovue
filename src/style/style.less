@@ -1,0 +1,47 @@
+#app, body, html {width: 100%;height: 100%;background-color: #f8f8f8;font-size: 12px;}
+* {margin: 0;padding: 0;box-sizing: border-box;outline: none;}
+
+/* 全局滚动条样式 */
+.scrollable {-webkit-overflow-scrolling: touch;}
+::-webkit-scrollbar {width: 5px;height: 5px;}
+::-webkit-scrollbar-thumb {background-color: rgba(50, 50, 50, 0.3);}
+::-webkit-scrollbar-thumb:hover {background-color: rgba(50, 50, 50, 0.6);}
+::-webkit-scrollbar-track {background-color: rgba(50, 50, 50, 0.1);}
+::-webkit-scrollbar-track:hover {background-color: rgba(50, 50, 50, 0.2);}
+
+.aminui-side-split {position: absolute;top:0px;left:0px;bottom:0px;width:65px;background: #333;z-index: 90;}
+.adminui-side-split-scroll {position: absolute;top:0px;left:0px;bottom:0px;right:0px;overflow: auto;overflow-x:hidden;}
+.aminui-side-split li {cursor: pointer;width: 65px;height: 65px;color: #fff;text-align: center;display: flex;flex-direction: column;align-items: center;justify-content: center;}
+.aminui-side-split li i {font-size: 16px;}
+.aminui-side-split li p {margin-top:5px;}
+.aminui-side-split li:hover {background: #444;}
+.aminui-side-split li.active {background: #09f;}
+
+.adminui-side-split-scroll::-webkit-scrollbar-thumb {background-color: rgba(255, 255, 255, 0.4);border-radius:5px;}
+.adminui-side-split-scroll::-webkit-scrollbar-thumb:hover {background-color: rgba(255, 255, 255, 0.5);}
+.adminui-side-split-scroll::-webkit-scrollbar-track {background-color: rgba(255, 255, 255, 0);}
+.adminui-side-split-scroll::-webkit-scrollbar-track:hover {background-color: rgba(255, 255, 255, 0);}
+
+
+.aminui-side {position: absolute;z-index: 80;top:0px;left:65px;bottom:0px;width:210px;background: #fff;box-shadow: 2px 0 8px 0 rgba(29,35,41,.05);border-right: 1px solid #e6e6e6;}
+.adminui-side-scroll {position: absolute;top:0px;left:0px;bottom:0px;right:0px;overflow: auto;overflow-x:hidden;}
+
+
+.aminui-body {position: absolute;z-index: 70;top:0px;left:275px;bottom:0px;right:0px;}
+
+.adminui-header {height: 50px;border-bottom: 1px solid #ebeef5;background: #fff;box-shadow: 0 1px 4px rgba(0,21,41,.08);}
+.adminui-tags {height:35px;background: #fff;border-bottom: 1px solid #e6e6e6;box-shadow: 0 1px 4px rgba(0,21,41,.08);}
+.adminui-tags li {cursor: pointer;display: inline-block;float: left;height:34px;line-height: 34px;}
+.adminui-tags li a {display: inline-block;padding:0 10px;width:100%;height:100%;color: #999;text-decoration:none;}
+.adminui-tags li i {margin-left:10px;padding:3px;}
+.adminui-tags li i:hover {background: #ff5722;color: #fff;}
+.adminui-tags li:hover {background: #ecf5ff;}
+.adminui-tags li.active {background: #09f;}
+.adminui-tags li.active a {color: #fff;}
+
+
+.adminui-main {position: absolute;top:85px;left:0px;right:0px;bottom:0px;overflow: auto;}
+
+
+.el-menu {border: none!important;}
+.el-menu-item.is-active {background: #ecf5ff;}
