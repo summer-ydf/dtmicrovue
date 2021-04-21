@@ -5,11 +5,7 @@
 		<Head></Head>
 		<Tags></Tags>
 		<div class="adminui-main">
-			<router-view v-slot="{ Component }">
-				<keep-alive>
-					<component :is="Component" />
-				</keep-alive>
-			</router-view>
+			<router-view></router-view>
 		</div>
 	</div>
 
