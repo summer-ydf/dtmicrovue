@@ -3,7 +3,7 @@
 		<div class="left-panel">
 			<el-breadcrumb separator-class="el-icon-arrow-right">
 				<template v-for="(item) in breadList" v-bind:key="item" >
-					<el-breadcrumb-item v-if="item.path !='/'"><i v-if="item.meta&&item.meta.icon" :class="item.meta.icon || 'el-icon-menu'"></i>{{item.name}}</el-breadcrumb-item>
+					<el-breadcrumb-item v-if="item.path !='/'"><i v-if="item.meta&&item.meta.icon" :class="item.meta.icon || 'el-icon-menu'"></i>{{item.meta.title}}</el-breadcrumb-item>
 				</template>
 			</el-breadcrumb>
 		</div>

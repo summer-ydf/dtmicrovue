@@ -1,8 +1,8 @@
 import { createStore } from 'vuex';
-import tagsView from './modules/tagsView';
+import keepAlive from './modules/keepAlive';
 
 export default createStore({
 	modules: {
-		tagsView
+		keepAlive
 	}
 });

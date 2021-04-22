@@ -3,7 +3,7 @@
 		<ul>
 			<li v-for="tag in tagList" v-bind:key="tag" :class="isActive(tag) ? 'active' : '' " @contextmenu.prevent="openContextMenu($event, tag)">
 				<router-link :to="tag">
-				{{ tag.name }}
+				{{ tag.meta.title }}
 				<i v-if="!tag.meta.affix" class="el-icon-close" @click.prevent.stop='closeSelectedTag(tag)'></i>
 				</router-link>
 			</li>
@@ -59,6 +59,7 @@
 
 <script>
 	export default {
+		name: "tags",
 		data() {
 			return {
 				contextMenuVisible: false,
@@ -104,6 +105,7 @@
 					}
 				})
 				if(!ishas){
+					this.$store.commit("pushKeepLive",route.name)
 					this.tagList.push(route)
 				}
 			},
@@ -115,6 +117,7 @@
 			closeSelectedTag(tag) {
 				const newtagList = this.tagList.filter(item => item.path !== tag.path)
 				this.tagList = newtagList;
+				this.$store.commit("removeKeepLive", tag.name)
 				if (this.isActive(tag)) {
 					const latestView = newtagList.slice(-1)[0]
 					if (latestView) {

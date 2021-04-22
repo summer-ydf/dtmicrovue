@@ -6,23 +6,25 @@ import tool from '@/utils/tool';
 
 //系统路由
 const routes = [{
-		path: "/",
 		name: "layout",
+		path: "/",
 		component: () => import(/* webpackChunkName: "layout" */ '@/layout'),
 		redirect: '/dashboard',
 		children: [
 			{
+				name: "home",
 				path: "/home",
-				name: "首页",
 				component: () => import(`@/views/other/empty`),
 				meta: {
+					title: "首页",
 					icon: "el-icon-platform-eleme"
 				},
 				children: [
 					{
+						name: "dashboard",
 						path: "/dashboard",
-						name: "控制台",
 						meta: {
+							title: "控制台",
 							affix: true
 						},
 						component: () => import(/* webpackChunkName: "home" */ '@/views/home'),
@@ -32,9 +34,12 @@ const routes = [{
 		]
 	},
 	{
+		name: "login",
 		path: "/login",
-		name: "登录",
 		component: () => import(/* webpackChunkName: "login" */ '@/views/login'),
+		meta: {
+			title: "登录"
+		}
 	}
 ]
 

@@ -45,13 +45,21 @@
 </template>
 
 <script>
+	export default {
+		name: "dashboard",
+		data() {
+			return {
+
+			}
+		}
+	}
 </script>
 
 <style scoped>
 	.el-row {margin-bottom:20px;}
 	.el-tag+.el-tag {margin-left: 10px;}
-	
-	
+
+
 	.welTop {display: flex;}
 	.welTop .main {margin-left:20px;}
 	.welTop .main h2 {font-size: 20px;color: #3c4a54;}

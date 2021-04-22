@@ -3,7 +3,7 @@
 		<div class="adminui-side-split-scroll">
 			<ul>
 				<li v-for="item in menu" v-bind:key="item" :class="pmenu.path==item.path?'active':''" @click="showMenu(item)"><i :class="item.meta.icon || 'el-icon-menu'"></i>
-					<p>{{ item.name }}</p>
+					<p>{{ item.meta.title }}</p>
 				</li>
 			</ul>
 		</div>

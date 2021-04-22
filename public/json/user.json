@@ -6,37 +6,44 @@
 			"userName": "Administrator"
 		},
 		"menuList": [{
-				"name": "组件",
+				"name": "vab",
 				"path": "/vab",
 				"meta": {
+					"title": "组件",
 					"icon": "el-icon-takeaway-box"
 				},
 				"children": []
 			},
 			{
-				"name": "布局",
+				"name": "layout2",
 				"path": "/layout",
 				"meta": {
+					"title": "组件",
 					"icon": "el-icon-files"
 				},
 				"children": [{
 						"path": "/layout/list",
-						"name": "列表",
-						"meta": {},
+						"name": "list",
+						"meta": {
+							"title": "列表"
+						},
 						"component": "list"
 					},
 					{
 						"path": "/layout/show",
-						"name": "详情",
-						"meta": {},
+						"name": "show",
+						"meta": {
+							"title": "详情"
+						},
 						"component": "show"
 					}
 				]
 			},
 			{
-				"name": "其他",
+				"name": "other",
 				"path": "/other",
 				"meta": {
+					"title": "其他",
 					"icon": "el-icon-more"
 				},
 				"children": [
@@ -44,6 +51,7 @@
 						"path": "/link",
 						"name": "外部链接",
 						"meta": {
+							"title": "外部链接",
 							"icon": "el-icon-link"
 						},
 						"children": [
@@ -51,6 +59,7 @@
 								"path": "https://baidu.com",
 								"name": "百度",
 								"meta": {
+									"title": "百度",
 									"target": "_blank"
 								}
 							},
@@ -58,6 +67,7 @@
 								"path": "https://www.google.cn",
 								"name": "谷歌",
 								"meta": {
+									"title": "谷歌",
 									"target": "_blank"
 								}
 							}
@@ -67,24 +77,33 @@
 						"path": "/iframe",
 						"name": "Iframe",
 						"meta": {
+							"title": "Iframe",
 							"icon": "el-icon-position"
 						},
 						"children": [
 							{
 								"path": "https://vue3js.cn/docs/zh/",
-								"name": "VUE 3"
+								"name": "VUE 3",
+								"meta": {
+									"title": "VUE 3"
+								}
 							},
 							{
 								"path": "https://element-plus.org?id=1",
-								"name": "Element Plus"
+								"name": "Element Plus",
+								"meta": {
+									"title": "Element Plus"
+								}
 							}
 						]
 					},
 					{
 						"path": "/other/lala",
 						"name": "404",
-						"meta": {},
-						"component": "lala"
+						"component": "lala",
+						"meta": {
+							"title": "模拟404"
+						}
 					}
 				]
 			},
@@ -92,12 +111,15 @@
 				"name": "配置",
 				"path": "/setting",
 				"meta": {
+					"title": "配置",
 					"icon": "el-icon-setting"
 				},
 				"children": [{
 					"path": "/setting/1",
 					"name": "setting1",
-					"meta": {},
+					"meta": {
+						"title": "系统设置"
+					},
 					"component": "lala"
 				}]
 			}
