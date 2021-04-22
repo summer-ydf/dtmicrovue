@@ -1,6 +1,7 @@
 <template>
-	<div>LIST</div>
-	<div style="height:1800px"></div>
+	<div>
+		<el-empty description="LIST"></el-empty>
+	</div>
 </template>
 
 <script>

@@ -1,10 +1,13 @@
 <template>
-	<label v-for="navMenu in navMenus" v-bind:key="navMenu">
+	<div v-if="navMenus.length<=0" style="padding:20px;">
+		<el-alert title="无子集菜单" center type="info" :closable="false"></el-alert>
+	</div>
+	<template v-for="navMenu in navMenus" v-bind:key="navMenu">
 		<el-menu-item v-if="!navMenu.children" :index="navMenu.path">
+			<a v-if="navMenu.meta&&navMenu.meta.target" :href="navMenu.path" :target="navMenu.meta.target" @click.stop='a'></a>
 			<i v-if="navMenu.meta&&navMenu.meta.icon" :class="navMenu.meta.icon || 'el-icon-menu'"></i>
 			<span>{{navMenu.name}}</span>
 		</el-menu-item>
-
 		<el-submenu v-if="navMenu.children" :index="navMenu.path">
 			<template #title>
 				<i v-if="navMenu.meta&&navMenu.meta.icon" :class="navMenu.meta.icon || 'el-icon-menu'"></i>
@@ -12,7 +15,7 @@
 			</template>
 			<NavMenu :navMenus="navMenu.children"></NavMenu>
 		</el-submenu>
-	</label>
+	</template>
 </template>
 
 <script>
@@ -22,6 +25,8 @@
 		data() {
 			return {}
 		},
-		methods: {}
+		methods: {
+			a(){}
+		}
 	}
 </script>

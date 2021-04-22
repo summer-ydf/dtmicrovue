@@ -1,7 +1,6 @@
 <template>
-	<div>SHOW</div>
-	<div class="main">
-		<el-input v-model="input" placeholder="请输入内容" clearable></el-input>
+	<div>
+		<el-empty description="SHOW"></el-empty>
 	</div>
 </template>
 
@@ -15,6 +14,6 @@
 	}
 </script>
 
-<style>
+<style scoped>
 	.main {width:200px;}
 </style>

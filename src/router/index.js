@@ -60,6 +60,7 @@ router.beforeEach(async (to, from, next) => {
 	let userInfo = tool.data.get("user");
 
 	if(to.path === "/login"){
+		isGetApiRouter = false;
 		next();
 		return false;
 	}
@@ -79,7 +80,7 @@ router.beforeEach(async (to, from, next) => {
 		})
 		router.addRoute(routes_404)
 		if (to.matched.length == 0) {
-			router.push(to.path);
+			router.push(to.fullPath);
 		}
 		isGetApiRouter = true;
 	}
@@ -94,7 +95,7 @@ router.onError((error) => {
 	NProgress.done();
 	ElNotification.error({
 		title: '路由错误',
-		message: error
+		message: error.message
 	});
 });
 
@@ -102,14 +103,22 @@ router.onError((error) => {
 //转换
 function filterAsyncRouter(routerMap) {
 	const accessedRouters = []
-	routerMap.filter(itemRouter => {
-		accessedRouters.push({
-			path: itemRouter.path,
-			name: itemRouter.name,
-			meta: itemRouter.meta,
-			children: filterAsyncRouter(itemRouter.children || []),
-			component: loadComponent(itemRouter.component)
-		})
+	routerMap.forEach(item => {
+		item.meta = item.meta?item.meta:{};
+		//处理外部链接特殊路由
+		if(item.path.startsWith('http') && item.meta.target!='_blank'){
+			item.path = `/${encodeURIComponent(item.path)}`;
+			item.component = 'other/iframe';
+		}
+		//MAP转路由对象
+		var route = {
+			path: item.path,
+			name: item.name,
+			meta: item.meta,
+			children: item.children ? filterAsyncRouter(item.children) : null,
+			component: loadComponent(item.component)
+		}
+		accessedRouters.push(route)
 	})
 	return accessedRouters
 }

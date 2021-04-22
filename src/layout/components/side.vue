@@ -11,7 +11,7 @@
 
 	<div class="aminui-side">
 		<div class="adminui-side-scroll">
-			<el-menu :default-active="$route.path" router>
+			<el-menu :default-active="$route.fullPath" router>
 				<NavMenu :navMenus="nextMenu"></NavMenu>
 			</el-menu>
 		</div>
@@ -37,7 +37,7 @@
 			var menu = this.$TOOL.data.get("user").menuList;
 			var home = this.$router.options.routes[0].children[0];
 			menu.unshift(home);
-			this.menu = menu;
+			this.menu = this.filterUrl(menu);
 			this.showThis()
 		},
 		setup() {
@@ -51,13 +51,9 @@
 		methods: {
 			//路由监听高亮
 			showThis(){
-				var menu = this.$TOOL.data.get("user").menuList;
 				var home = this.$router.options.routes[0].children[0];
-				menu.unshift(home);
-				var pl = this.$route.path.split("/");
-				var p = pl.length<=2?home.path:"/" + pl[1];
-				this.pmenu = p==home.path ? home:this.getRoute(p, menu);
-				this.nextMenu = this.pmenu.children;
+				this.pmenu = this.$route.matched[1] || home;
+				this.nextMenu = this.filterUrl(this.pmenu.children);
 			},
 			//点击显示
 			showMenu(route) {
@@ -74,6 +70,21 @@
 						this.getRoute(path, item.children);
 					}
 				}
+			},
+			//转换外部链接的路由
+			filterUrl(map){
+				var newMap = []
+				map.forEach(item => {
+					item.meta = item.meta?item.meta:{};
+					if(item.path.startsWith('http') && item.meta.target!='_blank'){
+						item.path = `/${encodeURIComponent(item.path)}`;
+					}
+					if(item.children&&item.children.length > 0){
+						this.filterUrl(item.children);
+					}
+					newMap.push(item)
+				})
+				return newMap;
 			}
 		}
 	}
