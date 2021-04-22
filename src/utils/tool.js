@@ -1,17 +1,23 @@
 const tool = {
 	/* localStorage */
-	data : {
-		set : function(table, settings){
+	data: {
+		set: function(table, settings) {
 			var _set = JSON.stringify(settings)
 			return localStorage.setItem(table, _set);
 		},
-		get : function(table){
-			return JSON.parse(localStorage.getItem(table));
+		get: function(table) {
+			var data = localStorage.getItem(table);
+			try {
+				data = JSON.parse(data)
+			} catch (err) {
+				return null
+			}
+			return data;
 		},
-		remove : function(table){
+		remove: function(table) {
 			return localStorage.removeItem(table);
 		},
-		clear : function(){
+		clear: function() {
 			return localStorage.clear();
 		}
 	}

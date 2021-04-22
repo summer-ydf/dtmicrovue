@@ -1,5 +1,5 @@
 <template>
-	<el-row>
+	<el-row :gutter="20">
 		<el-col :span="24">
 			<el-card shadow="never">
 				<div class="welTop">
@@ -28,12 +28,30 @@
 			</el-card>
 		</el-col>
 	</el-row>
+
+	<el-row :gutter="20">
+		<el-col :span="24">
+			<el-card shadow="never" header="User Permissions">
+				<el-tag v-if="$HAS('user.add')">user.add</el-tag>
+				<el-tag v-if="$HAS('user.edit')">user.edit</el-tag>
+				<el-tag v-if="$HAS('user.delete')">user.delete</el-tag>
+				<el-tag v-if="$HAS('list.add')">list.add</el-tag>
+				<el-tag v-if="$HAS('list.edit')">list.edit</el-tag>
+				<el-tag v-if="$HAS('list.delete')">list.delete</el-tag>
+			</el-card>
+		</el-col>
+	</el-row>
+
 </template>
 
 <script>
 </script>
 
 <style scoped>
+	.el-row {margin-bottom:20px;}
+	.el-tag+.el-tag {margin-left: 10px;}
+	
+	
 	.welTop {display: flex;}
 	.welTop .main {margin-left:20px;}
 	.welTop .main h2 {font-size: 20px;color: #3c4a54;}
