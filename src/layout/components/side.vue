@@ -58,27 +58,22 @@
 			//点击显示
 			showMenu(route) {
 				this.pmenu = route;
-				this.nextMenu = route.children;
-			},
-			//根据path获取
-			getRoute(path, menu){
-				for (var item of menu) {
-					if (item.path == path) {
-						return item;
-					}
-					if (item.children) {
-						this.getRoute(path, item.children);
-					}
-				}
+				this.nextMenu = this.filterUrl(route.children);
 			},
 			//转换外部链接的路由
 			filterUrl(map){
 				var newMap = []
 				map.forEach(item => {
 					item.meta = item.meta?item.meta:{};
+					//处理隐藏
+					if(item.meta.hidden){
+						return false
+					}
+					//处理http
 					if(item.path.startsWith('http') && item.meta.target!='_blank'){
 						item.path = `/${encodeURIComponent(item.path)}`;
 					}
+					//递归循环
 					if(item.children&&item.children.length > 0){
 						this.filterUrl(item.children);
 					}

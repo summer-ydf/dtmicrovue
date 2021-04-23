@@ -15,14 +15,14 @@
 				"children": []
 			},
 			{
-				"name": "layout2",
-				"path": "/layout",
+				"name": "template",
+				"path": "/template",
 				"meta": {
-					"title": "组件",
+					"title": "模板",
 					"icon": "el-icon-files"
 				},
 				"children": [{
-						"path": "/layout/list",
+						"path": "/template/list",
 						"name": "list",
 						"meta": {
 							"title": "列表"
@@ -30,10 +30,11 @@
 						"component": "list"
 					},
 					{
-						"path": "/layout/show",
+						"path": "/template/show/:id",
 						"name": "show",
 						"meta": {
-							"title": "详情"
+							"title": "详情",
+							"hidden": true
 						},
 						"component": "show"
 					}

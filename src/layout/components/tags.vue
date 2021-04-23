@@ -9,14 +9,15 @@
 			</li>
 		</ul>
 	</div>
-
-	<ul v-if="contextMenuVisible" :style="{left:left+'px',top:top+'px'}" class="contextmenu" id="contextmenu">
-		<li @click="refreshTab()">刷新</li>
-		<hr>
-		<li @click="closeTabs()" :class="contextMenuItem.meta.affix?'disabled':''">关闭标签</li>
-		<li @click="closeOtherTabs()">关闭其他标签</li>
-	</ul>
-
+	
+	<transition name="el-zoom-in-top">
+		<ul v-if="contextMenuVisible" :style="{left:left+'px',top:top+'px'}" class="contextmenu" id="contextmenu">
+			<li @click="refreshTab()">刷新</li>
+			<hr>
+			<li @click="closeTabs()" :class="contextMenuItem.meta.affix?'disabled':''">关闭标签</li>
+			<li @click="closeOtherTabs()">关闭其他标签</li>
+		</ul>
+	</transition>
 </template>
 
 <style>
@@ -66,7 +67,7 @@
 				contextMenuItem: null,
 				left: 0,
 				top: 0,
-				tagList: []
+				tagList: this.$store.state.viewTags.viewTags
 			}
 		},
 		props: {},
@@ -92,21 +93,16 @@
 				}
 			}
 		},
-		mounted() {
+		created() {
 			this.addViewTags(this.$router.options.routes[0].children[0].children[0]);
 			this.addViewTags(this.$route);
 		},
 		methods: {
 			//增加tag
 			addViewTags(route) {
-				var ishas = this.tagList.some(item=>{
-					if(item.path == route.path){
-						return true
-					}
-				})
-				if(!ishas){
+				if(route.name){
+					this.$store.commit("pushViewTags",route)
 					this.$store.commit("pushKeepLive",route.name)
-					this.tagList.push(route)
 				}
 			},
 			//高亮tag
@@ -115,11 +111,10 @@
 			},
 			//关闭tag
 			closeSelectedTag(tag) {
-				const newtagList = this.tagList.filter(item => item.path !== tag.path)
-				this.tagList = newtagList;
+				this.$store.commit("removeViewTags", tag)
 				this.$store.commit("removeKeepLive", tag.name)
 				if (this.isActive(tag)) {
-					const latestView = newtagList.slice(-1)[0]
+					const latestView = this.tagList.slice(-1)[0]
 					if (latestView) {
 						this.$router.push(latestView)
 					} else {

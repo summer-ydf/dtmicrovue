@@ -6,7 +6,6 @@
 		<Tags></Tags>
 		<div class="adminui-main">
 			<router-view></router-view>
-			<!-- <router-view :key="$route.fullPath"></router-view> -->
 		</div>
 	</div>
 

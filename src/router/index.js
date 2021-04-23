@@ -34,7 +34,6 @@ const routes = [{
 		]
 	},
 	{
-		name: "login",
 		path: "/login",
 		component: () => import(/* webpackChunkName: "login" */ '@/views/login'),
 		meta: {

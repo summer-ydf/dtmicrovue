@@ -17,12 +17,11 @@
 			login: async function() {
 				var userInfo = await this.$API.user.info();
 				this.$TOOL.data.set("user", userInfo.data);
-				this.$router.replace({path: '/'});
+				this.$router.replace({
+					path: '/'
+				});
 				//开启欢迎词
-				this.$notify.success({
-					title: '登录成功',
-					message: '欢迎登录'
-				})
+				this.$message.success("Login Success 登录成功")
 			}
 		}
 	}
