@@ -9,7 +9,7 @@
 ::-webkit-scrollbar-track {background-color: rgba(50, 50, 50, 0.1);}
 ::-webkit-scrollbar-track:hover {background-color: rgba(50, 50, 50, 0.2);}
 
-.aminui-side-split {position: absolute;top:0px;left:0px;bottom:0px;width:65px;background: #333;z-index: 90;}
+.aminui-side-split {position: absolute;top:0px;left:0px;bottom:0px;width:65px;background: #333;z-index: 5;}
 .adminui-side-split-scroll {position: absolute;top:0px;left:0px;bottom:0px;right:0px;overflow: auto;overflow-x:hidden;}
 .aminui-side-split li {cursor: pointer;width: 65px;height: 65px;color: #fff;text-align: center;display: flex;flex-direction: column;align-items: center;justify-content: center;}
 .aminui-side-split li i {font-size: 16px;}
@@ -23,11 +23,11 @@
 .adminui-side-split-scroll::-webkit-scrollbar-track:hover {background-color: rgba(255, 255, 255, 0);}
 
 
-.aminui-side {position: absolute;z-index: 80;top:0px;left:65px;bottom:0px;width:210px;background: #fff;box-shadow: 2px 0 8px 0 rgba(29,35,41,.05);border-right: 1px solid #e6e6e6;}
+.aminui-side {position: absolute;z-index: 5;top:0px;left:65px;bottom:0px;width:210px;background: #fff;box-shadow: 2px 0 8px 0 rgba(29,35,41,.05);border-right: 1px solid #e6e6e6;}
 .adminui-side-scroll {position: absolute;top:0px;left:0px;bottom:0px;right:0px;overflow: auto;overflow-x:hidden;}
 
 
-.aminui-body {position: absolute;z-index: 70;top:0px;left:275px;bottom:0px;right:0px;}
+.aminui-body {position: absolute;z-index: 4;top:0px;left:275px;bottom:0px;right:0px;}
 
 .adminui-header {height: 50px;border-bottom: 1px solid #ebeef5;background: #fff;box-shadow: 0 1px 4px rgba(0,21,41,.08);display: flex;justify-content:space-between;}
 
@@ -68,3 +68,4 @@
 .el-header {background: #fff;border-bottom: 1px solid #e6e6e6;padding:13px 15px;}
 .el-main {padding:15px;}
 .el-pagination {margin-top: 20px;}
+.el-drawer__body {overflow: auto;}

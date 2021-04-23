@@ -9,7 +9,7 @@
 			</li>
 		</ul>
 	</div>
-	
+
 	<transition name="el-zoom-in-top">
 		<ul v-if="contextMenuVisible" :style="{left:left+'px',top:top+'px'}" class="contextmenu" id="contextmenu">
 			<li @click="refreshTab()">刷新</li>

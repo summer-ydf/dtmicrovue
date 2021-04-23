@@ -8,11 +8,11 @@
 		<el-container>
 
 			<el-header>
-				<el-button type="primary">主要按钮</el-button>
-				<el-button disabled>默认按钮</el-button>
-				<el-button disabled>默认按钮</el-button>
+				<el-button type="primary" icon="el-icon-plus"></el-button>
+				<el-button type="primary" icon="el-icon-delete"></el-button>
+				<el-button type="primary">默认按钮</el-button>
 				<el-dropdown style="margin-left: 10px;">
-					<el-button>更多<i class="el-icon-arrow-down el-icon--right"></i></el-button>
+					<el-button type="primary" plain icon="el-icon-arrow-down"></el-button>
 					<template #dropdown>
 						<el-dropdown-menu>
 							<el-dropdown-item>黄金糕</el-dropdown-item>
@@ -23,7 +23,7 @@
 			</el-header>
 
 			<el-main id="tableMain">
-				<el-card shadow="never" @selection-change='handleSelectionChange'>
+				<el-card shadow="never">
 					<el-table :data="tableData" row-key="name" stripe default-expand-all :height="tableHeight">
 						<el-table-column type="selection" width="50"></el-table-column>
 						<el-table-column label="显示名称" prop="meta.title" width="200"></el-table-column>
@@ -46,8 +46,9 @@
 						</el-table-column>
 
 						<el-table-column label="操作" fixed="right" width="100">
-							<template>
-								<el-button type="text" size="small">编辑</el-button>
+							<template #default="scope">
+								<el-button @click="table_show(scope.row)" type="text" size="small">查看</el-button>
+								<el-button @click="table_edit(scope.row)" type="text" size="small">编辑</el-button>
 							</template>
 						</el-table-column>
 					</el-table>
@@ -55,10 +56,15 @@
 				</el-card>
 			</el-main>
 		</el-container>
+		<el-drawer title="我是标题" v-model="drawer" :size="800" :append-to-body="true" direction="rtl" destroy-on-close>
+			<Show showid="我来自父组件"></Show>
+		</el-drawer>
 	</el-container>
 </template>
 
 <script>
+	import Show from './show.vue';
+
 	export default {
 		name: 'list',
 		data() {
@@ -75,8 +81,12 @@
 					]}
 				],
 				tableHeight: '0',
-				tableData: []
+				tableData: [],
+				drawer: false
 			}
+		},
+		components: {
+			Show
 		},
 		created() {
 			this.tableData = this.$TOOL.data.get("user").menuList;
@@ -96,8 +106,14 @@
 			handleNodeClick(data){
 				console.log(data);
 			},
-			handleSelectionChange(val) {
-				console.log(val);
+			table_show(row) {
+				this.$router.push({
+					path: '/template/show/' + row.meta.title
+				});
+			},
+			table_edit(row) {
+				console.log(row);
+				this.drawer = true
 			}
 		}
 	}
