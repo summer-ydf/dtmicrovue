@@ -1,6 +1,8 @@
 export default {
 	state: {
-		keepLiveRoute: []
+		keepLiveRoute: [],
+		routeKey: null,
+		routeShow: true
 	},
 	mutations: {
 		pushKeepLive(state, component){
@@ -16,6 +18,17 @@ export default {
 		},
 		clearKeepLive(state){
 			state.keepLiveRoute = []
+		},
+		setRouteKey(state, key){
+			state.routeKey = key
+		},
+		setRouteShow(state, key){
+			state.routeShow = key
+		}
+	},
+	actions: {
+		setRouteKey({ commit }, key) {
+			commit('setRouteKey', key);
 		}
 	}
 }

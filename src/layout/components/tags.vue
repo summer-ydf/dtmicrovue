@@ -76,7 +76,7 @@
 		},
 		watch: {
 			$route(e) {
-				this.addViewTags(e)
+				this.addViewTags(e);
 			},
 			contextMenuVisible(value) {
 				var _this = this;
@@ -137,10 +137,22 @@
 			//TAB 刷新
 			refreshTab(){
 				var nowTag = this.contextMenuItem;
-				this.$router.push({
-					path: nowTag.path
-				})
 				this.contextMenuVisible = false
+				//判断是否当前路由，否的话跳转
+				if(this.$route.path != nowTag.path){
+					this.$router.push({
+						path: nowTag.path
+					})
+				}
+				var _this = this;
+				setTimeout(function() {
+					_this.$store.commit("removeKeepLive", nowTag.name)
+					_this.$store.commit("setRouteShow", false)
+					_this.$nextTick(() => {
+						_this.$store.commit("pushKeepLive",nowTag.name)
+						_this.$store.commit("setRouteShow", true)
+					})
+				}, 0);
 			},
 			//TAB 关闭
 			closeTabs(){

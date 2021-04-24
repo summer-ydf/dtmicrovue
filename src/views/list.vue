@@ -23,7 +23,7 @@
 			</el-header>
 
 			<el-main id="tableMain">
-				<el-card shadow="never">
+				<el-card shadow="never" v-loading="loading">
 					<el-table :data="tableData" row-key="name" stripe default-expand-all :height="tableHeight">
 						<el-table-column type="selection" width="50"></el-table-column>
 						<el-table-column label="显示名称" prop="meta.title" width="200"></el-table-column>
@@ -82,14 +82,21 @@
 				],
 				tableHeight: '0',
 				tableData: [],
+				loading: true,
 				drawer: false
 			}
 		},
 		components: {
 			Show
 		},
-		created() {
-			this.tableData = this.$TOOL.data.get("user").menuList;
+		async created() {
+			var userInfo = await this.$API.user.info();
+			var _this = this;
+			setTimeout(function() {
+				_this.tableData = userInfo.data.menuList;
+				_this.loading = false;
+			}, 500);
+
 		},
 		mounted(){
 			this.$nextTick(() => {

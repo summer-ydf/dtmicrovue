@@ -1,7 +1,7 @@
 <template>
 	<router-view v-slot="{ Component }">
-		<keep-alive :include="keepAliveNameList">
-			<component :is="Component" :key="$route.fullPath"/>
+		<keep-alive :include="this.$store.state.keepAlive.keepLiveRoute">
+			<component :is="Component" :key="$route.fullPath" v-if="$store.state.keepAlive.routeShow"/>
 		</keep-alive>
 	</router-view>
 </template>
@@ -10,11 +10,8 @@
 	export default {
 		data() {
 			return {
-				keepAliveNameList: this.$store.state.keepAlive.keepLiveRoute
+
 			}
-		},
-		created: function() {
-			
-		},
+		}
 	}
 </script>
