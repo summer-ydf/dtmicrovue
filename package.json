@@ -1,6 +1,6 @@
 {
-	"name": "element-plus-starter",
-	"version": "0.1.0",
+	"name": "SCUI-Admin",
+	"version": "0.1.1",
 	"private": true,
 	"scripts": {
 		"serve": "vue-cli-service serve",
