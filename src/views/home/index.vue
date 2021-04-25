@@ -32,7 +32,7 @@
 
 		<el-row :gutter="15">
 			<el-col :span="24">
-				<el-card shadow="never" header="User Permissions">
+				<el-card shadow="never" header="当前用户权限">
 					<el-tag v-if="$HAS('user.add')">user.add</el-tag>
 					<el-tag v-if="$HAS('user.edit')">user.edit</el-tag>
 					<el-tag v-if="$HAS('user.delete')">user.delete</el-tag>
@@ -42,20 +42,72 @@
 				</el-card>
 			</el-col>
 		</el-row>
+
+		<div class="diy-grid-layout">
+			<el-row :gutter="15">
+				<el-col :span="16">
+					 <draggable v-model="grid[0]" :disabled="false" animation="200" handle=".el-card__header" group="people" @end="end" item-key="id">
+						<template #item="{ element }">
+							<div>
+								<el-card shadow="never" :header="element.name">
+									<component :is="allComps[element.name]" msg="demo"></component>
+								</el-card>
+							</div>
+						</template>
+					</draggable>
+				</el-col>
+				<el-col :span="8">
+					<draggable v-model="grid[1]" animation="200" handle=".el-card__header" group="people" @end="end" item-key="id">
+						<template #item="{ element }">
+							<div >
+								<el-card shadow="never" :header="element.name">
+									<component :is="allComps[element.name]" msg="demo"></component>
+								</el-card>
+							</div>
+						</template>
+					</draggable>
+				</el-col>
+			</el-row>
+		</div>
+
+		<pre>{{ grid }}</pre>
+
+
 	</el-main>
 </template>
 
 <script>
+	import draggable from 'vuedraggable'
+	import allComps from './components'
 	export default {
 		name: "dashboard",
+		components: {
+			draggable
+		},
 		data() {
 			return {
-
+				allComps: allComps,
+				grid:[
+					[
+						{ name: "C1", id: 1 },
+						{ name: "C2", id: 2 }
+					],
+					[
+						{ name: "C3", id: 5 },
+						{ name: "C4", id: 6 }
+					]
+				]
 			}
 		},
 		mounted(){
 			console.log("home.vue mounted #57");
+		},
+		methods: {
+			end(){
+				console.log("拖动结束");
+			}
 		}
+
 	}
 </script>
 
@@ -71,4 +123,10 @@
 	.welTop .icons {margin-left:auto;text-align: center;}
 	.welTop .icons p {font-size: 12px;}
 	.avatar-list .avatar {margin-left: -10px;border: 3px solid #fff;cursor: pointer;}
+
+	.diy-grid-layout .el-card {margin-bottom:15px;}
+	.sortable-ghost {
+	  opacity: 0.5;
+	  background: #c8ebfb;
+	}
 </style>

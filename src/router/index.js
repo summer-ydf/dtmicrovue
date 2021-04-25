@@ -27,7 +27,7 @@ const routes = [{
 							title: "控制台",
 							affix: true
 						},
-						component: () => import(/* webpackChunkName: "home" */ '@/views/home'),
+						component: () => import(/* webpackChunkName: "home" */ '@/views/home/index'),
 					}
 				]
 			}
