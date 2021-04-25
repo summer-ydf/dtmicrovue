@@ -12,10 +12,12 @@
 
 	<transition name="el-zoom-in-top">
 		<ul v-if="contextMenuVisible" :style="{left:left+'px',top:top+'px'}" class="contextmenu" id="contextmenu">
-			<li @click="refreshTab()">刷新</li>
+			<li @click="refreshTab()"><i class="el-icon-refresh"></i>刷新</li>
 			<hr>
-			<li @click="closeTabs()" :class="contextMenuItem.meta.affix?'disabled':''">关闭标签</li>
-			<li @click="closeOtherTabs()">关闭其他标签</li>
+			<li @click="closeTabs()" :class="contextMenuItem.meta.affix?'disabled':''"><i class="el-icon-close"></i>关闭标签</li>
+			<li @click="closeOtherTabs()"><i class="el-icon-folder-delete"></i>关闭其他标签</li>
+			<hr>
+			<li @click="screen()"><i class="el-icon-full-screen"></i>全屏当前标签</li>
 		</ul>
 	</transition>
 </template>
@@ -24,7 +26,7 @@
 	.contextmenu {
 		position: fixed;
 		margin:0;
-		border-radius: 4px;
+		border-radius: 0px;
 		background: #fff;
 		border: 1px solid #e4e7ed;
 		box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
@@ -45,6 +47,10 @@
 		line-height: 30px;
 		padding: 0 17px;
 		color: #606266;
+	}
+	.contextmenu li i {
+		font-size: 14px;
+		margin-right: 10px;
 	}
 	.contextmenu li:hover {
 		background-color: #ecf5ff;
@@ -174,6 +180,19 @@
 					}
 				})
 				this.contextMenuVisible = false
+			},
+			//TAB 全屏标签
+			screen(){
+				var nowTag = this.contextMenuItem;
+				this.contextMenuVisible = false
+				//判断是否当前路由，否的话跳转
+				if(this.$route.path != nowTag.path){
+					this.$router.push({
+						path: nowTag.path
+					})
+				}
+				var element = document.getElementById('adminui-main')
+				this.$TOOL.screen(element)
 			}
 		}
 	}

@@ -11,6 +11,9 @@
 
 		</div>
 		<div class="right-panel">
+			<div class="screen panel-item" @click="screen">
+				<i class="el-icon-full-screen"></i>
+			</div>
 			<div class="setting panel-item">
 				<i class="el-icon-setting"></i>
 			</div>
@@ -63,6 +66,7 @@
 			}
 		},
 		methods: {
+			//个人信息
 			handleUser(command) {
 				if(command == "outLogin"){
 					this.$router.replace({path: '/login'});
@@ -71,6 +75,11 @@
 			getBreadcrumb(){
 				let matched = this.$route.matched;
 				this.breadList = matched;
+			},
+			//全屏
+			screen(){
+				var element = document.documentElement;
+				this.$TOOL.screen(element)
 			}
 		}
 	}

@@ -4,7 +4,7 @@
 	<div class="aminui-body">
 		<Head></Head>
 		<Tags></Tags>
-		<div class="adminui-main">
+		<div class="adminui-main" id="adminui-main">
 			<router-view></router-view>
 		</div>
 	</div>
