@@ -10,6 +10,9 @@
 	</div>
 
 	<div class="aminui-side">
+		<div class="adminui-side-top">
+			<h2>{{ pmenu.meta.title }}</h2>
+		</div>
 		<div class="adminui-side-scroll">
 			<el-menu :default-active="$route.fullPath" router>
 				<NavMenu :navMenus="nextMenu"></NavMenu>
