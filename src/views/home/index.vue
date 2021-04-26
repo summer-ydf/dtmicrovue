@@ -49,7 +49,7 @@
 					 <draggable v-model="grid[0]" :disabled="false" animation="200" handle=".el-card__header" group="people" @end="end" item-key="id">
 						<template #item="{ element }">
 							<div>
-								<el-card shadow="never" :header="element.name">
+								<el-card shadow="hover" :header="element.name" style="margin-bottom:15px;">
 									<component :is="allComps[element.name]" msg="demo"></component>
 								</el-card>
 							</div>
@@ -60,7 +60,7 @@
 					<draggable v-model="grid[1]" animation="200" handle=".el-card__header" group="people" @end="end" item-key="id">
 						<template #item="{ element }">
 							<div >
-								<el-card shadow="never" :header="element.name">
+								<el-card shadow="hover" :header="element.name" style="margin-bottom:15px;">
 									<component :is="allComps[element.name]" msg="demo"></component>
 								</el-card>
 							</div>
@@ -124,9 +124,8 @@
 	.welTop .icons p {font-size: 12px;}
 	.avatar-list .avatar {margin-left: -10px;border: 3px solid #fff;cursor: pointer;}
 
-	.diy-grid-layout .el-card {margin-bottom:15px;}
 	.sortable-ghost {
-	  opacity: 0.5;
-	  background: #c8ebfb;
+		opacity: 0.5;
+		background: #c8ebfb;
 	}
 </style>
