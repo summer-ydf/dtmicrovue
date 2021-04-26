@@ -9,17 +9,16 @@
 							<el-card shadow="hover" style="margin-bottom:15px;">
 								<template #header>
 									<span>{{element.title}}</span>
-									<el-dropdown>
+									<el-dropdown trigger="click">
 										<span class="el-dropdown-link">
-											下拉菜单<i class="el-icon-arrow-down el-icon--right"></i>
+											<i class="el-icon-menu"></i>
 										</span>
 										<template #dropdown>
 											<el-dropdown-menu>
-												<el-dropdown-item @click="refresh(element)">刷新</el-dropdown-item>
-												<el-dropdown-item @click="remove(element)">隐藏</el-dropdown-item>
-												<el-dropdown-item @click="push()" divided>添加组件</el-dropdown-item>
-												<el-dropdown-item>分栏设置</el-dropdown-item>
+												<el-dropdown-item @click="push()">添加组件</el-dropdown-item>
+												<el-dropdown-item @click="set()">分栏设置</el-dropdown-item>
 												<el-dropdown-item @click="backDefaul()">恢复默认</el-dropdown-item>
+												<el-dropdown-item @click="remove(element)" divided>移除</el-dropdown-item>
 											</el-dropdown-menu>
 										</template>
 									</el-dropdown>
@@ -33,23 +32,54 @@
 		</el-row>
 	</div>
 
-	<el-dialog title="添加组件" v-model="showPush" :width="400" destroy-on-close :append-to-body='true'>
-		<el-alert title="添加的元素自动会添加至最左侧分栏的最后,请勿添加过多的组件导致系统运行缓慢" type="warning" show-icon></el-alert>
-		<div style="margin-top: 15px;">
-			<el-select v-model="selectComps" filterable clearable placeholder="请选择组件" style="width: 100%;">
-				<el-option v-for="(item,key) in allComps" :key="key" :label="item.title" :value="key">
-					<span style="float: left">{{ item.title }}</span>
-					<span style="float: right; color: #8492a6; font-size: 13px">{{ key }}</span>
-				</el-option>
-			</el-select>
-		</div>
-
+	<el-dialog title="添加组件" v-model="showPush" :width="400" :before-close="closePush" destroy-on-close :append-to-body='true'>
+		<el-alert title="添加的元素自动会添加至最左侧" type="warning" show-icon style="margin-bottom:20px;"></el-alert>
+		<el-form :model="pushForm" ref="pushForm" :rules="rules" label-width="0">
+			<el-form-item prop="selectComps">
+				<el-select v-model="pushForm.selectComps" value-key="title" filterable clearable placeholder="请选择组件" style="width: 100%;">
+					<el-option v-for="item in allCompsList" :key="item.com" :label="item.title" :value="item" :disabled="item.disabled">
+						<span style="float: left">{{ item.title }}</span>
+						<span style="float: right; color: #8492a6; font-size: 13px">{{ item.com }}</span>
+					</el-option>
+				</el-select>
+			</el-form-item>
+		</el-form>
 		<template #footer>
-			<span class="dialog-footer">
-				<el-button @click="showPush = false">取 消</el-button>
-				<el-button type="primary" @click="submitPush()">确 定</el-button>
-			</span>
+			<el-button @click="closePush">取 消</el-button>
+			<el-button type="primary" @click="submitPush('pushForm')">确 定</el-button>
 		</template>
+	</el-dialog>
+
+	<el-dialog title="分栏设置" v-model="showSet" :width="500" destroy-on-close :append-to-body='true'>
+		<div class="diy-grid-layout-set">
+			<el-tooltip content="通栏">
+				<div class="col active">
+					<span></span>
+					<span></span>
+					<span></span>
+				</div>
+			</el-tooltip>
+			<el-tooltip content="左大右小布局">
+				<div class="row">
+					<span style="width: 60%;"></span>
+					<span style="width: 30%;"></span>
+				</div>
+			</el-tooltip>
+			<el-tooltip content="等分布局">
+				<div class="row">
+					<span></span>
+					<span></span>
+					<span></span>
+				</div>
+			</el-tooltip>
+			<el-tooltip content="左右辅助布局">
+				<div class="row">
+					<span style="width: 25%;"></span>
+					<span style="width: 50%;"></span>
+					<span style="width: 25%;"></span>
+				</div>
+			</el-tooltip>
+		</div>
 	</el-dialog>
 
 </template>
@@ -68,12 +98,20 @@
 		},
 		data() {
 			return {
-				layout: [18,6], //数组总数不能大于24, [16,8]:分两列左16右8 还可以设置 [18,6] [8,8,8] [6,12,6]
+				layout: [18,6], //数组总数不能大于24, [16,8]:分两列左16右8 还可以设置 [24] [18,6] [8,8,8] [6,12,6]
 				allComps: allComps,
+				allCompsList: [],
 				showPush: false,
+				pushForm: {
+					selectComps: null
+				},
+				rules: {
+					selectComps: [
+						{ required: true, message: '请选择添加的组件', trigger: 'blur' }
+					]
+				},
 				showSet: false,
-				selectComps: '',
-				defaultGrid:[
+				defaultGrid: [
 					[
 						{ title: "模块1", com: 'C1' },
 						{ title: "模块2", com: 'C2' }
@@ -85,7 +123,7 @@
 
 					]
 				],
-				grid:[]
+				grid: []
 			}
 		},
 		created(){
@@ -93,18 +131,56 @@
 			this.grid = grid || this.defaultGrid;
 		},
 		mounted(){
-			console.log(allComps);
+			//console.log(allComps);
 		},
 		methods: {
+			//输出可添加的组件
+			setAllCompsList(){
+				var allCompsList = []
+				for(var key in allComps){
+					allCompsList.push({
+						title: allComps[key].title,
+						com: key
+					})
+				}
+				var nowGrid_arr = this.grid.reduce(function(a, b){return a.concat(b)});
+				for(let comp of allCompsList){
+					const _item = nowGrid_arr.find((item)=>{return item.com === comp.com});
+					if(_item){
+						comp.disabled = true
+					}
+				}
+				this.allCompsList = allCompsList;
+
+			},
 			//拖动结束后
 			end(){
 				this.$TOOL.data.set("grid", this.grid);
 			},
+			//分栏设置
+			set(){
+				this.showSet = true;
+			},
 			//添加组件
 			push(){
+				this.setAllCompsList()
 				this.showPush = true;
 			},
-			submitPush(){
+			submitPush(formName){
+				this.$refs[formName].validate((valid) => {
+					if (valid) {
+						var formModel = this.$refs[formName].model;
+						this.grid[0].unshift(formModel.selectComps);
+						this.$TOOL.data.set("grid", this.grid);
+						this.$refs[formName].resetFields();
+						this.showPush = false;
+					}else{
+						return false;
+					}
+				})
+			},
+			closePush(){
+				this.$refs.pushForm.resetFields();
 				this.showPush = false;
 			},
 			//刷新组件
@@ -128,7 +204,7 @@
 			},
 			//恢复默认
 			backDefaul(){
-				this.grid = this.defaultGrid;
+				this.grid = this.$options.data().defaultGrid;
 				this.$TOOL.data.remove("grid");
 			}
 		}
@@ -140,9 +216,64 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+		cursor: move;
+	}
+	.diy-grid-layout .el-card__header .el-dropdown-link {
+		color: #999;
+		border-radius: 3px;
+		cursor: pointer;
+		padding:3px 5px;
+	}
+	.diy-grid-layout .el-card__header .el-dropdown-link:hover {
+		color: #555;
+		background: #ecf5ff;
+	}
+	.diy-grid-layout .el-card__header .el-dropdown-link:focus {
+		color: #555;
+		background: #ecf5ff;
 	}
 	.diy-grid-layout .sortable-ghost {
 		opacity: 0.5;
 		background: #c8ebfb;
 	}
+	.diy-grid-layout-set {
+		display: flex;
+		justify-content: center
+	}
+	.diy-grid-layout-set div {
+		width:80px;
+		height:80px;
+		background: #ecf5ff;
+		margin:10px;
+		cursor: pointer;
+	}
+	.diy-grid-layout-set div span{
+		background: #b1e0ff;
+	}
+	.diy-grid-layout-set .col {
+		display: flex;
+		flex-direction: column;
+		align-content: space-between;
+		padding:0 5px 5px 5px;
+	}
+	.diy-grid-layout-set .col span {
+		height:20px;
+		width: 100%;
+		margin-top:5px;
+	}
+	.diy-grid-layout-set .row {
+		display: flex;
+		justify-content: flex-start;
+		padding:5px 5px 5px 0;
+	}
+	.diy-grid-layout-set .row span {
+		height: 70px;
+		width: 20px;
+		margin-left:5px;
+	}
+	.diy-grid-layout-set div.active {
+		background: #09f;
+	}
+
+
 </style>
