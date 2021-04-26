@@ -4,6 +4,7 @@
 
 <script>
 	export default {
+		title:"模块2",
 		props: {
 			msg: String
 		},

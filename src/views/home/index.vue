@@ -43,69 +43,26 @@
 			</el-col>
 		</el-row>
 
-		<div class="diy-grid-layout">
-			<el-row :gutter="15">
-				<el-col :span="16">
-					 <draggable v-model="grid[0]" :disabled="false" animation="200" handle=".el-card__header" group="people" @end="end" item-key="id">
-						<template #item="{ element }">
-							<div>
-								<el-card shadow="hover" :header="element.name" style="margin-bottom:15px;">
-									<component :is="allComps[element.name]" msg="demo"></component>
-								</el-card>
-							</div>
-						</template>
-					</draggable>
-				</el-col>
-				<el-col :span="8">
-					<draggable v-model="grid[1]" animation="200" handle=".el-card__header" group="people" @end="end" item-key="id">
-						<template #item="{ element }">
-							<div >
-								<el-card shadow="hover" :header="element.name" style="margin-bottom:15px;">
-									<component :is="allComps[element.name]" msg="demo"></component>
-								</el-card>
-							</div>
-						</template>
-					</draggable>
-				</el-col>
-			</el-row>
-		</div>
-
-		<pre>{{ grid }}</pre>
-
+		<gridLayout></gridLayout>
 
 	</el-main>
 </template>
 
 <script>
-	import draggable from 'vuedraggable'
-	import allComps from './components'
+	import gridLayout from './gridLayout'
 	export default {
 		name: "dashboard",
 		components: {
-			draggable
+			gridLayout
 		},
 		data() {
-			return {
-				allComps: allComps,
-				grid:[
-					[
-						{ name: "C1", id: 1 },
-						{ name: "C2", id: 2 }
-					],
-					[
-						{ name: "C3", id: 5 },
-						{ name: "C4", id: 6 }
-					]
-				]
-			}
+			return {}
 		},
 		mounted(){
 			console.log("home.vue mounted #57");
 		},
 		methods: {
-			end(){
-				console.log("拖动结束");
-			}
+
 		}
 
 	}
@@ -124,8 +81,4 @@
 	.welTop .icons p {font-size: 12px;}
 	.avatar-list .avatar {margin-left: -10px;border: 3px solid #fff;cursor: pointer;}
 
-	.sortable-ghost {
-		opacity: 0.5;
-		background: #c8ebfb;
-	}
 </style>
