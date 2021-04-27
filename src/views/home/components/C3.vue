@@ -1,41 +1,30 @@
 <template>
 	<div v-loading="loading">
-		<div style="height: 200px" ref="demo"></div>
+		<scEcharts height="220px" :option="option"></scEcharts>
 	</div>
 </template>
 
 <script>
-	import * as echarts from 'echarts';
-	import T from '@/utils/echarts-theme-T.js';
-	echarts.registerTheme('T', T);
+	import scEcharts from '@/components/scEcharts';
 
 	export default {
 		title:"模块3",
 		components: {
-			echarts
-		},
-		props: {
-			msg: String
+			scEcharts
 		},
 		data() {
 			return {
-				loading: true
+				loading: true,
+				option: {}
 			}
 		},
-		mounted(){
+		created() {
 			var _this = this;
 			setTimeout(function() {
 				_this.loading = false
 			}, 500);
 
-			const myChart = echarts.init(this.$refs.demo, 'T');
-			const option = {
-				grid: {
-					top: 50,
-					right: 20,
-					bottom: 30,
-					left: 30,
-				},
+			var option = {
 				tooltip: {
 					trigger: 'axis',
 					axisPointer: {
@@ -43,33 +32,31 @@
 					}
 				},
 				legend: {
-					data: ['预购队列', '最新成交价'],
+					data: ['支出', '收入'],
 					right: 13,
 				},
 				xAxis: {
-					data: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子'],
+					data: ['周一', '周二', '周三', '周四', '周五'],
 				},
-				yAxis: [
-					{
-						type: 'value',
-						name: '价格',
-					},
-				],
-				series: [
-					{
-						name: '预购队列',
-						barWidth: 16,
+				yAxis: [{
+					type: 'value',
+					name: '价格',
+				}, ],
+				series: [{
+						name: '支出',
+						barWidth: '20%',
 						type: 'bar',
-						data: [5, 20, 36, 10, 10, 20],
+						data: [5, 20, 36, 10, 10],
 					},
 					{
-						name: '最新成交价',
-						type: 'line',
-						data: [15, 20, 16, 20, 30, 8],
+						name: '收入',
+						type: 'bar',
+						barWidth: '20%',
+						data: [15, 20, 16, 20, 30],
 					},
 				],
 			};
-			myChart.setOption(option);
+			this.option = option;
 		}
 	}
 </script>
