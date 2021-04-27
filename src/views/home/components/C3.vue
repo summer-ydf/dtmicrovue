@@ -1,12 +1,14 @@
 <template>
-	<div style="height: 200px" ref="demo"></div>
+	<div v-loading="loading">
+		<div style="height: 200px" ref="demo"></div>
+	</div>
 </template>
 
 <script>
 	import * as echarts from 'echarts';
 	import T from '@/utils/echarts-theme-T.js';
 	echarts.registerTheme('T', T);
-	
+
 	export default {
 		title:"模块3",
 		components: {
@@ -15,7 +17,16 @@
 		props: {
 			msg: String
 		},
+		data() {
+			return {
+				loading: true
+			}
+		},
 		mounted(){
+			var _this = this;
+			setTimeout(function() {
+				_this.loading = false
+			}, 500);
 
 			const myChart = echarts.init(this.$refs.demo, 'T');
 			const option = {
@@ -27,6 +38,9 @@
 				},
 				tooltip: {
 					trigger: 'axis',
+					axisPointer: {
+						type: 'shadow'
+					}
 				},
 				legend: {
 					data: ['预购队列', '最新成交价'],
