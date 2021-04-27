@@ -59,7 +59,7 @@
 			return {}
 		},
 		mounted(){
-			
+
 		},
 		methods: {
 

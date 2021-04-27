@@ -12,7 +12,16 @@
 					"title": "组件",
 					"icon": "el-icon-takeaway-box"
 				},
-				"children": []
+				"children": [
+					{
+						"path": "/template/drag",
+						"name": "drag",
+						"meta": {
+							"title": "拖拽排序"
+						},
+						"component": "vab/drag"
+					}
+				]
 			},
 			{
 				"name": "template",
@@ -21,13 +30,22 @@
 					"title": "模板",
 					"icon": "el-icon-files"
 				},
-				"children": [{
+				"children": [
+					{
+						"path": "/template/blank",
+						"name": "blank",
+						"meta": {
+							"title": "空白模板"
+						},
+						"component": "template/blank"
+					},
+					{
 						"path": "/template/list",
 						"name": "list",
 						"meta": {
 							"title": "列表"
 						},
-						"component": "list"
+						"component": "template/list"
 					},
 					{
 						"path": "/template/show/:id",
@@ -36,7 +54,7 @@
 							"title": "详情",
 							"hidden": true
 						},
-						"component": "show"
+						"component": "template/show"
 					}
 				]
 			},

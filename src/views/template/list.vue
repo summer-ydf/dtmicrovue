@@ -24,7 +24,7 @@
 
 			<el-main id="tableMain">
 				<el-card shadow="never" v-loading="loading">
-					<el-table :data="tableData" row-key="name" stripe default-expand-all :height="tableHeight">
+					<el-table :data="tableData" row-key="name" stripe :height="tableHeight">
 						<el-table-column type="selection" width="50"></el-table-column>
 						<el-table-column label="显示名称" prop="meta.title" width="200"></el-table-column>
 						<el-table-column label="图标" width="80">

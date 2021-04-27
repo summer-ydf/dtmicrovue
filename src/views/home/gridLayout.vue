@@ -267,7 +267,7 @@
 		cursor: pointer;
 	}
 	.diy-grid-layout-set div span{
-		background: #b1e0ff;
+		background: #d6efff;
 	}
 	.diy-grid-layout-set .col {
 		display: flex;

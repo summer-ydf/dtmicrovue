@@ -34,6 +34,13 @@ const routes = [{
 		]
 	},
 	{
+		path: "/cmd",
+		component: () => import(/* webpackChunkName: "login" */ '@/views/other/cmd'),
+		meta: {
+			title: "CMD"
+		}
+	},
+	{
 		path: "/login",
 		component: () => import(/* webpackChunkName: "login" */ '@/views/login'),
 		meta: {
@@ -42,7 +49,7 @@ const routes = [{
 	}
 ]
 
-//系统路由
+//系统特殊路由
 const routes_404 = {
 	path: "/:pathMatch(.*)*",
 	name: "404",

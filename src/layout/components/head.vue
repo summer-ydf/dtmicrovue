@@ -17,16 +17,33 @@
 			<div class="setting panel-item">
 				<i class="el-icon-setting"></i>
 			</div>
-			<el-popover placement="bottom" :width="300" trigger="click">
+			<el-popover placement="bottom" :width="360" trigger="click">
 				<template #reference>
 					<div class="msg panel-item">
-						<el-badge :value="1" class="badge" type="danger">
+						<el-badge :hidden="msgList.length==0" :value="msgList.length" class="badge" type="danger">
 							<i class="el-icon-bell"></i>
 						</el-badge>
 					</div>
 				</template>
 				<div>
-					<el-empty description="暂无消息"></el-empty>
+					<el-empty v-if="msgList.length==0" description="暂无新消息"></el-empty>
+					<div v-else class="msgList">
+						<header>
+							<label>通知</label>
+							<el-link :underline="false" href="javascript:void(0);" @click="markRead">全部标记已读</el-link>
+						</header>
+						<ul>
+							<el-scrollbar>
+								<li v-for="item in msgList" v-bind:key="item.id">
+									<a :href="item.link" target="_blank">
+										<h2>{{item.title}}</h2>
+										<p>{{item.describe}}</p>
+									</a>
+								</li>
+							</el-scrollbar>
+						</ul>
+						<footer><el-link :underline="false" href="https://gitee.com/lolicode/scui" target="_blank">前往通知中心</el-link></footer>
+					</div>
 				</div>
 			</el-popover>
 			<el-dropdown trigger="click" @command="handleUser">
@@ -37,6 +54,7 @@
 				<template #dropdown>
 					<el-dropdown-menu>
 						<el-dropdown-item command="userInfo">个人设置</el-dropdown-item>
+						<el-dropdown-item command="cmd">CMD</el-dropdown-item>
 						<el-dropdown-item divided command="outLogin">退出登录</el-dropdown-item>
 					</el-dropdown-menu>
 				</template>
@@ -51,7 +69,21 @@
 			return {
 				breadList: [],
 				userName: "",
-				userNameF: ""
+				userNameF: "",
+				msgList: [
+					{
+						id: 1,
+						title: "关于版本发布的通知",
+						describe: "当前版本号Ver0.1.0,最后更新日期2021年4月27日",
+						link: "https://gitee.com/lolicode/scui"
+					},
+					{
+						id: 2,
+						title: "感谢登录SCUI Admin",
+						describe: "Vue 3.0 + Vue-Router 4.0 + Element-Plus + Axios 后台管理系统。",
+						link: "https://gitee.com/lolicode/scui"
+					}
+				]
 			}
 		},
 		created() {
@@ -71,6 +103,9 @@
 				if(command == "outLogin"){
 					this.$router.replace({path: '/login'});
 				}
+				if(command == "cmd"){
+					this.$router.push({path: '/cmd'});
+				}
 			},
 			getBreadcrumb(){
 				let matched = this.$route.matched;
@@ -80,6 +115,10 @@
 			screen(){
 				var element = document.documentElement;
 				this.$TOOL.screen(element)
+			},
+			//标记已读
+			markRead(){
+				this.msgList = []
 			}
 		}
 	}
