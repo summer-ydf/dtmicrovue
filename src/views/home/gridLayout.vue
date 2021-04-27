@@ -1,9 +1,8 @@
 <template>
 	<div class="diy-grid-layout">
 		<el-row :gutter="15">
-
-			<el-col v-for="(item, index) in layout" v-bind:key="item" :span="item">
-				<draggable v-model="grid[index]" :disabled="false" animation="200" handle=".el-card__header" group="people" @end="end" item-key="com">
+			<el-col v-for="(item, index) in grid.layout" v-bind:key="index" :span="item">
+				<draggable v-model="grid.copmsList[index]" :disabled="false" animation="200" handle=".el-card__header" group="people" @end="end" item-key="com">
 					<template #item="{ element }">
 						<div>
 							<el-card shadow="hover" style="margin-bottom:15px;">
@@ -33,7 +32,7 @@
 	</div>
 
 	<el-dialog title="添加组件" v-model="showPush" :width="400" :before-close="closePush" destroy-on-close :append-to-body='true'>
-		<el-alert title="添加的元素自动会添加至最左侧" type="warning" show-icon style="margin-bottom:20px;"></el-alert>
+		<el-alert title="添加的元素自动会添加至最左侧" type="info" show-icon style="margin-bottom:20px;"></el-alert>
 		<el-form :model="pushForm" ref="pushForm" :rules="rules" label-width="0">
 			<el-form-item prop="selectComps">
 				<el-select v-model="pushForm.selectComps" value-key="title" filterable clearable placeholder="请选择组件" style="width: 100%;">
@@ -51,35 +50,40 @@
 	</el-dialog>
 
 	<el-dialog title="分栏设置" v-model="showSet" :width="500" destroy-on-close :append-to-body='true'>
+		<el-alert title="当出现设置的分栏数比现有少的情况,系统将自动移除多出的组件" type="info" show-icon style="margin-bottom:20px;"></el-alert>
 		<div class="diy-grid-layout-set">
 			<el-tooltip content="通栏">
-				<div class="col active">
+				<div :class="selectLayout.toString()==[24].toString()?'active col':'col'" @click="setLayout([24])">
 					<span></span>
 					<span></span>
 					<span></span>
 				</div>
 			</el-tooltip>
 			<el-tooltip content="左大右小布局">
-				<div class="row">
+				<div :class="selectLayout.toString()==[18, 6].toString()?'active row':'row'" @click="setLayout([18, 6])">
 					<span style="width: 60%;"></span>
 					<span style="width: 30%;"></span>
 				</div>
 			</el-tooltip>
 			<el-tooltip content="等分布局">
-				<div class="row">
+				<div :class="selectLayout.toString()==[8, 8, 8].toString()?'active row':'row'" @click="setLayout([8, 8, 8])">
 					<span></span>
 					<span></span>
 					<span></span>
 				</div>
 			</el-tooltip>
 			<el-tooltip content="左右辅助布局">
-				<div class="row">
+				<div :class="selectLayout.toString()==[6, 12, 6].toString()?'active row':'row'" @click="setLayout([6, 12, 6])">
 					<span style="width: 25%;"></span>
 					<span style="width: 50%;"></span>
 					<span style="width: 25%;"></span>
 				</div>
 			</el-tooltip>
 		</div>
+		<template #footer>
+			<el-button @click="showSet=false">取 消</el-button>
+			<el-button type="primary" @click="submitSet()">确 定</el-button>
+		</template>
 	</el-dialog>
 
 </template>
@@ -98,7 +102,6 @@
 		},
 		data() {
 			return {
-				layout: [18,6], //数组总数不能大于24, [16,8]:分两列左16右8 还可以设置 [24] [18,6] [8,8,8] [6,12,6]
 				allComps: allComps,
 				allCompsList: [],
 				showPush: false,
@@ -111,19 +114,23 @@
 					]
 				},
 				showSet: false,
-				defaultGrid: [
-					[
-						{ title: "模块1", com: 'C1' },
-						{ title: "模块2", com: 'C2' }
-					],
-					[
-						{ title: "模块3", com: 'C3' }
-					],
-					[
+				selectLayout: [],
+				defaultGrid: {
+					layout: [18, 6], //数组总数不能大于24, [16,8]:分两列左16右8 还可以设置 [24] [18,6] [8,8,8] [6,12,6]
+					copmsList: [
+						[
+							{ title: "模块1", com: 'C1' },
+							{ title: "模块2", com: 'C2' }
+						],
+						[
+							{ title: "模块3", com: 'C3' }
+						],
+						[
 
+						]
 					]
-				],
-				grid: []
+				},
+				grid: [],
 			}
 		},
 		created(){
@@ -131,7 +138,7 @@
 			this.grid = grid || this.defaultGrid;
 		},
 		mounted(){
-			//console.log(allComps);
+
 		},
 		methods: {
 			//输出可添加的组件
@@ -143,15 +150,14 @@
 						com: key
 					})
 				}
-				var nowGrid_arr = this.grid.reduce(function(a, b){return a.concat(b)});
+				var nowCopmsList_arr = this.grid.copmsList.reduce(function(a, b){return a.concat(b)});
 				for(let comp of allCompsList){
-					const _item = nowGrid_arr.find((item)=>{return item.com === comp.com});
+					const _item = nowCopmsList_arr.find((item)=>{return item.com === comp.com});
 					if(_item){
 						comp.disabled = true
 					}
 				}
 				this.allCompsList = allCompsList;
-
 			},
 			//拖动结束后
 			end(){
@@ -160,6 +166,7 @@
 			//分栏设置
 			set(){
 				this.showSet = true;
+				this.selectLayout = this.grid.layout;
 			},
 			//添加组件
 			push(){
@@ -170,7 +177,7 @@
 				this.$refs[formName].validate((valid) => {
 					if (valid) {
 						var formModel = this.$refs[formName].model;
-						this.grid[0].unshift(formModel.selectComps);
+						this.grid.copmsList[0].unshift(formModel.selectComps);
 						this.$TOOL.data.set("grid", this.grid);
 						this.$refs[formName].resetFields();
 						this.showPush = false;
@@ -183,24 +190,36 @@
 				this.$refs.pushForm.resetFields();
 				this.showPush = false;
 			},
-			//刷新组件
-			refresh(item){
-				console.log("刷新",item);
+			setLayout(value){
+				this.selectLayout = value;
+			},
+			submitSet(){
+				//处理更改分栏后删除被隐藏的组件
+				if(this.selectLayout.length == 1){
+					this.grid.copmsList[1] = []
+					this.grid.copmsList[2] = []
+				}
+				if(this.selectLayout.length == 2){
+					this.grid.copmsList[2] = []
+				}
+				this.showSet = false;
+				this.grid.layout = this.selectLayout;
+				this.$TOOL.data.set("grid", this.grid);
 			},
 			//隐藏组件
 			remove(item){
-				var newGrid = [...this.grid];
-				newGrid.forEach((obj, index) => {
+				var newCopmsList = [...this.grid.copmsList];
+				newCopmsList.forEach((obj, index) => {
 					var newObj = obj.filter(o=>o.com!=item.com);
-					newGrid[index] = newObj;
+					newCopmsList[index] = newObj;
 				})
-				var newGrid_arr = newGrid.reduce(function(a, b){return a.concat(b)});
-				if(newGrid_arr.length <= 0){
+				var newCopmsList_arr = newCopmsList.reduce(function(a, b){return a.concat(b)});
+				if(newCopmsList_arr.length <= 0){
 					alert("至少留一个崽~")
 					return false;
 				}
-				this.grid = newGrid;
-				this.$TOOL.data.set("grid", newGrid);
+				this.grid.copmsList = newCopmsList;
+				this.$TOOL.data.set("grid", this.grid);
 			},
 			//恢复默认
 			backDefaul(){

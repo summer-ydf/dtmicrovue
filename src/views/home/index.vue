@@ -59,7 +59,7 @@
 			return {}
 		},
 		mounted(){
-			console.log("home.vue mounted #57");
+			
 		},
 		methods: {
 
