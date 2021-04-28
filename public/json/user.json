@@ -14,7 +14,7 @@
 				},
 				"children": [
 					{
-						"path": "/template/drag",
+						"path": "/vab/drag",
 						"name": "drag",
 						"meta": {
 							"title": "拖拽排序"
@@ -22,12 +22,20 @@
 						"component": "vab/drag"
 					},
 					{
-						"path": "/template/chart",
+						"path": "/vab/chart",
 						"name": "chart",
 						"meta": {
 							"title": "图表 Echarts"
 						},
 						"component": "vab/chart"
+					},
+					{
+						"path": "/vab/filterbar",
+						"name": "filterBar",
+						"meta": {
+							"title": "过滤器"
+						},
+						"component": "vab/filterBar"
 					}
 				]
 			},
