@@ -18,6 +18,7 @@
 			<li @click="closeOtherTabs()"><i class="el-icon-folder-delete"></i>关闭其他标签</li>
 			<hr>
 			<li @click="screen()"><i class="el-icon-full-screen"></i>全屏当前标签</li>
+			<li @click="openWindow()"><i class="el-icon-copy-document"></i>在新的窗口中打开</li>
 		</ul>
 	</transition>
 </template>
@@ -193,6 +194,16 @@
 				}
 				var element = document.getElementById('adminui-main')
 				this.$TOOL.screen(element)
+			},
+			//新窗口打开
+			openWindow(){
+				var nowTag = this.contextMenuItem;
+				var url = nowTag.href || '/';
+				if(!nowTag.meta.affix){
+					this.closeSelectedTag(nowTag)
+				}
+				window.open(url);
+				this.contextMenuVisible = false
 			}
 		}
 	}

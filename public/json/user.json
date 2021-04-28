@@ -20,6 +20,14 @@
 							"title": "拖拽排序"
 						},
 						"component": "vab/drag"
+					},
+					{
+						"path": "/template/chart",
+						"name": "chart",
+						"meta": {
+							"title": "图表 Echarts"
+						},
+						"component": "vab/chart"
 					}
 				]
 			},

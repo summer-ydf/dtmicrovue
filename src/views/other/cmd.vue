@@ -17,6 +17,9 @@
 			<el-tab-pane label="config">
 				<pre class="code">{{json.config}}</pre>
 			</el-tab-pane>
+			<el-tab-pane label="api">
+				<pre class="code">{{json.api}}</pre>
+			</el-tab-pane>
 		 </el-tabs>
 
 
@@ -32,7 +35,8 @@
 				json: {
 					user: null,
 					grid: null,
-					config: null
+					config: null,
+					api: null,
 				}
 			}
 		},
@@ -40,6 +44,7 @@
 			this.json.user = this.$TOOL.data.get("user");
 			this.json.grid = this.$TOOL.data.get("grid")||'null';
 			this.json.config = this.$CONFIG;
+			this.json.api = this.$API;
 		},
 		methods: {
 			clear_all(){

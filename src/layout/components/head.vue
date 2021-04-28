@@ -53,7 +53,7 @@
 				</div>
 				<template #dropdown>
 					<el-dropdown-menu>
-						<el-dropdown-item command="userInfo">个人设置</el-dropdown-item>
+						<el-dropdown-item command="uc">个人设置</el-dropdown-item>
 						<el-dropdown-item command="cmd">CMD</el-dropdown-item>
 						<el-dropdown-item divided command="outLogin">退出登录</el-dropdown-item>
 					</el-dropdown-menu>
@@ -100,6 +100,9 @@
 		methods: {
 			//个人信息
 			handleUser(command) {
+				if(command == "uc"){
+					this.$router.push({path: '/usercenter'});
+				}
 				if(command == "outLogin"){
 					this.$router.replace({path: '/login'});
 				}

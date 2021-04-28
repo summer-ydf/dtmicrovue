@@ -90,7 +90,7 @@
 			Show
 		},
 		async created() {
-			var userInfo = await this.$API.user.info();
+			var userInfo = await this.$API.user.info.get();
 			var _this = this;
 			setTimeout(function() {
 				_this.tableData = userInfo.data.menuList;

@@ -28,10 +28,6 @@
 				tooltip: {
 					trigger: 'axis'
 				},
-				legend: {
-					data: ['支出', '收入'],
-					right: 13,
-				},
 				xAxis: {
 					boundaryGap: false,
 					data: ['周一', '周二', '周三', '周四', '周五', '周六'],
@@ -43,39 +39,29 @@
 						"show": false
 					}
 				}],
-				series: [{
-						name: '支出',
-						type: 'line',
-						symbolSize: 6,
-						smooth: true,
-						lineStyle: {
-							normal: {
-								shadowColor: 'rgba(0,0,0,0.2)',
-								shadowBlur: 15,
-								shadowOffsetY: 20
-							}
-						},
-						'areaStyle': {
-							'opacity': 0.2
-						},
-						data: [35, 10, 36, 5, 5, 20],
-					},
+				series: [
 					{
 						name: '收入',
 						type: 'line',
 						symbolSize: 6,
 						smooth: true,
 						lineStyle: {
-							normal: {
-								shadowColor: 'rgba(0,0,0,0.2)',
-								shadowBlur: 15,
-								shadowOffsetY: 20
-							}
+							width: 8,
+							shadowColor: 'rgba(0,0,0,0.2)',
+							shadowBlur: 15,
+							shadowOffsetY: 15,
+							color: new scEcharts.graphic.LinearGradient(0, 0, 0, 1, [{
+								offset: 0,
+								color: '#409EFF'
+								}, {
+								offset: 1,
+								color: '#36CE9E'
+							}])
 						},
 						'areaStyle': {
-							'opacity': 0.2
+							'opacity': 0
 						},
-						data: [15, 15, -25, 20, 20, 8],
+						data: [15, 15, 35, 5, 35, 15],
 					},
 				],
 			};

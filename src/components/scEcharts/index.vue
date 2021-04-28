@@ -8,6 +8,7 @@
 	echarts.registerTheme('T', T);
 
 	export default {
+		...echarts,
 		name: "scEcharts",
 		props: {
 			height: { type: String, default: "100%" },

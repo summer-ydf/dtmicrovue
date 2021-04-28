@@ -27,7 +27,15 @@ const routes = [{
 							title: "控制台",
 							affix: true
 						},
-						component: () => import(/* webpackChunkName: "home" */ '@/views/home/index'),
+						component: () => import(/* webpackChunkName: "home" */ '@/views/home'),
+					},
+					{
+						name: "userCenter",
+						path: "/usercenter",
+						meta: {
+							title: "个人信息"
+						},
+						component: () => import(/* webpackChunkName: "usercenter" */ '@/views/userCenter'),
 					}
 				]
 			}

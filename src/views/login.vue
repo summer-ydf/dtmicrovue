@@ -99,7 +99,7 @@
 				})
 			},
 			login: async function() {
-				var userInfo = await this.$API.user.info();
+				var userInfo = await this.$API.user.info.get();
 				this.$TOOL.data.set("user", userInfo.data);
 				this.$router.replace({
 					path: '/'

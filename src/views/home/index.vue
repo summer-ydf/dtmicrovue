@@ -59,10 +59,10 @@
 			return {}
 		},
 		mounted(){
-
+			
 		},
 		methods: {
-
+			
 		}
 
 	}
