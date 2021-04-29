@@ -18,6 +18,15 @@ const api = {
 				return await http.get(this.url);
 			}
 		}
+	},
+	demo: {
+		select: {
+			url: `${config.apiUrl}/json/select.json`,
+			name: "下拉菜单数据",
+			get: async function(data){
+				return await http.get(this.url, data);
+			}
+		}
 	}
 }
 

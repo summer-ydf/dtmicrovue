@@ -1,4 +1,5 @@
 import ElementPlus from 'element-plus'
+import locale from 'element-plus/lib/locale/lang/zh-cn'
 import 'element-plus/lib/theme-chalk/index.css'
 import { createApp } from 'vue'
 import App from './App.vue'
@@ -18,5 +19,5 @@ app.config.globalProperties.$HAS = permission;
 
 app.use(store);
 app.use(router);
-app.use(ElementPlus, { size: 'small', zIndex: 3000 });
+app.use(ElementPlus, { size: 'small', zIndex: 3000 ,locale: locale});
 app.mount('#app');
