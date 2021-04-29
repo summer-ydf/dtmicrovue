@@ -56,6 +56,14 @@
 						"component": "template/blank"
 					},
 					{
+						"path": "/template/normallist",
+						"name": "normallist",
+						"meta": {
+							"title": "普通列表"
+						},
+						"component": "template/normallist"
+					},
+					{
 						"path": "/template/list",
 						"name": "list",
 						"meta": {
