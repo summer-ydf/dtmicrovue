@@ -7,6 +7,7 @@ import config from "./config";
 import router from './router'
 import store from './store'
 import tool from './utils/tool'
+import http from "./utils/request";
 import api from './api'
 import permission from './utils/permission'
 
@@ -14,6 +15,7 @@ const app = createApp(App);
 
 app.config.globalProperties.$CONFIG = config;
 app.config.globalProperties.$TOOL = tool;
+app.config.globalProperties.$HTTP = http;
 app.config.globalProperties.$API = api;
 app.config.globalProperties.$HAS = permission;
 

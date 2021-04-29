@@ -36,6 +36,14 @@ const routes = [{
 							title: "个人信息"
 						},
 						component: () => import(/* webpackChunkName: "usercenter" */ '@/views/userCenter'),
+					},
+					{
+						name: "autocode",
+						path: "/autocode",
+						meta: {
+							title: "代码生成器"
+						},
+						component: () => import(/* webpackChunkName: "autocode" */ '@/views/autocode'),
 					}
 				]
 			}
