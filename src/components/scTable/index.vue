@@ -1,9 +1,7 @@
 <template>
 	<div class="scTable" ref="scTableMain" v-loading="loading">
 		<div class="scTable-table">
-			<el-table :data="tableData" ref="scTable" :height="tableHeight" stripe highlight-current-row
-				@selection-change="selectionChange"
-			>
+			<el-table :data="tableData" :row-key="rowKey" ref="scTable" :height="tableHeight" stripe  @selection-change="selectionChange">
 				<slot></slot>
 				<template #empty>
 					<el-empty description="暂无数据" :image-size="100"></el-empty>
@@ -25,7 +23,15 @@
 		name: 'scTable',
 		props: {
 			apiObj: { type: Object, default: () => {} },
-			//apiObj: { type: String, default: "" },
+			data: { type: Object, default: () => {} },
+			rowKey: { type: String, default: "" }
+		},
+		watch: {
+			//监听从props里拿到值了
+			data(){
+				this.tableData = this.data;
+				this.total = this.tableData.length;
+			}
 		},
 		data() {
 			return {
@@ -43,10 +49,12 @@
 			})
 		},
 		mounted() {
-			this.getData();
-			window.onresize = () => {
-				this.upTableHeight()
+			if(this.apiObj){
+				this.getData();
 			}
+			window.addEventListener("resize", () => {
+				this.upTableHeight()
+			})
 		},
 		methods: {
 			//更新表格高度
@@ -87,5 +95,5 @@
 <style scoped>
 	.scTable {display:flex;flex-direction:column;height:100%;}
 	.scTable-table {flex:1;}
-	.scTable-page {margin-top: 20px;height:50px;display: flex;align-items: center;justify-content: space-between;}
+	.scTable-page {height:50px;display: flex;align-items: center;justify-content: space-between;padding:0 15px;}
 </style>

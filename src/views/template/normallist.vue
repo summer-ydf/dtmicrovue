@@ -1,65 +1,81 @@
 <template>
 	<el-container>
 		<el-header>
-			<el-button type="primary" icon="el-icon-plus" @click="openDialog('add')">新增</el-button>
-			<el-popconfirm :title="'确定删除选中的 '+selection.length+' 项吗？'" @confirm="batch_del">
-				<template #reference>
-					<el-button type="danger" plain icon="el-icon-delete" :disabled="selection.length==0"></el-button>
-				</template>
-			</el-popconfirm>
+			<div>
+				<el-button type="primary" icon="el-icon-plus" @click="openDialog('add')">新增</el-button>
+				<el-popconfirm :title="'确定删除选中的 '+selection.length+' 项吗？'" @confirm="batch_del">
+					<template #reference>
+						<el-button type="danger" plain icon="el-icon-delete" :disabled="selection.length==0"></el-button>
+					</template>
+				</el-popconfirm>
+			</div>
 		</el-header>
-		<el-main>
-			<el-card shadow="never" class="scTable-card" body-style="height:100%">
-				<scTable ref="table" :apiObj="apiObj" @selection-change="selectionChange">
-					<!-- 表格列开始 -->
-					<el-table-column type="selection" width="50"></el-table-column>
-					<el-table-column label="序号" type="index" width="50"></el-table-column>
-					<el-table-column label="头像" width="60">
-						<template #default="scope">
-							<el-avatar size="small">{{ scope.row.name.substring(0,1) }}</el-avatar>
-						</template>
-					</el-table-column>
-					<el-table-column label="名称" prop="name" width="150"></el-table-column>
-					<el-table-column label="进度" prop="progress" width="200">
-						<template #default="scope">
-							<el-progress :percentage="scope.row.progress" status="success"></el-progress>
-						</template>
-					</el-table-column>
-					<el-table-column label="邮箱" prop="yx" align="right" width="150"></el-table-column>
-					<el-table-column label="状态" prop="audit" width="100"></el-table-column>
-					<el-table-column label="加入时间" prop="date" min-width="300"></el-table-column>
-					<el-table-column label="操作" fixed="right" width="120">
-						<template #default="scope">
-							<el-button @click="table_show(scope.row, scope.$index)" type="text" size="small">查看</el-button>
-							<el-button @click="table_edit(scope.row, scope.$index)" type="text" size="small">编辑</el-button>
-							<el-popconfirm title="确定删除吗？" @confirm="table_del(scope.$index)">
-								<template #reference>
-									<el-button type="text" size="small">删除</el-button>
-								</template>
-							</el-popconfirm>
-						</template>
-					</el-table-column>
-					<!-- 表格列结束 -->
-				</scTable>
-			</el-card>
+		<el-main class="nopadding">
+			<scTable ref="table" :apiObj="apiObj" @selection-change="selectionChange">
+				<!-- 表格列开始 -->
+				<el-table-column type="selection" width="50"></el-table-column>
+				<el-table-column label="序号" type="index" width="50"></el-table-column>
+				<el-table-column label="头像" width="60">
+					<template #default="scope">
+						<el-avatar size="small">{{ scope.row.name.substring(0,1) }}</el-avatar>
+					</template>
+				</el-table-column>
+				<el-table-column label="名称" prop="name" width="150"></el-table-column>
+				<el-table-column label="进度" prop="progress" width="200">
+					<template #default="scope">
+						<el-progress :percentage="scope.row.progress" status="success"></el-progress>
+					</template>
+				</el-table-column>
+				<el-table-column label="邮箱" prop="yx" width="150"></el-table-column>
+				<el-table-column label="状态" prop="audit" width="50">
+					<template #default="scope">
+						<el-tag>{{scope.row.audit}}</el-tag>
+					</template>
+				</el-table-column>
+				<el-table-column label="加入时间" prop="date" min-width="300"></el-table-column>
+				<el-table-column label="操作" fixed="right" width="140">
+					<template #default="scope">
+						<el-button @click="table_show(scope.row, scope.$index)" type="text" size="small">查看</el-button>
+						<el-button @click="table_edit(scope.row, scope.$index)" type="text" size="small">编辑</el-button>
+						<el-popconfirm title="确定删除吗？" @confirm="table_del(scope.$index)">
+							<template #reference>
+								<el-button type="text" size="small">删除</el-button>
+							</template>
+						</el-popconfirm>
+					</template>
+				</el-table-column>
+				<!-- 表格列结束 -->
+			</scTable>
 		</el-main>
 	</el-container>
 
 	<!-- 弹窗开始 -->
-	<el-dialog :title="titleMap[dialogMode]" :width="400" v-model="showDialog" :before-close="closeDialog" append-to-body>
-		<el-form :model="form" :rules="rules" ref="dialogForm" label-width="80px">
-			<el-form-item label="名称" prop="name">
-				<el-input v-model="form.name"></el-input>
-			</el-form-item>
-			<el-form-item label="邮箱" prop="yx">
-				<el-input v-model="form.yx"></el-input>
-			</el-form-item>
-			<el-form-item label="进度" prop="progress">
-				<el-slider v-model="form.progress"></el-slider>
-			</el-form-item>
-			<el-form-item label="状态" prop="audit">
-				<el-switch v-model="form.audit" active-value="1" inactive-value="0"></el-switch>
-			</el-form-item>
+	<el-dialog :title="titleMap[dialogMode]" :width="600" v-model="showDialog" :before-close="closeDialog" append-to-body>
+		<el-form :model="form" :rules="rules" :disabled="dialogMode=='show'" ref="dialogForm" label-width="80px" label-position="top">
+			<el-row :gutter="20">
+				<el-col :span="12">
+					<el-form-item label="名称" prop="name">
+						<el-input v-model="form.name"></el-input>
+					</el-form-item>
+				</el-col>
+				<el-col :span="12">
+					<el-form-item label="邮箱" prop="yx">
+						<el-input v-model="form.yx"></el-input>
+					</el-form-item>
+				</el-col>
+			</el-row>
+			<el-row :gutter="20">
+				<el-col :span="12">
+					<el-form-item label="进度" prop="progress">
+						<el-input v-model.number="form.progress"></el-input>
+					</el-form-item>
+				</el-col>
+				<el-col :span="12">
+					<el-form-item label="状态" prop="audit">
+						<el-switch v-model="form.audit" active-value="1" inactive-value="0"></el-switch>
+					</el-form-item>
+				</el-col>
+			</el-row>
 		</el-form>
 		<template #footer>
 			<el-button @click="closeDialog">取 消</el-button>
@@ -80,6 +96,7 @@
 		},
 		data() {
 			return {
+				filterType: "全部",
 				apiObj: this.$API.demo.demolist.list,
 				selection: [],
 				showDialog: false,
@@ -102,6 +119,9 @@
 					],
 					yx: [
 						{ required: true, message: '请输入完整的邮箱地址' },
+					],
+					progress: [
+						{ required: true, message: '请输入进度' },
 					]
 				}
 			}
@@ -175,12 +195,14 @@
 						return false;
 					}
 				})
+			},
+			//查看
+			table_show(row){
+				this.openDialog('show');
+				this.$nextTick(() => {
+					this.form = {...row}
+				});
 			}
 		}
 	}
 </script>
-
-<style scoped>
-	.scTable-card {height:100%;}
-	.scTable-card >>> .el-card {height:100%;}
-</style>
