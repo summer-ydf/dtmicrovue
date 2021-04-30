@@ -41,6 +41,7 @@
 							<el-form ref="form" :model="form" label-width="80px" style="width: 460px;margin-top:20px;">
 								<el-form-item label="账号">
 									<el-input v-model="form.user" disabled></el-input>
+									<div class="el-form-item-msg">账号信息用于登录，系统不允许修改</div>
 								</el-form-item>
 								<el-form-item label="姓名">
 									<el-input v-model="form.name"></el-input>

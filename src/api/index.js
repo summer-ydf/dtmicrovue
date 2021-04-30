@@ -26,6 +26,15 @@ const api = {
 			get: async function(data){
 				return await http.get(this.url, data);
 			}
+		},
+		demolist: {
+			list: {
+				url: `${config.apiUrl}/json/list.json`,
+				name: "列表数据",
+				get: async function(data){
+					return await http.get(this.url, data);
+				}
+			}
 		}
 	}
 }
