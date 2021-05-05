@@ -39,16 +39,26 @@
 						</template>
 					</el-table-column>
 					<el-table-column label="路由组件" prop="component" width="100"></el-table-column>
-					<el-table-column label="是否隐藏" prop="meta.hidden">
+					<el-table-column label="是否隐藏" prop="meta.hidden" width="100">
 						<template #default="scope">
 							{{ scope.row.meta.hidden?"是":"否" }}
 						</template>
 					</el-table-column>
 
-					<el-table-column label="操作" fixed="right" width="100">
+					<el-table-column label="操作" fixed="right" align="right" width="140">
 						<template #default="scope">
-							<el-button @click="table_show(scope.row)" type="text" size="small">查看</el-button>
-							<el-button @click="table_edit(scope.row)" type="text" size="small">编辑</el-button>
+							<el-button @click="table_edit(scope.row)" type="text" size="mini">编辑</el-button>
+							<el-dropdown style="margin-left:10px;">
+								<el-button size="mini" type="primary" plain icon="el-icon-arrow-down"></el-button>
+								<template #dropdown>
+									<el-dropdown-menu>
+										<el-dropdown-item @click="table_show(scope.row)">查看</el-dropdown-item>
+										<el-dropdown-item>更新数据</el-dropdown-item>
+										<el-dropdown-item>转移</el-dropdown-item>
+										<el-dropdown-item>删除</el-dropdown-item>
+									</el-dropdown-menu>
+								</template>
+							</el-dropdown>
 						</template>
 					</el-table-column>
 					<!-- 表格列结束 -->

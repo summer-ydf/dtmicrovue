@@ -139,14 +139,6 @@
 								}
 							}
 						]
-					},
-					{
-						"path": "/other/lala",
-						"name": "404",
-						"component": "lala",
-						"meta": {
-							"title": "模拟404"
-						}
 					}
 				]
 			},
@@ -158,12 +150,12 @@
 					"icon": "el-icon-setting"
 				},
 				"children": [{
-					"path": "/setting/1",
-					"name": "setting1",
+					"path": "/setting/system",
+					"name": "system",
 					"meta": {
 						"title": "系统设置"
 					},
-					"component": "lala"
+					"component": "setting/system"
 				}]
 			}
 		],

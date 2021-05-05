@@ -1,7 +1,7 @@
 <template>
 	<el-container>
 		<el-header>
-			<div>
+			<div class="left-panel">
 				<el-button type="primary" icon="el-icon-plus" @click="openDialog('add')">新增</el-button>
 				<el-popconfirm :title="'确定删除选中的 '+selection.length+' 项吗？'" @confirm="batch_del">
 					<template #reference>
@@ -9,9 +9,16 @@
 					</template>
 				</el-popconfirm>
 			</div>
+			<div class="right-panel">
+				<div class="right-panel-search">
+					<el-input v-model="search.name" placeholder="请输入内容" clearable></el-input>
+					<el-button type="primary" icon="el-icon-search" @click="upsearch"></el-button>
+				</div>
+				<scFilterBar ref="scFilterBar" :options="options" @change="updata"></scFilterBar>
+			</div>
 		</el-header>
 		<el-main class="nopadding">
-			<scTable ref="table" :apiObj="apiObj" @selection-change="selectionChange">
+			<scTable ref="table" :apiObj="apiObj" :params="{name:'demo',a:'1'}" @selection-change="selectionChange">
 				<!-- 表格列开始 -->
 				<el-table-column type="selection" width="50"></el-table-column>
 				<el-table-column label="序号" type="index" width="50"></el-table-column>
@@ -32,8 +39,9 @@
 						<el-tag>{{scope.row.audit}}</el-tag>
 					</template>
 				</el-table-column>
-				<el-table-column label="加入时间" prop="date" min-width="300"></el-table-column>
-				<el-table-column label="操作" fixed="right" width="140">
+				<el-table-column label="加入时间" prop="date" width="170"></el-table-column>
+
+				<el-table-column label="操作" fixed="right" align="right" width="140">
 					<template #default="scope">
 						<el-button @click="table_show(scope.row, scope.$index)" type="text" size="small">查看</el-button>
 						<el-button @click="table_edit(scope.row, scope.$index)" type="text" size="small">编辑</el-button>
@@ -88,15 +96,43 @@
 
 <script>
 	import scTable from '@/components/scTable';
+	import scFilterBar from '@/components/scFilterBar';
 
 	export default {
 		name: 'normallist',
 		components: {
-			scTable
+			scTable,
+			scFilterBar
 		},
 		data() {
 			return {
-				filterType: "全部",
+				search : {
+					name: ""
+				},
+				options: [
+					{
+						label: '状态',
+						value: 'type',
+						type: 'select',
+						extend: {
+							data:[
+								{
+									label: "通过",
+									value: "0"
+								},
+								{
+									label: "失败",
+									value: "1"
+								}
+							]
+						}
+					},
+					{
+						label: '加入时间',
+						value: 'date',
+						type: 'daterange'
+					}
+				],
 				apiObj: this.$API.demo.demolist.list,
 				selection: [],
 				showDialog: false,
@@ -170,7 +206,7 @@
 							id: new Date().getTime(),
 							date: "2021-04-30 13:57:00"
 						}
-						this.$refs.table.tableData.push(newData)
+						this.$refs.table.tableData.unshift(newData)
 						this.closeDialog();
 					}else{
 						return false;
@@ -202,6 +238,14 @@
 				this.$nextTick(() => {
 					this.form = {...row}
 				});
+			},
+			upsearch(){
+				var data = Object.assign({}, this.search, this.$refs.scFilterBar.getFilter());
+				this.$refs.table.upData(data)
+			},
+			updata(val){
+				var data = Object.assign({},this.search, val);
+				this.$refs.table.upData(data)
 			}
 		}
 	}

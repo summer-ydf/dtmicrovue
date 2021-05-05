@@ -48,8 +48,6 @@
 	.login_body {width: inherit;display: flex;box-shadow: 0px 20px 80px 0px rgba(0,0,0,0.3);}
 	.login-sidebox {width: 50%;background:url(/images/login-left.png) 0 0 no-repeat #607089;padding: 60px;color: #fff;position: relative;}
 
-	.login-sidebox
-
 	.login-logo {font-size: 35px;}
 	.login-logo i {margin-right: 10px;}
 
@@ -63,6 +61,10 @@
 	.login-form .el-divider {margin-top:40px;}
 
 	.login-footer {text-align: center;color: #999;margin-top: 50px;}
+
+	@media (max-height: 650px){
+	.login_container {position: static;transform: none;margin:50px auto;}
+	}
 </style>
 
 <script>

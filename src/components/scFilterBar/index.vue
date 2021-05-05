@@ -70,7 +70,7 @@
 			}
 		},
 		mounted(){
-			this.filter = this.defaultFilter;
+			this.filter = this.defaultFilter || [];
 			this.scrollInit()
 		},
 		methods: {
@@ -178,13 +178,16 @@
 				this.cancel();
 				this.change();
 			},
-			change(){
+			getFilter(){
 				var _filter = this.filter;
 				var formatData = {};
 				_filter.map(item => {
 					formatData.[item.key]=item.value
 				});
-				this.$emit('change', formatData)
+				return formatData;
+			},
+			change(){
+				this.$emit('change', this.getFilter())
 			},
 			scrollInit(){
 				const scrollDiv = this.$refs.scFilterBarScrollbar;

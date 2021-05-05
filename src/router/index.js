@@ -68,7 +68,6 @@ const routes = [{
 //系统特殊路由
 const routes_404 = {
 	path: "/:pathMatch(.*)*",
-	name: "404",
 	hidden: true,
 	component: () => import(/* webpackChunkName: "404" */ '@/views/other/404'),
 }
