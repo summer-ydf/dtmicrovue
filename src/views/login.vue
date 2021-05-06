@@ -4,7 +4,7 @@
 		<div class="login_body">
 			<div class="login-sidebox">
 				<div class="login-logo">
-					<i class="el-icon-platform-eleme"></i>SCUI
+					<i class="el-icon-platform-eleme"></i>{{appName}}
 				</div>
 				<div class="login-title">
 					<h2>面面俱到的中后台前端框架</h2>
@@ -38,7 +38,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="login-footer">© SCUI</div>
+		<div class="login-footer">© {{appName}} {{appVar}}</div>
 	</div>
 
 </template>
@@ -71,6 +71,8 @@
 	export default {
 		data() {
 			return {
+				appName: this.$CONFIG.APP_NAME,
+				appVar: this.$CONFIG.APP_VER,
 				ruleForm: {
 					user: "admin",
 					password: "admin",
