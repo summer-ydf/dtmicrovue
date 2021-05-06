@@ -51,7 +51,7 @@ const routes = [{
 	},
 	{
 		path: "/cmd",
-		component: () => import(/* webpackChunkName: "login" */ '@/views/other/cmd'),
+		component: () => import(/* webpackChunkName: "cmd" */ '@/views/other/cmd'),
 		meta: {
 			title: "CMD"
 		}

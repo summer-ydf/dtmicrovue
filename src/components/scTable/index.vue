@@ -23,13 +23,9 @@
 </template>
 
 <script>
-	import draggable from 'vuedraggable'
-
 	export default {
 		name: 'scTable',
-		components: {
-			draggable
-		},
+		components: {},
 		props: {
 			apiObj: { type: Object, default: () => {} },
 			data: { type: Object, default: () => {} },
