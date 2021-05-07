@@ -13,12 +13,14 @@
 			<el-pagination background :small="true" layout="total, prev, pager, next, jumper" :total="total" :page-size="pageSize" v-model:currentPage="currentPage" @current-change="reload"></el-pagination>
 			<div>
 				<el-button @click="refresh" icon="el-icon-refresh" circle style="margin-left:15px"></el-button>
-				<el-button @click="setting" icon="el-icon-setting" circle style="margin-left:15px"></el-button>
+				<el-popover placement="top" title="设置" :width="500" trigger="click">
+					<template #reference>
+						<el-button icon="el-icon-setting" circle style="margin-left:15px"></el-button>
+					</template>
+					<div style="padding:50px 0;text-align: center;">表格设置,开发中...</div>
+				</el-popover>
 			</div>
 		</div>
-		<el-drawer title="表格设置" v-model="tableSetting" :size="400" direction="btt" custom-class="scTable-setting" append-to-body destroy-on-close>
-			待开发
-		</el-drawer>
 	</div>
 </template>
 
@@ -46,7 +48,6 @@
 				currentPage: 1,
 				loading: false,
 				tableHeight:'100%',
-				tableSetting: false,
 				tableParams: {}
 			}
 		},
@@ -96,13 +97,6 @@
 				this.currentPage = 1;
 				this.tableParams = params;
 				this.getData()
-			},
-			//表格设置
-			setting(){
-				this.tableSetting = true;
-			},
-			userColumnClose(index){
-				this.userColumn.splice(index, 1);
 			},
 			//转发原装方法&事件
 			selectionChange(selection){
