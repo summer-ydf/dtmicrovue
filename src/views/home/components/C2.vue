@@ -23,6 +23,10 @@
 			return {
 				activities: [
 					{
+						content: '1.0.1 提升部分组件为全局组件',
+						timestamp: '2021-05-07'
+					},
+					{
 						content: '1.0.0 版本开源 <i class="el-icon-present"></i>',
 						timestamp: '2021-05-07'
 					}
