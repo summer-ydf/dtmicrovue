@@ -18,13 +18,19 @@ const T = {
 		"axisLine": {
 			"show": true,
 			"lineStyle": {
-				"color": "#999"
+				"color": "#eee",
+				"width": 1
 			}
 		},
 		"axisTick": {
 			"show": false,
 			"lineStyle": {
 				"color": "#333"
+			}
+		},
+		"axisLabel": {
+			"textStyle": {
+				"color": "#999"
 			}
 		},
 		"splitLine": {

@@ -22,7 +22,7 @@
 										</template>
 									</el-dropdown>
 								</template>
-								<component :is="allComps[element.com]" msg="demo"></component>
+								<component :is="allComps[element.com]"></component>
 							</el-card>
 						</div>
 					</template>

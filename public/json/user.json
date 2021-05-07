@@ -56,20 +56,20 @@
 						"component": "template/blank"
 					},
 					{
-						"path": "/template/normallist",
-						"name": "normallist",
-						"meta": {
-							"title": "普通列表"
-						},
-						"component": "template/normallist"
-					},
-					{
 						"path": "/template/list",
 						"name": "list",
 						"meta": {
-							"title": "列表"
+							"title": "普通列表"
 						},
 						"component": "template/list"
+					},
+					{
+						"path": "/template/sideList",
+						"name": "sideList",
+						"meta": {
+							"title": "分栏列表"
+						},
+						"component": "template/sideList"
 					},
 					{
 						"path": "/template/show/:id",
