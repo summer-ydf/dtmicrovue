@@ -44,14 +44,14 @@
 				}, ],
 				series: [{
 						name: '支出',
-						barWidth: '20%',
+						barWidth: '15px',
 						type: 'bar',
 						data: [5, 20, 36, 10, 10],
 					},
 					{
 						name: '收入',
 						type: 'bar',
-						barWidth: '20%',
+						barWidth: '15px',
 						data: [15, 20, 16, 20, 30],
 					},
 				],

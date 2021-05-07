@@ -120,10 +120,10 @@
 					copmsList: [
 						[
 							{ title: "模块1", com: 'C1' },
-							{ title: "模块2", com: 'C2' }
+							{ title: "模块3", com: 'C3' }
 						],
 						[
-							{ title: "模块3", com: 'C3' }
+							{ title: "模块2", com: 'C2' }
 						],
 						[
 
