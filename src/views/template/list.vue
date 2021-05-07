@@ -74,13 +74,11 @@
 </template>
 
 <script>
-	import scTable from '@/components/scTable';
 	import Show from './show.vue';
 
 	export default {
 		name: 'list',
 		components: {
-			scTable,
 			Show
 		},
 		data() {

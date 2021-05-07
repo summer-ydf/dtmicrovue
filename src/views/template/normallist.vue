@@ -95,15 +95,8 @@
 </template>
 
 <script>
-	import scTable from '@/components/scTable';
-	import scFilterBar from '@/components/scFilterBar';
-
 	export default {
 		name: 'normallist',
-		components: {
-			scTable,
-			scFilterBar
-		},
 		data() {
 			return {
 				search : {
