@@ -92,6 +92,7 @@
 </template>
 
 <script>
+	import template from '@/utils/template.js'
 	export default {
 		name: 'autocode',
 		data() {
@@ -163,7 +164,7 @@
 			//同步获取模板文件
 			async getTpl(){
 				var data = await this.$HTTP.get('code/table.vue')
-				this.code = this.templateEngine(data, {name:"SCUI Demo", date:new Date().toLocaleString()})
+				this.code = template(data, {name:"SCUI Demo", date:new Date().toLocaleString()})
 			},
 			//下载按钮
 			download(){
@@ -176,17 +177,6 @@
 				element.setAttribute('download', 'index.vue')
 				element.style.display = 'none'
 				element.click()
-			},
-			//模板引擎
-			templateEngine(tpl, data){
-				/* eslint-disable */
-				var reg = /<%\s*([^%>]\S+)\s*%>/;
-				var _exec = null;
-				while (_exec = (reg.exec(tpl))) {
-					tpl = tpl.replace(_exec[0], data[_exec[1]]);
-				}
-				return tpl;
-				/* eslint-enable */
 			}
 		}
 	}
