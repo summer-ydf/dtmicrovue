@@ -1,5 +1,6 @@
 <template>
-	<div style="height: 300px;">
+
+	<div style="height: 248px;">
 		<el-scrollbar >
 			<el-timeline>
 				<el-timeline-item v-for="(item, index) in activities" :key="index" :timestamp="item.timestamp" placement="top">
@@ -8,6 +9,11 @@
 			</el-timeline>
 		</el-scrollbar>
 	</div>
+	<div style="margin-top: 20px;">
+		<el-button type="primary" round @click="go">反馈讨论</el-button>
+		<el-button type="primary" round @click="gogit">gitee</el-button>
+	</div>
+
 </template>
 
 <script>
@@ -25,6 +31,14 @@
 		},
 		mounted() {
 
+		},
+		methods: {
+			go(){
+				window.open("https://support.qq.com/product/323856")
+			},
+			gogit(){
+				window.open("https://gitee.com/lolicode/scui")
+			}
 		}
 	}
 </script>
