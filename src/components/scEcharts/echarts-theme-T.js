@@ -29,9 +29,7 @@ const T = {
 			}
 		},
 		"axisLabel": {
-			"textStyle": {
-				"color": "#999"
-			}
+			"color": "#999"
 		},
 		"splitLine": {
 			"show": true,

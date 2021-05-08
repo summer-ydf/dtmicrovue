@@ -18,27 +18,34 @@
 			</div>
 		</el-header>
 		<el-main class="nopadding">
-			<scTable ref="table" :apiObj="apiObj" @selection-change="selectionChange">
+			<scTable ref="table" :apiObj="apiObj" :column="column" @selection-change="selectionChange">
 				<!-- 表格列开始 -->
 				<el-table-column type="selection" width="50"></el-table-column>
+
 				<el-table-column label="序号" type="index" width="50"></el-table-column>
+
 				<el-table-column label="头像" width="60">
 					<template #default="scope">
 						<el-avatar size="small">{{ scope.row.name.substring(0,1) }}</el-avatar>
 					</template>
 				</el-table-column>
+
 				<el-table-column label="名称" prop="name" width="150"></el-table-column>
+
 				<el-table-column label="进度" prop="progress" width="200">
 					<template #default="scope">
 						<el-progress :percentage="scope.row.progress" status="success"></el-progress>
 					</template>
 				</el-table-column>
+
 				<el-table-column label="邮箱" prop="yx" width="150"></el-table-column>
+
 				<el-table-column label="状态" prop="audit" width="50">
 					<template #default="scope">
 						<el-tag>{{scope.row.audit}}</el-tag>
 					</template>
 				</el-table-column>
+
 				<el-table-column label="加入时间" prop="date" width="170"></el-table-column>
 
 				<el-table-column label="操作" fixed="right" align="right" width="140">
@@ -152,7 +159,24 @@
 					progress: [
 						{ required: true, message: '请输入进度' },
 					]
-				}
+				},
+				column: [
+					{
+						label: "NAME",
+						prop: "name",
+						width: 150
+					},
+					{
+						label: "PROGRESS",
+						prop: "progress",
+						width: 150
+					},
+					{
+						label: "AUDIT",
+						prop: "audit",
+						width: 150
+					}
+				]
 			}
 		},
 		mounted() {

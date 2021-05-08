@@ -1,8 +1,17 @@
 <template>
 	<div class="scTable" ref="scTableMain" v-loading="loading">
 		<div class="scTable-table">
-			<el-table :data="tableData" :row-key="rowKey" ref="scTable" :height="tableHeight" stripe  @selection-change="selectionChange">
+			<el-table :data="tableData" :row-key="rowKey" :key="toggleIndex" ref="scTable" :height="tableHeight" stripe  @selection-change="selectionChange">
 				<slot></slot>
+				<el-table-column v-for="(item, index) in userColumn" :key="index" :label="item.label" :prop="item.prop" :width="item.width">
+					<template #default="scope">
+						{{scope.row[item.prop]}}
+					</template>
+					<template #header>
+						{{item.label}}
+						<i class="el-icon-remove" style="color: #F56C6C;cursor: pointer;" @click="removeColumn(index)"></i>
+					</template>
+				</el-table-column>
 				<el-table-column min-width="1"></el-table-column>
 				<template #empty>
 					<el-empty description="暂无数据" :image-size="100"></el-empty>
@@ -17,7 +26,7 @@
 					<template #reference>
 						<el-button icon="el-icon-setting" circle style="margin-left:15px"></el-button>
 					</template>
-					<div style="padding:50px 0;text-align: center;">表格设置,开发中...</div>
+					<columnSetting ref="columnSetting" @userChange="columnSettingChange" :column="column"></columnSetting>
 				</el-popover>
 			</div>
 		</div>
@@ -25,13 +34,18 @@
 </template>
 
 <script>
+	import columnSetting from './columnSetting'
+
 	export default {
 		name: 'scTable',
-		components: {},
+		components: {
+			columnSetting
+		},
 		props: {
 			apiObj: { type: Object, default: () => {} },
 			data: { type: Object, default: () => {} },
-			rowKey: { type: String, default: "" }
+			rowKey: { type: String, default: "" },
+			column: { type: Object, default: () => {} }
 		},
 		watch: {
 			//监听从props里拿到值了
@@ -42,13 +56,15 @@
 		},
 		data() {
 			return {
+				toggleIndex: 0,
 				tableData: [],
 				pageSize: 20,
 				total: 0,
 				currentPage: 1,
 				loading: false,
 				tableHeight:'100%',
-				tableParams: {}
+				tableParams: {},
+				userColumn: []
 			}
 		},
 		created() {
@@ -98,6 +114,15 @@
 				this.tableParams = params;
 				this.getData()
 			},
+			//自定义变化事件
+			columnSettingChange(userColumn){
+				this.userColumn = userColumn;
+				this.toggleIndex += 1;
+			},
+			removeColumn(index){
+				this.$refs.columnSetting.remove(index)
+				this.toggleIndex += 1;
+			},
 			//转发原装方法&事件
 			selectionChange(selection){
 				this.$emit('selection-change', selection)
@@ -110,13 +135,4 @@
 	.scTable {display:flex;flex-direction:column;height:100%;}
 	.scTable-table {flex:1;}
 	.scTable-page {height:50px;display: flex;align-items: center;justify-content: space-between;padding:0 15px;}
-
-	.setting-column {display:flex;padding:0 20px;}
-	.setting-column > div {border: 1px solid #eee;height: 250px;}
-	.setting-column .all {width: 300px;margin-right:20px;}
-	.setting-column .all span {display: inline-block;width: 100%;height:30px;line-height: 30px;padding:0 15px;}
-	.setting-column .all span:hover {background: #ecf5ff;}
-	.setting-column .user {flex:1;padding:20px;}
-	.setting-column .user>div {width: 100%;height: 100%;}
-	.setting-column .user .el-tag {margin:0 8px 8px 0;}
 </style>

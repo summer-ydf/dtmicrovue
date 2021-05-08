@@ -74,13 +74,13 @@
 					{
 						id: 1,
 						title: "关于版本发布的通知",
-						describe: "当前版本号Ver0.1.0,最后更新日期2021年4月27日",
+						describe: "点进去Gitee获取最新开源版本",
 						link: "https://gitee.com/lolicode/scui"
 					},
 					{
 						id: 2,
 						title: "感谢登录SCUI Admin",
-						describe: "Vue 3.0 + Vue-Router 4.0 + Element-Plus + Axios 后台管理系统。",
+						describe: "Vue 3.0 + Vue-Router 4.0 + ElementPlus + Axios 后台管理系统。",
 						link: "https://gitee.com/lolicode/scui"
 					}
 				]

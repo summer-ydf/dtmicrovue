@@ -23,6 +23,10 @@
 			return {
 				activities: [
 					{
+						content: '1.0.2 增加自定义隐藏排序列，修复scEcharts组件主题警告',
+						timestamp: '2021-05-08'
+					},
+					{
 						content: '1.0.1 提升部分组件为全局组件',
 						timestamp: '2021-05-07'
 					},
