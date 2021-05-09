@@ -17,7 +17,7 @@
 			<div class="setting panel-item">
 				<i class="el-icon-setting"></i>
 			</div>
-			<el-popover placement="bottom" :width="360" trigger="hover">
+			<el-popover placement="bottom" :width="360" trigger="click">
 				<template #reference>
 					<div class="msg panel-item">
 						<el-badge :hidden="msgList.length==0" :value="msgList.length" class="badge" type="danger">
@@ -46,7 +46,7 @@
 					</div>
 				</div>
 			</el-popover>
-			<el-dropdown trigger="hover" @command="handleUser">
+			<el-dropdown trigger="click" @command="handleUser">
 				<div class="user panel-item">
 					<el-avatar :size="30">{{ userNameF }}</el-avatar>
 					<label>{{ userName }}<i class="el-icon-arrow-down el-icon--right"></i></label>

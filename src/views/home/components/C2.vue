@@ -2,9 +2,9 @@
 
 	<div style="height: 248px;">
 		<el-scrollbar >
-			<el-timeline>
-				<el-timeline-item v-for="(item, index) in activities" :key="index" :timestamp="item.timestamp" placement="top">
-					<div v-html="item.content"></div>
+			<el-timeline style="padding-left: 20px;">
+				<el-timeline-item v-for="(item, index) in activities" :key="index" :timestamp="item.timestamp" :color="index==0?'#409EFF':''" placement="top">
+					<li v-for="li in item.content" :key="li"  v-html="li"></li>
 				</el-timeline-item>
 			</el-timeline>
 		</el-scrollbar>
@@ -23,15 +23,29 @@
 			return {
 				activities: [
 					{
-						content: '1.0.2 增加自定义隐藏排序列，修复scEcharts组件主题警告',
+						content: [
+							"[新增] 个性列表模板",
+							"[调整] 大布局更换为flex布局"
+						],
+						timestamp: '2021-05-09'
+					},
+					{
+						content: [
+							'[新增] 增加自定义隐藏排序列',
+							'[修复] scEcharts组件主题警'
+						],
 						timestamp: '2021-05-08'
 					},
 					{
-						content: '1.0.1 提升部分组件为全局组件',
+						content: [
+							'[调整] 提升部分组件为全局组件'
+						],
 						timestamp: '2021-05-07'
 					},
 					{
-						content: '1.0.0 版本开源 <i class="el-icon-present"></i>',
+						content: [
+							'1.0.0 版本开源 <i class="el-icon-present"></i>'
+						],
 						timestamp: '2021-05-07'
 					}
 				]
