@@ -79,6 +79,14 @@
 							"hidden": true
 						},
 						"component": "template/show"
+					},
+					{
+						"path": "/template/itemList",
+						"name": "itemList",
+						"meta": {
+							"title": "个性列表"
+						},
+						"component": "template/itemList"
 					}
 				]
 			},
