@@ -18,7 +18,7 @@
 
 						<el-col :xl="6" :lg="8" :md="8" :sm="12" :xs="24" v-for="item in list" :key="item.title">
 							<el-card shadow="hover" :body-style="{ padding: '0px' }">
-								<el-image :src="item.image" fit="cover"></el-image>
+								<el-image :src="item.image" fit="cover" :preview-src-list="[item.image]"></el-image>
 								<div class="title">
 									<h2>{{item.title}}</h2>
 									<p>

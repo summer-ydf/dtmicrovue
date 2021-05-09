@@ -13,5 +13,5 @@
 </script>
 
 <style scoped>
-	iframe {border:0;position: absolute;top:0px;left:0px;right:0px;bottom:0px;width:100%;height:100%;}
+	iframe {border:0;width:100%;height:100%;display: block;}
 </style>
