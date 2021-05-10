@@ -11,7 +11,7 @@
 							<h2>嗨~ admin，忙碌了一上午，记得吃午饭哦。</h2>
 							<p>最近更新：动态面包屑，外部链接，Iframe链接等</p>
 						</div>
-						<div class="icons">
+						<div class="icons hidden-xs-only">
 							<div class="avatar-list">
 								<el-tooltip content="Sakuya" placement="top">
 									<el-avatar class="avatar" :size="30" src="images/avatar.jpg"></el-avatar>
@@ -59,10 +59,10 @@
 			return {}
 		},
 		mounted(){
-			
+
 		},
 		methods: {
-			
+
 		}
 
 	}

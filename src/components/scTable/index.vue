@@ -20,7 +20,7 @@
 		</div>
 		<div class="scTable-page">
 			<el-pagination background :small="true" layout="total, prev, pager, next, jumper" :total="total" :page-size="pageSize" v-model:currentPage="currentPage" @current-change="reload"></el-pagination>
-			<div>
+			<div class="scTable-do">
 				<el-button @click="refresh" icon="el-icon-refresh" circle style="margin-left:15px"></el-button>
 				<el-popover placement="top" title="设置" :width="500" trigger="click">
 					<template #reference>
@@ -135,4 +135,5 @@
 	.scTable {display:flex;flex-direction:column;height:100%;}
 	.scTable-table {flex:1;}
 	.scTable-page {height:50px;display: flex;align-items: center;justify-content: space-between;padding:0 15px;}
+	.scTable-do {white-space: nowrap;}
 </style>

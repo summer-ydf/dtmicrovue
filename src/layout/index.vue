@@ -1,7 +1,7 @@
 <template>
 	<Side></Side>
 
-	<div class="aminui-body">
+	<div class="aminui-body el-container">
 		<Head></Head>
 		<Tags></Tags>
 		<div class="adminui-main" id="adminui-main">

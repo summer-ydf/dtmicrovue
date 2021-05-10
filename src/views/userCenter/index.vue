@@ -1,7 +1,7 @@
 <template>
 	<el-main>
 		<el-row :gutter="15">
-			<el-col :span="8">
+			<el-col :lg="8">
 				<el-card shadow="never">
 					<div class="user-info">
 						<div class="user-info-top">
@@ -34,7 +34,7 @@
 					</div>
 				</el-card>
 			</el-col>
-			<el-col :span="16">
+			<el-col :lg="16">
 				<el-card shadow="never">
 					<el-tabs tab-position="top">
 						<el-tab-pane label="基本信息">

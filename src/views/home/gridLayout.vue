@@ -1,7 +1,7 @@
 <template>
 	<div class="diy-grid-layout">
 		<el-row :gutter="15">
-			<el-col v-for="(item, index) in grid.layout" v-bind:key="index" :span="item">
+			<el-col v-for="(item, index) in grid.layout" v-bind:key="index" :md="item" :xs="24">
 				<draggable v-model="grid.copmsList[index]" :disabled="false" animation="200" handle=".el-card__header" group="people" @end="end" item-key="com">
 					<template #item="{ element }">
 						<div>
