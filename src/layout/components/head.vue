@@ -1,7 +1,10 @@
 <template>
 	<div class="adminui-header">
 		<div class="left-panel">
-			<el-breadcrumb separator-class="el-icon-arrow-right">
+			<div v-if="ismobile" class="mobile-nav-icon panel-item" @click="mobileNav">
+				<i class="el-icon-menu"></i>
+			</div>
+			<el-breadcrumb v-if="!ismobile" separator-class="el-icon-arrow-right">
 				<template v-for="(item) in breadList" v-bind:key="item" >
 					<el-breadcrumb-item v-if="item.path !='/'"><i v-if="item.meta&&item.meta.icon" :class="item.meta.icon || 'el-icon-menu'"></i>{{item.meta.title}}</el-breadcrumb-item>
 				</template>
@@ -92,6 +95,11 @@
 			this.userNameF = this.userName.substring(0,1);
 			this.getBreadcrumb();
 		},
+		computed:{
+			ismobile(){
+				return this.$store.state.global.ismobile
+			}
+		},
 		watch: {
 			$route() {
 				this.getBreadcrumb();
@@ -122,6 +130,10 @@
 			//标记已读
 			markRead(){
 				this.msgList = []
+			},
+			//移动端打开菜单，暴露父组件事件
+			mobileNav(){
+				this.$emit('mobile-nav')
 			}
 		}
 	}
