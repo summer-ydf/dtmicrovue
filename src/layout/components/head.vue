@@ -1,10 +1,7 @@
 <template>
 	<div class="adminui-header">
 		<div class="left-panel">
-			<div v-if="ismobile" class="mobile-nav-icon panel-item" @click="mobileNav">
-				<i class="el-icon-menu"></i>
-			</div>
-			<el-breadcrumb v-if="!ismobile" separator-class="el-icon-arrow-right">
+			<el-breadcrumb separator-class="el-icon-arrow-right" class="hidden-sm-and-down">
 				<template v-for="(item) in breadList" v-bind:key="item" >
 					<el-breadcrumb-item v-if="item.path !='/'"><i v-if="item.meta&&item.meta.icon" :class="item.meta.icon || 'el-icon-menu'"></i>{{item.meta.title}}</el-breadcrumb-item>
 				</template>
@@ -14,10 +11,10 @@
 
 		</div>
 		<div class="right-panel">
-			<div class="screen panel-item" @click="screen">
+			<div class="screen panel-item hidden-sm-and-down" @click="screen">
 				<i class="el-icon-full-screen"></i>
 			</div>
-			<div class="setting panel-item">
+			<div class="setting panel-item hidden-sm-and-down">
 				<i class="el-icon-setting"></i>
 			</div>
 			<el-popover placement="bottom" :width="360" trigger="click">
@@ -95,11 +92,6 @@
 			this.userNameF = this.userName.substring(0,1);
 			this.getBreadcrumb();
 		},
-		computed:{
-			ismobile(){
-				return this.$store.state.global.ismobile
-			}
-		},
 		watch: {
 			$route() {
 				this.getBreadcrumb();
@@ -130,10 +122,6 @@
 			//标记已读
 			markRead(){
 				this.msgList = []
-			},
-			//移动端打开菜单，暴露父组件事件
-			mobileNav(){
-				this.$emit('mobile-nav')
 			}
 		}
 	}

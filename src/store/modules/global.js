@@ -1,6 +1,6 @@
 export default {
 	state: {
-		ismobile: false,
+		ismobile: false
 	},
 	mutations: {
 		SET_ismobile(state, key){

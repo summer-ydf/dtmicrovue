@@ -1,18 +1,13 @@
 <template>
 	<Side v-if="!ismobile"></Side>
-
+	<Side-m v-if="ismobile"></Side-m>
 	<div class="aminui-body el-container">
-		<Head @mobile-nav="mobileNav"></Head>
+		<Head></Head>
 		<Tags v-if="!ismobile"></Tags>
 		<div class="adminui-main" id="adminui-main">
 			<router-view></router-view>
 		</div>
 	</div>
-
-	<el-drawer ref="mobileNavBox" title="移动端菜单" :size="240" v-model="mobileNavBox" direction="ltr" :with-header="false" append-to-body destroy-on-close>
-		<SideM></SideM>
-	</el-drawer>
-
 </template>
 
 <script>
@@ -31,7 +26,7 @@
 		},
 		data() {
 			return {
-				mobileNavBox: false
+
 			}
 		},
 		computed:{
@@ -39,7 +34,7 @@
 				return this.$store.state.global.ismobile
 			}
 		},
-		mounted() {
+		created() {
 			this.onLayoutResize();
 			window.addEventListener('resize', this.onLayoutResize);
 		},
@@ -51,9 +46,6 @@
 				}else{
 					this.$store.commit("SET_ismobile", false)
 				}
-			},
-			mobileNav(){
-				this.mobileNavBox = true
 			}
 		}
 	}
