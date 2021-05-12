@@ -6,7 +6,8 @@
 	import * as echarts from 'echarts';
 	import T from './echarts-theme-T.js';
 	echarts.registerTheme('T', T);
-
+	const unwarp = (obj) => obj && (obj.__v_raw || obj.valueOf() || obj);
+	
 	export default {
 		...echarts,
 		name: "scEcharts",
@@ -17,7 +18,17 @@
 			option: { type: Object, default: () => {} }
 		},
 		data() {
-			return {}
+			return {
+				myChart: null
+			}
+		},
+		watch: {
+			option: {
+				deep:true,
+				handler (v) {
+					unwarp(this.myChart).setOption(v);
+				}
+			}
 		},
 		computed: {
 			myOptions: function() {
@@ -29,9 +40,10 @@
 		},
 		methods: {
 			draw(){
-				let myChart = echarts.init(this.$refs.scEcharts, 'T');
+				var myChart = echarts.init(this.$refs.scEcharts, 'T');
 				myChart.setOption(this.myOptions);
-				window.addEventListener('resize', () => myChart.resize() );
+				this.myChart = myChart;
+				window.addEventListener('resize', () => myChart.resize());
 			}
 		}
 	}

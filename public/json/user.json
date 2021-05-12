@@ -36,6 +36,14 @@
 							"title": "过滤器"
 						},
 						"component": "vab/filterBar"
+					},
+					{
+						"path": "/vab/print",
+						"name": "print",
+						"meta": {
+							"title": "打印"
+						},
+						"component": "vab/print"
 					}
 				]
 			},

@@ -4,6 +4,7 @@
  * Copyright 2015 yanhaijing. All Rights Reserved
  * Licensed under MIT (https://github.com/yanhaijing/template.js/blob/master/MIT-LICENSE.txt)
  */
+/* eslint-disable */
 ;(function(root, factory) {
     var template = factory(root);
     if (typeof define === 'function' && define.amd) {

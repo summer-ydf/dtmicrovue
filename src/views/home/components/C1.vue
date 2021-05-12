@@ -1,6 +1,6 @@
 <template>
 	<div v-loading="loading">
-		<scEcharts height="300px" :option="option"></scEcharts>
+		<scEcharts ref="c1" height="300px" :option="option"></scEcharts>
 	</div>
 </template>
 
@@ -30,7 +30,17 @@
 				},
 				xAxis: {
 					boundaryGap: false,
-					data: ['周一', '周二', '周三', '周四', '周五', '周六'],
+					type: 'category',
+					data: (function (){
+						var now = new Date();
+						var res = [];
+						var len = 30;
+						while (len--) {
+							res.unshift(now.toLocaleTimeString().replace(/^\D*/,''));
+							now = new Date(now - 2000);
+						}
+						return res;
+					})()
 				},
 				yAxis: [{
 					type: 'value',
@@ -43,29 +53,44 @@
 					{
 						name: '收入',
 						type: 'line',
-						symbolSize: 6,
-						smooth: true,
+						symbol: 'none',
 						lineStyle: {
-							width: 8,
-							shadowColor: 'rgba(0,0,0,0.2)',
-							shadowBlur: 15,
-							shadowOffsetY: 15,
-							color: new scEcharts.graphic.LinearGradient(0, 0, 0, 1, [{
-								offset: 0,
-								color: '#409EFF'
-								}, {
-								offset: 1,
-								color: '#36CE9E'
-							}])
+							width: 1,
+							color: '#F56C6C'
 						},
-						'areaStyle': {
-							'opacity': 0
+						areaStyle: {
+							opacity: 0.1,
+							color: '#F56C6C'
 						},
-						data: [15, 15, 35, 5, 35, 15],
+						data: (function (){
+							var res = [];
+							var len = 30;
+							while (len--) {
+								res.push(Math.round(Math.random() * 0));
+							}
+							return res;
+						})()
 					},
 				],
 			};
 			this.option = option;
-		}
+
+		},
+		mounted(){
+			 var _this = this;
+			setInterval(function (){
+				var o = _this.option;
+
+				o.series[0].data.shift()
+				o.series[0].data.push(Math.round(Math.random() * 100));
+
+				o.xAxis.data.shift();
+				o.xAxis.data.push((new Date()).toLocaleTimeString().replace(/^\D*/, ''));
+
+
+				//_this.$refs.c1.myChart.setOption(o)
+			},2100)
+
+		},
 	}
 </script>
