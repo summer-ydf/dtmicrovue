@@ -172,7 +172,7 @@
 			//TAB 关闭其他
 			closeOtherTabs(){
 				var nowTag = this.contextMenuItem;
-				var tags = this.tagList;
+				var tags = [...this.tagList];
 				tags.forEach(tag => {
 					if(tag.meta&&tag.meta.affix || nowTag.path==tag.path){
 						return true
