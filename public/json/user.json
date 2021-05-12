@@ -95,6 +95,14 @@
 							"title": "个性列表"
 						},
 						"component": "template/itemList"
+					},
+					{
+						"path": "/template/mapvgl",
+						"name": "mapvgl",
+						"meta": {
+							"title": "mapVGL"
+						},
+						"component": "template/mapvgl"
 					}
 				]
 			},
