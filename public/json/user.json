@@ -174,14 +174,56 @@
 					"title": "配置",
 					"icon": "el-icon-setting"
 				},
-				"children": [{
-					"path": "/setting/system",
-					"name": "system",
-					"meta": {
-						"title": "系统设置"
+				"children": [
+					{
+						"path": "/setting/system",
+						"name": "system",
+						"meta": {
+							"title": "系统设置"
+						},
+						"component": "setting/system"
 					},
-					"component": "setting/system"
-				}]
+					{
+						"path": "/setting/user",
+						"name": "user",
+						"meta": {
+							"title": "用户管理"
+						},
+						"component": "setting/user"
+					},
+					{
+						"path": "/setting/role",
+						"name": "role",
+						"meta": {
+							"title": "角色管理"
+						},
+						"component": "setting/role"
+					},
+					{
+						"path": "/setting/menu",
+						"name": "menu",
+						"meta": {
+							"title": "菜单管理"
+						},
+						"component": "setting/menu"
+					},
+					{
+						"path": "/setting/dic",
+						"name": "dic",
+						"meta": {
+							"title": "字典管理"
+						},
+						"component": "setting/dic"
+					},
+					{
+						"path": "/setting/client",
+						"name": "client",
+						"meta": {
+							"title": "应用管理"
+						},
+						"component": "setting/client"
+					}
+				]
 			}
 		],
 		"permissions": [
