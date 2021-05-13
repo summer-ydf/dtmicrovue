@@ -115,27 +115,13 @@
 				},
 				showSet: false,
 				selectLayout: [],
-				defaultGrid: {
-					layout: [18, 6], //数组总数不能大于24, [16,8]:分两列左16右8 还可以设置 [24] [18,6] [8,8,8] [6,12,6]
-					copmsList: [
-						[
-							{ title: "模块1", com: 'C1' },
-							{ title: "模块3", com: 'C3' }
-						],
-						[
-							{ title: "模块2", com: 'C2' }
-						],
-						[
-
-						]
-					]
-				},
+				defaultGrid: this.$CONFIG.DEFAULT_GRID,
 				grid: [],
 			}
 		},
 		created(){
 			var grid = this.$TOOL.data.get("grid");
-			this.grid = grid || this.defaultGrid;
+			this.grid = grid || JSON.parse(JSON.stringify(this.defaultGrid));
 		},
 		mounted(){
 
@@ -223,7 +209,7 @@
 			},
 			//恢复默认
 			backDefaul(){
-				this.grid = this.$options.data().defaultGrid;
+				this.grid =  JSON.parse(JSON.stringify(this.defaultGrid));
 				this.$TOOL.data.remove("grid");
 			}
 		}

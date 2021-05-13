@@ -3,7 +3,7 @@
 	<Side-m v-if="ismobile"></Side-m>
 	<div class="aminui-body el-container">
 		<Head></Head>
-		<Tags v-if="!ismobile"></Tags>
+		<Tags v-if="!ismobile && $CONFIG.LAYOUT_TAGS"></Tags>
 		<div class="adminui-main" id="adminui-main">
 			<router-view></router-view>
 		</div>

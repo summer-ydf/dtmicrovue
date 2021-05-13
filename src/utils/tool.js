@@ -46,6 +46,10 @@ const tool = {
 			}
 		}
 	},
+	/* 复制对象 */
+	objCopy(obj){
+		return JSON.parse(JSON.stringify(obj));
+	},
 	/* 日期格式化 */
 	dateFormat(date, fmt='yyyy-MM-dd'){
 		date = new Date(date)
