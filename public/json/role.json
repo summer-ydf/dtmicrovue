@@ -1,0 +1,56 @@
+{
+	"code": 200,
+	"count": 2,
+	"data": [
+		{
+			"id": "1",
+			"label": "超级管理员",
+			"alias": "SA"
+		},
+		{
+			"id": "2",
+			"label": "管理员",
+			"alias": "admin",
+			"children": [
+				{
+					"id": "21",
+					"label": "系统管理员",
+					"alias": "SystemAdmin"
+				},
+				{
+					"id": "22",
+					"label": "业务管理员",
+					"alias": "BusinessAdmin"
+				},
+				{
+					"id": "23",
+					"label": "数据管理员",
+					"alias": "DataAdmin"
+				}
+			]
+		},
+		{
+			"id": "3",
+			"label": "操作员",
+			"alias": "OperatorManager",
+			"children": [
+				{
+					"id": "31",
+					"label": "公告维护员",
+					"alias": "BulletinManager"
+				},
+				{
+					"id": "32",
+					"label": "审核员",
+					"alias": "Auditor"
+				},
+				{
+					"id": "33",
+					"label": "复审员",
+					"alias": "Reviewer"
+				}
+			]
+		}
+	],
+	"message": ""
+}

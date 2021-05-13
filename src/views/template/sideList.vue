@@ -99,7 +99,7 @@
 			}
 		},
 		async created() {
-			var userInfo = await this.$API.user.info.get();
+			var userInfo = await this.$API.user.login.get();
 			this.tableData = userInfo.data.menuList;
 		},
 		mounted(){

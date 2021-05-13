@@ -14,7 +14,7 @@
 				</el-table-column>
 				<el-table-column min-width="1"></el-table-column>
 				<template #empty>
-					<el-empty description="暂无数据" :image-size="100"></el-empty>
+					<el-empty :description="emptyText" :image-size="100"></el-empty>
 				</template>
 			</el-table>
 		</div>
@@ -56,6 +56,7 @@
 		},
 		data() {
 			return {
+				emptyText: "暂无数据",
 				toggleIndex: 0,
 				tableData: [],
 				pageSize: 20,
@@ -95,7 +96,14 @@
 					page: this.currentPage
 				}
 				Object.assign(reqData, this.tableParams)
-				var res = await this.apiObj.get(reqData);
+				try {
+					var res = await this.apiObj.get(reqData);
+				}catch(error){
+					this.loading = false;
+					this.emptyText = error.statusText;
+					return false;
+				}
+				this.emptyText = "暂无数据";
 				this.tableData = res.data;
 				this.total = res.count;
 				this.loading = false;

@@ -14,15 +14,15 @@
 			</div>
 		</el-header>
 		<el-main class="nopadding">
-			<scTable ref="table" :apiObj="apiObj" @selection-change="selectionChange">
+			<scTable ref="table" :apiObj="apiObj" row-key="id" @selection-change="selectionChange">
 
 				<el-table-column type="selection" width="50"></el-table-column>
 
 				<el-table-column label="#" type="index" width="50"></el-table-column>
 
-				<el-table-column label="角色名称" prop="yx" width="250"></el-table-column>
+				<el-table-column label="角色名称" prop="label" width="250"></el-table-column>
 
-				<el-table-column label="别名" prop="name" width="150"></el-table-column>
+				<el-table-column label="别名" prop="alias" width="150"></el-table-column>
 
 				<el-table-column label="排序" prop="progress" width="150"></el-table-column>
 
@@ -41,13 +41,15 @@
 
 <script>
 	export default {
-		name: 'user',
+		name: 'role',
 		data() {
 			return {
+				apiObj: this.$API.role.list,
 				selection: [],
 				search: {
 					keyword: null
-				}
+				},
+
 			}
 		},
 		methods: {
@@ -55,6 +57,10 @@
 			selectionChange(selection){
 				this.selection = selection;
 			},
+			//搜索
+			upsearch(){
+
+			}
 		}
 	}
 </script>

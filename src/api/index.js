@@ -11,9 +11,46 @@ import http from "@/utils/request";
 
 const api = {
 	user: {
-		info: {
-			url: `${config.API_URL}/json/user.json`,
+		login: {
+			url: `${config.API_URL}/json/login.json`,
 			name: "登录获取用户菜单和权限",
+			get: async function(){
+				return await http.get(this.url);
+			}
+		},
+		list: {
+			url: `${config.API_URL}/json/user_list.json`,
+			name: "获取用户列表",
+			get: async function(params={}){
+				return await http.get(this.url, params);
+			}
+		},
+		save: {
+			url: `${config.API_URL}/json/post.json`,
+			name: "新增编辑用户",
+			post: async function(params={}){
+				return await http.get(this.url, params);
+			}
+		},
+		del: {
+			url: `${config.API_URL}/json/post.json`,
+			name: "删除用户",
+			post: async function(params={}){
+				return await http.get(this.url, params);
+			}
+		}
+	},
+	role: {
+		select: {
+			url: `${config.API_URL}/json/role.json`,
+			name: "角色选择列表",
+			get: async function(){
+				return await http.get(this.url);
+			}
+		},
+		list: {
+			url: `${config.API_URL}/json/role.json`,
+			name: "角色列表",
 			get: async function(){
 				return await http.get(this.url);
 			}
