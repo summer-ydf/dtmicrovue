@@ -1,7 +1,7 @@
 <template>
 	<div class="scTable" ref="scTableMain" v-loading="loading">
 		<div class="scTable-table">
-			<el-table :data="tableData" :row-key="rowKey" :key="toggleIndex" ref="scTable" :height="tableHeight" stripe  @selection-change="selectionChange">
+			<el-table :data="tableData" :row-key="rowKey" :key="toggleIndex" ref="scTable" :height="tableHeight" :stripe="stripe" :highlight-current-row="highlightCurrentRow"  @selection-change="selectionChange" @current-change="currentChange">
 				<slot></slot>
 				<el-table-column v-for="(item, index) in userColumn" :key="index" :label="item.label" :prop="item.prop" :width="item.width">
 					<template #default="scope">
@@ -19,8 +19,8 @@
 			</el-table>
 		</div>
 		<div class="scTable-page">
-			<el-pagination background :small="true" layout="total, prev, pager, next, jumper" :total="total" :page-size="pageSize" v-model:currentPage="currentPage" @current-change="reload"></el-pagination>
-			<div class="scTable-do">
+			<el-pagination background :small="true" :layout="paginationLayout" :total="total" :page-size="pageSize" v-model:currentPage="currentPage" @current-change="reload"></el-pagination>
+			<div class="scTable-do" v-if="!hideDo">
 				<el-button @click="refresh" icon="el-icon-refresh" circle style="margin-left:15px"></el-button>
 				<el-popover placement="top" title="设置" :width="500" trigger="click">
 					<template #reference>
@@ -45,7 +45,11 @@
 			apiObj: { type: Object, default: () => {} },
 			data: { type: Object, default: () => {} },
 			rowKey: { type: String, default: "" },
-			column: { type: Object, default: () => {} }
+			column: { type: Object, default: () => {} },
+			hideDo: { type: Boolean, default: false },
+			stripe: { type: Boolean, default: false },
+			highlightCurrentRow: { type: Boolean, default: false },
+			paginationLayout: { type: String, default: "total, prev, pager, next, jumper" },
 		},
 		watch: {
 			//监听从props里拿到值了
@@ -134,6 +138,9 @@
 			//转发原装方法&事件
 			selectionChange(selection){
 				this.$emit('selection-change', selection)
+			},
+			currentChange(selection){
+				this.$emit('current-change', selection)
 			}
 		}
 	}

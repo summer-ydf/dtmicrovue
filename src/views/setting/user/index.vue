@@ -14,7 +14,7 @@
 				<el-header>
 					<div class="left-panel">
 						<el-button type="primary" icon="el-icon-plus" @click="add"></el-button>
-						<el-button type="danger" plain icon="el-icon-delete" :disabled="selection.length==0"></el-button>
+						<el-button type="danger" plain icon="el-icon-delete" :disabled="selection.length==0" @click="batch_del"></el-button>
 						<el-button type="primary" plain :disabled="selection.length==0">分配角色</el-button>
 						<el-button type="primary" plain :disabled="selection.length==0">密码重置</el-button>
 					</div>
@@ -26,7 +26,7 @@
 					</div>
 				</el-header>
 				<el-main class="nopadding">
-					<scTable ref="table" :apiObj="apiObj" @selection-change="selectionChange">
+					<scTable ref="table" :apiObj="apiObj" @selection-change="selectionChange" stripe>
 						<el-table-column type="selection" width="50"></el-table-column>
 						<el-table-column label="ID" prop="id" width="50"></el-table-column>
 						<el-table-column label="登录账号" prop="userName" width="150"></el-table-column>
@@ -132,6 +132,25 @@
 				}else{
 					this.$alert(res.message, "提示", {type: 'error'})
 				}
+			},
+			//批量删除
+			async batch_del(){
+				this.$confirm(`确定删除选中的 ${this.selection.length} 项吗？`, '提示', {
+					type: 'warning'
+				}).then(() => {
+					const loading = this.$loading();
+					this.selection.forEach(item => {
+						this.$refs.table.tableData.forEach((itemI, indexI) => {
+							if (item.id === itemI.id) {
+								this.$refs.table.tableData.splice(indexI, 1)
+							}
+						})
+					})
+					loading.close();
+					this.$message.success("操作成功")
+				}).catch(() => {
+					
+				})
 			},
 			//提交
 			saveForm(){

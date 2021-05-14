@@ -200,20 +200,20 @@
 						"component": "setting/role"
 					},
 					{
-						"path": "/setting/menu",
-						"name": "menu",
-						"meta": {
-							"title": "菜单管理"
-						},
-						"component": "setting/menu"
-					},
-					{
 						"path": "/setting/dic",
 						"name": "dic",
 						"meta": {
 							"title": "字典管理"
 						},
 						"component": "setting/dic"
+					},
+					{
+						"path": "/setting/menu",
+						"name": "menu",
+						"meta": {
+							"title": "菜单管理"
+						},
+						"component": "setting/menu"
 					},
 					{
 						"path": "/setting/client",

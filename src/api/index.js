@@ -56,6 +56,22 @@ const api = {
 			}
 		}
 	},
+	dic: {
+		list: {
+			url: `${config.API_URL}/json/dic_list.json`,
+			name: "字典列表",
+			get: async function(){
+				return await http.get(this.url);
+			}
+		},
+		info: {
+			url: `${config.API_URL}/json/dic_info.json`,
+			name: "字典明细",
+			get: async function(params){
+				return await http.get(this.url, params);
+			}
+		}
+	},
 	demo: {
 		select: {
 			url: `${config.API_URL}/json/select.json`,
