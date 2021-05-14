@@ -43,6 +43,7 @@
 		},
 		props: {
 			apiObj: { type: Object, default: () => {} },
+			params: { type: Object, default: () => {} },
 			data: { type: Object, default: () => {} },
 			rowKey: { type: String, default: "" },
 			column: { type: Object, default: () => {} },
@@ -56,6 +57,10 @@
 			data(){
 				this.tableData = this.data;
 				this.total = this.tableData.length;
+			},
+			apiObj(){
+				this.tableParams = this.params;
+				this.refresh();
 			}
 		},
 		data() {
@@ -68,7 +73,7 @@
 				currentPage: 1,
 				loading: false,
 				tableHeight:'100%',
-				tableParams: {},
+				tableParams: this.params,
 				userColumn: []
 			}
 		},

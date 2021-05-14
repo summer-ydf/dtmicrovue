@@ -14,7 +14,7 @@
 				</el-form-item>
 			</el-col>
 			<el-col :span="12">
-				<el-form-item label="上级字典" prop="parentId">
+				<el-form-item label="父路径" prop="parentId">
 					<el-cascader v-model="form.parentId" :options="dic" :props="dicProps" :show-all-levels="false" clearable></el-cascader>
 				</el-form-item>
 			</el-col>
@@ -76,7 +76,7 @@
 				this.form.name = data.name
 				this.form.code = data.code
 				this.form.parentId = data.parentId
-			
+
 				//可以和上面一样单个注入，也可以像下面一样直接合并进去
 				//Object.assign(this.form, data)
 			}
