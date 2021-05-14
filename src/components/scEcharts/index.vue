@@ -7,7 +7,7 @@
 	import T from './echarts-theme-T.js';
 	echarts.registerTheme('T', T);
 	const unwarp = (obj) => obj && (obj.__v_raw || obj.valueOf() || obj);
-	
+
 	export default {
 		...echarts,
 		name: "scEcharts",
@@ -34,6 +34,11 @@
 			myOptions: function() {
 				return this.option || {};
 			}
+		},
+		activated(){
+			this.$nextTick(() => {
+				this.myChart.resize()
+			})
 		},
 		mounted(){
 			this.draw();
