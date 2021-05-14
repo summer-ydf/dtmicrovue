@@ -83,6 +83,9 @@
 			}
 		},
 		activated(){
+			this.$nextTick(() => {
+				this.upTableHeight()
+			})
 			window.addEventListener("resize", this.upTableHeight, true)
 		},
 		deactivated(){
