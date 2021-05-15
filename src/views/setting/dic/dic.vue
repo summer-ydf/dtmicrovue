@@ -1,24 +1,14 @@
 <template>
 	<el-form :model="form" :rules="rules" ref="dialogForm" label-width="80px" label-position="left">
-		<el-row :gutter="20">
-			<el-col :span="24">
-				<el-form-item label="编码" prop="code">
-					<el-input v-model="form.code" clearable></el-input>
-				</el-form-item>
-			</el-col>
-		</el-row>
-		<el-row :gutter="20">
-			<el-col :span="12">
-				<el-form-item label="字典名称" prop="name">
-					<el-input v-model="form.name" clearable></el-input>
-				</el-form-item>
-			</el-col>
-			<el-col :span="12">
-				<el-form-item label="父路径" prop="parentId">
-					<el-cascader v-model="form.parentId" :options="dic" :props="dicProps" :show-all-levels="false" clearable></el-cascader>
-				</el-form-item>
-			</el-col>
-		</el-row>
+		<el-form-item label="编码" prop="code">
+			<el-input v-model="form.code" clearable></el-input>
+		</el-form-item>
+		<el-form-item label="字典名称" prop="name">
+			<el-input v-model="form.name" clearable></el-input>
+		</el-form-item>
+		<el-form-item label="父路径" prop="parentId">
+			<el-cascader v-model="form.parentId" :options="dic" :props="dicProps" :show-all-levels="false" clearable></el-cascader>
+		</el-form-item>
 	</el-form>
 </template>
 

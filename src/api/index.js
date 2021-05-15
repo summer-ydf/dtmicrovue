@@ -72,6 +72,15 @@ const api = {
 			}
 		}
 	},
+	app: {
+		list: {
+			url: `${config.API_URL}/json/app.json`,
+			name: "应用列表",
+			get: async function(){
+				return await http.get(this.url);
+			}
+		}
+	},
 	demo: {
 		select: {
 			url: `${config.API_URL}/json/select.json`,

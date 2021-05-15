@@ -5,6 +5,7 @@
 		{
 			"id": "100",
 			"userName": "81883387",
+			"avatar": "images/avatar.jpg",
 			"mail": "81883387@qq.com",
 			"name": "sakuya",
 			"group": ["1"],
@@ -14,6 +15,7 @@
 		{
 			"id": "101",
 			"userName": "luhkpev",
+			"avatar": "images/avatar3.gif",
 			"mail": "k.luhkpev@zdgtfd.ma",
 			"name": "John Martinez",
 			"group": ["22", "23"],

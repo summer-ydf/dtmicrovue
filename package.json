@@ -15,6 +15,7 @@
 		"less": "^3.12.2",
 		"less-loader": "^7.1.0",
 		"nprogress": "^0.2.0",
+		"sortablejs": "^1.13.0",
 		"vue": "^3.0.0",
 		"vue-router": "^4.0.0-0",
 		"vuedraggable": "^4.0.1",

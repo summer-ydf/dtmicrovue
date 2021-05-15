@@ -13,6 +13,7 @@ import http from "./utils/request"
 import permission from './utils/permission'
 import scTable from './components/scTable'
 import scFilterBar from './components/scFilterBar'
+import scUpload from './components/scUpload'
 
 const app = createApp(App);
 
@@ -28,5 +29,6 @@ app.use(ElementPlus, {size: 'small', zIndex: 3000 ,locale: locale});
 
 app.component('scTable', scTable);
 app.component('scFilterBar', scFilterBar);
+app.component('scUpload', scUpload);
 
 app.mount('#app');

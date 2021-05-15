@@ -1,0 +1,23 @@
+{
+	"code": 200,
+	"count": 2,
+	"data": [
+		{
+			"id": "100",
+			"appName": "自助机",
+			"appId": "selfHelp",
+			"secret": "YuOju6lP3t4thLbZOhRSV4UZ79vdnwIC",
+			"type": "ALL",
+			"exp": "长期"
+		},
+		{
+			"id": "101",
+			"appName": "微信小程序",
+			"appId": "WechatApp",
+			"secret": "WgBbsRtCeXiNXIYkkShxxvqOGrAYKK2e",
+			"type": "",
+			"exp": "长期"
+		}
+	],
+	"message": ""
+}

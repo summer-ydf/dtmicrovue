@@ -28,24 +28,32 @@
 			<el-header>
 				<div class="left-panel">
 					<el-button type="primary" icon="el-icon-plus" @click="addInfo"></el-button>
-					<el-button type="danger" plain icon="el-icon-delete" disabled></el-button>
+					<el-button type="danger" plain icon="el-icon-delete" :disabled="selection.length==0" @click="batch_del"></el-button>
 				</div>
 			</el-header>
 			<el-main class="nopadding">
-				<scTable ref="table" :apiObj="listApi" :params="listApiParams" stripe :paginationLayout="'prev, pager, next'">
+				<scTable ref="table" :apiObj="listApi" row-key="id" :params="listApiParams" @selection-change="selectionChange" stripe :paginationLayout="'prev, pager, next'">
 					<el-table-column type="selection" width="50"></el-table-column>
-					<el-table-column label="#" type="index" width="50"></el-table-column>
 					<el-table-column label="" width="50">
 						<template #default>
-							<el-tag type="info" style="cursor: move;"><i class="el-icon-d-caret"></i></el-tag>
+							<el-tag class="move" style="cursor: move;"><i class="el-icon-d-caret"></i></el-tag>
 						</template>
 					</el-table-column>
 					<el-table-column label="名称" prop="name" width="150"></el-table-column>
 					<el-table-column label="键值" prop="key" width="150"></el-table-column>
 					<el-table-column label="是否有效" prop="yx" width="100">
 						<template #default="scope">
-							<i v-if="scope.row.yx==1" class="el-icon-success" style="color: #67C23A;"></i>
-							<i v-if="scope.row.yx==0" class="el-icon-remove" style="color: #DCDFE6;"></i>
+							<el-switch v-model="scope.row.yx" @change="changeSwitch($event, scope.row)" :loading="scope.row.$switch_yx" active-value="1" inactive-value="0"></el-switch>
+						</template>
+					</el-table-column>
+					<el-table-column label="操作" fixed="right" align="right" width="140">
+						<template #default="scope">
+							<el-button type="text" size="small" @click="table_edit(scope.row, scope.$index)">编辑</el-button>
+							<el-popconfirm title="确定删除吗？" @confirm="table_del(scope.row, scope.$index)">
+								<template #reference>
+									<el-button type="text" size="small">删除</el-button>
+								</template>
+							</el-popconfirm>
 						</template>
 					</el-table-column>
 				</scTable>
@@ -53,7 +61,7 @@
 		</el-container>
 	</el-container>
 
-	<el-dialog :title="titleMap[dicMode]" v-model="dicDialogVisible" :width="600" destroy-on-close>
+	<el-dialog :title="titleMap[dicMode]" v-model="dicDialogVisible" :width="330" destroy-on-close>
 		<dic-dialog ref="dicDialog" :mode="dicMode"></dic-dialog>
 		<template #footer>
 			<el-button @click="dicDialogVisible=false" >取 消</el-button>
@@ -61,7 +69,7 @@
 		</template>
 	</el-dialog>
 
-	<el-dialog :title="titleMap[listMode]" v-model="listDialogVisible" :width="600" destroy-on-close>
+	<el-dialog :title="titleMap[listMode]" v-model="listDialogVisible" :width="330" destroy-on-close>
 		<list-dialog ref="listDialog" :mode="listMode" :params="listDialogParams"></list-dialog>
 		<template #footer>
 			<el-button @click="listDialogVisible=false" >取 消</el-button>
@@ -74,6 +82,7 @@
 <script>
 	import dicDialog from './dic'
 	import listDialog from './list'
+	import Sortable from 'sortablejs'
 
 	export default {
 		name: 'dic',
@@ -103,6 +112,7 @@
 				listDialogParams: {},
 				isListSaveing: false,
 				listMode: 'add',
+				selection: []
 			}
 		},
 		watch: {
@@ -112,6 +122,7 @@
 		},
 		mounted() {
 			this.getDic()
+			this.rowDrop()
 		},
 		methods: {
 			//加载树数据
@@ -226,15 +237,98 @@
 
 				})
 			},
+			//行拖拽
+			rowDrop(){
+				const _this = this
+				const tbody = this.$refs.table.$el.querySelector('.el-table__body-wrapper tbody')
+				Sortable.create(tbody, {
+					handle: ".move",
+					animation: 300,
+					ghostClass: "ghost",
+					onEnd({ newIndex, oldIndex }) {
+						const tableData = _this.$refs.table.tableData
+						const currRow = tableData.splice(oldIndex, 1)[0]
+						tableData.splice(newIndex, 0, currRow)
+						_this.$message.success("排序成功")
+					}
+				})
+			},
 			//添加明细
 			addInfo(){
 				var dicCurrentKey = this.$refs.dic.getCurrentKey();
 				this.listDialogParams = {code: dicCurrentKey};
+				this.listMode = 'add';
 				this.listDialogVisible = true;
 			},
-			//保存明细
-			saveList(){
+			//编辑明细
+			table_edit(row){
+				this.listMode = 'edit';
+				this.listDialogVisible = true;
+				this.$nextTick(() => {
+					this.$refs.listDialog.setData(row)
+				})
+			},
+			//删除明细
+			async table_del(row, index){
+				var reqData = {id: row.id}
+				var res = await this.$API.user.del.post(reqData);
+				if(res.code == 200){
+					this.$refs.table.tableData.splice(index, 1);
+					this.$message.success("删除成功")
+				}else{
+					this.$alert(res.message, "提示", {type: 'error'})
+				}
+			},
+			//批量删除
+			async batch_del(){
+				this.$confirm(`确定删除选中的 ${this.selection.length} 项吗？`, '提示', {
+					type: 'warning'
+				}).then(() => {
+					const loading = this.$loading();
+					this.selection.forEach(item => {
+						this.$refs.table.tableData.forEach((itemI, indexI) => {
+							if (item.id === itemI.id) {
+								this.$refs.table.tableData.splice(indexI, 1)
+							}
+						})
+					})
+					loading.close();
+					this.$message.success("操作成功")
+				}).catch(() => {
 
+				})
+			},
+			//提交明细
+			saveList(){
+				this.$refs.listDialog.submit(async (formData) => {
+					this.isListSaveing = true;
+					var res = await this.$API.user.save.post(formData);
+					this.isListSaveing = false;
+					if(res.code == 200){
+						//这里选择刷新整个表格 OR 插入/编辑现有表格数据
+						this.listDialogVisible = false;
+						this.$message.success("操作成功")
+					}else{
+						this.$alert(res.message, "提示", {type: 'error'})
+					}
+				})
+			},
+			//表格选择后回调事件
+			selectionChange(selection){
+				this.selection = selection;
+			},
+			//表格内开关事件
+			changeSwitch(val, row){
+				//1.还原数据
+				row.yx = row.yx == '1'?'0':'1'
+				//2.执行加载
+				row.$switch_yx = true;
+				//3.等待接口返回后改变值
+				setTimeout(()=>{
+					delete row.$switch_yx;
+					row.yx = val;
+					this.$message.success(`操作成功id:${row.id} val:${val}`)
+				}, 500)
 			}
 		}
 	}
