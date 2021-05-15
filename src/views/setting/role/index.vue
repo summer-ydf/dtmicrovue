@@ -35,7 +35,7 @@
 		</el-main>
 	</el-container>
 
-	<el-dialog :title="titleMap[saveMode]" v-model="saveDialogVisible" :width="600" destroy-on-close>
+	<el-dialog :title="titleMap[saveMode]" v-model="saveDialogVisible" :width="500" destroy-on-close>
 		<save-dialog ref="saveDialog" :mode="saveMode"></save-dialog>
 		<template #footer>
 			<el-button @click="saveDialogVisible=false" >取 消</el-button>

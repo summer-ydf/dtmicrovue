@@ -7,16 +7,16 @@
 			"appName": "自助机",
 			"appId": "selfHelp",
 			"secret": "YuOju6lP3t4thLbZOhRSV4UZ79vdnwIC",
-			"type": "ALL",
-			"exp": "长期"
+			"type": ["ALL"],
+			"exp": "2035-01-01 00:00:00"
 		},
 		{
 			"id": "101",
 			"appName": "微信小程序",
 			"appId": "WechatApp",
 			"secret": "WgBbsRtCeXiNXIYkkShxxvqOGrAYKK2e",
-			"type": "",
-			"exp": "长期"
+			"type": ["UPDATA", "QUERY"],
+			"exp": "2023-06-01 00:00:00"
 		}
 	],
 	"message": ""

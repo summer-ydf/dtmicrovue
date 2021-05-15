@@ -3,7 +3,7 @@
 		<el-row :gutter="20">
 			<el-col :span="24">
 				<el-form-item label="头像" prop="avatar">
-					<sc-upload v-model="form.avatar" title="上传头像"></sc-upload>
+					<sc-upload v-model="form.avatar" title="上传头像" :action="uploadUrl"></sc-upload>
 				</el-form-item>
 			</el-col>
 		</el-row>
@@ -49,6 +49,7 @@
 		},
 		data() {
 			return {
+				uploadUrl: this.$API.demo.upload.url,
 				//表单数据
 				form: {
 					id:"",

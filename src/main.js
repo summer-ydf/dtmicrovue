@@ -25,7 +25,7 @@ app.config.globalProperties.$HAS = permission;
 
 app.use(store);
 app.use(router);
-app.use(ElementPlus, {size: 'small', zIndex: 3000 ,locale: locale});
+app.use(ElementPlus, {size: 'small', zIndex: 1000 ,locale: locale});
 
 app.component('scTable', scTable);
 app.component('scFilterBar', scFilterBar);

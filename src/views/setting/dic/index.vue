@@ -43,7 +43,7 @@
 					<el-table-column label="键值" prop="key" width="150"></el-table-column>
 					<el-table-column label="是否有效" prop="yx" width="100">
 						<template #default="scope">
-							<el-switch v-model="scope.row.yx" @change="changeSwitch($event, scope.row)" :loading="scope.row.$switch_yx" active-value="1" inactive-value="0"></el-switch>
+							<el-switch v-if="scope.row.yx" v-model="scope.row.yx" @change="changeSwitch($event, scope.row)" :loading="scope.row.$switch_yx" active-value="1" inactive-value="0"></el-switch>
 						</template>
 					</el-table-column>
 					<el-table-column label="操作" fixed="right" align="right" width="140">
@@ -158,6 +158,9 @@
 				this.dicMode = 'edit';
 				this.dicDialogVisible = true;
 				this.$nextTick(() => {
+					var editNode = this.$refs.dic.getNode(data.id);
+					var editNodeParentId =  editNode.level==1?undefined:editNode.parent.data.id
+					data.parentId = editNodeParentId
 					this.$refs.dicDialog.setData(data)
 				})
 			},

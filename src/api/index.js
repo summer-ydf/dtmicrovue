@@ -81,7 +81,20 @@ const api = {
 			}
 		}
 	},
+	log: {
+		list: {
+			url: `${config.API_URL}/json/log.json`,
+			name: "日志列表",
+			get: async function(){
+				return await http.get(this.url);
+			}
+		}
+	},
 	demo: {
+		upload: {
+			url: `https://www.fastmock.site/mock/44c807475f7eeba73409792255781935/api/upload`,
+			name: "文件上传接口"
+		},
 		select: {
 			url: `${config.API_URL}/json/select.json`,
 			name: "下拉菜单数据",

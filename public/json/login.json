@@ -209,7 +209,7 @@
 					},
 					{
 						"path": "/setting/menu",
-						"name": "menu",
+						"name": "settingMenu",
 						"meta": {
 							"title": "菜单管理"
 						},
@@ -222,6 +222,14 @@
 							"title": "应用管理"
 						},
 						"component": "setting/client"
+					},
+					{
+						"path": "/setting/log",
+						"name": "log",
+						"meta": {
+							"title": "系统日志"
+						},
+						"component": "setting/log"
 					}
 				]
 			}

@@ -4,10 +4,10 @@
 			<div class="mask">
 				<span class="del" @click.stop="del"><i class="el-icon-delete"></i></span>
 			</div>
-			<el-image class="file" :src="tempImg || img" :preview-src-list="[img]" hide-on-click-modal append-to-body></el-image>
+			<el-image class="file" :src="tempImg || img" :preview-src-list="[img]" fit="cover" hide-on-click-modal append-to-body></el-image>
 		</div>
 		<div v-else class="sc-upload-uploader">
-			<el-upload ref="upload" v-loading="loading" class="uploader" accept=".JPG, .PNG, .JPEG,.jpg, .png, .jpeg" action="https://www.fastmock.site/mock/44c807475f7eeba73409792255781935/api/upload" :show-file-list="false" :before-upload="before" :on-success="success" :on-error="error">
+			<el-upload ref="upload" v-loading="loading" class="uploader" :accept="accept" :action="action" :show-file-list="false" :before-upload="before" :on-success="success" :on-error="error">
 				<div class="file-empty">
 					<i class="el-icon-plus"></i>
 					<h4>{{title}}</h4>
@@ -22,6 +22,9 @@
 	export default {
 		props: {
 			modelValue: { type: String, default: "" },
+			action: { type: String, default: "#" },
+			accept: { type: String, default: ".jpg, .png, .jpeg, .gif" },
+			maxSize: { type: Number, default: 10 },
 			title: { type: String, default: "上传" },
 		},
 		data() {
@@ -45,6 +48,11 @@
 		},
 		methods: {
 			before(file){
+				const maxSize = file.size / 1024 / 1024 < this.maxSize;
+				if (!maxSize) {
+					this.$message.warning('上传文件大小不能超过 10MB!');
+					return false;
+				}
 				this.tempImg = URL.createObjectURL(file);
 				this.loading = true;
 			},
@@ -56,6 +64,7 @@
 				}else{
 					this.img = res.data.src;
 				}
+				this.$emit('on-success', res)
 			},
 			error(err){
 				this.$notify.error({
@@ -74,11 +83,9 @@
 </script>
 
 <style scoped>
-
 	.el-form-item.is-error .sc-upload-uploader {border: 1px dashed #F56C6C;}
 
 	.sc-upload {width: 120px;height: 120px;}
-	.sc-upload:hover {}
 
 	.sc-upload-file {position: relative;width: 100%;height: 100%;}
 	.sc-upload-file .mask {display: none;position: absolute;top:0px;right:0px;line-height: 1;z-index: 1;}
@@ -88,7 +95,6 @@
 	.sc-upload-file .file {width: 120px;height: 120px;}
 	.sc-upload-file .file img {vertical-align: bottom;}
 	.sc-upload-file:hover .mask {display: inline-block;}
-
 
 	.sc-upload-uploader {border: 1px dashed #d9d9d9;}
 	.sc-upload-uploader:hover {border: 1px dashed #409eff;}

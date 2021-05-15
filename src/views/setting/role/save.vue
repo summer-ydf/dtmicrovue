@@ -4,7 +4,6 @@
 			<el-col :span="12">
 				<el-form-item label="上级角色" prop="parentId">
 					<el-cascader v-model="form.parentId" :options="groups" :props="groupsProps" :show-all-levels="false" clearable></el-cascader>
-					<div class="el-form-item-msg">如不选择任意上级，系统默认为最顶级角色</div>
 				</el-form-item>
 			</el-col>
 			<el-col :span="12">
