@@ -1,0 +1,111 @@
+<template>
+	<el-row>
+		<el-col :xl="12" :lg="16">
+
+			<h2>{{form.meta.title || "新增菜单"}}</h2>
+			<el-form :model="form" :rules="rules" ref="dialogForm" label-width="80px" label-position="left">
+				<el-form-item label="显示名称" prop="meta.title">
+					<el-input v-model="form.meta.title" clearable placeholder="菜单显示名字"></el-input>
+				</el-form-item>
+				<el-form-item label="上级菜单" prop="parent">
+					<el-cascader v-model="form.parent" :options="menu" :props="menuProps" :show-all-levels="false" clearable></el-cascader>
+					<div class="el-form-item-msg">这里还有点问题！el-cascader的props的label 现暂只支持字符串还未支持自定义函数 </div>
+				</el-form-item>
+				<el-form-item label="类型" prop="meta.type">
+					<el-radio-group v-model="form.meta.type">
+						<el-radio-button label="menu">菜单</el-radio-button>
+						<el-radio-button label="iframe">Iframe</el-radio-button>
+						<el-radio-button label="link">外链</el-radio-button>
+						<el-radio-button label="button">按钮</el-radio-button>
+					</el-radio-group>
+				</el-form-item>
+				<el-form-item label="别名" prop="name">
+					<el-input v-model="form.name" clearable placeholder="菜单别名"></el-input>
+					<div class="el-form-item-msg">系统唯一且与内置组件名一致，否则导致缓存失效。如类型为Iframe的菜单，别名将代替源地址显示在地址栏</div>
+				</el-form-item>
+				<el-form-item label="菜单图标" prop="meta.icon">
+					<el-input v-model="form.meta.icon" clearable placeholder=""></el-input>
+				</el-form-item>
+				<el-form-item label="路由地址" prop="path">
+					<el-input v-model="form.path" clearable placeholder=""></el-input>
+				</el-form-item>
+				<el-form-item label="视图" prop="component">
+					<el-autocomplete v-model="form.component" :fetch-suggestions="querySearch" :debounce="10" clearable placeholder=""></el-autocomplete>
+					<div class="el-form-item-msg">如父节点、链接或Iframe等没有视图的菜单不需要填写</div>
+				</el-form-item>
+				<el-form-item label="是否隐藏" prop="meta.hidden">
+					<el-checkbox v-model="form.meta.hidden">隐藏菜单</el-checkbox>
+					<div class="el-form-item-msg">菜单不显示在导航中，但用户依然可以访问，例如详情页</div>
+				</el-form-item>
+				<el-form-item>
+					<el-button type="primary">保 存</el-button>
+				</el-form-item>
+			</el-form>
+
+		</el-col>
+	</el-row>
+
+</template>
+
+<script>
+	export default {
+		props: {
+			menu: { type: Object, default: () => {} },
+		},
+		data(){
+			return {
+				form: {
+					parent: "",
+					name: "",
+					path: "",
+					component: "",
+					meta:{
+						title: "",
+						icon: "",
+						type: "menu"
+					}
+				},
+				menuProps: {
+					value: 'name',
+					label: 'name',
+					checkStrictly: true
+				},
+				rules: {},
+				views: []
+			}
+		},
+		mounted() {
+			this.views = this.getViews();
+		},
+		methods: {
+			//表单注入数据
+			setData(data, pid){
+				this.form = data
+				this.form.parent = pid
+				//可以和上面一样单个注入，也可以像下面一样直接合并进去
+				//Object.assign(this.form, data)
+			},
+			//获取所有视图组件
+			getViews(){
+				const filesUrl = []
+				let files = require.context('@/views', true, /\.vue$/)
+				files.keys().forEach(file => {
+					// 如需删除index? .replace(/\/index$/, "")
+					filesUrl.push({
+						value: file.replace(/^\.\/(.*)\.\w+$/, '$1')
+					})
+				})
+				return filesUrl;
+			},
+			querySearch(queryString, cb){
+				var results = this.getViews();
+				results = results.filter(item => item.value.indexOf(queryString) !== -1)
+				cb(results)
+			}
+		}
+	}
+</script>
+
+<style scoped>
+	h2 {font-size: 17px;color: #3c4a54;padding:0 0 30px 0;}
+</style>

@@ -81,9 +81,21 @@ const api = {
 			}
 		}
 	},
+	menu: {
+		list: {
+			url: `${config.API_URL}/json/login.json`,
+			name: "菜单管理",
+			get: async function(){
+				// 这里接口对象偷懒重复了登录接口
+				var res = await http.get(this.url);
+					res.data = res.data.menuList;
+				return res;
+			}
+		}
+	},
 	log: {
 		list: {
-			url: `${config.API_URL}/json/log.json`,
+			url: `${config.MOCK_URL}/loglist`,
 			name: "日志列表",
 			get: async function(){
 				return await http.get(this.url);
@@ -92,7 +104,7 @@ const api = {
 	},
 	demo: {
 		upload: {
-			url: `https://www.fastmock.site/mock/44c807475f7eeba73409792255781935/api/upload`,
+			url: `${config.MOCK_URL}/upload`,
 			name: "文件上传接口"
 		},
 		select: {

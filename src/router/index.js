@@ -132,8 +132,9 @@ function filterAsyncRouter(routerMap) {
 	routerMap.forEach(item => {
 		item.meta = item.meta?item.meta:{};
 		//处理外部链接特殊路由
-		if(item.path.startsWith('http') && item.meta.target!='_blank'){
-			item.path = `/${encodeURIComponent(item.path)}`;
+		if(item.meta.type=='iframe'){
+			item.meta.url = item.path;
+			item.path = `/i/${item.name}`;
 			item.component = 'other/iframe';
 		}
 		//MAP转路由对象

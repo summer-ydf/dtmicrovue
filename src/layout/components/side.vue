@@ -67,15 +67,15 @@
 			//转换外部链接的路由
 			filterUrl(map){
 				var newMap = []
-				map.forEach(item => {
+				map && map.forEach(item => {
 					item.meta = item.meta?item.meta:{};
 					//处理隐藏
 					if(item.meta.hidden){
 						return false
 					}
 					//处理http
-					if(item.path.startsWith('http') && item.meta.target!='_blank'){
-						item.path = `/${encodeURIComponent(item.path)}`;
+					if(item.meta.type=='iframe'){
+						item.path = `/i/${item.name}`;
 					}
 					//递归循环
 					if(item.children&&item.children.length > 0){

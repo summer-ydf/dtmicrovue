@@ -56,8 +56,8 @@
 						map.splice(index, 1);
 					}
 					//处理http
-					if(item.path.startsWith('http') && item.meta.target!='_blank'){
-						item.path = `/${encodeURIComponent(item.path)}`;
+					if(item.meta.type=='iframe'){
+						item.path = `/i/${item.name}`;
 					}
 					//递归循环
 					if(item.children&&item.children.length > 0){

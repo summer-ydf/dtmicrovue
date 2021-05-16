@@ -10,14 +10,16 @@
 				"path": "/vab",
 				"meta": {
 					"title": "组件",
-					"icon": "el-icon-takeaway-box"
+					"icon": "el-icon-takeaway-box",
+					"type": "menu"
 				},
 				"children": [
 					{
 						"path": "/vab/drag",
 						"name": "drag",
 						"meta": {
-							"title": "拖拽排序"
+							"title": "拖拽排序",
+							"type": "menu"
 						},
 						"component": "vab/drag"
 					},
@@ -25,7 +27,8 @@
 						"path": "/vab/chart",
 						"name": "chart",
 						"meta": {
-							"title": "图表 Echarts"
+							"title": "图表 Echarts",
+							"type": "menu"
 						},
 						"component": "vab/chart"
 					},
@@ -33,7 +36,8 @@
 						"path": "/vab/filterbar",
 						"name": "filterBar",
 						"meta": {
-							"title": "过滤器"
+							"title": "过滤器",
+							"type": "menu"
 						},
 						"component": "vab/filterBar"
 					},
@@ -41,7 +45,8 @@
 						"path": "/vab/print",
 						"name": "print",
 						"meta": {
-							"title": "打印"
+							"title": "打印",
+							"type": "menu"
 						},
 						"component": "vab/print"
 					}
@@ -52,14 +57,16 @@
 				"path": "/template",
 				"meta": {
 					"title": "模板",
-					"icon": "el-icon-files"
+					"icon": "el-icon-files",
+					"type": "menu"
 				},
 				"children": [
 					{
 						"path": "/template/blank",
 						"name": "blank",
 						"meta": {
-							"title": "空白模板"
+							"title": "空白模板",
+							"type": "menu"
 						},
 						"component": "template/blank"
 					},
@@ -67,7 +74,8 @@
 						"path": "/template/list",
 						"name": "list",
 						"meta": {
-							"title": "普通列表"
+							"title": "普通列表",
+							"type": "menu"
 						},
 						"component": "template/list"
 					},
@@ -75,7 +83,8 @@
 						"path": "/template/sideList",
 						"name": "sideList",
 						"meta": {
-							"title": "分栏列表"
+							"title": "分栏列表",
+							"type": "menu"
 						},
 						"component": "template/sideList"
 					},
@@ -84,6 +93,7 @@
 						"name": "show",
 						"meta": {
 							"title": "详情",
+							"type": "menu",
 							"hidden": true
 						},
 						"component": "template/show"
@@ -92,7 +102,8 @@
 						"path": "/template/itemList",
 						"name": "itemList",
 						"meta": {
-							"title": "个性列表"
+							"title": "个性列表",
+							"type": "menu"
 						},
 						"component": "template/itemList"
 					}
@@ -103,7 +114,8 @@
 				"path": "/other",
 				"meta": {
 					"title": "其他",
-					"icon": "el-icon-more"
+					"icon": "el-icon-more",
+					"type": "menu"
 				},
 				"children": [
 					{
@@ -111,7 +123,8 @@
 						"name": "外部链接",
 						"meta": {
 							"title": "外部链接",
-							"icon": "el-icon-link"
+							"icon": "el-icon-link",
+							"type": "menu"
 						},
 						"children": [
 							{
@@ -119,7 +132,7 @@
 								"name": "百度",
 								"meta": {
 									"title": "百度",
-									"target": "_blank"
+									"type": "link"
 								}
 							},
 							{
@@ -127,7 +140,7 @@
 								"name": "谷歌",
 								"meta": {
 									"title": "谷歌",
-									"target": "_blank"
+									"type": "link"
 								}
 							}
 						]
@@ -137,21 +150,24 @@
 						"name": "Iframe",
 						"meta": {
 							"title": "Iframe",
-							"icon": "el-icon-position"
+							"icon": "el-icon-position",
+							"type": "menu"
 						},
 						"children": [
 							{
 								"path": "https://vue3js.cn/docs/zh/",
-								"name": "VUE 3",
+								"name": "vue3",
 								"meta": {
-									"title": "VUE 3"
+									"title": "VUE 3",
+									"type": "iframe"
 								}
 							},
 							{
 								"path": "https://element-plus.org?id=1",
-								"name": "Element Plus",
+								"name": "elementplus",
 								"meta": {
-									"title": "Element Plus"
+									"title": "Element Plus",
+									"type": "iframe"
 								}
 							}
 						]
@@ -163,23 +179,25 @@
 				"path": "/test",
 				"meta": {
 					"title": "实验室",
-					"icon": "el-icon-folder"
-				},
-				"children": []
+					"icon": "el-icon-folder",
+					"type": "menu"
+				}
 			},
 			{
 				"name": "setting",
 				"path": "/setting",
 				"meta": {
 					"title": "配置",
-					"icon": "el-icon-setting"
+					"icon": "el-icon-setting",
+					"type": "menu"
 				},
 				"children": [
 					{
 						"path": "/setting/system",
 						"name": "system",
 						"meta": {
-							"title": "系统设置"
+							"title": "系统设置",
+							"type": "menu"
 						},
 						"component": "setting/system"
 					},
@@ -187,7 +205,8 @@
 						"path": "/setting/user",
 						"name": "user",
 						"meta": {
-							"title": "用户管理"
+							"title": "用户管理",
+							"type": "menu"
 						},
 						"component": "setting/user"
 					},
@@ -195,7 +214,8 @@
 						"path": "/setting/role",
 						"name": "role",
 						"meta": {
-							"title": "角色管理"
+							"title": "角色管理",
+							"type": "menu"
 						},
 						"component": "setting/role"
 					},
@@ -203,7 +223,8 @@
 						"path": "/setting/dic",
 						"name": "dic",
 						"meta": {
-							"title": "字典管理"
+							"title": "字典管理",
+							"type": "menu"
 						},
 						"component": "setting/dic"
 					},
@@ -211,7 +232,8 @@
 						"path": "/setting/menu",
 						"name": "settingMenu",
 						"meta": {
-							"title": "菜单管理"
+							"title": "菜单管理",
+							"type": "menu"
 						},
 						"component": "setting/menu"
 					},
@@ -219,7 +241,8 @@
 						"path": "/setting/client",
 						"name": "client",
 						"meta": {
-							"title": "应用管理"
+							"title": "应用管理",
+							"type": "menu"
 						},
 						"component": "setting/client"
 					},
@@ -227,7 +250,8 @@
 						"path": "/setting/log",
 						"name": "log",
 						"meta": {
-							"title": "系统日志"
+							"title": "系统日志",
+							"type": "menu"
 						},
 						"component": "setting/log"
 					}

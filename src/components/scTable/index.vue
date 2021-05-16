@@ -19,7 +19,9 @@
 			</el-table>
 		</div>
 		<div class="scTable-page">
-			<el-pagination background :small="true" :layout="paginationLayout" :total="total" :page-size="pageSize" v-model:currentPage="currentPage" @current-change="reload"></el-pagination>
+			<div class="scTable-pagination">
+				<el-pagination v-if="!hidePagination" background :small="true" :layout="paginationLayout" :total="total" :page-size="pageSize" v-model:currentPage="currentPage" @current-change="reload"></el-pagination>
+			</div>
 			<div class="scTable-do" v-if="!hideDo">
 				<el-button @click="refresh" icon="el-icon-refresh" circle style="margin-left:15px"></el-button>
 				<el-popover placement="top" title="设置" :width="500" trigger="click">
@@ -47,6 +49,7 @@
 			data: { type: Object, default: () => {} },
 			rowKey: { type: String, default: "" },
 			column: { type: Object, default: () => {} },
+			hidePagination: { type: Boolean, default: false },
 			hideDo: { type: Boolean, default: false },
 			stripe: { type: Boolean, default: false },
 			highlightCurrentRow: { type: Boolean, default: false },

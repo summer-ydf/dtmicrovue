@@ -12,47 +12,32 @@
 				</div>
 			</el-header>
 			<el-main class="nopadding">
-				<scTable ref="table" :apiObj="apiObj" stripe>
+				<scTable ref="table" :apiObj="apiObj" stripe highlightCurrentRow @currentChange="currentChange">
 					<el-table-column label="#" type="index" width="50"></el-table-column>
-					<el-table-column label="ID" prop="id" width="80"></el-table-column>
-					<el-table-column label="日志名" prop="id" width="150"></el-table-column>
-					<el-table-column label="请求接口" prop="id" width="150"></el-table-column>
-					<el-table-column label="请求方法" prop="id" width="150"></el-table-column>
-					<el-table-column label="客户端IP" prop="id" width="150"></el-table-column>
-					<el-table-column label="日志时间" prop="id" width="150"></el-table-column>
+					<el-table-column label="ID" prop="id" width="180"></el-table-column>
+					<el-table-column label="日志名" prop="name" width="150"></el-table-column>
+					<el-table-column label="请求接口" prop="url" width="150"></el-table-column>
+					<el-table-column label="请求方法" prop="type" width="150"></el-table-column>
+					<el-table-column label="用户" prop="user" width="150"></el-table-column>
+					<el-table-column label="客户端IP" prop="cip" width="150"></el-table-column>
+					<el-table-column label="日志时间" prop="time" width="150"></el-table-column>
 				</scTable>
 			</el-main>
 		</el-container>
 		<el-aside width="340px" style="border-left: 1px solid #e6e6e6;border-right: 0;padding:20px;">
-
-			<el-descriptions title="基础信息" :column="1" size="small">
-				<el-descriptions-item label="请求接口">/oauth/token</el-descriptions-item>
-				<el-descriptions-item label="请求方法">POST</el-descriptions-item>
-				<el-descriptions-item label="状态代码">200</el-descriptions-item>
-				<el-descriptions-item label="日志名">登录用户验证</el-descriptions-item>
-				<el-descriptions-item label="日志时间">2021-05-15 22:15:35</el-descriptions-item>
-			</el-descriptions>
-
-			<el-collapse>
-				<el-collapse-item title="Request" name="1">
-					<div>
-						Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198
-						Safari/537.36
-					</div>
-				</el-collapse-item>
-				<el-collapse-item title="Response" name="2">
-					<div>
-						id=100
-					</div>
-				</el-collapse-item>
-			</el-collapse>
+			<info ref="info"></info>
 		</el-aside>
 	</el-container>
 </template>
 
 <script>
+	import info from './info'
+
 	export default {
 		name: 'log',
+		components: {
+			info
+		},
 		data() {
 			return {
 				apiObj: this.$API.log.list,
@@ -64,6 +49,9 @@
 		methods: {
 			upsearch(){
 
+			},
+			currentChange(row){
+				this.$refs.info.setData(row)
 			}
 		}
 	}

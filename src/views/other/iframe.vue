@@ -6,8 +6,11 @@
 	export default {
 		data() {
 			return {
-				src: decodeURIComponent(this.$route.fullPath.substr(1))
+				src: this.$route.meta.url
 			}
+		},
+		mounted() {
+			
 		}
 	}
 </script>

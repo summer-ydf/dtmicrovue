@@ -24,6 +24,18 @@
 				activities: [
 					{
 						content: [
+							"[新增] 组件sortablejs",
+							"[新增] 7类系统基础页面",
+							"[新增] 表格新增params，hidePagination参数",
+							"[新增] 新的全局组件 sc-upload",
+							"[优化] 路由表新增type属性 判断菜单、链接等",
+							"[优化] iframe的表现形式,地址栏用别名代替",
+							'[修复] 图表和表格切换标签时宽高异常'
+						],
+						timestamp: '2021-05-16'
+					},
+					{
+						content: [
 							"[新增] 打印工具",
 							"[新增] 移动端菜单布局",
 							'[修复] scEcharts数据双向绑定'
