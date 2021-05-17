@@ -49,6 +49,15 @@
 							"type": "menu"
 						},
 						"component": "vab/print"
+					},
+					{
+						"path": "/vab/upload",
+						"name": "upload",
+						"meta": {
+							"title": "上传",
+							"type": "menu"
+						},
+						"component": "vab/upload"
 					}
 				]
 			},
