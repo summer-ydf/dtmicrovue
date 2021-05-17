@@ -17,7 +17,6 @@
 					</template>
 				</el-table-column>
 				<el-table-column label="秘钥" prop="secret" show-overflow-tooltip width="150"></el-table-column>
-				<el-table-column label="类型" prop="type" width="250"></el-table-column>
 				<el-table-column label="授权到期" prop="exp" width="150"></el-table-column>
 				<el-table-column label="操作" fixed="right" align="right" width="120">
 					<template #default="scope">
