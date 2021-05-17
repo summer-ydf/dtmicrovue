@@ -4,7 +4,7 @@
 			<div class="left-panel">
 				<el-button type="primary" icon="el-icon-plus" @click="add"></el-button>
 				<el-button type="danger" plain icon="el-icon-delete" :disabled="selection.length==0" @click="batch_del"></el-button>
-				<el-button type="primary" plain :disabled="selection.length==0">权限设置</el-button>
+				<el-button type="primary" plain :disabled="selection.length!=1" @click="permission">权限设置</el-button>
 			</div>
 			<div class="right-panel">
 				<div class="right-panel-search">
@@ -43,15 +43,25 @@
 		</template>
 	</el-dialog>
 
+	<el-dialog title="角色权限设置" v-model="permissionDialogVisible" :width="400" destroy-on-close>
+		<permission-dialog ref="permissionDialog"></permission-dialog>
+		<template #footer>
+			<el-button @click="permissionDialogVisible=false" >取 消</el-button>
+			<el-button type="primary" @click="savePermission()" :loading="isPermissionSaveing">保 存</el-button>
+		</template>
+	</el-dialog>
+
 </template>
 
 <script>
 	import saveDialog from './save'
+	import permissionDialog from './permission'
 
 	export default {
 		name: 'role',
 		components: {
-			saveDialog
+			saveDialog,
+			permissionDialog
 		},
 		data() {
 			return {
@@ -69,6 +79,9 @@
 				},
 				isSaveing: false,
 
+				//权限
+				permissionDialogVisible: false,
+				isPermissionSaveing: false
 			}
 		},
 		methods: {
@@ -145,6 +158,14 @@
 			//表格选择后回调事件
 			selectionChange(selection){
 				this.selection = selection;
+			},
+			//权限设置
+			permission(){
+				this.permissionDialogVisible = true;
+			},
+			savePermission(){
+				this.$message.success("操作成功")
+				this.permissionDialogVisible = false;
 			},
 			//搜索
 			upsearch(){

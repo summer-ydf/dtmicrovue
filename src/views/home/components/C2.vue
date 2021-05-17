@@ -24,6 +24,14 @@
 				activities: [
 					{
 						content: [
+							"[优化] 控制台自由布局开关",
+							"[优化] 增加菜单管理新增和删除",
+							'[优化] 角色管理增加权限配置'
+						],
+						timestamp: '2021-05-17'
+					},
+					{
+						content: [
 							"[新增] 组件sortablejs",
 							"[新增] 7类系统基础页面",
 							"[新增] 表格新增params，hidePagination参数",

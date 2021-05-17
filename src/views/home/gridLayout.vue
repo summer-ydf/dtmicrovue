@@ -1,14 +1,17 @@
 <template>
+	<div class="diy-grid-setting" @click.stop="setting">
+		<i class="el-icon-setting"></i>
+	</div>
 	<div class="diy-grid-layout">
 		<el-row :gutter="15">
 			<el-col v-for="(item, index) in grid.layout" v-bind:key="index" :md="item" :xs="24">
-				<draggable v-model="grid.copmsList[index]" :disabled="false" animation="200" handle=".el-card__header" group="people" @end="end" item-key="com">
+				<draggable v-model="grid.copmsList[index]" :disabled="!isDiy" animation="200" handle=".el-card__header" group="people" @end="end" item-key="com">
 					<template #item="{ element }">
 						<div>
-							<el-card shadow="hover" style="margin-bottom:15px;">
+							<el-card shadow="hover" style="margin-bottom:15px;" :class="isDiy?'move':''">
 								<template #header>
 									<span>{{element.title}}</span>
-									<el-dropdown trigger="click">
+									<el-dropdown trigger="click" v-if="isDiy">
 										<span class="el-dropdown-link">
 											<i class="el-icon-menu"></i>
 										</span>
@@ -86,6 +89,15 @@
 		</template>
 	</el-dialog>
 
+	<el-drawer title="布局设置" v-model="settingDialog" :size="300" destroy-on-close>
+		<el-form ref="form" label-width="120px" label-position="left" style="padding:0 20px;">
+			<el-form-item label="自由拖拽">
+				<el-switch v-model="isDiy"></el-switch>
+			</el-form-item>
+			<el-divider></el-divider>
+		</el-form>
+	</el-drawer>
+
 </template>
 
 
@@ -102,6 +114,8 @@
 		},
 		data() {
 			return {
+				settingDialog: false,
+				isDiy: false,
 				allComps: allComps,
 				allCompsList: [],
 				showPush: false,
@@ -211,17 +225,24 @@
 			backDefaul(){
 				this.grid =  JSON.parse(JSON.stringify(this.defaultGrid));
 				this.$TOOL.data.remove("grid");
+			},
+			//设置
+			setting(){
+				this.settingDialog = true;
 			}
 		}
 	}
 </script>
 
 <style>
+	.diy-grid-setting {position: fixed;width:40px;height:40px;border-radius: 3px 0 0 3px;bottom:40px;right:0px;z-index: 100;background: #409EFF;display: flex;flex-direction: column;align-items: center;justify-content: center;cursor: pointer;}
+	.diy-grid-setting i {font-size: 18px;color: #fff;}
+
+	.diy-grid-layout .el-card.move .el-card__header {cursor: move;}
 	.diy-grid-layout .el-card__header {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		cursor: move;
 	}
 	.diy-grid-layout .el-card__header .el-dropdown-link {
 		color: #999;
