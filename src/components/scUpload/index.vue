@@ -104,7 +104,7 @@
 	.sc-upload-uploader {border: 1px dashed #d9d9d9;box-sizing: border-box;width: 100%;height: 100%;}
 	.sc-upload-uploader:hover {border: 1px dashed #409eff;}
 	.sc-upload-uploader .uploader {width: 100%;height: 100%;}
-	.sc-upload-uploader >>> .el-upload  {width: 100%;height: 100%;}
+	.sc-upload-uploader:v-deep .el-upload  {width: 100%;height: 100%;}
 
 	.sc-upload-uploader .file-empty {width: 100%;height: 100%;line-height: 1;display: flex;flex-direction: column;align-items: center;justify-content: center;}
 	.sc-upload-uploader .file-empty i {font-size: 28px;color: #8c939d;}
