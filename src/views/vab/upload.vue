@@ -31,17 +31,28 @@
 			</el-form>
 		</el-card>
 
+		<el-card shadow="never" header="多选">
+			<sc-upload-multiple v-model="imgs" :action="uploadUrl"></sc-upload-multiple>
+			<el-input v-model="imgs"></el-input>
+		</el-card>
+
 	</el-main>
 </template>
 
 <script>
+	import multiple from '@/components/scUpload/multiple'
+
 	export default {
 		name: 'upload',
+		components: {
+			scUploadMultiple: multiple
+		},
 		data() {
 			return {
 				uploadUrl: this.$API.demo.upload.url,
 				imgurl: "images/avatar.jpg",
 				avatar: "",
+				imgs: "images/avatar.jpg,images/avatar.jpg",
 				form: {
 					img1: "",
 					img2: "",

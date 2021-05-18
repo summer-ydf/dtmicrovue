@@ -4,7 +4,8 @@
 			<div class="mask">
 				<span class="del" @click.stop="del"><i class="el-icon-delete"></i></span>
 			</div>
-			<el-image class="file" :src="tempImg || img" :preview-src-list="[img]" fit="cover" hide-on-click-modal append-to-body></el-image>
+			<el-image v-if="fileIsImg" class="image" :src="tempImg || img" :preview-src-list="[img]" fit="cover" hide-on-click-modal append-to-body></el-image>
+			<a v-else :href="img" class="file" target="_blank"><i class="el-icon-document"></i></a>
 		</div>
 		<div v-else class="sc-upload-uploader">
 			<el-upload ref="upload" class="uploader" :accept="accept" :action="action" :show-file-list="false" :before-upload="before" :on-success="success" :on-error="error">
@@ -26,18 +27,19 @@
 			accept: { type: String, default: ".jpg, .png, .jpeg, .gif" },
 			maxSize: { type: Number, default: 10 },
 			title: { type: String, default: "上传" },
-			icon: { type: String, default: "el-icon-plus" },
-			multiple: { type: Boolean, default: false },
+			icon: { type: String, default: "el-icon-plus" }
 		},
 		data() {
 			return {
 				loading: false,
+				fileIsImg: true,
 				img: "",
 				tempImg: ""
 			}
 		},
 		watch:{
 			modelValue(){
+				this.isImg(this.modelValue)
 				this.img = this.modelValue;
 			},
 			img(){
@@ -45,15 +47,26 @@
 			}
 		},
 		mounted() {
+			this.isImg(this.modelValue)
 			this.img = this.modelValue;
 		},
 		methods: {
+			isImg(fileUrl){
+				var strRegex = "(.jpg|.png|.gif|.jpeg)$";
+				var re = new RegExp(strRegex);
+				if (re.test(fileUrl.toLowerCase())){
+					this.fileIsImg=true;
+				}else{
+					this.fileIsImg=false;
+				}
+			},
 			before(file){
 				const maxSize = file.size / 1024 / 1024 < this.maxSize;
 				if (!maxSize) {
 					this.$message.warning('上传文件大小不能超过 10MB!');
 					return false;
 				}
+				this.isImg(file.name)
 				this.tempImg = URL.createObjectURL(file);
 				this.loading = true;
 			},
@@ -97,8 +110,10 @@
 	.sc-upload-file .mask span {display: inline-block;width: 25px;height:25px;line-height: 23px;text-align: center;cursor: pointer;color: #fff;}
 	.sc-upload-file .mask span i {font-size: 12px;}
 	.sc-upload-file .mask .del {background: #F56C6C;}
-	.sc-upload-file .file {width: 100%;height: 100%;}
-	.sc-upload-file .file img {vertical-align: bottom;}
+	.sc-upload-file .image {width: 100%;height: 100%;}
+	.sc-upload-file .image img {vertical-align: bottom;}
+	.sc-upload-file .file {width: 100%;height: 100%;display: flex;flex-direction: column;align-items: center;justify-content: center;border: 1px solid #DCDFE6;}
+	.sc-upload-file .file i {font-size: 30px;color: #409EFF;}
 	.sc-upload-file:hover .mask {display: inline-block;}
 
 	.sc-upload-uploader {border: 1px dashed #d9d9d9;box-sizing: border-box;width: 100%;height: 100%;}
