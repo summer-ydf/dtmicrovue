@@ -8,7 +8,7 @@
 					</div>
 					<div v-else>
 						<div class="mask">
-							<span class="del" @click.stop="del"><i class="el-icon-delete"></i></span>
+							<span class="del" @click.stop="del(index)"><i class="el-icon-delete"></i></span>
 						</div>
 						<el-image class="image" :src="file.url" :preview-src-list="[file.url]" fit="cover" hide-on-click-modal append-to-body></el-image>
 					</div>
@@ -17,7 +17,7 @@
 		</div>
 
 		<div class="sc-upload-uploader">
-			<el-upload ref="upload" :action="action" :accept="accept" multiple :show-file-list="true"  :before-upload="before" :on-success="success" :on-error="error">
+			<el-upload ref="upload" :action="action" :accept="accept" multiple :show-file-list="true" :file-list="defaultList" :before-upload="before" :on-success="success" :on-remove="remove" :on-error="error">
 				<el-button size="small" type="primary">点击上传</el-button>
 			</el-upload>
 		</div>
@@ -33,35 +33,39 @@
 		},
 		data(){
 			return {
+				defaultList: this.toArr(this.modelValue),
 				fileList: []
 			}
 		},
 		watch:{
-			// modelValue(){
-			// 	this.fileList = this.toArr(this.modelValue);
-			// },
-			// fileList: {
-			// 	handler(){
-			// 		this.$emit('update:modelValue', this.toStr(this.fileList));
-			// 	},
-			// 	deep: true
-			// }
+			modelValue(){
+
+			},
+			fileList: {
+				handler(val){
+					this.$emit('update:modelValue', this.toStr(val));
+				},
+				deep: true
+			}
 		},
 		mounted() {
-			this.fileList = this.toArr(this.modelValue);
-			this.$refs.upload.uploadFiles = this.fileList
+			this.fileList = this.$refs.upload.uploadFiles
+
 		},
 		methods: {
+
 			//默认值转换为数组
 			toArr(str){
 				var _arr = [];
 				var arr = str.split(",");
 				arr.forEach(item => {
-					_arr.push({
-						name: "F",
-						status: "success",
-						url: item
-					})
+					if(item){
+						_arr.push({
+							name: "F",
+							status: "success",
+							url: item
+						})
+					}
 				})
 				return _arr;
 			},
@@ -75,15 +79,13 @@
 				return str;
 			},
 			before(){
-				this.fileList = this.$refs.upload.uploadFiles;
-				this.fileList.forEach(item => {
-					if(item.status!='success'){
-						item.tempURL = URL.createObjectURL(item.raw);
-					}
-				})
+				console.log(this.$refs.upload.uploadFiles);
 			},
 			success(res, file){
 				file.url = res.data.src
+			},
+			remove(){
+
 			},
 			error(err){
 				this.$notify.error({

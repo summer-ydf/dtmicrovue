@@ -52,7 +52,7 @@
 				uploadUrl: this.$API.demo.upload.url,
 				imgurl: "images/avatar.jpg",
 				avatar: "",
-				imgs: "images/avatar.jpg,images/avatar.jpg",
+				imgs: "images/avatar.jpg,images/avatar2.gif,images/avatar3.gif",
 				form: {
 					img1: "",
 					img2: "",
