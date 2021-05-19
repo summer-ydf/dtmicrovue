@@ -60,13 +60,13 @@
 				},
 				rules: {
 					img1: [
-						{required: true, message: '请上传', trigger: 'blur'}
+						{required: true, message: '请上传', trigger: 'change'}
 					],
 					img2: [
-						{required: true, message: '请上传', trigger: 'blur'}
+						{required: true, message: '请上传', trigger: 'change'}
 					],
 					date: [
-						{required: true, message: '请选择日期', trigger: 'blur'}
+						{required: true, message: '请选择日期', trigger: 'change'}
 					]
 				}
 			}
