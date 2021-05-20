@@ -21,6 +21,9 @@
 						</el-form-item>
 					</el-col>
 				</el-form-item>
+				<el-form-item label="其他凭证" prop="img3">
+					<sc-upload-multiple v-model="form.img3" :action="uploadUrl"></sc-upload-multiple>
+				</el-form-item>
 				<el-form-item label="日期" prop="date">
 					<el-date-picker type="date" placeholder="选择日期" v-model="form.date"></el-date-picker>
 				</el-form-item>
@@ -29,11 +32,6 @@
 				    <el-button @click="resetForm">重置</el-button>
 				</el-form-item>
 			</el-form>
-		</el-card>
-
-		<el-card shadow="never" header="多选">
-			<sc-upload-multiple v-model="imgs" :action="uploadUrl"></sc-upload-multiple>
-			<el-input v-model="imgs"></el-input>
 		</el-card>
 
 	</el-main>
@@ -56,6 +54,7 @@
 				form: {
 					img1: "",
 					img2: "",
+					img3: "",
 					date: ""
 				},
 				rules: {
@@ -63,6 +62,9 @@
 						{required: true, message: '请上传', trigger: 'change'}
 					],
 					img2: [
+						{required: true, message: '请上传', trigger: 'change'}
+					],
+					img3: [
 						{required: true, message: '请上传', trigger: 'change'}
 					],
 					date: [
@@ -75,7 +77,8 @@
 			submitForm(){
 				this.$refs.ruleForm.validate((valid) => {
 					if (valid) {
-						alert('submit!');
+						alert('请看控制台输出');
+						console.log(this.form);
 					}else{
 						return false;
 					}

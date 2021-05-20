@@ -3,29 +3,36 @@
 
 		<div class="sc-upload-list">
 			<ul>
-				<li v-for="(file, index) in defaultFileList" :key="index">
-					<div v-if="file.status!='success'">
-						loading
+				<li v-for="(file, index) in fileList" :key="index">
+					<div v-if="file.status!='success'" class="sc-upload-item" v-loading="true" element-loading-background="rgba(0, 0, 0, 0.5)">
+						<el-image class="image" :src="file.tempImg" fit="cover"></el-image>
 					</div>
-					<div v-else>
+					<div v-else class="sc-upload-item">
 						<div class="mask">
 							<span class="del" @click.stop="del(index)"><i class="el-icon-delete"></i></span>
 						</div>
-						<el-image class="image" :src="file.url" :preview-src-list="preview" :initial-index="index" fit="cover" hide-on-click-modal append-to-body></el-image>
+						<el-image class="image" :src="file.url" fit="cover" :preview-src-list="preview" hide-on-click-modal append-to-body>
+							<template #placeholder>
+								<div class="image-slot">
+								    <i class="el-icon-more"></i>
+								</div>
+							</template>
+						</el-image>
 					</div>
 				</li>
 			</ul>
-			{{defaultFileList}}
 		</div>
 
 		<div class="sc-upload-uploader">
-			<el-upload ref="upload" class="uploader" :action="action" :accept="accept" multiple  :show-file-list="false" :before-upload="before" :on-progress="progress" :on-success="success" :on-change="change" :on-remove="remove" :on-error="error">
+			<el-upload ref="upload" class="uploader" :action="action" :accept="accept" multiple  :show-file-list="false" :file-list="defaultFileList" :before-upload="before" :on-progress="progress" :on-success="success" :on-change="change" :on-remove="remove" :on-error="error">
 				<div class="file-empty">
 					<i :class="icon"></i>
 					<h4>{{title}}</h4>
 				</div>
 			</el-upload>
 		</div>
+
+		<el-input v-model="value" style="display:none"></el-input>
 	</div>
 </template>
 
@@ -40,28 +47,52 @@
 		},
 		data(){
 			return {
-				defaultFileList: this.toArr(this.modelValue)
+				value: "",
+				defaultFileList: [],
+				fileList: []
 			}
 		},
 		watch:{
-			modelValue(val){
-				this.defaultFileList = this.toArr(val)
+			modelValue(){
+				this.fileList = this.modelValuetoArr
+				this.value = this.modelValue
 			},
-			defaultFileList: {
-				handler(val){
-					console.log(val);
-					this.$emit('update:modelValue', this.toStr(val));
+			fileList: {
+				handler(){
+					if(this.isAllSuccess){
+						this.$emit('update:modelValue', this.fileListtoStr);
+					}
 				},
-				//deep: true
+				deep: true
 			}
 		},
 		computed: {
+			modelValuetoArr(){
+				return this.toArr(this.modelValue)
+			},
+			fileListtoStr(){
+				return this.toStr(this.fileList)
+			},
 			preview(){
-				return this.defaultFileList.map(v => v.url)
+				return this.fileList.map(v => v.url)
+			},
+			isAllSuccess(){
+				var all_length = this.fileList.length;
+				var success_length = 0
+				this.fileList.forEach(item => {
+					if(item.status == "success"){
+						success_length += 1
+					}
+				})
+
+				return success_length == all_length
+
 			}
 		},
 		mounted() {
-
+			this.defaultFileList = this.toArr(this.modelValue);
+			this.fileList = this.toArr(this.modelValue)
+			this.value = this.modelValue
 		},
 		methods: {
 			//默认值转换为数组
@@ -83,7 +114,9 @@
 			toStr(arr){
 				var _arr = [];
 				arr.forEach(item => {
-					_arr.push(item.url)
+
+						_arr.push(item.url)
+
 				})
 				var str = _arr.join(",")
 				return str;
@@ -91,12 +124,9 @@
 			before(){
 
 			},
-			change(file){
-				if(file.status =='ready'){
-					file.aa = "123"
-					file.url = URL.createObjectURL(file.raw);
-					this.defaultFileList.push(file)
-				}
+			change(file, fileList){
+				file.tempImg = URL.createObjectURL(file.raw);
+				this.fileList = fileList
 			},
 			success(res, file){
 				file.url = res.data.src
@@ -114,8 +144,8 @@
 				})
 			},
 			del(index){
-				this.defaultFileList.splice(index, 1);
-				this.$refs.upload.uploadFiles.splice(index-this.defaultFileList.length-1, 1);
+				this.fileList.splice(index, 1);
+				this.$refs.upload.uploadFiles.splice(index-this.fileList.length-1, 1);
 			}
 		}
 	}
@@ -123,18 +153,33 @@
 
 <style scoped>
 
+	.el-form-item.is-error .sc-upload-uploader {border: 1px dashed #F56C6C;}
+
 	.sc-upload-multiple {display: inline-block;}
 
 
+	.sc-upload-list {display: inline-block;}
+	.sc-upload-list li {list-style: none;display: inline-block;width: 120px;height: 120px;margin-right: 10px;}
 
-	.sc-upload-list li {list-style: none;    display: inline-block;width: 120px;height: 120px;}
+	.sc-upload-item {position: relative;width: 100%;height: 100%;}
+	.sc-upload-item .mask {display: none;position: absolute;top:0px;right:0px;line-height: 1;z-index: 1;}
+	.sc-upload-item .mask span {display: inline-block;width: 25px;height:25px;line-height: 23px;text-align: center;cursor: pointer;color: #fff;}
+	.sc-upload-item .mask span i {font-size: 12px;}
+	.sc-upload-item .mask .del {background: #F56C6C;}
+
+	.sc-upload-item:hover .mask {display: inline-block;}
+
+
 	.sc-upload-list .image {width: 100%;height: 100%;}
 
+	.sc-upload-list .image-slot {display: flex;justify-content: center;align-items: center;width: 100%;height: 100%;background: #f5f7fa;color: #909399;}
+	.sc-upload-list .image-slot i {font-size: 20px;}
 
 	.sc-upload-uploader {border: 1px dashed #d9d9d9;width: 120px;height: 120px;display: inline-block;vertical-align: top;box-sizing: border-box;}
 	.sc-upload-uploader:hover {border: 1px dashed #409eff;}
 	.sc-upload-uploader .uploader {width: 100%;height: 100%;}
 	.sc-upload-uploader:deep(.el-upload) {width: 100%;height: 100%;}
+
 
 	.sc-upload-uploader .file-empty {width: 100%;height: 100%;line-height: 1;display: flex;flex-direction: column;align-items: center;justify-content: center;}
 	.sc-upload-uploader .file-empty i {font-size: 28px;color: #8c939d;}
