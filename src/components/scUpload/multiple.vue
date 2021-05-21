@@ -39,6 +39,7 @@
 			modelValue: { type: String, default: "" },
 			action: { type: String, default: "#" },
 			accept: { type: String, default: ".jpg, .png, .jpeg, .gif" },
+			maxSize: { type: Number, default: 10 },
 			title: { type: String, default: "上传" },
 			icon: { type: String, default: "el-icon-plus" }
 		},
