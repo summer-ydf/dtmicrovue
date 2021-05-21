@@ -52,6 +52,7 @@
 		},
 		watch:{
 			modelValue(){
+				this.$refs.upload.uploadFiles=this.modelValuetoArr
 				this.fileList = this.modelValuetoArr
 				this.value = this.modelValue
 			},
