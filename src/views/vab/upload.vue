@@ -3,8 +3,13 @@
 
 		<el-card shadow="never" header="基础示例">
 			<sc-upload v-model="imgurl" :action="uploadUrl"></sc-upload>
-			<sc-upload v-model="avatar" :action="uploadUrl"></sc-upload>
-			<sc-upload v-model="avatar" title="上传头像" icon="el-icon-picture-outline" :action="uploadUrl"></sc-upload>
+			<sc-upload v-model="avatar" title="自定义" icon="el-icon-picture-outline" :action="uploadUrl"></sc-upload>
+			<sc-upload v-model="avatar" title="自定义" icon="el-icon-picture-outline" :action="uploadUrl" accept=".xls,.xlsx" :on-success="success" :width="220">
+				<div class="custom-empty">
+					<i class="el-icon-upload"></i>
+					<p>自定义插槽</p>
+				</div>
+			</sc-upload>
 		</el-card>
 
 		<el-card shadow="never" header="在验证表单中使用">
@@ -74,6 +79,14 @@
 			}
 		},
 		methods: {
+			success(response){
+				this.$alert(`success函数钩子，return false后阻止后续执行，回调参数打开控制台查看`, {
+					title: "提示",
+					type: "success"
+				})
+				console.log(response);
+				return false;
+			},
 			submitForm(){
 				this.$refs.ruleForm.validate((valid) => {
 					if (valid) {
@@ -96,4 +109,7 @@
 
 	.imglist {margin-bottom:0;}
 	.imglist .el-col+.el-col {margin-left: 10px;}
+	.custom-empty {width: 100%;height: 100%;line-height: 1;display: flex;flex-direction: column;align-items: center;justify-content: center;}
+	.custom-empty i {font-size: 40px;color: #8c939d;}
+	.custom-empty p {font-size: 12px;font-weight: normal;color: #8c939d;margin-top: 10px;}
 </style>

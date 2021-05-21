@@ -1,5 +1,5 @@
 <template>
-	<div class="sc-upload" v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.5)">
+	<div class="sc-upload" v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.5)" :style="style">
 		<div v-if="tempImg || img" class="sc-upload-file">
 			<div class="mask">
 				<span class="del" @click.stop="del"><i class="el-icon-delete"></i></span>
@@ -9,10 +9,12 @@
 		</div>
 		<div v-else class="sc-upload-uploader">
 			<el-upload ref="upload" class="uploader" :accept="accept" :action="action" :show-file-list="false" :before-upload="before" :on-success="success" :on-error="error">
-				<div class="file-empty">
-					<i :class="icon"></i>
-					<h4>{{title}}</h4>
-				</div>
+				<slot>
+					<div class="file-empty">
+						<i :class="icon"></i>
+						<h4>{{title}}</h4>
+					</div>
+				</slot>
 			</el-upload>
 		</div>
 		<el-input v-model="img" style="display:none"></el-input>
@@ -22,19 +24,26 @@
 <script>
 	export default {
 		props: {
+			height: {type: Number, default: 120},
+			width: {type: Number, default: 120},
 			modelValue: { type: String, default: "" },
 			action: { type: String, default: "#" },
 			accept: { type: String, default: ".jpg, .png, .jpeg, .gif" },
 			maxSize: { type: Number, default: 10 },
 			title: { type: String, default: "上传" },
-			icon: { type: String, default: "el-icon-plus" }
+			icon: { type: String, default: "el-icon-plus" },
+			onSuccess: { type: Function, default: () => { return true } }
 		},
 		data() {
 			return {
 				loading: false,
 				fileIsImg: true,
 				img: "",
-				tempImg: ""
+				tempImg: "",
+				style: {
+					width: this.width + "px",
+					height: this.height + "px"
+				}
 			}
 		},
 		watch:{
@@ -73,12 +82,15 @@
 			success(res){
 				this.loading = false;
 				this.tempImg = "";
+				var os = this.onSuccess(res);
+				if(os!=undefined && os==false){
+					return false;
+				}
 				if(res.code != 200){
 					this.$message.warning(res.message || "上传文件未知错误")
 				}else{
 					this.img = res.data.src;
 				}
-				this.$emit('on-success', res)
 			},
 			error(err){
 				this.$notify.error({
