@@ -1,5 +1,5 @@
 <template>
-	<el-tabs tab-position="left" style="height: 280px;">
+	<el-tabs tab-position="top">
 		<el-tab-pane label="菜单权限">
 			<div class="treeMain">
 				<el-tree ref="menu" node-key="name" :data="menu.list" :default-checked-keys="menu.checked" :props="menu.props" show-checkbox></el-tree>
