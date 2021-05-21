@@ -25,7 +25,7 @@
 			<el-upload ref="upload" class="uploader" :action="action" :accept="accept" multiple  :show-file-list="false" :file-list="defaultFileList" :before-upload="before" :on-progress="progress" :on-success="success" :on-change="change" :on-remove="remove" :on-error="error">
 				<div class="file-empty">
 					<i :class="icon"></i>
-					<h4>{{title}}</h4>
+					<h4 v-if="title">{{title}}</h4>
 				</div>
 			</el-upload>
 		</div>
@@ -40,7 +40,7 @@
 			action: { type: String, default: "#" },
 			accept: { type: String, default: ".jpg, .png, .jpeg, .gif" },
 			maxSize: { type: Number, default: 10 },
-			title: { type: String, default: "上传" },
+			title: { type: String, default: "" },
 			icon: { type: String, default: "el-icon-plus" }
 		},
 		data(){
@@ -144,7 +144,6 @@
 			},
 			del(index){
 				this.fileList.splice(index, 1);
-				this.$refs.upload.uploadFiles.splice(index-this.fileList.length-1, 1);
 			}
 		}
 	}

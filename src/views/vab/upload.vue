@@ -3,8 +3,8 @@
 
 		<el-card shadow="never" header="基础示例">
 			<sc-upload v-model="imgurl" :action="uploadUrl"></sc-upload>
-			<sc-upload v-model="avatar" title="自定义" icon="el-icon-picture-outline" :action="uploadUrl"></sc-upload>
-			<sc-upload v-model="avatar" title="自定义" icon="el-icon-picture-outline" :action="uploadUrl" accept=".xls,.xlsx" :on-success="success" :width="220">
+			<sc-upload v-model="avatar" title="自定义标题" icon="el-icon-picture-outline" :action="uploadUrl"></sc-upload>
+			<sc-upload v-model="avatar" :action="uploadUrl" accept=".xls,.xlsx" :on-success="success" :width="220">
 				<div class="custom-empty">
 					<i class="el-icon-upload"></i>
 					<p>自定义插槽</p>

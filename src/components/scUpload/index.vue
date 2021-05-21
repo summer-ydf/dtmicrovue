@@ -12,7 +12,7 @@
 				<slot>
 					<div class="file-empty">
 						<i :class="icon"></i>
-						<h4>{{title}}</h4>
+						<h4 v-if="title">{{title}}</h4>
 					</div>
 				</slot>
 			</el-upload>
@@ -30,7 +30,7 @@
 			action: { type: String, default: "#" },
 			accept: { type: String, default: ".jpg, .png, .jpeg, .gif" },
 			maxSize: { type: Number, default: 10 },
-			title: { type: String, default: "上传" },
+			title: { type: String, default: "" },
 			icon: { type: String, default: "el-icon-plus" },
 			onSuccess: { type: Function, default: () => { return true } }
 		},
