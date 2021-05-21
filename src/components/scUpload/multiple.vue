@@ -1,6 +1,5 @@
 <template>
 	<div class="sc-upload-multiple">
-
 		<div class="sc-upload-list">
 			<ul>
 				<li v-for="(file, index) in fileList" :key="index">
@@ -22,7 +21,6 @@
 				</li>
 			</ul>
 		</div>
-
 		<div class="sc-upload-uploader">
 			<el-upload ref="upload" class="uploader" :action="action" :accept="accept" multiple  :show-file-list="false" :file-list="defaultFileList" :before-upload="before" :on-progress="progress" :on-success="success" :on-change="change" :on-remove="remove" :on-error="error">
 				<div class="file-empty">
@@ -31,7 +29,6 @@
 				</div>
 			</el-upload>
 		</div>
-
 		<el-input v-model="value" style="display:none"></el-input>
 	</div>
 </template>
@@ -84,9 +81,7 @@
 						success_length += 1
 					}
 				})
-
 				return success_length == all_length
-
 			}
 		},
 		mounted() {
@@ -114,15 +109,17 @@
 			toStr(arr){
 				var _arr = [];
 				arr.forEach(item => {
-
-						_arr.push(item.url)
-
+					_arr.push(item.url)
 				})
 				var str = _arr.join(",")
 				return str;
 			},
-			before(){
-
+			before(file){
+				const maxSize = file.size / 1024 / 1024 < this.maxSize;
+				if (!maxSize) {
+					this.$message.warning('上传文件大小不能超过 10MB!');
+					return false;
+				}
 			},
 			change(file, fileList){
 				file.tempImg = URL.createObjectURL(file.raw);
@@ -159,7 +156,7 @@
 
 
 	.sc-upload-list {display: inline-block;}
-	.sc-upload-list li {list-style: none;display: inline-block;width: 120px;height: 120px;margin-right: 10px;}
+	.sc-upload-list li {list-style: none;display: inline-block;width: 120px;height: 120px;margin-right: 10px;vertical-align: top;box-sizing: border-box;}
 
 	.sc-upload-item {position: relative;width: 100%;height: 100%;}
 	.sc-upload-item .mask {display: none;position: absolute;top:0px;right:0px;line-height: 1;z-index: 1;}
