@@ -48,7 +48,7 @@
 				<el-tab-pane label="扩展配置">
 					<el-alert title="扩展配置为系统业务所有的配置，应该由系统管理员操作，如需用户配置应另起业务配置页面。" type="warning"></el-alert>
 
-					<el-table :data="setting" stripe @row-dblclick="table_edit">
+					<el-table :data="setting" stripe>
 						<el-table-column label="#" type="index" width="50"></el-table-column>
 						<el-table-column label="KEY" prop="key" width="150">
 							<template #default="scope">
@@ -58,7 +58,10 @@
 						</el-table-column>
 						<el-table-column label="VALUE" prop="value" width="350">
 							<template #default="scope">
-								<el-input v-if="scope.row.isSet" v-model="scope.row.value" placeholder="请输入内容"></el-input>
+								<template v-if="scope.row.isSet">
+									<el-switch v-if="typeof scope.row.value==='boolean'" v-model="scope.row.value"></el-switch>
+									<el-input v-else v-model="scope.row.value" placeholder="请输入内容"></el-input>
+								</template>
 								<span v-else>{{scope.row.value}}</span>
 							</template>
 						</el-table-column>
@@ -121,6 +124,11 @@
 						key: "crm_url",
 						value: "-",
 						title: "CRM地址"
+					},
+					{
+						key: "autoSwitch",
+						value: true,
+						title: "自动判断boolean类型"
 					}
 				]
 			}
