@@ -42,6 +42,11 @@
 				}
 			}
 		},
+		watch:{
+			modelValue(){
+				this.value = this.modelValue
+			},
+		},
 		mounted(){
 
 		},
