@@ -11,6 +11,10 @@
 						<p class="no-print">忽略打印</p>
 					</div>
 				</el-tab-pane>
+				<el-tab-pane label="动态打印">
+					<el-alert title="打印创建的DOM结构,适用于远程获取模板后打印" type="success" style="margin-bottom:20px;"></el-alert>
+					<el-button type="primary" @click="print2">动态打印</el-button>
+				</el-tab-pane>
 			</el-tabs>
 		</el-card>
 	</el-main>
@@ -26,7 +30,14 @@
 		},
 		methods: {
 			print(){
+				//直接传入REF或者querySelector
 				print(this.$refs.printMain)
+			},
+			print2(){
+				//创建虚拟DOM结构后再传入
+				var dom = document.createElement("div")
+					dom.innerHTML = "<div>后创建的DOM结构</div>"
+				print(dom)
 			}
 		}
 	}

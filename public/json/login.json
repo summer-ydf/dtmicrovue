@@ -58,6 +58,15 @@
 							"type": "menu"
 						},
 						"component": "vab/upload"
+					},
+					{
+						"path": "/vab/editor",
+						"name": "editor",
+						"meta": {
+							"title": "富文本编辑器",
+							"type": "menu"
+						},
+						"component": "vab/editor"
 					}
 				]
 			},

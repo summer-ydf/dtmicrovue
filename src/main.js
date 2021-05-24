@@ -14,6 +14,7 @@ import permission from './utils/permission'
 import scTable from './components/scTable'
 import scFilterBar from './components/scFilterBar'
 import scUpload from './components/scUpload'
+import scUploadMultiple from './components/scUpload/multiple'
 
 const app = createApp(App);
 
@@ -30,5 +31,6 @@ app.use(ElementPlus, {size: 'small', zIndex: 1000 ,locale: locale});
 app.component('scTable', scTable);
 app.component('scFilterBar', scFilterBar);
 app.component('scUpload', scUpload);
+app.component('scUploadMultiple', scUploadMultiple);
 
 app.mount('#app');

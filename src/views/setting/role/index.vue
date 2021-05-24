@@ -43,7 +43,7 @@
 		</template>
 	</el-dialog>
 
-	<el-dialog title="角色权限设置" v-model="permissionDialogVisible" :width="400" destroy-on-close>
+	<el-dialog title="角色权限设置" v-model="permissionDialogVisible" :width="500" destroy-on-close>
 		<permission-dialog ref="permissionDialog"></permission-dialog>
 		<template #footer>
 			<el-button @click="permissionDialogVisible=false" >取 消</el-button>

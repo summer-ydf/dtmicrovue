@@ -3,8 +3,8 @@
 
 		<el-card shadow="never" header="基础示例">
 			<sc-upload v-model="imgurl" :action="uploadUrl"></sc-upload>
-			<sc-upload v-model="avatar" title="自定义标题" icon="el-icon-picture-outline" :action="uploadUrl"></sc-upload>
-			<sc-upload v-model="avatar" :action="uploadUrl" accept=".xls,.xlsx" :on-success="success" :width="220">
+			<sc-upload v-model="imgurl2" title="自定义标题" icon="el-icon-picture-outline" :action="uploadUrl"></sc-upload>
+			<sc-upload v-model="imgurl3" :action="uploadUrl" accept=".xls,.xlsx" :on-success="success" :width="220">
 				<div class="custom-empty">
 					<i class="el-icon-upload"></i>
 					<p>自定义插槽</p>
@@ -43,19 +43,14 @@
 </template>
 
 <script>
-	import multiple from '@/components/scUpload/multiple'
-
 	export default {
 		name: 'upload',
-		components: {
-			scUploadMultiple: multiple
-		},
 		data() {
 			return {
 				uploadUrl: this.$API.demo.upload.url,
 				imgurl: "images/avatar.jpg",
-				avatar: "",
-				imgs: "images/avatar.jpg,images/avatar2.gif,images/avatar3.gif",
+				imgurl2: "",
+				imgurl3: "",
 				form: {
 					img1: "",
 					img2: "",
