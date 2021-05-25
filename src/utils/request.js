@@ -8,6 +8,7 @@ axios.defaults.timeout = 10000
 // HTTP request 拦截器
 axios.interceptors.request.use(
 	(config) => {
+		config.headers['Authorization'] = "SCUI-Demo-Auth"
 		return config;
 	},
 	(error) => {

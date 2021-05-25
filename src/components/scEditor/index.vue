@@ -11,6 +11,7 @@
 <script>
 	import ClassicEditor from './build-classic/ckeditor.js';
 	import CKEditor from './ckeditor.js';
+	import uploadAdapter from "./uploadAdapter.js";
 
 	export default {
 		components: {
@@ -50,9 +51,6 @@
 					},
 					table: {
 						contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells', 'tableCellProperties', 'tableProperties']
-					},
-					ckfinder: {
-						uploadUrl: 'https://www.fastmock.site/mock/44c807475f7eeba73409792255781935/api/upload'
 					}
 				}
 			}
@@ -69,6 +67,9 @@
 			onReady(editor) {
 				const toolbarContainer = document.querySelector('.toolbar-container');
 				toolbarContainer.prepend(editor.ui.view.toolbar.element);
+				editor.plugins.get("FileRepository").createUploadAdapter = loader => {
+					return new uploadAdapter(loader);
+				};
 			},
 			onEditorInput() {
 				this.$emit('update:modelValue', this.value);
@@ -97,7 +98,7 @@
 		border-top: 0;
 		resize: vertical;
 	}
-	
+
 	.content-container .ck-content {
 		margin: 0 auto;
 		background: #fff;

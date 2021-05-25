@@ -10,6 +10,15 @@ import http from "@/utils/request";
  */
 
 const api = {
+	default: {
+		upload: {
+			url: `${config.MOCK_URL}/upload`,
+			name: "文件上传",
+			post: async function(data){
+				return await http.post(this.url, data);
+			}
+		}
+	},
 	user: {
 		login: {
 			url: `${config.API_URL}/json/login.json`,
@@ -105,7 +114,10 @@ const api = {
 	demo: {
 		upload: {
 			url: `${config.MOCK_URL}/upload`,
-			name: "文件上传接口"
+			name: "文件上传接口",
+			post: async function(data){
+				return await http.post(this.url, data);
+			}
 		},
 		select: {
 			url: `${config.API_URL}/json/select.json`,
