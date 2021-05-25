@@ -22,7 +22,7 @@
 			</ul>
 		</div>
 		<div class="sc-upload-uploader">
-			<el-upload ref="upload" class="uploader" :action="action" :accept="accept" multiple  :show-file-list="false" :file-list="defaultFileList" :before-upload="before" :on-progress="progress" :on-success="success" :on-change="change" :on-remove="remove" :on-error="error">
+			<el-upload ref="upload" class="uploader" :action="action" :accept="accept" multiple  :show-file-list="false" :file-list="defaultFileList" :before-upload="before" :on-progress="progress" :on-success="success" :on-change="change" :on-remove="remove" :on-error="error" :http-request="request">
 				<div class="file-empty">
 					<i :class="icon"></i>
 					<h4 v-if="title">{{title}}</h4>
@@ -34,10 +34,13 @@
 </template>
 
 <script>
+	import API from "@/api";
+
 	export default {
 		props: {
 			modelValue: { type: String, default: "" },
-			action: { type: String, default: "#" },
+			action: { type: String, default: "" },
+			apiObj: { type: Object, default: () => {} },
 			accept: { type: String, default: ".jpg, .png, .jpeg, .gif" },
 			maxSize: { type: Number, default: 10 },
 			title: { type: String, default: "" },
@@ -144,6 +147,19 @@
 			},
 			del(index){
 				this.fileList.splice(index, 1);
+			},
+			request(param){
+				var apiObj = API.default.upload;
+				if(this.apiObj){
+					apiObj = this.apiObj;
+				}
+				const data = new FormData();
+				data.append("file", param.file);
+				apiObj.post(data).then(res => {
+					param.onSuccess(res)
+				}).catch(err => {
+					param.onError(err)
+				})
 			}
 		}
 	}

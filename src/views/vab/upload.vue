@@ -2,9 +2,9 @@
 	<el-main>
 
 		<el-card shadow="never" header="基础示例">
-			<sc-upload v-model="imgurl" :action="uploadUrl"></sc-upload>
-			<sc-upload v-model="imgurl2" title="自定义标题" icon="el-icon-picture-outline" :action="uploadUrl"></sc-upload>
-			<sc-upload v-model="imgurl3" :action="uploadUrl" accept=".xls,.xlsx" :on-success="success" :width="220">
+			<sc-upload v-model="imgurl"></sc-upload>
+			<sc-upload v-model="imgurl2" title="自定义标题" icon="el-icon-picture-outline"></sc-upload>
+			<sc-upload v-model="imgurl3" :apiObj="uploadApi" accept=".xls,.xlsx" :on-success="success" :width="220">
 				<div class="custom-empty">
 					<i class="el-icon-upload"></i>
 					<p>自定义插槽</p>
@@ -17,17 +17,17 @@
 				<el-form-item label="身份证" class="imglist" required>
 					<el-col>
 						<el-form-item prop="img1">
-							<sc-upload v-model="form.img1" title="人像面" :action="uploadUrl"></sc-upload>
+							<sc-upload v-model="form.img1" title="人像面"></sc-upload>
 						</el-form-item>
 					</el-col>
 					<el-col>
 						<el-form-item prop="img2">
-							<sc-upload v-model="form.img2" title="国徽面" :action="uploadUrl"></sc-upload>
+							<sc-upload v-model="form.img2" title="国徽面"></sc-upload>
 						</el-form-item>
 					</el-col>
 				</el-form-item>
 				<el-form-item label="其他凭证" prop="img3">
-					<sc-upload-multiple v-model="form.img3" :action="uploadUrl"></sc-upload-multiple>
+					<sc-upload-multiple v-model="form.img3"></sc-upload-multiple>
 				</el-form-item>
 				<el-form-item label="日期" prop="date">
 					<el-date-picker type="date" placeholder="选择日期" v-model="form.date"></el-date-picker>
@@ -47,7 +47,7 @@
 		name: 'upload',
 		data() {
 			return {
-				uploadUrl: this.$API.demo.upload.url,
+				uploadApi: this.$API.demo.upload,
 				imgurl: "images/avatar.jpg",
 				imgurl2: "",
 				imgurl3: "",
