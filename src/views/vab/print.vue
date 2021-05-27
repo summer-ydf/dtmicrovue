@@ -3,12 +3,13 @@
 		<el-card shadow="never">
 			<el-tabs tab-position="top">
 				<el-tab-pane label="普通打印">
-					<el-alert title="打印当前页面已存在的元素,如包含.no-print样式就忽略" type="success" style="margin-bottom:20px;"></el-alert>
+					<el-alert title="打印当前页面已存在的元素,如包含.no-print样式就忽略,分页打印就需要{page-break-after: always}控制" type="success" style="margin-bottom:20px;"></el-alert>
 					<el-button type="primary" @click="print">普通打印</el-button>
 					<div style="height:20px"></div>
 					<div class="printMain" ref="printMain">
-						打印内容
-						<p class="no-print">忽略打印</p>
+						<div class="item">打印内容1 <i class="el-icon-platform-eleme"></i> <p class="no-print">忽略打印</p></div>
+						<div style="page-break-after: always;"></div>
+						<div class="item">打印内容2</div>
 					</div>
 				</el-tab-pane>
 				<el-tab-pane label="动态打印">
@@ -35,8 +36,7 @@
 			},
 			print2(){
 				//创建虚拟DOM结构后再传入
-				var dom = document.createElement("div")
-					dom.innerHTML = "<div>后创建的DOM结构</div>"
+				var dom = "<h2>TITLE</h2><p>后创建的DOM结构</p>"
 				print(dom)
 			}
 		}
@@ -44,6 +44,6 @@
 </script>
 
 <style scoped>
-	.printMain {padding:20px;border: 1px solid #eee;}
+	.printMain .item{padding:20px;border: 1px solid #409eff;margin-bottom: 20px;background: #ecf5ff;border-radius: 4px;}
 	.printMain p {margin-top: 20px;color: #999;}
 </style>
