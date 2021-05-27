@@ -8,7 +8,13 @@ const Print = function(dom, options) {
 	}, options);
 
 	if ((typeof dom) === "string") {
-		this.dom = document.querySelector(dom);
+		try{
+			this.dom = document.querySelector(dom);
+		}catch{
+			var createDom = document.createElement("div")
+				createDom.innerHTML = dom
+			this.dom = createDom;
+		};
 	} else {
 		this.isDOM(dom)
 		this.dom = this.isDOM(dom) ? dom : dom.$el;
@@ -36,7 +42,7 @@ Print.prototype = {
 		}
 		str += "<style>" + (this.options.noPrint ? this.options.noPrint : '.no-print') +
 			"{display:none;}</style>";
-
+		str += "<style>html,body{background-color:#fff;}</style>";
 		return str;
 	},
 
