@@ -6,7 +6,7 @@ const DEFAULT_CONFIG = {
 	APP_VER: "1.1.1",
 
 	//接口地址
-	API_URL: "",
+	API_URL: ".",
 
 	//MOCK接口地址
 	MOCK_URL: "https://www.fastmock.site/mock/44c807475f7eeba73409792255781935/api",
