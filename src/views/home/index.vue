@@ -5,7 +5,7 @@
 				<el-card shadow="never">
 					<div class="welTop">
 						<div class="icon">
-							<el-avatar :size="60" src="images/avatar.jpg"></el-avatar>
+							<el-avatar :size="60" src="img/avatar.jpg"></el-avatar>
 						</div>
 						<div class="main">
 							<h2>嗨~ admin，忙碌了一上午，记得吃午饭哦。</h2>
@@ -14,13 +14,13 @@
 						<div class="icons hidden-sm-and-down">
 							<div class="avatar-list">
 								<el-tooltip content="Sakuya" placement="top">
-									<el-avatar class="avatar" :size="30" src="images/avatar.jpg"></el-avatar>
+									<el-avatar class="avatar" :size="30" src="img/avatar.jpg"></el-avatar>
 								</el-tooltip>
 								<el-tooltip content="Lolowan" placement="top">
-									<el-avatar class="avatar" :size="30" src="images/avatar2.gif"></el-avatar>
+									<el-avatar class="avatar" :size="30" src="img/avatar2.gif"></el-avatar>
 								</el-tooltip>
 								<el-tooltip content="Ali" placement="top">
-									<el-avatar class="avatar" :size="30" src="images/avatar3.gif"></el-avatar>
+									<el-avatar class="avatar" :size="30" src="img/avatar3.gif"></el-avatar>
 								</el-tooltip>
 							</div>
 							<p>Participants</p>

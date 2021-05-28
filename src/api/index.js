@@ -21,28 +21,28 @@ const api = {
 	},
 	user: {
 		login: {
-			url: `${config.API_URL}/json/login.json`,
+			url: `${config.MOCK_URL}/login`,
 			name: "登录获取用户菜单和权限",
 			get: async function(){
 				return await http.get(this.url);
 			}
 		},
 		list: {
-			url: `${config.API_URL}/json/user_list.json`,
+			url: `${config.MOCK_URL}/user_list`,
 			name: "获取用户列表",
 			get: async function(params={}){
 				return await http.get(this.url, params);
 			}
 		},
 		save: {
-			url: `${config.API_URL}/json/post.json`,
+			url: `${config.MOCK_URL}/post`,
 			name: "新增编辑用户",
 			post: async function(params={}){
 				return await http.get(this.url, params);
 			}
 		},
 		del: {
-			url: `${config.API_URL}/json/post.json`,
+			url: `${config.MOCK_URL}/post`,
 			name: "删除用户",
 			post: async function(params={}){
 				return await http.get(this.url, params);
@@ -51,14 +51,14 @@ const api = {
 	},
 	role: {
 		select: {
-			url: `${config.API_URL}/json/role.json`,
+			url: `${config.MOCK_URL}/role`,
 			name: "角色选择列表",
 			get: async function(){
 				return await http.get(this.url);
 			}
 		},
 		list: {
-			url: `${config.API_URL}/json/role.json`,
+			url: `${config.MOCK_URL}/role`,
 			name: "角色列表",
 			get: async function(){
 				return await http.get(this.url);
@@ -67,14 +67,14 @@ const api = {
 	},
 	dic: {
 		list: {
-			url: `${config.API_URL}/json/dic_list.json`,
+			url: `${config.MOCK_URL}/dic_list`,
 			name: "字典列表",
 			get: async function(){
 				return await http.get(this.url);
 			}
 		},
 		info: {
-			url: `${config.API_URL}/json/dic_info.json`,
+			url: `${config.MOCK_URL}/dic_info`,
 			name: "字典明细",
 			get: async function(params){
 				return await http.get(this.url, params);
@@ -83,7 +83,7 @@ const api = {
 	},
 	app: {
 		list: {
-			url: `${config.API_URL}/json/app.json`,
+			url: `${config.MOCK_URL}/app`,
 			name: "应用列表",
 			get: async function(){
 				return await http.get(this.url);
@@ -92,7 +92,7 @@ const api = {
 	},
 	menu: {
 		list: {
-			url: `${config.API_URL}/json/login.json`,
+			url: `${config.MOCK_URL}/login`,
 			name: "菜单管理",
 			get: async function(){
 				// 这里接口对象偷懒重复了登录接口

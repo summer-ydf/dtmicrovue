@@ -24,7 +24,7 @@
 						<el-checkbox label="记住我" v-model="ruleForm.autologin"></el-checkbox>
 					</el-form-item>
 					<el-form-item>
-						<el-button type="primary" style="width: 100%;" @click="submitForm('ruleForm')" round>登 录</el-button>
+						<el-button type="primary" style="width: 100%;" @click="submitForm('ruleForm')" :loading="islogin" round>登 录</el-button>
 					</el-form-item>
 				</el-form>
 
@@ -46,7 +46,7 @@
 <style scoped>
 	.login_container {position: absolute;top:50%;left:50%;width: 900px;margin: 0 auto;z-index: 1;transform: translate(-50%, -50%);}
 	.login_body {width: inherit;display: flex;box-shadow: 0px 20px 80px 0px rgba(0,0,0,0.3);}
-	.login-sidebox {width: 50%;background:url(/images/login-left.png) 0 0 no-repeat #607089;padding: 60px;color: #fff;position: relative;}
+	.login-sidebox {width: 50%;background:url(~@/assets/login-left.png) 0 0 no-repeat #607089;padding: 60px;color: #fff;position: relative;}
 
 	.login-logo {font-size: 35px;}
 	.login-logo i {margin-right: 10px;}
@@ -85,7 +85,8 @@
 					password: [
 						{required: true, message: '请输入密码', trigger: 'blur'}
 					]
-				}
+				},
+				islogin: false
 			}
 		},
 		created: function() {
@@ -103,6 +104,7 @@
 				})
 			},
 			login: async function() {
+				this.islogin = true;
 				var userInfo = await this.$API.user.login.get();
 				this.$TOOL.data.set("user", userInfo.data);
 				this.$router.replace({
