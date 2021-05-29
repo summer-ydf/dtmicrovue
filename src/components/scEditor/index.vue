@@ -53,15 +53,15 @@
 					language: 'zh_CN',
 					skin_url: '/tinymce/skins/ui/oxide',
 					menubar: false,
-					statusbar: false,
+					statusbar: true,
 					plugins: this.plugins,
 					toolbar: this.toolbar,
 					fontsize_formats: '12px 14px 16px 18px 20px 22px 24px 28px 32px 36px 48px 56px 72px',
 					height: 500,
 					placeholder: this.placeholder,
 					branding: false,
-					resize: false,
-					elementpath: false,
+					resize: true,
+					elementpath: true,
 					content_style: "",
 					images_upload_handler: async (blobInfo, success, failure) => {
 						const data = new FormData();
