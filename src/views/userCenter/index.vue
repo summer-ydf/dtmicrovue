@@ -5,7 +5,7 @@
 				<el-card shadow="never">
 					<div class="user-info">
 						<div class="user-info-top">
-							<el-avatar :size="80" src="images/avatar.jpg"></el-avatar>
+							<el-avatar :size="80" src="img/avatar.jpg"></el-avatar>
 							<h2>{{ form.name||'-' }}</h2>
 							<p>{{ form.about||'无签名' }}</p>
 							<el-button type="primary" round icon="el-icon-collection-tag" size="medium">Administrator</el-button>
