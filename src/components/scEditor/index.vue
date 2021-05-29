@@ -1,21 +1,26 @@
 <template>
 	<div class="sceditor">
-		<div class="toolbar-container"></div>
-		<div class="content-container">
-			<ckeditor v-model="value" :editor="editor" :config="editorConfig" :disabled="disabled" @ready="onReady"
-				@input="onEditorInput"></ckeditor>
-		</div>
+		<Editor v-model="contentValue" :init="init" :disabled="disabled" :placeholder="placeholder" @onClick="onClick" />
 	</div>
 </template>
 
 <script>
-	import ClassicEditor from './build-classic/ckeditor.js';
-	import CKEditor from './ckeditor.js';
-	import uploadAdapter from "./uploadAdapter.js";
+	import API from "@/api";
+	import Editor from '@tinymce/tinymce-vue'
+	import tinymce from 'tinymce/tinymce'
+	import 'tinymce/themes/silver'
+	import 'tinymce/icons/default'
+
+	// 引入编辑器插件
+	import 'tinymce/plugins/code'  //编辑源码
+	import 'tinymce/plugins/image'  //插入编辑图片
+	import 'tinymce/plugins/link'  //超链接
+	import 'tinymce/plugins/preview'//预览
+	import 'tinymce/plugins/table'  //表格
 
 	export default {
 		components: {
-			ckeditor: CKEditor.component
+			Editor
 		},
 		props: {
 			modelValue: {
@@ -30,81 +35,73 @@
 				type: Boolean,
 				default: false
 			},
+			plugins: {
+				type: [String, Array],
+				default: 'code image link preview table'
+			},
 			toolbar: {
-				type: Array,
-				default: () => { return ['heading', '|', 'fontSize', 'fontFamily', 'fontColor', '|', 'bold', 'italic', 'underline', 'strikethrough', '|', 'alignment', '|', 'bulletedList', 'numberedList', '|', 'outdent', 'indent', '|', 'todoList', 'blockQuote', 'link', 'imageUpload', 'mediaEmbed', 'insertTable', '|', 'undo', 'redo'] }
+				type: [String, Array],
+				default: 'undo redo |  forecolor backcolor bold italic underline strikethrough link | formatselect fontselect fontsizeselect | \
+					alignleft aligncenter alignright alignjustify outdent indent lineheight | bullist numlist | \
+					image table  preview | code selectall'
 			}
 		},
 		data() {
 			return {
-				value: this.modelValue,
-				editor: ClassicEditor,
-				editorConfig: {
+				init: {
+					language_url: '/tinymce/langs/zh_CN.js',
+					language: 'zh_CN',
+					skin_url: '/tinymce/skins/ui/oxide',
+					menubar: false,
+					statusbar: false,
+					plugins: this.plugins,
 					toolbar: this.toolbar,
+					fontsize_formats: '12px 14px 16px 18px 20px 22px 24px 28px 32px 36px 48px 56px 72px',
+					height: 500,
 					placeholder: this.placeholder,
-					fontSize: {
-						options: ['default', 10, 12, 14, 16, 18, 20, 24, 36]
+					branding: false,
+					resize: false,
+					elementpath: false,
+					content_style: "",
+					images_upload_handler: async (blobInfo, success, failure) => {
+						const data = new FormData();
+						data.append("file", blobInfo.blob() ,blobInfo.filename());
+						try {
+							const res = await API.default.upload.post(data)
+							success(res.data.src)
+						}catch (error) {
+							failure("Image upload failed")
+						}
 					},
-					image: {
-						styles: ['alignLeft', 'alignCenter', 'alignRight'],
-						toolbar: [ 'imageStyle:alignCenter', 'imageStyle:alignLeft', 'imageStyle:alignRight', '|', 'imageTextAlternative' ]
-					},
-					table: {
-						contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells', 'tableCellProperties', 'tableProperties']
+					setup: function(editor) {
+						editor.on('init', function() {
+							this.getBody().style.fontSize = '14px';
+						})
+
 					}
-				}
+				},
+				contentValue: this.modelValue
 			}
 		},
 		watch: {
-			modelValue() {
-				this.value = this.modelValue
+			modelValue(val) {
+				this.contentValue = val
 			},
+			contentValue(val){
+				this.$emit('update:modelValue', val);
+			}
 		},
 		mounted() {
-
+			tinymce.init({})
 		},
 		methods: {
-			onReady(editor) {
-				const toolbarContainer = document.querySelector('.toolbar-container');
-				toolbarContainer.prepend(editor.ui.view.toolbar.element);
-				editor.plugins.get("FileRepository").createUploadAdapter = loader => {
-					return new uploadAdapter(loader);
-				};
-			},
-			onEditorInput() {
-				this.$emit('update:modelValue', this.value);
+			onClick(e){
+				this.$emit('onClick', e, tinymce)
 			}
 		}
 	}
 </script>
 
 <style>
-	.sceditor {}
-	.ck .ck-placeholder:before {color: #bbb;}
-	.sceditor .ck-toolbar {
-		background: #fff;
-		border-color: #DCDFE6;
-		box-shadow: 2px 2px 1px rgba(0, 0, 0, .05);
-		position: relative;
-		z-index: 1;
-	}
-
-	.content-container {
-		background: #f6f8f9;
-		overflow-y: scroll;
-		padding: 30px;
-		height: 400px;
-		border: 1px solid #DCDFE6;
-		border-top: 0;
-		resize: vertical;
-	}
-
-	.content-container .ck-content {
-		margin: 0 auto;
-		background: #fff;
-		border: 1px solid #DCDFE6 !important;
-		box-shadow: 2px 2px 1px rgba(0, 0, 0, .05) !important;
-		padding: 40px;
-		min-height: 340px;
-	}
+.sceditor .tox .tox-editor-header {box-shadow: 2px 2px 1px rgba(0, 0, 0, .05);}
 </style>
