@@ -31,6 +31,10 @@
 				type: String,
 				default: ""
 			},
+			height: {
+				type: Number,
+				default: 300,
+			},
 			disabled: {
 				type: Boolean,
 				default: false
@@ -57,7 +61,7 @@
 					plugins: this.plugins,
 					toolbar: this.toolbar,
 					fontsize_formats: '12px 14px 16px 18px 20px 22px 24px 28px 32px 36px 48px 56px 72px',
-					height: 500,
+					height: this.height,
 					placeholder: this.placeholder,
 					branding: false,
 					resize: true,

@@ -1,7 +1,7 @@
 <template>
 	<el-main>
 		<el-card shadow="never">
-			<sc-editor v-model="html" placeholder="请输入"></sc-editor>
+			<sc-editor v-model="html" placeholder="请输入" :height="400"></sc-editor>
 		</el-card>
 	</el-main>
 </template>
