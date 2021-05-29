@@ -88,13 +88,14 @@
 			//获取所有视图组件
 			getViews(){
 				const filesUrl = []
-				let files = require.context('@/views', true, /\.vue$/)
-				files.keys().forEach(file => {
-					// 如需删除index? .replace(/\/index$/, "")
-					filesUrl.push({
-						value: file.replace(/^\.\/(.*)\.\w+$/, '$1')
-					})
-				})
+				//不知道为什么 require.context 会引起Webpack会一并把结果都打包进来使得此文件过大
+				// let files = require.context('@/views', true, /\.vue$/)
+				// files.keys().forEach(file => {
+				// 	// 如需删除index? .replace(/\/index$/, "")
+				// 	filesUrl.push({
+				// 		value: file.replace(/^\.\/(.*)\.\w+$/, '$1')
+				// 	})
+				// })
 				return filesUrl;
 			},
 			querySearch(queryString, cb){
