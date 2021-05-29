@@ -108,5 +108,4 @@
 </script>
 
 <style>
-.sceditor .tox .tox-editor-header {box-shadow: 2px 2px 1px rgba(0, 0, 0, .05);}
 </style>
