@@ -53,9 +53,10 @@
 		data() {
 			return {
 				init: {
-					language_url: '/tinymce/langs/zh_CN.js',
+					language_url: 'tinymce/langs/zh_CN.js',
 					language: 'zh_CN',
-					skin_url: '/tinymce/skins/ui/oxide',
+					skin_url: 'tinymce/skins/ui/oxide',
+					content_css: "tinymce/skins/content/default/content.css",
 					menubar: false,
 					statusbar: true,
 					plugins: this.plugins,
@@ -107,5 +108,4 @@
 </script>
 
 <style>
-.sceditor .tox .tox-editor-header {box-shadow: 2px 2px 1px rgba(0, 0, 0, .05);}
 </style>
