@@ -3,13 +3,19 @@ const DEFAULT_CONFIG = {
 	APP_NAME: "SCUI",
 
 	//版本号
-	APP_VER: "1.1.1",
+	APP_VER: "1.1.2",
 
 	//接口地址
 	API_URL: "",
 
 	//MOCK接口地址
 	MOCK_URL: "https://www.fastmock.site/mock/44c807475f7eeba73409792255781935/api",
+
+	//布局 默认：default | 通栏：header
+	LAYOUT: 'default',
+
+	//菜单是否折叠
+	MENU_IS_COLLAPSE: false,
 
 	//是否开启多标签
 	LAYOUT_TAGS: true,

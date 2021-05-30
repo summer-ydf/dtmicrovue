@@ -6,12 +6,14 @@
 		<el-menu-item v-if="!navMenu.children" :index="navMenu.path">
 			<a v-if="navMenu.meta&&navMenu.meta.type=='link'" :href="navMenu.path" target="_blank" @click.stop='a'></a>
 			<i v-if="navMenu.meta&&navMenu.meta.icon" :class="navMenu.meta.icon || 'el-icon-menu'"></i>
-			<span>{{navMenu.meta.title}}</span>
+			<template #title>
+				<span>{{navMenu.meta.title}}</span>
+			</template>
 		</el-menu-item>
 		<el-submenu v-if="navMenu.children" :index="navMenu.path">
 			<template #title>
 				<i v-if="navMenu.meta&&navMenu.meta.icon" :class="navMenu.meta.icon || 'el-icon-menu'"></i>
-				<span> {{navMenu.meta.title}}</span>
+				<span>{{navMenu.meta.title}}</span>
 			</template>
 			<NavMenu :navMenus="navMenu.children"></NavMenu>
 		</el-submenu>
