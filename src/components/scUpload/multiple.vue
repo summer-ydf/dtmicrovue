@@ -4,7 +4,7 @@
 			<ul>
 				<li v-for="(file, index) in fileList" :key="index">
 					<div v-if="file.status!='success'" class="sc-upload-item" v-loading="true" element-loading-background="rgba(0, 0, 0, 0.5)">
-						<el-image class="image" :src="file.tempImg" fit="cover"></el-image>
+						<el-image class="image" :src="file.tempImg" fit="cover" :z-index="9999"></el-image>
 					</div>
 					<div v-else class="sc-upload-item">
 						<div class="mask">

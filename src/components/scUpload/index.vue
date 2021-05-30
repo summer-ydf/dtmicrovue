@@ -4,7 +4,7 @@
 			<div class="mask">
 				<span class="del" @click.stop="del"><i class="el-icon-delete"></i></span>
 			</div>
-			<el-image v-if="fileIsImg" class="image" :src="tempImg || img" :preview-src-list="[img]" fit="cover" hide-on-click-modal append-to-body></el-image>
+			<el-image v-if="fileIsImg" class="image" :src="tempImg || img" :preview-src-list="[img]" fit="cover" hide-on-click-modal append-to-body :z-index="9999"></el-image>
 			<a v-else :href="img" class="file" target="_blank"><i class="el-icon-document"></i></a>
 		</div>
 		<div v-else class="sc-upload-uploader">
