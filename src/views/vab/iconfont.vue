@@ -1,10 +1,11 @@
 <template>
 	<el-main>
+		<el-alert title="扩展了Element Plus图标库,也可以使用阿里iconfont在@/assets/font中新增自己的图标库,记得在@style/style.less中引入" type="success" style="margin-bottom:20px;"></el-alert>
 		<el-row :gutter="0" class="box">
 			<el-col :span="4" v-for="(icon, index) in icons" :key="index" >
 				<div class="icon-box">
-					<i :class="'scicon-'+icon.font_class"></i>
-					<p>{{ 'scicon-'+icon.font_class }}</p>
+					<i :class="'sc-icon-'+icon.font_class"></i>
+					<p>{{ 'sc-icon-'+icon.font_class }}</p>
 				</div>
 			</el-col>
 		</el-row>
