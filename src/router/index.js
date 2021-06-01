@@ -1,5 +1,6 @@
 import {createRouter, createWebHashHistory} from 'vue-router';
 import { ElNotification } from 'element-plus';
+import config from "@/config"
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import tool from '@/utils/tool';
@@ -79,6 +80,9 @@ const router = createRouter({
 	history: createWebHashHistory(),
 	routes: routes
 })
+
+//设置标题
+document.title = config.APP_NAME
 
 //判断是否已加载过API路由
 var isGetApiRouter = false;

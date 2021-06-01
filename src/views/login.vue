@@ -4,7 +4,7 @@
 		<div class="login_body">
 			<div class="login-sidebox">
 				<div class="login-logo">
-					<i class="el-icon-platform-eleme"></i>{{appName}}
+					<img class="logo" :alt="appName" src="@/assets/logo.png">{{appName}}
 				</div>
 				<div class="login-title">
 					<h2>面面俱到的中后台前端框架</h2>
@@ -48,8 +48,8 @@
 	.login_body {width: inherit;display: flex;box-shadow: 0px 20px 80px 0px rgba(0,0,0,0.3);}
 	.login-sidebox {width: 50%;background:url(~@/assets/login-left.png) 0 0 no-repeat #607089;padding: 60px;color: #fff;position: relative;}
 
-	.login-logo {font-size: 35px;}
-	.login-logo i {margin-right: 10px;}
+	.login-logo {font-size: 35px;display: flex;align-items: center;}
+	.login-logo .logo {margin-right: 10px;width: 50px;height: 50px;}
 
 	.login-title {margin-top: 20px;}
 	.login-title h2 {font-size: 22px;font-weight: normal;}

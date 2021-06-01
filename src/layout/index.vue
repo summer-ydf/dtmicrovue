@@ -3,9 +3,9 @@
 	<template v-if="layout=='header'">
 		<header class="adminui-header">
 			<div class="adminui-header-left">
-				<div class="logo">
-					<i class="el-icon-platform-eleme"></i>
-					<span>SCUI-Admin</span>
+				<div class="logo-bar">
+					<img class="logo" :alt="appName" src="@/assets/logo.png">
+					<span>{{ $CONFIG.APP_NAME }}</span>
 				</div>
 				<ul v-if="!ismobile" class="nav">
 					<li v-for="item in menu" :key="item" :class="pmenu.path==item.path?'active':''" @click="showMenu(item)">
