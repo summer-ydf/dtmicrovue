@@ -24,6 +24,12 @@
 				activities: [
 					{
 						content: [
+							"[新增] 扩展图标"
+						],
+						timestamp: '2021-06-01'
+					},
+					{
+						content: [
 							"[新增] 布局实时演示",
 							"[优化] 抽离tinymce、echarts模块",
 							"[优化] 更换富文本编辑为tinymce",
