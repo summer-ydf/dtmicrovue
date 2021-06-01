@@ -25,6 +25,7 @@ const routes = [{
 						path: "/dashboard",
 						meta: {
 							title: "控制台",
+							icon: "el-icon-menu",
 							affix: true
 						},
 						component: () => import(/* webpackChunkName: "home" */ '@/views/home'),
@@ -33,7 +34,8 @@ const routes = [{
 						name: "userCenter",
 						path: "/usercenter",
 						meta: {
-							title: "个人信息"
+							title: "个人信息",
+							icon: "el-icon-user",
 						},
 						component: () => import(/* webpackChunkName: "usercenter" */ '@/views/userCenter'),
 					},
@@ -41,7 +43,8 @@ const routes = [{
 						name: "autocode",
 						path: "/autocode",
 						meta: {
-							title: "代码生成器"
+							title: "代码生成器",
+							icon: "el-icon-magic-stick",
 						},
 						component: () => import(/* webpackChunkName: "autocode" */ '@/views/autocode'),
 					}
