@@ -15,6 +15,7 @@ import scTable from './components/scTable'
 import scFilterBar from './components/scFilterBar'
 import scUpload from './components/scUpload'
 import scUploadMultiple from './components/scUpload/multiple'
+import scFormTable from './components/scFormTable'
 
 const app = createApp(App);
 
@@ -32,5 +33,6 @@ app.component('scTable', scTable);
 app.component('scFilterBar', scFilterBar);
 app.component('scUpload', scUpload);
 app.component('scUploadMultiple', scUploadMultiple);
+app.component('scFormTable', scFormTable);
 
 app.mount('#app');
