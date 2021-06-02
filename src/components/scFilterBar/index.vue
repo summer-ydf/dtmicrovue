@@ -94,7 +94,11 @@
 			async remoteMethod(query){
 				if(query !== ''){
 					this.selectLoading = true;
+					try {
 					var data = await this.addFilterForm.field.extend.request(query);
+					}catch (error) {
+						console.log(error);
+					}
 					this.addFilterForm.field.extend.data = data;
 					this.selectLoading = false;
 				}else{
@@ -105,7 +109,11 @@
 				if(isopen && this.addFilterForm.field.extend && this.addFilterForm.field.extend.request && !this.addFilterForm.field.extend.remote){
 					//如果字段类型为异步获取数据就在这里处理
 					this.selectLoading = true;
+					try {
 					var data = await this.addFilterForm.field.extend.request();
+					}catch (error) {
+						console.log(error);
+					}
 					this.addFilterForm.field.extend.data = data;
 					this.selectLoading = false;
 				}
