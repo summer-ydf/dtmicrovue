@@ -24,6 +24,12 @@
 				activities: [
 					{
 						content: [
+							"[优化] 代码生成器重构移位"
+						],
+						timestamp: '2021-06-03'
+					},
+					{
+						content: [
 							"[新增] 扩展图标"
 						],
 						timestamp: '2021-06-01'
