@@ -39,15 +39,6 @@ const routes = [{
 							icon: "el-icon-user",
 						},
 						component: () => import(/* webpackChunkName: "usercenter" */ '@/views/userCenter'),
-					},
-					{
-						name: "autocode",
-						path: "/autocode",
-						meta: {
-							title: "代码生成器",
-							icon: "el-icon-magic-stick",
-						},
-						component: () => import(/* webpackChunkName: "autocode" */ '@/views/autocode'),
 					}
 				]
 			}
