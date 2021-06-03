@@ -62,8 +62,11 @@
 		},
 		data() {
 			return {
-				apiObj: this.$API.role.list,
+				apiObj: this.$API.<%= api.list %>,
 				selection: [],
+				search: {
+					keyword: ""
+				},
 				saveDialogVisible: false,
 				saveMode: 'add',
 				titleMap: {
@@ -88,24 +91,23 @@
 				this.saveMode = 'edit';
 				this.saveDialogVisible = true;
 				this.$nextTick(() => {
-					//这里应该再次根据ID查询详情接口
+					//这里可以再次根据ID查询详情接口
 					this.$refs.saveDialog.setData(row)
 				})
-
 			},
 			//查看
 			table_show(row){
 				this.saveMode = 'show';
 				this.saveDialogVisible = true;
 				this.$nextTick(() => {
-					//这里应该再次根据ID查询详情接口
+					//这里可以再次根据ID查询详情接口
 					this.$refs.saveDialog.setData(row)
 				})
 			},
 			//删除
 			async table_del(row, index){
 				var reqData = {id: row.id}
-				var res = await this.$API.user.del.post(reqData);
+				var res = await this.$API.<%= api.del %>.post(reqData);
 				if(res.code == 200){
 					//这里选择刷新整个表格 OR 插入/编辑现有表格数据
 					this.$refs.table.tableData.splice(index, 1);
@@ -116,7 +118,7 @@
 			},
 			//批量删除
 			async batch_del(){
-				this.$confirm(`确定删除选中的 ${this.selection.length} 项吗？如果删除项中含有子集将会被一并删除`, '提示', {
+				this.$confirm(`确定删除选中的 ${this.selection.length} 项吗？`, '提示', {
 					type: 'warning'
 				}).then(() => {
 					const loading = this.$loading();
@@ -137,7 +139,7 @@
 			saveForm(){
 				this.$refs.saveDialog.submit(async (formData) => {
 					this.isSaveing = true;
-					var res = await this.$API.user.save.post(formData);
+					var res = await this.$API.<%= api.save %>.post(formData);
 					this.isSaveing = false;
 					if(res.code == 200){
 						//这里选择刷新整个表格 OR 插入/编辑现有表格数据
@@ -154,7 +156,7 @@
 			},
 			//搜索
 			upsearch(){
-			
+
 			}
 		}
 	}

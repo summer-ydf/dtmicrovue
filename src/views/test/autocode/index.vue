@@ -27,7 +27,7 @@
 			return {
 				list: [
 					{
-						title: "List",
+						title: "CRUD",
 						des: "配置型生成经典的增删改查列表",
 						icon: "sc-icon-file-list-fill",
 						ver: "1.0.0-beta.1",
