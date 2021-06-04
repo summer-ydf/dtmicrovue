@@ -2,15 +2,15 @@ const T = {
 	"color": [
 		"#409EFF",
 		"#36CE9E",
-		"#E6A23C",
+		"#f56e6a",
 		"#626c91",
-		"#F56C6C",
+		"#edb00d",
 		"#909399"
 	],
 	'grid': {
 		'left': '3%',
 		'right': '3%',
-		'bottom': '3%',
+		'bottom': '10',
 		'top': '40',
 		'containLabel': true
 	},
@@ -32,7 +32,7 @@ const T = {
 			"color": "#999"
 		},
 		"splitLine": {
-			"show": true,
+			"show": false,
 			"lineStyle": {
 				"color": [
 					"#eee"

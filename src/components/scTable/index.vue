@@ -88,6 +88,8 @@
 		mounted() {
 			if(this.apiObj){
 				this.getData();
+			}else{
+				this.tableData = this.data;
 			}
 		},
 		activated(){
