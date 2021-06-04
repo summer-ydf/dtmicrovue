@@ -19,6 +19,7 @@
 		},
 		data() {
 			return {
+				isActivat: false,
 				myChart: null
 			}
 		},
@@ -36,11 +37,17 @@
 			}
 		},
 		activated(){
-			this.$nextTick(() => {
-				this.myChart.resize()
-			})
+			if(!this.isActivat){
+				this.$nextTick(() => {
+					this.myChart.resize()
+				})
+			}
+		},
+		deactivated(){
+			this.isActivat = false;
 		},
 		mounted(){
+			this.isActivat = true;
 			this.draw();
 		},
 		methods: {
