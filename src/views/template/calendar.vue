@@ -21,7 +21,7 @@
 				<el-main>
 					<div class="task-list">
 						<template v-if="dayItem">
-							<el-card shadow="hover" v-for="task in dayItem.tasks" :class="stateMap[task.state]">
+							<el-card shadow="hover" v-for="task in dayItem.tasks" :key="task.id" :class="stateMap[task.state]">
 								<h2>{{task.title}}</h2>
 								<div class="task-bottom">
 									<div class="tags">
