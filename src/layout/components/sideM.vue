@@ -2,7 +2,7 @@
 	<div ref="" class="mobile-nav-button" @click="showMobileNav($event)" v-drag draggable="false"><i class="el-icon-menu"></i></div>
 
 	<el-drawer ref="mobileNavBox" title="移动端菜单" :size="240" v-model="nav" direction="ltr" :with-header="false" destroy-on-close>
-		<el-menu :default-active="$route.fullPath" @select="select" router>
+		<el-menu :default-active="$route.meta.active || $route.fullPath" @select="select" router>
 			<NavMenu :navMenus="menu"></NavMenu>
 		</el-menu>
 	</el-drawer>
