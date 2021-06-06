@@ -5,9 +5,11 @@
 				<i class="el-icon-s-fold"></i>
 			</div>
 			<el-breadcrumb separator-class="el-icon-arrow-right" class="hidden-sm-and-down">
-				<template v-for="(item) in breadList" v-bind:key="item" >
-					<el-breadcrumb-item v-if="item.path !='/'">{{item.meta.title}}</el-breadcrumb-item>
-				</template>
+				<transition-group name="breadcrumb" mode="out-in">
+					<template v-for="item in breadList" :key="item.meta.title" >
+						<el-breadcrumb-item v-if="item.path!='/' &&  !item.meta.hiddenBreadcrumb" :key="item.meta.title">{{item.meta.title}}</el-breadcrumb-item>
+					</template>
+				</transition-group>
 			</el-breadcrumb>
 		</div>
 		<div class="center-panel"></div>
@@ -40,3 +42,9 @@
 		}
 	}
 </script>
+
+<style scoped>
+	.breadcrumb-enter-active,.breadcrumb-leave-active {transition: all 0.3s;}
+	.breadcrumb-enter-from,.breadcrumb-leave-active {opacity: 0;transform: translateX(20px);}
+	.breadcrumb-leave-active {position: absolute;}
+</style>

@@ -140,6 +140,7 @@ function filterAsyncRouter(routerMap) {
 			path: item.path,
 			name: item.name,
 			meta: item.meta,
+			redirect: item.redirect,
 			children: item.children ? filterAsyncRouter(item.children) : null,
 			component: loadComponent(item.component)
 		}

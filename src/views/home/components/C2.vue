@@ -24,6 +24,19 @@
 				activities: [
 					{
 						content: [
+							"[新增] 统计列表、日历计划模板",
+							"[新增] 表单表格组件",
+							"[新增] 面包屑动画",
+							"[新增] 路由meta.active属性",
+							"[新增] 路由meta.hiddenBreadcrumb属性",
+							"[新增] 路由redirect属性",
+							"[优化] 子菜单隐藏无效",
+							"[修复] scEcharts动画失效"
+						],
+						timestamp: '2021-06-06'
+					},
+					{
+						content: [
 							"[优化] 代码生成器重构移位"
 						],
 						timestamp: '2021-06-03'

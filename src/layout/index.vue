@@ -24,7 +24,7 @@
 					<h2>{{ pmenu.meta.title }}</h2>
 				</div>
 				<div class="adminui-side-scroll">
-					<el-menu :default-active="$route.fullPath" router :collapse="menuIsCollapse">
+					<el-menu :default-active="$route.meta.active || $route.fullPath" router :collapse="menuIsCollapse">
 						<NavMenu :navMenus="nextMenu"></NavMenu>
 					</el-menu>
 				</div>
@@ -59,7 +59,7 @@
 					<h2>{{ pmenu.meta.title }}</h2>
 				</div>
 				<div class="adminui-side-scroll">
-					<el-menu :default-active="$route.fullPath" router :collapse="menuIsCollapse">
+					<el-menu :default-active="$route.meta.active || $route.fullPath" router :collapse="menuIsCollapse">
 						<NavMenu :navMenus="nextMenu"></NavMenu>
 					</el-menu>
 				</div>

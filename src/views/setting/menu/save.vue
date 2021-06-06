@@ -29,12 +29,20 @@
 				<el-form-item label="路由地址" prop="path">
 					<el-input v-model="form.path" clearable placeholder=""></el-input>
 				</el-form-item>
+				<el-form-item label="重定向" prop="redirect">
+					<el-input v-model="form.redirect" clearable placeholder=""></el-input>
+				</el-form-item>
+				<el-form-item label="菜单高亮" prop="active">
+					<el-input v-model="form.active" clearable placeholder=""></el-input>
+					<div class="el-form-item-msg">子节点或详情页需要高亮的上级菜单路由地址</div>
+				</el-form-item>
 				<el-form-item label="视图" prop="component">
 					<el-autocomplete v-model="form.component" :fetch-suggestions="querySearch" :debounce="10" clearable placeholder=""></el-autocomplete>
 					<div class="el-form-item-msg">如父节点、链接或Iframe等没有视图的菜单不需要填写</div>
 				</el-form-item>
 				<el-form-item label="是否隐藏" prop="meta.hidden">
 					<el-checkbox v-model="form.meta.hidden">隐藏菜单</el-checkbox>
+					<el-checkbox v-model="form.meta.hiddenBreadcrumb">隐藏面包屑</el-checkbox>
 					<div class="el-form-item-msg">菜单不显示在导航中，但用户依然可以访问，例如详情页</div>
 				</el-form-item>
 				<el-form-item>
@@ -59,9 +67,11 @@
 					name: "",
 					path: "",
 					component: "",
+					redirect: "",
 					meta:{
 						title: "",
 						icon: "",
+						active: "",
 						type: "menu"
 					}
 				},
