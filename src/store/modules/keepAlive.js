@@ -1,6 +1,6 @@
 export default {
 	state: {
-		keepLiveRoute: [],
+		keepLiveRoute: ['empty'],
 		routeKey: null,
 		routeShow: true
 	},
