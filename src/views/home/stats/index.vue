@@ -59,7 +59,7 @@
 			return {}
 		},
 		mounted(){
-
+			this.$emit('on-mounted')
 		},
 		methods: {
 

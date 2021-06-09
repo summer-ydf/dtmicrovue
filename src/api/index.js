@@ -22,7 +22,14 @@ const api = {
 	user: {
 		login: {
 			url: `${config.MOCK_URL}/login`,
-			name: "登录获取用户菜单和权限",
+			name: "登录获取用户菜单和权限,全部权限",
+			get: async function(){
+				return await http.get(this.url);
+			}
+		},
+		login_demo: {
+			url: `${config.MOCK_URL}/login_user`,
+			name: "登录获取用户菜单和权限，部分权限",
 			get: async function(){
 				return await http.get(this.url);
 			}

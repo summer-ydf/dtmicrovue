@@ -24,7 +24,35 @@
 						<el-checkbox label="记住我" v-model="ruleForm.autologin"></el-checkbox>
 					</el-form-item>
 					<el-form-item>
-						<el-button type="primary" style="width: 100%;" @click="submitForm('ruleForm')" :loading="islogin" round>登 录</el-button>
+						<el-dropdown  style="width: 100%;">
+							<el-button type="primary" style="width: 100%;" :loading="islogin" round>登 录<i class="el-icon-arrow-down el-icon--right"></i></el-button>
+							<template #dropdown>
+								<el-dropdown-menu>
+									<el-dropdown-item @click="submitForm('ruleForm', 'admin')">
+										<div class="demo-user-item">
+											<div class="icon">
+												<el-avatar src="img/avatar.jpg"></el-avatar>
+											</div>
+											<div class="info">
+												<h2>Sakuya</h2>
+												<p>超级管理员(Administrator)</p>
+											</div>
+										</div>
+									</el-dropdown-item>
+									<el-dropdown-item @click="submitForm('ruleForm', 'user')">
+										<div class="demo-user-item">
+											<div class="icon">
+												<el-avatar src="img/avatar2.gif"></el-avatar>
+											</div>
+											<div class="info">
+												<h2>Lolowan</h2>
+												<p>普通用户(User)</p>
+											</div>
+										</div>
+									</el-dropdown-item>
+								</el-dropdown-menu>
+							</template>
+						</el-dropdown>
 					</el-form-item>
 				</el-form>
 
@@ -62,6 +90,11 @@
 
 	.login-footer {text-align: center;color: #999;margin-top: 50px;}
 
+	.demo-user-item {display: flex;align-items: center;line-height: 1;padding:10px 0;}
+	.demo-user-item .icon {margin-right: 20px;}
+	.demo-user-item .info h2 {font-size: 14px;}
+	.demo-user-item .info p {color: #666;margin-top: 6px;}
+
 	@media (max-height: 650px){
 	.login_container {position: static;transform: none;margin:50px auto;}
 	}
@@ -93,10 +126,11 @@
 			this.$TOOL.data.remove("user")
 		},
 		methods: {
-			submitForm(formName) {
+			submitForm(formName, type) {
 				this.$refs[formName].validate((valid) => {
 					if (valid) {
-						this.login()
+						type=='admin' && this.login()
+						type=='user' && this.login_demo()
 					}else{
 						console.log('error submit!!');
 						return false;
@@ -106,6 +140,16 @@
 			login: async function() {
 				this.islogin = true;
 				var userInfo = await this.$API.user.login.get();
+				this.$TOOL.data.set("user", userInfo.data);
+				this.$router.replace({
+					path: '/'
+				});
+				//开启欢迎词
+				this.$message.success("Login Success 登录成功")
+			},
+			login_demo: async function() {
+				this.islogin = true;
+				var userInfo = await this.$API.user.login_demo.get();
 				this.$TOOL.data.set("user", userInfo.data);
 				this.$router.replace({
 					path: '/'

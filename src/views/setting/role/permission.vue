@@ -19,7 +19,10 @@
 			<el-form label-width="100px" label-position="left">
 				<el-form-item label="控制台视图">
 					<el-select v-model="dashboard" placeholder="请选择">
-						<el-option v-for="item in dashboardOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
+						<el-option v-for="item in dashboardOptions" :key="item.value" :label="item.label" :value="item.value">
+							<span style="float: left">{{ item.label }}</span>
+							<span style="float: right; color: #8492a6; font-size: 12px">{{ item.views }}</span>
+						</el-option>
 					</el-select>
 					<div class="el-form-item-msg">用于控制角色登录后控制台的视图</div>
 				</el-form-item>
@@ -55,11 +58,14 @@
 				dashboardOptions: [
 					{
 						value: '0',
-						label: '数据统计'
+						label: '数据统计',
+						views: 'stats'
+						
 					},
 					{
 						value: '1',
-						label: '工作台'
+						label: '工作台',
+						views: 'work'
 					},
 				]
 			}
