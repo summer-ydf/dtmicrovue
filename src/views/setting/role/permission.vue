@@ -15,6 +15,16 @@
 				<el-tree ref="type" node-key="name" :data="type.list" :default-checked-keys="type.checked" :props="type.props" show-checkbox></el-tree>
 			</div>
 		</el-tab-pane>
+		<el-tab-pane label="控制台">
+			<el-form label-width="100px" label-position="left">
+				<el-form-item label="控制台视图">
+					<el-select v-model="dashboard" placeholder="请选择">
+						<el-option v-for="item in dashboardOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
+					</el-select>
+					<div class="el-form-item-msg">用于控制角色登录后控制台的视图</div>
+				</el-form-item>
+			</el-form>
+		</el-tab-pane>
 	</el-tabs>
 </template>
 
@@ -40,7 +50,18 @@
 					list: [],
 					checked: [],
 					props: {}
-				}
+				},
+				dashboard: "0",
+				dashboardOptions: [
+					{
+						value: '0',
+						label: '数据统计'
+					},
+					{
+						value: '1',
+						label: '工作台'
+					},
+				]
 			}
 		},
 		mounted() {
