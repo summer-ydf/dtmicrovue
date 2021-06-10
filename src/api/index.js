@@ -113,8 +113,8 @@ const api = {
 		list: {
 			url: `${config.MOCK_URL}/loglist`,
 			name: "日志列表",
-			get: async function(){
-				return await http.get(this.url);
+			get: async function(params){
+				return await http.get(this.url, params);
 			}
 		}
 	},
