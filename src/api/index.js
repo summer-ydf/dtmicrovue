@@ -119,6 +119,13 @@ const api = {
 		}
 	},
 	demo: {
+		page: {
+			url: `${config.MOCK_URL}/page`,
+			name: "分页列表",
+			get: async function(params){
+				return await http.get(this.url, params);
+			}
+		},
 		upload: {
 			url: `${config.MOCK_URL}/upload`,
 			name: "文件上传接口",
