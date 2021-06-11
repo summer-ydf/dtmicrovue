@@ -29,7 +29,16 @@
 		},
 		data() {
 			return {
-				value: null
+				value: [
+					{
+						id: "10",
+						user: "王小虎"
+					},
+					{
+						id: "2",
+						user: "曹操"
+					}
+				]
 			}
 		},
 		computed: {
