@@ -56,11 +56,11 @@
 						symbol: 'none',
 						lineStyle: {
 							width: 1,
-							color: '#F56C6C'
+							color: '#409EFF'
 						},
 						areaStyle: {
 							opacity: 0.1,
-							color: '#F56C6C'
+							color: '#79bbff'
 						},
 						data: (function (){
 							var res = [];
