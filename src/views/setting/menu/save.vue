@@ -40,6 +40,10 @@
 					<el-autocomplete v-model="form.component" :fetch-suggestions="querySearch" :debounce="10" clearable placeholder=""></el-autocomplete>
 					<div class="el-form-item-msg">如父节点、链接或Iframe等没有视图的菜单不需要填写</div>
 				</el-form-item>
+				<el-form-item label="颜色" prop="color">
+					<el-color-picker v-model="form.color" :predefine="predefineColors"></el-color-picker>
+
+				</el-form-item>
 				<el-form-item label="是否隐藏" prop="meta.hidden">
 					<el-checkbox v-model="form.meta.hidden">隐藏菜单</el-checkbox>
 					<el-checkbox v-model="form.meta.hiddenBreadcrumb">隐藏面包屑</el-checkbox>
@@ -72,6 +76,7 @@
 						title: "",
 						icon: "",
 						active: "",
+						color: "",
 						type: "menu"
 					}
 				},
@@ -80,6 +85,15 @@
 					label: 'name',
 					checkStrictly: true
 				},
+				predefineColors: [
+					'#ff4500',
+					'#ff8c00',
+					'#ffd700',
+					'#90ee90',
+					'#00ced1',
+					'#1e90ff',
+					'#c71585'
+				],
 				rules: {},
 				views: []
 			}
