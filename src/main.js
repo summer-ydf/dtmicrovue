@@ -21,6 +21,7 @@ import auth from './directives/auth'
 
 const app = createApp(App);
 
+//挂载全局对象
 app.config.globalProperties.$CONFIG = config;
 app.config.globalProperties.$TOOL = tool;
 app.config.globalProperties.$HTTP = http;
@@ -31,6 +32,7 @@ app.use(store);
 app.use(router);
 app.use(ElementPlus, {size: 'small', locale: locale});
 
+//注册全局组件
 app.component('scTable', scTable);
 app.component('scFilterBar', scFilterBar);
 app.component('scUpload', scUpload);
@@ -38,6 +40,8 @@ app.component('scUploadMultiple', scUploadMultiple);
 app.component('scFormTable', scFormTable);
 app.component('scTableSelect', scTableSelect);
 
+//注册全局指令
 app.directive('auth', auth)
 
+//挂载app
 app.mount('#app');
