@@ -12,6 +12,7 @@
 
 <script>
 	export default {
+		name: 'directive',
 		data() {
 			return {}
 		},
