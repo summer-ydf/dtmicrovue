@@ -32,12 +32,12 @@
 							</el-space>
 							<h2>当前账号权限</h2>
 							<el-space wrap>
-								<el-tag v-if="$HAS('user.add')">user.add</el-tag>
-								<el-tag v-if="$HAS('user.edit')">user.edit</el-tag>
-								<el-tag v-if="$HAS('user.delete')">user.delete</el-tag>
-								<el-tag v-if="$HAS('list.add')">list.add</el-tag>
-								<el-tag v-if="$HAS('list.edit')">list.edit</el-tag>
-								<el-tag v-if="$HAS('list.delete')">list.delete</el-tag>
+								<el-tag v-if="$AUTH('user.add')">user.add</el-tag>
+								<el-tag v-if="$AUTH('user.edit')">user.edit</el-tag>
+								<el-tag v-if="$AUTH('user.delete')">user.delete</el-tag>
+								<el-tag v-if="$AUTH('list.add')">list.add</el-tag>
+								<el-tag v-if="$AUTH('list.edit')">list.edit</el-tag>
+								<el-tag v-if="$AUTH('list.delete')">list.delete</el-tag>
 							</el-space>
 						</div>
 					</div>

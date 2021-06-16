@@ -17,6 +17,7 @@ import scUpload from './components/scUpload'
 import scUploadMultiple from './components/scUpload/multiple'
 import scFormTable from './components/scFormTable'
 import scTableSelect from './components/scTableSelect'
+import auth from './directives/auth'
 
 const app = createApp(App);
 
@@ -24,7 +25,7 @@ app.config.globalProperties.$CONFIG = config;
 app.config.globalProperties.$TOOL = tool;
 app.config.globalProperties.$HTTP = http;
 app.config.globalProperties.$API = api;
-app.config.globalProperties.$HAS = permission;
+app.config.globalProperties.$AUTH = permission;
 
 app.use(store);
 app.use(router);
@@ -36,5 +37,7 @@ app.component('scUpload', scUpload);
 app.component('scUploadMultiple', scUploadMultiple);
 app.component('scFormTable', scFormTable);
 app.component('scTableSelect', scTableSelect);
+
+app.directive('auth', auth)
 
 app.mount('#app');
