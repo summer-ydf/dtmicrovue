@@ -90,6 +90,7 @@
 				this.getData();
 			}else{
 				this.tableData = this.data;
+				this.total = this.tableData.length
 			}
 		},
 		activated(){
