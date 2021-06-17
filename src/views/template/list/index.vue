@@ -26,8 +26,8 @@
 		<el-main class="nopadding">
 			<scTable ref="table" :data="list" @selection-change="selectionChange" stripe>
 				<el-table-column type="selection" width="50"></el-table-column>
-				<el-table-column label="ID" prop="id" width="80"></el-table-column>
-				<el-table-column label="状态" prop="state" width="60">
+				<el-table-column label="ID" prop="id" width="80" sortable></el-table-column>
+				<el-table-column label="状态" prop="state" width="60" :filters="[{text: '正常', value: '1'}, {text: '异常', value: '2'}]" :filter-method="filterHandler">
 					<template #default="scope">
 						<em v-if="scope.row.state=='1'" class="state state-1"></em>
 						<em v-if="scope.row.state=='2'" class="state state-2 status-processing"></em>
@@ -39,7 +39,7 @@
 						<p>{{scope.row.subtitle}}</p>
 					</template>
 				</el-table-column>
-				<el-table-column label="类型" prop="type" width="100">
+				<el-table-column label="类型" prop="type" width="100" :filters="[{text: '数据', value: '数据'}, {text: '表单', value: '表单'}]" :filter-method="filterHandler">
 					<template #default="scope">
 						<el-tag>{{scope.row.type}}</el-tag>
 					</template>
@@ -51,7 +51,7 @@
 						<el-progress v-if="scope.row.state=='2'" :percentage="scope.row.progress" status="exception"></el-progress>
 					</template>
 				</el-table-column>
-				<el-table-column label="创建时间" prop="time" width="150"></el-table-column>
+				<el-table-column label="创建时间" prop="time" width="150" sortable></el-table-column>
 				<el-table-column label="操作" fixed="right" align="right" width="200">
 					<template #default="scope">
 						<el-button type="text" size="small" @click="table_show(scope.row, scope.$index)">查看</el-button>
@@ -127,6 +127,10 @@
 			table_show(row, index){
 				console.log(row, index);
 				this.info = true;
+			},
+			filterHandler(value, row, column){
+				const property = column.property;
+				return row[property] === value;
 			}
 		}
 	}
