@@ -24,12 +24,13 @@
 			</div>
 		</el-header>
 		<el-main class="nopadding">
-			<scTable ref="table" :data="list" @selection-change="selectionChange">
+			<scTable ref="table" :data="list" @selection-change="selectionChange" stripe>
 				<el-table-column type="selection" width="50"></el-table-column>
-				<el-table-column label="ID" prop="id" width="100"></el-table-column>
-				<el-table-column label="状态" prop="state" width="80">
+				<el-table-column label="ID" prop="id" width="80"></el-table-column>
+				<el-table-column label="状态" prop="state" width="60">
 					<template #default="scope">
-						<el-badge v-if="scope.row.state=='1'" is-dot></el-badge>
+						<em v-if="scope.row.state=='1'" class="state state-1"></em>
+						<em v-if="scope.row.state=='2'" class="state state-2 status-processing"></em>
 					</template>
 				</el-table-column>
 				<el-table-column label="名称" prop="name" width="300">
@@ -38,15 +39,16 @@
 						<p>{{scope.row.subtitle}}</p>
 					</template>
 				</el-table-column>
-				<el-table-column label="类型" prop="type" width="150">
+				<el-table-column label="类型" prop="type" width="100">
 					<template #default="scope">
 						<el-tag>{{scope.row.type}}</el-tag>
 					</template>
 				</el-table-column>
-				<el-table-column label="负责人" prop="user" width="150"></el-table-column>
+				<el-table-column label="负责人" prop="user" width="100"></el-table-column>
 				<el-table-column label="进度" prop="progress" width="250">
 					<template #default="scope">
-						<el-progress :percentage="scope.row.progress"></el-progress>
+						<el-progress v-if="scope.row.state=='1'" :percentage="scope.row.progress"></el-progress>
+						<el-progress v-if="scope.row.state=='2'" :percentage="scope.row.progress" status="exception"></el-progress>
 					</template>
 				</el-table-column>
 				<el-table-column label="创建时间" prop="time" width="150"></el-table-column>
@@ -71,15 +73,20 @@
 		</el-main>
 	</el-container>
 
-	<el-drawer title="我是标题" v-model="info" size="100%" direction="btt" destroy-on-close>
-
+	<el-drawer v-model="info" :size="800" custom-class="drawerBG" direction="rtl" destroy-on-close>
+		<info></info>
 	</el-drawer>
 
 </template>
 
 <script>
+	import info from './info'
+
 	export default {
 		name: 'list',
+		components: {
+			info
+		},
 		data() {
 			return {
 				group: "0",
@@ -99,9 +106,9 @@
 						id: "5002",
 						name: "scEditor",
 						subtitle: "Tinymce封装的富文本编辑器",
-						state: "1",
+						state: "2",
 						type: "表单",
-						progress: 10,
+						progress: 40,
 						user: "Sakuya",
 						time: "2010-10-10"
 					}
@@ -125,5 +132,24 @@
 	}
 </script>
 
-<style>
+<style scoped>
+	.state {width:8px;height:8px;background: #ddd;display: inline-block;border-radius: 50%;vertical-align: middle;}
+	.state-1 {background: #409EFF;}
+	.state-2 {background: #F56C6C;}
+	.status-processing {position: relative;}
+	.status-processing:after {position: absolute;top:0px;left:0px;width: 100%;height: 100%;border-radius: 50%;background: inherit;content: '';animation: warn 1.2s ease-in-out infinite;}
+
+	@keyframes warn {
+		0% {
+			transform: scale(0.5);
+			opacity: 1;
+		}
+		30% {
+			opacity: 1;
+		}
+		100% {
+			transform: scale(2);
+			opacity: 0;
+		}
+	}
 </style>
