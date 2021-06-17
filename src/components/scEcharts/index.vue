@@ -48,7 +48,9 @@
 		},
 		mounted(){
 			this.isActivat = true;
-			this.draw();
+			this.$nextTick(() => {
+				this.draw();
+			})
 		},
 		methods: {
 			draw(){
