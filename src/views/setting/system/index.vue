@@ -46,7 +46,7 @@
 				</el-tab-pane>
 
 				<el-tab-pane label="扩展配置">
-					<el-alert title="扩展配置为系统业务所有的配置，应该由系统管理员操作，如需用户配置应另起业务配置页面。" type="warning"></el-alert>
+					<el-alert title="扩展配置为系统业务所有的配置，应该由系统管理员操作，如需用户配置应另起业务配置页面。" type="warning" style="margin-bottom: 15px;"></el-alert>
 
 					<el-table :data="setting" stripe>
 						<el-table-column label="#" type="index" width="50"></el-table-column>
@@ -63,6 +63,12 @@
 									<el-input v-else v-model="scope.row.value" placeholder="请输入内容"></el-input>
 								</template>
 								<span v-else>{{scope.row.value}}</span>
+							</template>
+						</el-table-column>
+						<el-table-column label="CATEGORY" prop="category" width="150">
+							<template #default="scope">
+								<el-input v-if="scope.row.isSet" v-model="scope.row.category" placeholder="请输入内容"></el-input>
+								<span v-else>{{scope.row.category}}</span>
 							</template>
 						</el-table-column>
 						<el-table-column label="TITLE" prop="title" width="350">
@@ -113,21 +119,25 @@
 					{
 						key: "file_serve",
 						value: "https://file.scui.com",
+						category: "url",
 						title: "文件服务器地址"
 					},
 					{
 						key: "cloud_url",
 						value: "-",
+						category: "url",
 						title: "客户端地址"
 					},
 					{
 						key: "crm_url",
 						value: "-",
+						category: "url",
 						title: "CRM地址"
 					},
 					{
 						key: "autoSwitch",
 						value: true,
+						category: "user",
 						title: "自动判断boolean类型"
 					}
 				]
