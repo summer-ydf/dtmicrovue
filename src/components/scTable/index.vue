@@ -88,7 +88,7 @@
 		mounted() {
 			if(this.apiObj){
 				this.getData();
-			}else{
+			}else if(this.data){
 				this.tableData = this.data;
 				this.total = this.tableData.length
 			}
