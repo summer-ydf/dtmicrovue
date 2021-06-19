@@ -19,6 +19,7 @@
 	const work = defineAsyncComponent(() => import('./work'));
 
 	export default {
+		name: "dashboard",
 		components: {
 			stats,
 			work

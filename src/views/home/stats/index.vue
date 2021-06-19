@@ -89,7 +89,6 @@
 <script>
 	import gridLayout from './gridLayout'
 	export default {
-		name: "dashboard",
 		components: {
 			gridLayout
 		},
