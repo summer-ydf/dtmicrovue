@@ -124,6 +124,8 @@
 		},
 		created: function() {
 			this.$TOOL.data.remove("user")
+			this.$store.commit("clearViewTags")
+			this.$store.commit("clearKeepLive")
 		},
 		methods: {
 			submitForm(formName, type) {
