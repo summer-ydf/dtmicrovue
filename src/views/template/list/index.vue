@@ -12,7 +12,9 @@
 		<el-header>
 			<div class="left-panel">
 				<el-button type="primary" icon="el-icon-plus"></el-button>
-				<el-button type="danger" plain icon="el-icon-delete" :disabled="selection.length==0"></el-button>
+				<el-button v-if="selection.length>0" type="danger" plain icon="el-icon-delete"></el-button>
+				<el-button v-if="selection.length>0">变更状态</el-button>
+				<el-button v-if="selection.length>0">推送至队列</el-button>
 			</div>
 			<div class="right-panel">
 				<el-radio-group v-model="group">
@@ -21,10 +23,13 @@
 					<el-radio-button label="2">弃坑 (1)</el-radio-button>
 					<el-radio-button label="3">其他</el-radio-button>
 				</el-radio-group>
+
+				<scFilterBar :options="options" @change="change"></scFilterBar>
+
 			</div>
 		</el-header>
 		<el-main class="nopadding">
-			<scTable ref="table" :data="list" @selection-change="selectionChange" stripe>
+			<scTable ref="table" :data="list" :column="column" @selection-change="selectionChange" stripe>
 				<el-table-column type="selection" width="50"></el-table-column>
 				<el-table-column label="ID" prop="id" width="80" sortable></el-table-column>
 				<el-table-column label="状态" prop="state" width="60" :filters="[{text: '正常', value: '1'}, {text: '异常', value: '2'}]" :filter-method="filterHandler">
@@ -80,44 +85,80 @@
 </template>
 
 <script>
+	import scFilterBar from '@/components/scFilterBar';
 	import info from './info'
 
 	export default {
 		name: 'list',
 		components: {
+			scFilterBar,
 			info
 		},
 		data() {
 			return {
-				group: "0",
-				selection: [],
-				list: [
+				options: [
 					{
-						id: "5001",
-						name: "scEcharts",
-						subtitle: "重新封装的Echarts，暴露源对象",
-						state: "1",
-						type: "数据",
-						progress: 70,
-						user: "Sakuya",
-						time: "2010-10-10"
+						label: '名称',
+						value: 'name',
+						type: 'text'
 					},
 					{
-						id: "5002",
-						name: "scEditor",
-						subtitle: "Tinymce封装的富文本编辑器",
-						state: "2",
-						type: "表单",
-						progress: 40,
-						user: "Sakuya",
-						time: "2010-10-10"
+						label: '类型',
+						value: 'type',
+						type: 'select',
+						extend: {
+							multiple: true,
+							data:[
+								{
+									label: "数据",
+									value: "1"
+								},
+								{
+									label: "表单",
+									value: "2"
+								}
+							]
+						}
+					},
+					{
+						label: '创建时间',
+						value: 'date',
+						type: 'daterange',
 					}
 				],
+				column: [
+					{label: "状态值", prop: "state", width: "100"},
+					{label: "进度值", prop: "progress", width: "150"},
+				],
+				group: "0",
+				selection: [],
+				list: [],
 				info: false
 			}
 		},
 		mounted() {
-
+			this.list = [
+				{
+					id: "5001",
+					name: "scEcharts",
+					subtitle: "重新封装的Echarts，暴露源对象",
+					state: "1",
+					type: "数据",
+					progress: 70,
+					user: "Sakuya",
+					time: "2010-10-10"
+				},
+				{
+					id: "5002",
+					name: "scEditor",
+					subtitle: "Tinymce封装的富文本编辑器",
+					state: "2",
+					type: "表单",
+					progress: 40,
+					user: "Sakuya",
+					time: "2010-10-10"
+				}
+			]
 		},
 		methods: {
 			//表格选择后回调事件
@@ -131,6 +172,9 @@
 			filterHandler(value, row, column){
 				const property = column.property;
 				return row[property] === value;
+			},
+			change(data){
+				console.log(data);
 			}
 		}
 	}

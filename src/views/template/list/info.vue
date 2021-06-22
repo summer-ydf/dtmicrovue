@@ -100,9 +100,7 @@
 						type: 'bar',
 						barWidth: '15px',
 						itemStyle: {
-							normal: {
-								barBorderRadius:[15, 15, 0, 0]
-							}
+							borderRadius:[15, 15, 0, 0]
 						}
 					},
 					{
