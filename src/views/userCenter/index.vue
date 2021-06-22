@@ -46,6 +46,13 @@
 			<el-col :lg="16">
 				<el-card shadow="never">
 					<el-tabs tab-position="top">
+						<el-tab-pane label="近期动态">
+							<el-timeline style="margin-top:20px;padding-left:10px;">
+								<el-timeline-item v-for="(activity, index) in activities" :key="index" :timestamp="activity.timestamp" placement="top">
+									{{activity.content}}
+								</el-timeline-item>
+							</el-timeline>
+						</el-tab-pane>
 						<el-tab-pane label="基本信息">
 							<el-form ref="form" :model="form" label-width="80px" style="width: 460px;margin-top:20px;">
 								<el-form-item label="账号">
@@ -104,6 +111,38 @@
 		name: 'userCenter',
 		data() {
 			return {
+				activities: [
+					{
+						content: '更改了 系统配置 systemName 为 SCUI',
+						type: 'edit',
+						timestamp: '刚刚'
+					},
+					{
+						content: '删除了 用户 USER',
+						type: 'del',
+						timestamp: '5分钟前'
+					},
+					{
+						content: '禁用了 用户 USER',
+						type: 'del',
+						timestamp: '5分钟前'
+					},
+					{
+						content: '创建了 用户 USER',
+						type: 'add',
+						timestamp: '5分钟前'
+					},
+					{
+						content: '审核了 用户 lolowan 为 通过',
+						type: 'add',
+						timestamp: '10分钟前'
+					},
+					{
+						content: '登录成功',
+						type: 'do',
+						timestamp: '1小时前'
+					},
+				],
 				form: {
 					user: "81883387@qq.com",
 					name: "Sakuya",
