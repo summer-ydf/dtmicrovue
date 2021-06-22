@@ -133,6 +133,7 @@
 					this.total = response.total;
 					this.loading = false;
 				}
+				this.$refs.scTable.$el.querySelector('.el-table__body-wrapper').scrollTop = 0
 			},
 			//分页点击
 			reload(){

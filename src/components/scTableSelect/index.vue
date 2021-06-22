@@ -111,7 +111,7 @@
 						var setrow = this.tableData.filter(item => item[this.defaultProps.value]===this.defaultValue[this.defaultProps.value] )
 						this.$refs.table.setCurrentRow(setrow[0]);
 					}
-
+					this.$refs.table.$el.querySelector('.el-table__body-wrapper').scrollTop = 0
 				})
 			},
 			//分页刷新表格
