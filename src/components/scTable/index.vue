@@ -36,6 +36,7 @@
 </template>
 
 <script>
+	import config from "@/config/table";
 	import columnSetting from './columnSetting'
 
 	export default {
@@ -71,7 +72,7 @@
 				emptyText: "暂无数据",
 				toggleIndex: 0,
 				tableData: [],
-				pageSize: 20,
+				pageSize: config.pageSize,
 				total: 0,
 				currentPage: 1,
 				loading: false,
@@ -111,7 +112,8 @@
 			async getData(){
 				this.loading = true;
 				var reqData = {
-					page: this.currentPage
+					[config.request.page]: this.currentPage,
+					[config.request.pageSize]: this.pageSize
 				}
 				Object.assign(reqData, this.tableParams)
 				try {
@@ -121,10 +123,16 @@
 					this.emptyText = error.statusText;
 					return false;
 				}
-				this.emptyText = "暂无数据";
-				this.tableData = res.data;
-				this.total = res.count;
-				this.loading = false;
+				var response = config.parseData(res);
+				if(response.code != 200){
+					this.loading = false;
+					this.emptyText = response.msg;
+				}else{
+					this.emptyText = "暂无数据";
+					this.tableData = response.rows;
+					this.total = response.total;
+					this.loading = false;
+				}
 			},
 			//分页点击
 			reload(){

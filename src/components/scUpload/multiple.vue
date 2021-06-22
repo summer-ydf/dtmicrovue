@@ -34,7 +34,7 @@
 </template>
 
 <script>
-	import API from "@/api";
+	import config from "@/config/upload";
 
 	export default {
 		props: {
@@ -42,7 +42,7 @@
 			action: { type: String, default: "" },
 			apiObj: { type: Object, default: () => {} },
 			accept: { type: String, default: ".jpg, .png, .jpeg, .gif" },
-			maxSize: { type: Number, default: 10 },
+			maxSize: { type: Number, default: config.maxSize },
 			title: { type: String, default: "" },
 			icon: { type: String, default: "el-icon-plus" }
 		},
@@ -122,7 +122,7 @@
 			before(file){
 				const maxSize = file.size / 1024 / 1024 < this.maxSize;
 				if (!maxSize) {
-					this.$message.warning('上传文件大小不能超过 10MB!');
+					this.$message.warning(`上传文件大小不能超过 ${this.maxSize}MB!`);
 					return false;
 				}
 			},
@@ -131,7 +131,8 @@
 				this.fileList = fileList
 			},
 			success(res, file){
-				file.url = res.data.src
+				var response = config.parseData(res);
+				file.url = response.src
 			},
 			progress(){
 
@@ -149,7 +150,7 @@
 				this.fileList.splice(index, 1);
 			},
 			request(param){
-				var apiObj = API.default.upload;
+				var apiObj = config.apiObj;
 				if(this.apiObj){
 					apiObj = this.apiObj;
 				}

@@ -27,6 +27,8 @@
 </template>
 
 <script>
+	import config from "@/config/tableSelect";
+
 	export default {
 		props: {
 			modelValue: null,
@@ -44,15 +46,15 @@
 				keyword: null,
 				defaultValue: [],
 				tableData: [],
-				pageSize: 20,
+				pageSize: config.pageSize,
 				total: 0,
 				currentPage: 1,
 				defaultProps: {
-					label: 'label',
-					value: 'value',
-					page: 'page',
-					pageSize: 'pageSize',
-					keyword: 'keyword'
+					label: config.props.label,
+					value: config.props.value,
+					page: config.request.page,
+					pageSize: config.request.pageSize,
+					keyword: config.request.keyword
 				}
 			}
 		},
@@ -92,8 +94,9 @@
 					[this.defaultProps.keyword]: this.keyword
 				}
 				var res = await this.apiObj.get(reqData);
-				this.tableData = res.data.rows;
-				this.total =  res.data.total;
+				var parseData = config.parseData(res)
+				this.tableData = parseData.rows;
+				this.total = parseData.total;
 				this.loading = false;
 				//表格默认赋值
 				this.$nextTick(() => {

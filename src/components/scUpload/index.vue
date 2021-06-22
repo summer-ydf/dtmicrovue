@@ -22,7 +22,7 @@
 </template>
 
 <script>
-	import API from "@/api";
+	import config from "@/config/upload";
 
 	export default {
 		props: {
@@ -32,7 +32,7 @@
 			action: { type: String, default: "" },
 			apiObj: { type: Object, default: () => {} },
 			accept: { type: String, default: ".jpg, .png, .jpeg, .gif" },
-			maxSize: { type: Number, default: 10 },
+			maxSize: { type: Number, default: config.maxSize },
 			title: { type: String, default: "" },
 			icon: { type: String, default: "el-icon-plus" },
 			onSuccess: { type: Function, default: () => { return true } }
@@ -75,7 +75,7 @@
 			before(file){
 				const maxSize = file.size / 1024 / 1024 < this.maxSize;
 				if (!maxSize) {
-					this.$message.warning('上传文件大小不能超过 10MB!');
+					this.$message.warning(`上传文件大小不能超过 ${this.maxSize}MB!`);
 					return false;
 				}
 				this.isImg(file.name)
@@ -89,10 +89,11 @@
 				if(os!=undefined && os==false){
 					return false;
 				}
-				if(res.code != 200){
-					this.$message.warning(res.message || "上传文件未知错误")
+				var response = config.parseData(res);
+				if(response.code != 200){
+					this.$message.warning(response.msg || "上传文件未知错误")
 				}else{
-					this.img = res.data.src;
+					this.img = response.src;
 				}
 			},
 			error(err){
@@ -108,7 +109,7 @@
 				this.img = ""
 			},
 			request(param){
-				var apiObj = API.default.upload;
+				var apiObj = config.apiObj;
 				if(this.apiObj){
 					apiObj = this.apiObj;
 				}
