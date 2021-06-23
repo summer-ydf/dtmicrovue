@@ -11,6 +11,7 @@ import api from './api'
 import tool from './utils/tool'
 import http from "./utils/request"
 import permission from './utils/permission'
+import errorHandler from './utils/errorHandler'
 import scTable from './components/scTable'
 import scFilterBar from './components/scFilterBar'
 import scUpload from './components/scUpload'
@@ -31,6 +32,9 @@ app.config.globalProperties.$AUTH = permission;
 app.use(store);
 app.use(router);
 app.use(ElementPlus, {size: 'small', locale: locale});
+
+//全局代码错误捕捉
+app.config.errorHandler = errorHandler
 
 //注册全局组件
 app.component('scTable', scTable);
