@@ -21,19 +21,10 @@
 							</ul>
 						</div>
 						<div class="user-info-bottom">
-							<h2>标签</h2>
-							<el-space wrap>
-								<el-tag>HTML</el-tag>
-								<el-tag>CSS</el-tag>
-								<el-tag>JavaScript</el-tag>
-								<el-tag>NodeJs</el-tag>
-								<el-tag>Vue</el-tag>
-								<el-tag>Photoshop</el-tag>
-							</el-space>
 							<h2>当前账号权限</h2>
 							<el-space wrap>
-								<el-tag v-if="$AUTH('user.add')">user.add</el-tag>
-								<el-tag v-if="$AUTH('user.edit')">user.edit</el-tag>
+								<el-tag v-auth="'user.add'">user.add</el-tag>
+								<el-tag v-auth="'user.edit'">user.edit</el-tag>
 								<el-tag v-if="$AUTH('user.delete')">user.delete</el-tag>
 								<el-tag v-if="$AUTH('list.add')">list.add</el-tag>
 								<el-tag v-if="$AUTH('list.edit')">list.edit</el-tag>
@@ -49,7 +40,10 @@
 						<el-tab-pane label="近期动态">
 							<el-timeline style="margin-top:20px;padding-left:10px;">
 								<el-timeline-item v-for="(activity, index) in activities" :key="index" :timestamp="activity.timestamp" placement="top">
-									{{activity.content}}
+									<div class="activity-item">
+										<el-avatar class="avatar" :size="24" src="img/avatar.jpg"></el-avatar>
+										<label>{{activity.operate}}</label><el-tag v-if="activity.mod" size="mini">{{activity.mod}}</el-tag>{{activity.describe}}
+									</div>
 								</el-timeline-item>
 							</el-timeline>
 						</el-tab-pane>
@@ -113,32 +107,44 @@
 			return {
 				activities: [
 					{
-						content: '更改了 系统配置 systemName 为 SCUI',
+						operate: '更改了',
+						mod: '系统配置',
+						describe: 'systemName 为 SCUI',
 						type: 'edit',
 						timestamp: '刚刚'
 					},
 					{
-						content: '删除了 用户 USER',
+						operate: '删除了',
+						mod: '用户',
+						describe: 'USER',
 						type: 'del',
 						timestamp: '5分钟前'
 					},
 					{
-						content: '禁用了 用户 USER',
+						operate: '禁用了',
+						mod: '用户',
+						describe: 'USER',
 						type: 'del',
 						timestamp: '5分钟前'
 					},
 					{
-						content: '创建了 用户 USER',
+						operate: '创建了',
+						mod: '用户',
+						describe: 'USER',
 						type: 'add',
 						timestamp: '5分钟前'
 					},
 					{
-						content: '审核了 用户 lolowan 为 通过',
+						operate: '审核了',
+						mod: '用户',
+						describe: 'lolowan 为 通过',
 						type: 'add',
 						timestamp: '10分钟前'
 					},
 					{
-						content: '登录成功',
+						operate: '登录',
+						mod: '',
+						describe: '成功',
 						type: 'do',
 						timestamp: '1小时前'
 					},
@@ -160,5 +166,10 @@
 	}
 </script>
 
-<style>
+<style scoped>
+	.el-card {margin-bottom:15px;}
+	.activity-item {font-size: 13px;color: #999;display: flex;align-items: center;}
+	.activity-item label {color: #333;margin-right:10px;}
+	.activity-item .el-avatar {margin-right:10px;}
+	.activity-item .el-tag {margin-right:10px;}
 </style>
