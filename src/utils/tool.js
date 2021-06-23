@@ -73,7 +73,7 @@ const tool = {
 		return fmt;
 	},
 	/* 千分符 */
-	thousands(num){
+	groupSeparator(num){
 		num = num + '';
 		if(!num.includes('.')){
 			num += '.'
