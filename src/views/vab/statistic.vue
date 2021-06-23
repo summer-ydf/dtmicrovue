@@ -9,7 +9,7 @@
 
 <template>
 	<el-main>
-		<el-alert title="一个非常简单的组件, 目的就是省去重复写样式, 支持千分符/前后缀等." type="success" style="margin:20px 0;"></el-alert>
+		<el-alert title="一个非常简单的组件, 目的就是省去重复写样式, 支持千分符/前后缀等." type="success" style="margin-bottom:20px;"></el-alert>
 		<el-row :gutter="15">
 			<el-col :lg="8">
 				<el-card shadow="never">
