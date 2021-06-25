@@ -36,7 +36,7 @@
 				</el-container>
 			</el-main>
 			<div style="height:10px;border-top: 1px solid #e6e6e6;"></div>
-			<el-footer style="height:50%;overflow: auto;">
+			<el-footer style="height:40%;overflow: auto;">
 				<info ref="info"></info>
 			</el-footer>
 		</el-container>
