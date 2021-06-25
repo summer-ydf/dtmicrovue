@@ -33,9 +33,6 @@ app.use(store);
 app.use(router);
 app.use(ElementPlus, {size: 'small', locale: locale});
 
-//全局代码错误捕捉
-app.config.errorHandler = errorHandler
-
 //注册全局组件
 app.component('scTable', scTable);
 app.component('scFilterBar', scFilterBar);
@@ -46,6 +43,9 @@ app.component('scTableSelect', scTableSelect);
 
 //注册全局指令
 app.directive('auth', auth)
+
+//全局代码错误捕捉
+app.config.errorHandler = errorHandler
 
 //挂载app
 app.mount('#app');

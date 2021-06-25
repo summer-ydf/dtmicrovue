@@ -1,11 +1,9 @@
 /**
  * 全局代码错误捕捉
- * 比如split一个null 就会被捕捉到
+ * 比如 null.length 就会被捕捉到
  */
-import { ElNotification } from 'element-plus';
 
-export default (error)=>{
-
+export default (error, vm)=>{
 	var errorMap = {
 		InternalError: "Javascript引擎内部错误",
 		ReferenceError: "未找到对象",
@@ -17,11 +15,14 @@ export default (error)=>{
 	}
 	var errorName = errorMap[error.name] || "未知错误"
 
-	ElNotification.error({
-		title: errorName,
-		message: error
-	});
-
-	console.warn('[SCUI]: 捕捉到错误');
+	console.warn(`[SCUI error]: ${error}`);
 	console.error(error);
+	//throw error;
+
+	vm.$nextTick(() => {
+		vm.$notify.error({
+			title: errorName,
+			message: error
+		});
+	})
 }
