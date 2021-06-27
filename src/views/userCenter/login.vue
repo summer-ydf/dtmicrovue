@@ -2,17 +2,12 @@
 
 	<div class="login_container">
 		<div class="login_body">
-			<div class="login-sidebox" style="background:url('img/login-left.png') 0 0 no-repeat #607089;">
-				<div class="login-logo">
-					<img class="logo" :alt="appName" src="img/logo.png">{{appName}}
-				</div>
-				<div class="login-title">
-					<h2>面面俱到的中后台前端框架</h2>
-					<p>基于Vue 3.0 + Vue-Router 4.0 + Element-Plus + VueX + Axios 后台管理系统前端框架。</p>
-				</div>
-			</div>
+
 			<div class="login-form">
-				<h2>登录</h2>
+				<div class="login-logo">
+					<img class="logo" :alt="appName" src="img/logo.png">
+					<h2>用户登录</h2>
+				</div>
 				<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0" size="large">
 					<el-form-item prop="user">
 						<el-input v-model="ruleForm.user" prefix-icon="el-icon-user" clearable placeholder="用户名 / 手机 / 邮箱"></el-input>
@@ -56,7 +51,7 @@
 					</el-form-item>
 				</el-form>
 
-				<el-divider><i class="el-icon-mobile-phone"></i></el-divider>
+				<el-divider>其他登录方式</el-divider>
 
 				<div class="login-oauth">
 					<el-button size="medium" type="primary" icon="el-icon-platform-eleme" circle></el-button>
@@ -65,6 +60,14 @@
 					<el-button size="medium" type="warning" icon="el-icon-menu" circle></el-button>
 				</div>
 			</div>
+			<div class="login-sidebox">
+				<div class="login-sidebox__title">
+					<h2>SCUI</h2>
+					<h4>高性能 / 精致 / 优雅</h4>
+					<p>基于Vue3 + Element-Plus 的中后台前端解决方案。</p>
+				</div>
+				<img src="img/loginbg.svg"/>
+			</div>
 		</div>
 		<div class="login-footer">© {{appName}} {{appVar}}</div>
 	</div>
@@ -72,19 +75,23 @@
 </template>
 
 <style scoped>
-	.login_container {position: absolute;top:50%;left:50%;width: 900px;margin: 0 auto;z-index: 1;transform: translate(-50%, -50%);}
+	.login_container {position: absolute;top:50%;left:50%;width: 1100px;margin: 0 auto;z-index: 1;transform: translate(-50%, -50%);}
 	.login_body {width: inherit;display: flex;box-shadow: 0px 20px 80px 0px rgba(0,0,0,0.3);}
-	.login-sidebox {width: 50%;padding: 60px;color: #fff;position: relative;}
+	.login-sidebox {width: 50%;padding: 60px;color: #fff;background:#3887e5;position: relative;overflow: hidden;}
+	.login-sidebox__title h2 {font-size: 30px;}
+	.login-sidebox__title h4 {font-size: 18px;margin-top: 10px;font-weight: normal;}
+	.login-sidebox__title p {font-size: 14px;margin-top:10px;line-height: 1.8;color: rgba(255,255,255,0.6);}
+	.login-sidebox img {position: absolute;left:-120px;bottom:-160px;width: 550px;}
 
-	.login-logo {font-size: 35px;display: flex;align-items: center;}
-	.login-logo .logo {margin-right: 10px;width: 50px;height: 50px;}
+	.login-logo {text-align: center;margin-bottom: 30px;}
+	.login-logo .logo {width: 70px;height: 70px;vertical-align: bottom;}
+	.login-logo h2 {font-size: 24px;margin-top: 20px;color: #40485b;}
 
 	.login-title {margin-top: 20px;}
 	.login-title h2 {font-size: 22px;font-weight: normal;}
 	.login-title p {font-size: 12px;margin-top:40px;line-height: 1.8;color: rgba(255,255,255,0.8);}
 
-	.login-form {width: 50%;padding: 60px;background: #fff;}
-	.login-form h2 {font-size: 24px;color: #40485b;margin-bottom: 25px;}
+	.login-form {width: 50%;padding: 60px 100px;background: #fff;}
 	.login-oauth {display: flex;justify-content:space-around;}
 	.login-form .el-divider {margin-top:40px;}
 
@@ -97,6 +104,18 @@
 
 	@media (max-height: 650px){
 	.login_container {position: static;transform: none;margin:50px auto;}
+	.login-footer {margin-bottom: 50px;}
+	}
+	@media (max-width: 1200px){
+	.login_container {width: 900px;}
+	.login-form {padding:60px;}
+	}
+	@media (max-width: 1000px){
+	.login_container {width: 100%;background: #fff;margin: 0;transform:none;top:0px;bottom:0px;left:0px;right: 0px;}
+	.login_body {box-shadow: none;}
+	.login-form {width:100%;padding:60px 40px;}
+	.login-sidebox {display: none;}
+	.login-footer {margin-top: 0;}
 	}
 </style>
 
