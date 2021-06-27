@@ -4,7 +4,7 @@
 		<header class="adminui-header">
 			<div class="adminui-header-left">
 				<div class="logo-bar">
-					<img class="logo" :alt="appName" src="@/assets/logo.png">
+					<img class="logo" :alt="appName" src="img/logo.png">
 					<span>{{ $CONFIG.APP_NAME }}</span>
 				</div>
 				<ul v-if="!ismobile" class="nav">

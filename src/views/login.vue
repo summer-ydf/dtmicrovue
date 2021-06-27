@@ -2,9 +2,9 @@
 
 	<div class="login_container">
 		<div class="login_body">
-			<div class="login-sidebox">
+			<div class="login-sidebox" style="background:url('img/login-left.png') 0 0 no-repeat #607089;">
 				<div class="login-logo">
-					<img class="logo" :alt="appName" src="@/assets/logo.png">{{appName}}
+					<img class="logo" :alt="appName" src="img/logo.png">{{appName}}
 				</div>
 				<div class="login-title">
 					<h2>面面俱到的中后台前端框架</h2>
@@ -74,7 +74,7 @@
 <style scoped>
 	.login_container {position: absolute;top:50%;left:50%;width: 900px;margin: 0 auto;z-index: 1;transform: translate(-50%, -50%);}
 	.login_body {width: inherit;display: flex;box-shadow: 0px 20px 80px 0px rgba(0,0,0,0.3);}
-	.login-sidebox {width: 50%;background:url(~@/assets/login-left.png) 0 0 no-repeat #607089;padding: 60px;color: #fff;position: relative;}
+	.login-sidebox {width: 50%;padding: 60px;color: #fff;position: relative;}
 
 	.login-logo {font-size: 35px;display: flex;align-items: center;}
 	.login-logo .logo {margin-right: 10px;width: 50px;height: 50px;}
