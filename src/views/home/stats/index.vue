@@ -2,7 +2,7 @@
 	<el-main>
 		<el-row :gutter="15">
 			<el-col :span="24">
-				<el-card shadow="never">
+				<el-card shadow="never" style="margin-bottom: 15px;">
 					<div class="welTop">
 						<div class="icon">
 							<el-avatar :size="60" src="img/avatar.jpg"></el-avatar>
@@ -36,7 +36,7 @@
 
 		<div class="data-box">
 			<el-row :gutter="15">
-				<el-col :span="8">
+				<el-col :md="8" :xs="24">
 					<el-card shadow="never" class="item-background">
 						<div class="item">
 							<div class="main">
@@ -50,7 +50,7 @@
 						</div>
 					</el-card>
 				</el-col>
-				<el-col :span="8">
+				<el-col :md="8" :xs="24">
 					<el-card shadow="never">
 						<div class="item">
 							<div class="main">
@@ -64,7 +64,7 @@
 						</div>
 					</el-card>
 				</el-col>
-				<el-col :span="8">
+				<el-col :md="8" :xs="24">
 					<el-card shadow="never">
 						<div class="item">
 							<div class="main">
@@ -106,7 +106,7 @@
 </script>
 
 <style scoped>
-	.el-row {margin-bottom:15px;}
+	.el-row {}
 	.el-tag+.el-tag {margin-left: 10px;}
 
 
@@ -119,6 +119,7 @@
 	.avatar-list .avatar {margin-left: -10px;border: 3px solid #fff;cursor: pointer;}
 
 	.data-box {}
+	.data-box .el-card {margin-bottom: 15px;}
 	.data-box .item-background {background: #409EFF;color: #fff;}
 	.data-box .item-background .item h2 {color: #fff;}
 	.data-box .item-background .item p {color: rgba(255, 255, 255, 0.5);}
