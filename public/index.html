@@ -24,10 +24,10 @@
 			<style>
 				.app-loading {position: absolute;top:0px;left:0px;right:0px;bottom:0px;display: flex;justify-content: center;align-items: center;flex-direction: column;background: #fff;}
 				.app-loading__logo {margin-bottom: 30px;}
-				.app-loading__logo img {width: 100px;vertical-align: bottom;}
-				.app-loading__loader {width: 30px;height: 30px;border: 5px solid transparent;border-top-color: #000;border-radius: 50%;animation: .5s loader linear infinite;position: relative;}
-				.app-loading__loader:before {content: '';display: block;width: inherit;height: inherit;position: absolute;top: -5px;left: -5px;border: 5px solid #ccc;border-radius: 50%;opacity: .5;}
-				.app-loading__title {font-size: 30px;color: #333;margin-top: 30px;}
+				.app-loading__logo img {width: 90px;vertical-align: bottom;}
+				.app-loading__loader {box-sizing: border-box;width: 35px;height: 35px;border: 5px solid transparent;border-top-color: #000;border-radius: 50%;animation: .5s loader linear infinite;position: relative;}
+				.app-loading__loader:before {box-sizing: border-box;content: '';display: block;width: inherit;height: inherit;position: absolute;top: -5px;left: -5px;border: 5px solid #ccc;border-radius: 50%;opacity: .5;}
+				.app-loading__title {font-size: 24px;color: #333;margin-top: 30px;}
 				@keyframes loader {
 				    0% {
 				        transform: rotate(0deg);
