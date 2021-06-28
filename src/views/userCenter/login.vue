@@ -16,7 +16,14 @@
 						<el-input v-model="ruleForm.password" prefix-icon="el-icon-lock" clearable show-password placeholder="请输入密码"></el-input>
 					</el-form-item>
 					<el-form-item style="margin-bottom: 10px;">
-						<el-checkbox label="记住我" v-model="ruleForm.autologin"></el-checkbox>
+						<el-row>
+							<el-col :span="12">
+								<el-checkbox label="记住我" v-model="ruleForm.autologin"></el-checkbox>
+							</el-col>
+							<el-col :span="12" style="text-align: right;">
+								<el-button type="text">忘记密码？</el-button>
+							</el-col>
+						</el-row>
 					</el-form-item>
 					<el-form-item>
 						<el-dropdown  style="width: 100%;">
