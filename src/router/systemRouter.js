@@ -46,7 +46,7 @@ const routes = [{
 	},
 	{
 		path: "/login",
-		component: () => import(/* webpackChunkName: "login" */ '@/views/login'),
+		component: () => import(/* webpackChunkName: "login" */ '@/views/userCenter/login'),
 		meta: {
 			title: "登录"
 		}
