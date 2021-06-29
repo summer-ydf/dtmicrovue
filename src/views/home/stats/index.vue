@@ -9,9 +9,10 @@
 						</div>
 						<div class="main">
 							<h2>欢迎体验SCUI</h2>
-							<p>轻快是SCUI的宗旨，让一切复杂的东西简单化。并且没有免费收费版本区别。如果喜欢点个星星支持一下。
+							<p>高性能 / 精致 / 优雅。基于Vue3 + Element-Plus 的中后台前端解决方案，如果喜欢就点个星星支持一下。</p>
+                            <p>
 								<a href='https://gitee.com/lolicode/scui' target="_blank">
-									<img src='https://gitee.com/lolicode/scui/badge/star.svg?theme=dark' alt='star' style="vertical-align: middle;height:18px;">
+									<img src='https://gitee.com/lolicode/scui/badge/star.svg?theme=dark' alt='star' style="vertical-align: middle">
 								</a>
 							</p>
 						</div>
