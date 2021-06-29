@@ -1,7 +1,5 @@
 <template>
-	<el-main>
-		<h2>{{ title }}</h2>
-	</el-main>
+	<el-empty :image-size="200" :description="title"></el-empty>
 </template>
 
 <script>
