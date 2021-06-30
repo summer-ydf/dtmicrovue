@@ -5,8 +5,8 @@
 			<el-col :xl="6" :lg="6" :md="8" :sm="12" :xs="24" v-for="item in list" :key="item.title">
 				<el-card shadow="hover" :body-style="{ padding: '0px' }" @click="click(item.url)">
 					<div class="code-item">
-						<div class="img">
-							<i :class="item.icon"></i>
+						<div class="img" :style="{background: item.color}">
+							<i :class="item.icon" :style="`background-image: -webkit-linear-gradient(top left, #fff, ${item.color} 100px)`"></i>
 						</div>
 						<div class="title">
 							<h2>{{item.title}}</h2>
@@ -30,8 +30,17 @@
 						title: "CRUD",
 						des: "配置型生成经典的增删改查列表",
 						icon: "sc-icon-file-list-fill",
+						color: "#09f",
 						ver: "1.0.0-beta.1",
 						url: "/test/autocode/list"
+					},
+					{
+						title: "FormDesigner",
+						des: "表单设计器",
+						icon: "sc-icon-edit-box-fill",
+						color: "#ccc",
+						ver: "开发中",
+						url: "/test/autocode/form"
 					}
 				]
 			}
