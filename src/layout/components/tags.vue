@@ -119,6 +119,7 @@
 			//关闭tag
 			closeSelectedTag(tag) {
 				this.$store.commit("removeViewTags", tag)
+				this.$store.commit("removeIframeList", tag)
 				this.$store.commit("removeKeepLive", tag.name)
 				if (this.isActive(tag)) {
 					const latestView = this.tagList.slice(-1)[0]
@@ -151,6 +152,7 @@
 						path: nowTag.path
 					})
 				}
+				this.$store.commit("refreshIframe", nowTag)
 				var _this = this;
 				setTimeout(function() {
 					_this.$store.commit("removeKeepLive", nowTag.name)

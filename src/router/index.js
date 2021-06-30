@@ -82,7 +82,6 @@ function filterAsyncRouter(routerMap) {
 		if(item.meta.type=='iframe'){
 			item.meta.url = item.path;
 			item.path = `/i/${item.name}`;
-			item.component = 'other/iframe';
 		}
 		//MAP转路由对象
 		var route = {

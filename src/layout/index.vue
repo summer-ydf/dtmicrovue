@@ -35,6 +35,7 @@
 				<Tags v-if="!ismobile && layoutTags"></Tags>
 				<div class="adminui-main" id="adminui-main">
 					<router-view></router-view>
+					<iframe-view></iframe-view>
 				</div>
 			</div>
 		</section>
@@ -72,6 +73,7 @@
 				<Tags v-if="!ismobile && layoutTags"></Tags>
 				<div class="adminui-main" id="adminui-main">
 					<router-view></router-view>
+					<iframe-view></iframe-view>
 				</div>
 			</div>
 		</section>
@@ -91,6 +93,7 @@
 	import NavMenu from './components/NavMenu.vue';
 	import userbar from './components/userbar.vue';
 	import setting from './components/setting.vue';
+	import iframeView from './components/iframeView.vue';
 
 	export default {
 		name: 'index',
@@ -100,7 +103,8 @@
 			Tags,
 			NavMenu,
 			userbar,
-			setting
+			setting,
+			iframeView
 		},
 		data() {
 			return {
