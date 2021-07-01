@@ -152,6 +152,7 @@
 			this.$TOOL.data.remove("user")
 			this.$store.commit("clearViewTags")
 			this.$store.commit("clearKeepLive")
+			this.$store.commit("clearIframeList")
 		},
 		methods: {
 			submitForm(formName, type) {
