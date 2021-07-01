@@ -22,16 +22,27 @@ axios.interceptors.response.use(
 		return response;
 	},
 	(error) => {
-		if(error.response.status == 404){
+		if (error.response) {
+			if (error.response.status == 404) {
+				ElNotification.error({
+					title: '请求错误',
+					message: "Status:404，正在请求不存在的服务器记录！"
+				});
+			} else if (error.response.status == 500) {
+				ElNotification.error({
+					title: '请求错误',
+					message: "Status:500，服务器发生错误！"
+				});
+			} else {
+				ElNotification.error({
+					title: '请求错误',
+					message: `Status:${error.response.status}，未知错误！`
+				});
+			}
+		} else {
 			ElNotification.error({
 				title: '请求错误',
-				message: "Status:404，正在请求不存在的服务器记录！"
-			});
-		}
-		if(error.response.status == 500){
-			ElNotification.error({
-				title: '请求错误',
-				message: "Status:500，服务器发生错误！"
+				message: "请求服务器无响应！"
 			});
 		}
 
