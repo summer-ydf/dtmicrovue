@@ -29,6 +29,9 @@ var isGetApiRouter = false;
 
 router.beforeEach(async (to, from, next) => {
 	NProgress.start()
+	
+	//动态标题
+	document.title = `${to.meta.title} - ${config.APP_NAME}`
 
 	let userInfo = tool.data.get("user");
 
