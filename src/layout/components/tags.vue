@@ -1,7 +1,7 @@
 <template>
 	<div class="adminui-tags">
-		<ul>
-			<li v-for="tag in tagList" v-bind:key="tag" :class="isActive(tag) ? 'active' : '' " @contextmenu.prevent="openContextMenu($event, tag)">
+		<ul ref="tags">
+			<li v-for="tag in tagList" v-bind:key="tag" :class="[isActive(tag)?'active':'',tag.meta.affix?'affix':'' ]" @contextmenu.prevent="openContextMenu($event, tag)">
 				<router-link :to="tag">
 				{{ tag.meta.title }}
 				<i v-if="!tag.meta.affix" class="el-icon-close" @click.prevent.stop='closeSelectedTag(tag)'></i>
@@ -23,49 +23,9 @@
 	</transition>
 </template>
 
-<style>
-	.contextmenu {
-		position: fixed;
-		margin:0;
-		border-radius: 0px;
-		background: #fff;
-		border: 1px solid #e4e7ed;
-		box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
-		z-index: 3000;
-		list-style-type: none;
-		padding: 10px 0;
-	}
-	.contextmenu hr {
-		margin:5px 0;
-		border: none;
-		height: 1px;
-		font-size: 0px;
-		background-color: #ebeef5;
-	}
-	.contextmenu li {
-		margin:0;
-		cursor: pointer;
-		line-height: 30px;
-		padding: 0 17px;
-		color: #606266;
-	}
-	.contextmenu li i {
-		font-size: 14px;
-		margin-right: 10px;
-	}
-	.contextmenu li:hover {
-		background-color: #ecf5ff;
-		color: #66b1ff;
-	}
-	.contextmenu li.disabled {
-		cursor: not-allowed;
-		color: #bbb;
-		background: transparent;
-	}
-
-</style>
-
 <script>
+	import Sortable from 'sortablejs'
+
 	export default {
 		name: "tags",
 		data() {
@@ -78,9 +38,6 @@
 			}
 		},
 		props: {},
-		setup() {
-
-		},
 		watch: {
 			$route(e) {
 				this.addViewTags(e);
@@ -104,7 +61,18 @@
 			this.addViewTags(this.$router.options.routes[0].children[0].children[0]);
 			this.addViewTags(this.$route);
 		},
+		mounted() {
+			this.tagDrop();
+		},
 		methods: {
+			//标签拖拽排序
+			tagDrop(){
+				const target = this.$refs.tags
+				Sortable.create(target, {
+					draggable: 'li',
+					animation: 300
+				})
+			},
 			//增加tag
 			addViewTags(route) {
 				if(route.name){
@@ -210,3 +178,44 @@
 		}
 	}
 </script>
+
+<style>
+	.contextmenu {
+		position: fixed;
+		margin:0;
+		border-radius: 0px;
+		background: #fff;
+		border: 1px solid #e4e7ed;
+		box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+		z-index: 3000;
+		list-style-type: none;
+		padding: 10px 0;
+	}
+	.contextmenu hr {
+		margin:5px 0;
+		border: none;
+		height: 1px;
+		font-size: 0px;
+		background-color: #ebeef5;
+	}
+	.contextmenu li {
+		margin:0;
+		cursor: pointer;
+		line-height: 30px;
+		padding: 0 17px;
+		color: #606266;
+	}
+	.contextmenu li i {
+		font-size: 14px;
+		margin-right: 10px;
+	}
+	.contextmenu li:hover {
+		background-color: #ecf5ff;
+		color: #66b1ff;
+	}
+	.contextmenu li.disabled {
+		cursor: not-allowed;
+		color: #bbb;
+		background: transparent;
+	}
+</style>
