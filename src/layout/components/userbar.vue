@@ -81,11 +81,19 @@
 				if(command == "uc"){
 					this.$router.push({path: '/usercenter'});
 				}
-				if(command == "outLogin"){
-					this.$router.replace({path: '/login'});
-				}
 				if(command == "cmd"){
 					this.$router.push({path: '/cmd'});
+				}
+				if(command == "outLogin"){
+					this.$confirm('确认是否退出当前用户？','提示', {
+						type: 'warning',
+						confirmButtonText: '退出',
+						confirmButtonClass: 'el-button--danger'
+					}).then(() => {
+						this.$router.replace({path: '/login'});
+					}).catch(() => {
+						//取消退出
+					})
 				}
 			},
 			//全屏
