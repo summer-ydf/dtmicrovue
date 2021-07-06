@@ -78,6 +78,36 @@
 		</section>
 	</template>
 
+	<!-- 经典布局 -->
+	<template v-else-if="layout=='dock'">
+		<header class="adminui-header">
+			<div class="adminui-header-left">
+				<div class="logo-bar">
+					<img class="logo" src="img/logo.png">
+					<span>{{ $CONFIG.APP_NAME }}</span>
+				</div>
+			</div>
+			<div class="adminui-header-right">
+				<userbar></userbar>
+			</div>
+		</header>
+
+		<section class="aminui-wrapper">
+			<Side-m v-if="ismobile"></Side-m>
+			<div class="aminui-body el-container">
+				<div v-if="!ismobile" class="adminui-header-menu">
+					<el-menu :default-active="$route.meta.active || $route.fullPath" router mode="horizontal">
+						<NavMenu :navMenus="menu"></NavMenu>
+					</el-menu>
+				</div>
+				<div class="adminui-main" id="adminui-main">
+					<router-view></router-view>
+					<iframe-view></iframe-view>
+				</div>
+			</div>
+		</section>
+	</template>
+
 	<!-- 默认布局 -->
 	<template v-else>
 		<section class="aminui-wrapper">

@@ -7,6 +7,7 @@
 				<el-option label="默认" value="default"></el-option>
 				<el-option label="通栏" value="header"></el-option>
 				<el-option label="经典" value="menu"></el-option>
+				<el-option label="功能坞" value="dock"></el-option>
 			</el-select>
 		</el-form-item>
 		<el-form-item label="折叠菜单">

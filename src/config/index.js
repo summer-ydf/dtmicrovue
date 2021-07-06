@@ -11,7 +11,8 @@ const DEFAULT_CONFIG = {
 	//MOCK接口地址
 	MOCK_URL: "https://www.fastmock.site/mock/44c807475f7eeba73409792255781935/api",
 
-	//布局 默认：default | 通栏：header | 经典：menu
+	//布局 默认：default | 通栏：header | 经典：menu | 功能坞：dock
+	//dock将关闭标签和面包屑栏
 	LAYOUT: 'default',
 
 	//菜单是否折叠
