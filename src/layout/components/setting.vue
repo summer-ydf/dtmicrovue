@@ -6,6 +6,7 @@
 			<el-select v-model="layout" placeholder="请选择">
 				<el-option label="默认" value="default"></el-option>
 				<el-option label="通栏" value="header"></el-option>
+				<el-option label="经典" value="menu"></el-option>
 			</el-select>
 		</el-form-item>
 		<el-form-item label="折叠菜单">

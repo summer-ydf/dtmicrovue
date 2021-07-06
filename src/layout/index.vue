@@ -4,7 +4,7 @@
 		<header class="adminui-header">
 			<div class="adminui-header-left">
 				<div class="logo-bar">
-					<img class="logo" :alt="appName" src="img/logo.png">
+					<img class="logo" src="img/logo.png">
 					<span>{{ $CONFIG.APP_NAME }}</span>
 				</div>
 				<ul v-if="!ismobile" class="nav">
@@ -24,9 +24,46 @@
 					<h2>{{ pmenu.meta.title }}</h2>
 				</div>
 				<div class="adminui-side-scroll">
-					<el-menu :default-active="$route.meta.active || $route.fullPath" router :collapse="menuIsCollapse">
-						<NavMenu :navMenus="nextMenu"></NavMenu>
-					</el-menu>
+					<el-scrollbar>
+						<el-menu :default-active="$route.meta.active || $route.fullPath" router :collapse="menuIsCollapse">
+							<NavMenu :navMenus="nextMenu"></NavMenu>
+						</el-menu>
+					</el-scrollbar>
+				</div>
+			</div>
+			<Side-m v-if="ismobile"></Side-m>
+			<div class="aminui-body el-container">
+				<Topbar v-if="!ismobile"></Topbar>
+				<Tags v-if="!ismobile && layoutTags"></Tags>
+				<div class="adminui-main" id="adminui-main">
+					<router-view></router-view>
+					<iframe-view></iframe-view>
+				</div>
+			</div>
+		</section>
+	</template>
+
+	<!-- 经典布局 -->
+	<template v-else-if="layout=='menu'">
+		<header class="adminui-header">
+			<div class="adminui-header-left">
+				<div class="logo-bar">
+					<img class="logo" src="img/logo.png">
+					<span>{{ $CONFIG.APP_NAME }}</span>
+				</div>
+			</div>
+			<div class="adminui-header-right">
+				<userbar></userbar>
+			</div>
+		</header>
+		<section class="aminui-wrapper">
+			<div v-if="!ismobile" :class="menuIsCollapse?'aminui-side isCollapse':'aminui-side'">
+				<div class="adminui-side-scroll">
+					<el-scrollbar>
+						<el-menu :default-active="$route.meta.active || $route.fullPath" router :collapse="menuIsCollapse">
+							<NavMenu :navMenus="menu"></NavMenu>
+						</el-menu>
+					</el-scrollbar>
 				</div>
 			</div>
 			<Side-m v-if="ismobile"></Side-m>
@@ -46,13 +83,15 @@
 		<section class="aminui-wrapper">
 			<div v-if="!ismobile" class="aminui-side-split">
 				<div class="adminui-side-split-scroll">
-					<ul>
-						<li v-for="item in menu" :key="item" :class="pmenu.path==item.path?'active':''"
-							@click="showMenu(item)">
-							<i :class="item.meta.icon || 'el-icon-menu'"></i>
-							<p>{{ item.meta.title }}</p>
-						</li>
-					</ul>
+					<el-scrollbar>
+						<ul>
+							<li v-for="item in menu" :key="item" :class="pmenu.path==item.path?'active':''"
+								@click="showMenu(item)">
+								<i :class="item.meta.icon || 'el-icon-menu'"></i>
+								<p>{{ item.meta.title }}</p>
+							</li>
+						</ul>
+					</el-scrollbar>
 				</div>
 			</div>
 			<div v-if="!ismobile" :class="menuIsCollapse?'aminui-side isCollapse':'aminui-side'">
@@ -60,9 +99,11 @@
 					<h2>{{ pmenu.meta.title }}</h2>
 				</div>
 				<div class="adminui-side-scroll">
-					<el-menu :default-active="$route.meta.active || $route.fullPath" router :collapse="menuIsCollapse">
-						<NavMenu :navMenus="nextMenu"></NavMenu>
-					</el-menu>
+					<el-scrollbar>
+						<el-menu :default-active="$route.meta.active || $route.fullPath" router :collapse="menuIsCollapse">
+							<NavMenu :navMenus="nextMenu"></NavMenu>
+						</el-menu>
+					</el-scrollbar>
 				</div>
 			</div>
 			<Side-m v-if="ismobile"></Side-m>
@@ -140,6 +181,12 @@
 		watch: {
 			$route() {
 				this.showThis()
+			},
+			layout: {
+				handler(val){
+					document.body.setAttribute('data-layout', val)
+				},
+				immediate: true,
 			}
 		},
 		methods: {
