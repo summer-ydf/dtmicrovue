@@ -1,10 +1,10 @@
 <!--
  * @Descripttion: 系统计划任务配置
- * @version: 1.0
+ * @version: 1.1
  * @Author: sakuya
  * @Date: 2021年7月7日09:28:32
- * @LastEditors:
- * @LastEditTime:
+ * @LastEditors: sakuya
+ * @LastEditTime: 2021年7月8日22:15:13
 -->
 
 <template>
@@ -57,13 +57,7 @@
 		</el-row>
 	</el-main>
 
-	<el-dialog title="计划任务" v-model="saveDialogVisible" :width="400" destroy-on-close>
-		<save-dialog ref="saveDialog"></save-dialog>
-		<template #footer>
-			<el-button @click="saveDialogVisible=false" >取 消</el-button>
-			<el-button type="primary" @click="saveForm()" :loading="isSaveing">保 存</el-button>
-		</template>
-	</el-dialog>
+	<save-dialog ref="saveDialog"></save-dialog>
 
 	<el-drawer title="计划任务日志" v-model="logsVisible" :size="600" direction="rtl" destroy-on-close>
 		<logs></logs>
@@ -80,11 +74,14 @@
 			saveDialog,
 			logs
 		},
+		provide() {
+			return {
+				list: this.list
+			}
+		},
 		data() {
 			return {
-				saveDialogVisible: false,
 				logsVisible: false,
-				isSaveing: false,
 				list: [
 					{
 						id: "1",
@@ -115,13 +112,11 @@
 		},
 		methods: {
 			add(){
-				this.saveDialogVisible = true;
+				this.$refs.saveDialog.show()
 			},
 			edit(task){
-				this.saveDialogVisible = true;
-				this.$nextTick(() => {
-					this.$refs.saveDialog.setData(task)
-				})
+				this.$refs.saveDialog.show('edit')
+				this.$refs.saveDialog.setData(task)
 			},
 			del(task){
 				this.$confirm(`确认删除 ${task.title} 计划任务吗？`,'提示', {
@@ -139,13 +134,6 @@
 			},
 			run(task){
 				this.$message.success(`已成功执行计划任务：${task.title}`)
-			},
-			saveForm(){
-				this.$refs.saveDialog.submit((formData) => {
-					console.log(formData)
-					this.$message.success("操作成功")
-					this.saveDialogVisible = false;
-				})
 			}
 		}
 	}
