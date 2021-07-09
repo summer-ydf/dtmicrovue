@@ -35,21 +35,9 @@
 		</el-main>
 	</el-container>
 
-	<el-dialog :title="titleMap[saveMode]" v-model="saveDialogVisible" :width="500" destroy-on-close>
-		<save-dialog ref="saveDialog" :mode="saveMode"></save-dialog>
-		<template #footer>
-			<el-button @click="saveDialogVisible=false" >取 消</el-button>
-			<el-button v-if="saveMode!='show'" type="primary" @click="saveForm()" :loading="isSaveing">保 存</el-button>
-		</template>
-	</el-dialog>
+	<save-dialog ref="saveDialog" @success="handleSaveSuccess"></save-dialog>
 
-	<el-dialog title="角色权限设置" v-model="permissionDialogVisible" :width="500" destroy-on-close>
-		<permission-dialog ref="permissionDialog"></permission-dialog>
-		<template #footer>
-			<el-button @click="permissionDialogVisible=false" >取 消</el-button>
-			<el-button type="primary" @click="savePermission()" :loading="isPermissionSaveing">保 存</el-button>
-		</template>
-	</el-dialog>
+	<permission-dialog ref="permissionDialog"></permission-dialog>
 
 </template>
 
@@ -69,45 +57,27 @@
 				selection: [],
 				search: {
 					keyword: null
-				},
-				saveDialogVisible: false,
-				saveMode: 'add',
-				titleMap: {
-					add: "新增",
-					edit: "编辑",
-					show: "查看"
-				},
-				isSaveing: false,
-
-				//权限
-				permissionDialogVisible: false,
-				isPermissionSaveing: false
+				}
 			}
 		},
 		methods: {
 			//添加
 			add(){
-				this.saveMode = 'add';
-				this.saveDialogVisible = true;
+				this.$refs.saveDialog.show()
 			},
 			//编辑
 			table_edit(row){
-				this.saveMode = 'edit';
-				this.saveDialogVisible = true;
-				this.$nextTick(() => {
-					//这里应该再次根据ID查询详情接口
-					this.$refs.saveDialog.setData(row)
-				})
-
+				this.$refs.saveDialog.show('edit')
+				this.$refs.saveDialog.setData(row)
 			},
 			//查看
 			table_show(row){
-				this.saveMode = 'show';
-				this.saveDialogVisible = true;
-				this.$nextTick(() => {
-					//这里应该再次根据ID查询详情接口
-					this.$refs.saveDialog.setData(row)
-				})
+				this.$refs.saveDialog.show('show')
+				this.$refs.saveDialog.setData(row)
+			},
+			//权限设置
+			permission(){
+				this.$refs.permissionDialog.show()
 			},
 			//删除
 			async table_del(row, index){
@@ -140,36 +110,40 @@
 
 				})
 			},
-			//提交
-			saveForm(){
-				this.$refs.saveDialog.submit(async (formData) => {
-					this.isSaveing = true;
-					var res = await this.$API.user.save.post(formData);
-					this.isSaveing = false;
-					if(res.code == 200){
-						//这里选择刷新整个表格 OR 插入/编辑现有表格数据
-						this.saveDialogVisible = false;
-						this.$message.success("操作成功")
-					}else{
-						this.$alert(res.message, "提示", {type: 'error'})
-					}
-				})
-			},
 			//表格选择后回调事件
 			selectionChange(selection){
 				this.selection = selection;
 			},
-			//权限设置
-			permission(){
-				this.permissionDialogVisible = true;
-			},
-			savePermission(){
-				this.$message.success("操作成功")
-				this.permissionDialogVisible = false;
-			},
 			//搜索
 			upsearch(){
 
+			},
+			//根据ID获取树结构
+			filterTree(id){
+				var target = null;
+				function filter(tree){
+					tree.forEach(item => {
+						if(item.id == id){
+							target = item
+						}
+						if(item.children){
+							filter(item.children)
+						}
+					})
+				}
+				filter(this.$refs.table.tableData)
+				return target
+			},
+			//本地更新数据
+			handleSaveSuccess(data, mode){
+				//这里新增或编辑后本地改变了值，当然也可以暴力直接刷新表格
+				//this.$refs.table.tableData.refresh()
+				if(mode=='add'){
+					data.id = new Date().getTime()
+					this.$refs.table.tableData.unshift(data)
+				}else if(mode=='edit'){
+					Object.assign(this.filterTree(data.id), data)
+				}
 			}
 		}
 	}

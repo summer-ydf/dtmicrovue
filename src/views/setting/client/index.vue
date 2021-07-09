@@ -32,7 +32,7 @@
 		</el-main>
 	</el-container>
 
-	<save-dialog ref="saveDialog"></save-dialog>
+	<save-dialog ref="saveDialog" @success="handleSuccess"></save-dialog>
 
 </template>
 
@@ -51,6 +51,7 @@
 			}
 		},
 		methods: {
+			//增加
 			add(){
 				this.$refs.saveDialog.show()
 			},
@@ -93,6 +94,17 @@
 			//表格选择后回调事件
 			selectionChange(selection){
 				this.selection = selection;
+			},
+			//本地更新数据
+			handleSuccess(data, mode){
+				if(mode=='add'){
+					data.id = new Date().getTime()
+					this.$refs.table.tableData.unshift(data)
+				}else if(mode=='edit'){
+					this.$refs.table.tableData.filter(item => item.id===data.id ).forEach(item => {
+						Object.assign(item, data)
+					})
+				}
 			}
 		}
 	}

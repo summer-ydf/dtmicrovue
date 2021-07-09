@@ -55,13 +55,7 @@
 		</el-container>
 	</el-container>
 
-	<el-dialog :title="titleMap[saveMode]" v-model="saveDialogVisible" :width="500" destroy-on-close>
-		<save-dialog ref="saveDialog" :mode="saveMode"></save-dialog>
-		<template #footer>
-			<el-button @click="saveDialogVisible=false" >取 消</el-button>
-			<el-button v-if="saveMode!='show'" type="primary" @click="saveForm()" :loading="isSaveing">保 存</el-button>
-		</template>
-	</el-dialog>
+	<save-dialog ref="saveDialog" @success="handleSuccess"></save-dialog>
 
 </template>
 
@@ -75,14 +69,6 @@
 		},
 		data() {
 			return {
-				saveDialogVisible: false,
-				saveMode: 'add',
-				titleMap: {
-					add: "新增",
-					edit: "编辑",
-					show: "查看"
-				},
-				isSaveing: false,
 				showGrouploading: false,
 				groupFilterText: '',
 				group: [],
@@ -104,27 +90,17 @@
 		methods: {
 			//添加
 			add(){
-				this.saveMode = 'add';
-				this.saveDialogVisible = true;
+				this.$refs.saveDialog.show()
 			},
 			//编辑
 			table_edit(row){
-				this.saveMode = 'edit';
-				this.saveDialogVisible = true;
-				this.$nextTick(() => {
-					//这里应该再次根据ID查询详情接口
-					this.$refs.saveDialog.setData(row)
-				})
-
+				this.$refs.saveDialog.show('edit')
+				this.$refs.saveDialog.setData(row)
 			},
 			//查看
 			table_show(row){
-				this.saveMode = 'show';
-				this.saveDialogVisible = true;
-				this.$nextTick(() => {
-					//这里应该再次根据ID查询详情接口
-					this.$refs.saveDialog.setData(row)
-				})
+				this.$refs.saveDialog.show('show')
+				this.$refs.saveDialog.setData(row)
 			},
 			//删除
 			async table_del(row, index){
@@ -157,21 +133,6 @@
 
 				})
 			},
-			//提交
-			saveForm(){
-				this.$refs.saveDialog.submit(async (formData) => {
-					this.isSaveing = true;
-					var res = await this.$API.user.save.post(formData);
-					this.isSaveing = false;
-					if(res.code == 200){
-						//这里选择刷新整个表格 OR 插入/编辑现有表格数据
-						this.saveDialogVisible = false;
-						this.$message.success("操作成功")
-					}else{
-						this.$alert(res.message, "提示", {type: 'error'})
-					}
-				})
-			},
 			//表格选择后回调事件
 			selectionChange(selection){
 				this.selection = selection;
@@ -199,6 +160,17 @@
 			//搜索
 			upsearch(){
 
+			},
+			//本地更新数据
+			handleSuccess(data, mode){
+				if(mode=='add'){
+					data.id = new Date().getTime()
+					this.$refs.table.tableData.unshift(data)
+				}else if(mode=='edit'){
+					this.$refs.table.tableData.filter(item => item.id===data.id ).forEach(item => {
+						Object.assign(item, data)
+					})
+				}
 			}
 		}
 	}

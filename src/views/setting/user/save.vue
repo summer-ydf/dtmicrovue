@@ -1,55 +1,65 @@
 <template>
-	<el-form :model="form" :rules="rules" :disabled="mode=='show'" ref="dialogForm" label-width="80px" label-position="top">
-		<el-row :gutter="20">
-			<el-col :span="24">
-				<el-form-item label="头像" prop="avatar">
-					<sc-upload v-model="form.avatar" title="上传头像" :action="uploadUrl"></sc-upload>
-				</el-form-item>
-			</el-col>
-		</el-row>
-		<el-row :gutter="20">
-			<el-col :span="12">
-				<el-form-item label="登录账号" prop="userName">
-					<el-input v-model="form.userName" clearable></el-input>
-				</el-form-item>
-			</el-col>
-			<el-col :span="12">
-				<el-form-item label="姓名" prop="name">
-					<el-input v-model="form.name" clearable></el-input>
-				</el-form-item>
-			</el-col>
-		</el-row>
-		<el-row :gutter="20">
-			<el-col :span="12">
-				<el-form-item label="登录密码" prop="password">
-					<el-input v-model="form.password" clearable></el-input>
-					<div v-if="mode=='edit'" class="el-form-item-msg">如不修改密码，可为空</div>
-				</el-form-item>
-			</el-col>
-			<el-col :span="12">
-				<el-form-item label="确认密码" prop="password2">
-					<el-input v-model="form.password2" clearable></el-input>
-				</el-form-item>
-			</el-col>
-		</el-row>
-		<el-row :gutter="20">
-			<el-col :span="12">
-				<el-form-item label="所属角色" prop="group">
-					<el-cascader v-model="form.group" :options="groups" :props="groupsProps" :show-all-levels="false" clearable></el-cascader>
-				</el-form-item>
-			</el-col>
-		</el-row>
-	</el-form>
+	<el-dialog :title="titleMap[mode]" v-model="visible" :width="500" destroy-on-close>
+		<el-form :model="form" :rules="rules" :disabled="mode=='show'" ref="dialogForm" label-width="100px" label-position="top">
+			<el-row :gutter="20">
+				<el-col :span="24">
+					<el-form-item label="头像" prop="avatar">
+						<sc-upload v-model="form.avatar" title="上传头像"></sc-upload>
+					</el-form-item>
+				</el-col>
+			</el-row>
+			<el-row :gutter="20">
+				<el-col :span="12">
+					<el-form-item label="登录账号" prop="userName">
+						<el-input v-model="form.userName" placeholder="用于登录系统" clearable></el-input>
+					</el-form-item>
+				</el-col>
+				<el-col :span="12">
+					<el-form-item label="姓名" prop="name">
+						<el-input v-model="form.name" placeholder="请输入完整的真实姓名" clearable></el-input>
+					</el-form-item>
+				</el-col>
+			</el-row>
+			<el-row :gutter="20" v-if="mode=='add'">
+				<el-col :span="12">
+					<el-form-item label="登录密码" prop="password">
+						<el-input type="password" v-model="form.password" clearable show-password></el-input>
+					</el-form-item>
+				</el-col>
+				<el-col :span="12">
+					<el-form-item label="确认密码" prop="password2">
+						<el-input type="password" v-model="form.password2" clearable show-password></el-input>
+					</el-form-item>
+				</el-col>
+			</el-row>
+			<el-row :gutter="20">
+				<el-col :span="24">
+					<el-form-item label="所属角色" prop="group">
+						<el-cascader v-model="form.group" :options="groups" :props="groupsProps" :show-all-levels="false" clearable style="width: 100%;"></el-cascader>
+					</el-form-item>
+				</el-col>
+			</el-row>
+		</el-form>
+		<template #footer>
+			<el-button @click="visible=false" >取 消</el-button>
+			<el-button v-if="mode!='show'" type="primary" :loading="isSaveing" @click="submit()">保 存</el-button>
+		</template>
+	</el-dialog>
 </template>
 
 <script>
 	export default {
-		props: {
-			mode: { type: String, default: "add" }
-		},
+		emits: ['success'],
 		data() {
 			return {
-				uploadUrl: this.$API.demo.upload.url,
+				mode: "add",
+				titleMap: {
+					add: '新增用户',
+					edit: '编辑用户',
+					show: '查看'
+				},
+				visible: false,
+				isSaveing: false,
 				//表单数据
 				form: {
 					id:"",
@@ -71,17 +81,20 @@
 					],
 					password: [
 						{required: true, message: '请输入登录密码'},
-						{validator: () => {
+						{validator: (rule, value, callback) => {
 							if (this.form.password2 !== '') {
 								this.$refs.dialogForm.validateField('password2');
 							}
+							callback();
 						}}
 					],
 					password2: [
 						{required: true, message: '请再次输入密码'},
-						{validator: (value, callback) => {
+						{validator: (rule, value, callback) => {
 							if (value !== this.form.password) {
 								callback(new Error('两次输入密码不一致!'));
+							}else{
+								callback();
 							}
 						}}
 					],
@@ -99,23 +112,34 @@
 			}
 		},
 		mounted() {
-			if(this.mode != 'add'){
-				this.rules.password = []
-				this.rules.password2 = []
-			}
 			this.getGroup()
 		},
 		methods: {
+			//显示
+			show(mode='add'){
+				this.mode = mode;
+				this.visible = true;
+				this.form = this.$options.data().form
+			},
 			//加载树数据
 			async getGroup(){
 				var res = await this.$API.role.select.get();
 				this.groups = res.data;
 			},
 			//表单提交方法
-			submit(callback){
-				this.$refs.dialogForm.validate((valid) => {
+			submit(){
+				this.$refs.dialogForm.validate(async (valid) => {
 					if (valid) {
-						callback(this.form)
+						this.isSaveing = true;
+						var res = await this.$API.user.save.post(this.form);
+						this.isSaveing = false;
+						if(res.code == 200){
+							this.$emit('success', this.form, this.mode)
+							this.visible = false;
+							this.$message.success("操作成功")
+						}else{
+							this.$alert(res.message, "提示", {type: 'error'})
+						}
 					}else{
 						return false;
 					}

@@ -1,6 +1,6 @@
 <template>
 	<el-dialog :title="titleMap[mode]" v-model="visible" :width="500" destroy-on-close>
-		<el-form :model="form" :rules="rules" :disabled="mode=='show'" ref="dialogForm" label-width="100px" label-position="left">
+		<el-form :model="form" :rules="rules" ref="dialogForm" label-width="100px" label-position="left">
 			<el-form-item label="应用标识" prop="appId">
 				<el-input v-model="form.appId" clearable></el-input>
 			</el-form-item>
@@ -19,7 +19,7 @@
 				</el-checkbox-group>
 			</el-form-item>
 			<el-form-item label="授权至" prop="exp">
-				<el-date-picker v-model="form.exp" type="datetime" placeholder="选择日期时间"></el-date-picker>
+				<el-date-picker v-model="form.exp" type="datetime" value-format="YYYY-MM-DD HH:mm:ss" placeholder="选择日期时间"></el-date-picker>
 			</el-form-item>
 		</el-form>
 		<template #footer>
@@ -31,6 +31,7 @@
 
 <script>
 	export default {
+		emits: ['success'],
 		data() {
 			return {
 				mode: "add",
@@ -38,7 +39,6 @@
 					add: '新增APP',
 					edit: '编辑APP'
 				},
-				//表单数据
 				form: {
 					id:"",
 					appId: "",
@@ -47,7 +47,6 @@
 					type: [],
 					exp: ""
 				},
-				//验证规则
 				rules: {
 					appId:[
 						{required: true, message: '请输入应用标识'}
@@ -59,15 +58,14 @@
 						{required: true, message: '请输入秘钥'}
 					],
 					type:[
-						{required: true, message: '请选择类型范围'}
+						{required: true, message: '请选择类型范围', trigger: 'change'}
 					],
 					exp:[
-						{required: true, message: '请选择授权到期日期'}
+						{required: true, message: '请选择授权到期日期', trigger: 'change'}
 					]
 				},
 				visible: false,
-				isSaveing: false,
-				pData: {}
+				isSaveing: false
 			}
 		},
 		methods: {
@@ -85,12 +83,8 @@
 						var res = await this.$API.user.save.post(this.form);
 						this.isSaveing = false;
 						if(res.code == 200){
+							this.$emit('success', this.form, this.mode)
 							this.visible = false;
-							if(this.mode == 'add'){
-								//
-							}else if(this.mode == 'edit'){
-								Object.assign(this.pData, this.form)
-							}
 							this.$message.success("操作成功")
 						}else{
 							this.$alert(res.message, "提示", {type: 'error'})
@@ -100,7 +94,6 @@
 			},
 			//表单注入数据
 			setData(data){
-				this.pData = data
 				this.form.id = data.id
 				this.form.appId = data.appId
 				this.form.appName = data.appName

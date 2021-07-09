@@ -32,7 +32,7 @@
 
 <script>
 	export default {
-		inject: ['list'],
+		emits: ['success'],
 		data() {
 			return {
 				mode: "add",
@@ -81,15 +81,7 @@
 							this.isSaveing = false;
 							this.visible = false;
 							this.$message.success("操作成功")
-							if(this.mode == 'add'){
-								var newItem = {...this.form}
-								newItem.id = new Date().getTime()
-								this.list.push(newItem)
-							}else if(this.mode == 'edit'){
-								this.list.filter(item => item.id===this.form.id ).forEach(item => {
-									Object.assign(item, this.form)
-								})
-							}
+							this.$emit('success', this.form, this.mode)
 						},1000)
 					}
 				})

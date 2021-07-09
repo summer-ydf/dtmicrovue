@@ -57,7 +57,7 @@
 		</el-row>
 	</el-main>
 
-	<save-dialog ref="saveDialog"></save-dialog>
+	<save-dialog ref="saveDialog" @success="handleSuccess"></save-dialog>
 
 	<el-drawer title="计划任务日志" v-model="logsVisible" :size="600" direction="rtl" destroy-on-close>
 		<logs></logs>
@@ -134,6 +134,17 @@
 			},
 			run(task){
 				this.$message.success(`已成功执行计划任务：${task.title}`)
+			},
+			//本地更新数据
+			handleSuccess(data, mode){
+				if(mode=='add'){
+					data.id = new Date().getTime()
+					this.list.push(data)
+				}else if(mode=='edit'){
+					this.list.filter(item => item.id===data.id ).forEach(item => {
+						Object.assign(item, data)
+					})
+				}
 			}
 		}
 	}

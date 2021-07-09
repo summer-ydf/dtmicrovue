@@ -1,7 +1,7 @@
 <template>
 	<el-container>
 		<el-aside width="220px">
-			<el-tree ref="category" class="menu" node-key="label" :data="category" :default-expanded-keys="['系统日志']" current-node-key="系统日志" :highlight-current="true" :expand-on-click-node="false" @node-click="dicClick">
+			<el-tree ref="category" class="menu" node-key="label" :data="category" :default-expanded-keys="['系统日志']" current-node-key="系统日志" :highlight-current="true" :expand-on-click-node="false">
 			</el-tree>
 		</el-aside>
 		<el-container>
