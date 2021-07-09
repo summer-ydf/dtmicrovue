@@ -141,6 +141,7 @@
 			},
 			//刷新数据
 			refresh(){
+				this.$refs.scTable.clearSelection();
 				this.getData();
 			},
 			//更新数据
