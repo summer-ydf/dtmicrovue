@@ -1,5 +1,5 @@
 <template>
-	<el-dialog :title="titleMap[mode]" v-model="visible" :width="500" destroy-on-close>
+	<el-dialog :title="titleMap[mode]" v-model="visible" :width="500" destroy-on-close @closed="$emit('closed')">
 		<el-form :model="form" :rules="rules" :disabled="mode=='show'" ref="dialogForm" label-width="100px" label-position="top">
 			<el-row :gutter="20">
 				<el-col :span="24">
@@ -49,7 +49,7 @@
 
 <script>
 	export default {
-		emits: ['success'],
+		emits: ['success', 'closed'],
 		data() {
 			return {
 				mode: "add",
@@ -116,10 +116,10 @@
 		},
 		methods: {
 			//显示
-			show(mode='add'){
+			open(mode='add'){
 				this.mode = mode;
 				this.visible = true;
-				this.form = this.$options.data().form
+				return this
 			},
 			//加载树数据
 			async getGroup(){

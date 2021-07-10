@@ -35,9 +35,9 @@
 		</el-main>
 	</el-container>
 
-	<save-dialog ref="saveDialog" @success="handleSaveSuccess"></save-dialog>
+	<save-dialog v-if="dialog.save" ref="saveDialog" @success="handleSaveSuccess" @closed="dialog.save=false"></save-dialog>
 
-	<permission-dialog ref="permissionDialog"></permission-dialog>
+	<permission-dialog v-if="dialog.permission" ref="permissionDialog" @closed="dialog.permission=false"></permission-dialog>
 
 </template>
 
@@ -53,6 +53,10 @@
 		},
 		data() {
 			return {
+				dialog: {
+					save: false,
+					permission: false
+				},
 				apiObj: this.$API.role.list,
 				selection: [],
 				search: {
@@ -63,21 +67,31 @@
 		methods: {
 			//添加
 			add(){
-				this.$refs.saveDialog.show()
+				this.dialog.save = true
+				this.$nextTick(() => {
+					this.$refs.saveDialog.open()
+				})
 			},
 			//编辑
 			table_edit(row){
-				this.$refs.saveDialog.show('edit')
-				this.$refs.saveDialog.setData(row)
+				this.dialog.save = true
+				this.$nextTick(() => {
+					this.$refs.saveDialog.open('edit').setData(row)
+				})
 			},
 			//查看
 			table_show(row){
-				this.$refs.saveDialog.show('show')
-				this.$refs.saveDialog.setData(row)
+				this.dialog.save = true
+				this.$nextTick(() => {
+					this.$refs.saveDialog.open('show').setData(row)
+				})
 			},
 			//权限设置
 			permission(){
-				this.$refs.permissionDialog.show()
+				this.dialog.permission = true
+				this.$nextTick(() => {
+					this.$refs.permissionDialog.open()
+				})
 			},
 			//删除
 			async table_del(row, index){

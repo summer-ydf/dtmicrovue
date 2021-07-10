@@ -1,10 +1,10 @@
 <!--
  * @Descripttion: 系统计划任务配置
- * @version: 1.1
+ * @version: 1.2
  * @Author: sakuya
  * @Date: 2021年7月7日09:28:32
  * @LastEditors: sakuya
- * @LastEditTime: 2021年7月8日22:15:13
+ * @LastEditTime: 2021年7月10日20:56:47
 -->
 
 <template>
@@ -57,9 +57,9 @@
 		</el-row>
 	</el-main>
 
-	<save-dialog ref="saveDialog" @success="handleSuccess"></save-dialog>
+	<save-dialog v-if="dialog.save" ref="saveDialog" @success="handleSuccess" @closed="dialog.save=false"></save-dialog>
 
-	<el-drawer title="计划任务日志" v-model="logsVisible" :size="600" direction="rtl" destroy-on-close>
+	<el-drawer title="计划任务日志" v-model="dialog.logsVisible" :size="600" direction="rtl" destroy-on-close>
 		<logs></logs>
 	</el-drawer>
 </template>
@@ -81,7 +81,10 @@
 		},
 		data() {
 			return {
-				logsVisible: false,
+				dialog: {
+					save: false,
+					logsVisible: false
+				},
 				list: [
 					{
 						id: "1",
@@ -112,11 +115,16 @@
 		},
 		methods: {
 			add(){
-				this.$refs.saveDialog.show()
+				this.dialog.save = true
+				this.$nextTick(() => {
+					this.$refs.saveDialog.open()
+				})
 			},
 			edit(task){
-				this.$refs.saveDialog.show('edit')
-				this.$refs.saveDialog.setData(task)
+				this.dialog.save = true
+				this.$nextTick(() => {
+					this.$refs.saveDialog.open('edit').setData(task)
+				})
 			},
 			del(task){
 				this.$confirm(`确认删除 ${task.title} 计划任务吗？`,'提示', {
@@ -130,7 +138,7 @@
 				})
 			},
 			logs(){
-				this.logsVisible = true
+				this.dialog.logsVisible = true
 			},
 			run(task){
 				this.$message.success(`已成功执行计划任务：${task.title}`)

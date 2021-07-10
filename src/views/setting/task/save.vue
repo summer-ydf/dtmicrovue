@@ -1,14 +1,14 @@
 <!--
  * @Descripttion: 系统计划任务配置
- * @version: 1.1
+ * @version: 1.2
  * @Author: sakuya
  * @Date: 2021年7月7日09:28:32
  * @LastEditors: sakuya
- * @LastEditTime: 2021年7月8日22:15:13
+ * @LastEditTime: 2021年7月10日20:56:47
 -->
 
 <template>
-	<el-dialog :title="titleMap[mode]" v-model="visible" :width="400" destroy-on-close>
+	<el-dialog :title="titleMap[mode]" v-model="visible" :width="400" destroy-on-close @closed="$emit('closed')">
 		<el-form :model="form" :rules="rules" ref="dialogForm" label-width="100px" label-position="left">
 			<el-form-item label="描述" prop="title">
 				<el-input v-model="form.title" placeholder="计划任务标题" clearable></el-input>
@@ -32,7 +32,7 @@
 
 <script>
 	export default {
-		emits: ['success'],
+		emits: ['success', 'closed'],
 		data() {
 			return {
 				mode: "add",
@@ -67,10 +67,10 @@
 		},
 		methods: {
 			//显示
-			show(mode='add'){
+			open(mode='add'){
 				this.mode = mode;
 				this.visible = true;
-				this.form = this.$options.data().form
+				return this;
 			},
 			//表单提交方法
 			submit(){

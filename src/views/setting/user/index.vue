@@ -55,7 +55,7 @@
 		</el-container>
 	</el-container>
 
-	<save-dialog ref="saveDialog" @success="handleSuccess"></save-dialog>
+	<save-dialog v-if="dialog.save" ref="saveDialog" @success="handleSuccess" @closed="dialog.save=false"></save-dialog>
 
 </template>
 
@@ -69,6 +69,9 @@
 		},
 		data() {
 			return {
+				dialog: {
+					save: false
+				},
 				showGrouploading: false,
 				groupFilterText: '',
 				group: [],
@@ -90,17 +93,24 @@
 		methods: {
 			//添加
 			add(){
-				this.$refs.saveDialog.show()
+				this.dialog.save = true
+				this.$nextTick(() => {
+					this.$refs.saveDialog.open()
+				})
 			},
 			//编辑
 			table_edit(row){
-				this.$refs.saveDialog.show('edit')
-				this.$refs.saveDialog.setData(row)
+				this.dialog.save = true
+				this.$nextTick(() => {
+					this.$refs.saveDialog.open('edit').setData(row)
+				})
 			},
 			//查看
 			table_show(row){
-				this.$refs.saveDialog.show('show')
-				this.$refs.saveDialog.setData(row)
+				this.dialog.save = true
+				this.$nextTick(() => {
+					this.$refs.saveDialog.open('show').setData(row)
+				})
 			},
 			//删除
 			async table_del(row, index){
