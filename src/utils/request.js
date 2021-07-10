@@ -1,5 +1,7 @@
 import axios from 'axios';
 import { ElNotification } from 'element-plus';
+import sysConfig from "@/config";
+import tool from '@/utils/tool';
 
 axios.defaults.baseURL = ''
 
@@ -8,7 +10,10 @@ axios.defaults.timeout = 10000
 // HTTP request 拦截器
 axios.interceptors.request.use(
 	(config) => {
-		config.headers['Authorization'] = "SCUI-Demo-Auth"
+		let userInfo = tool.data.get("user");
+		if(userInfo){
+			config.headers[sysConfig.TOKEN_NAME] = userInfo.token
+		}
 		return config;
 	},
 	(error) => {
