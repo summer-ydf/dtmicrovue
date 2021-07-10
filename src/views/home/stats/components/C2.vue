@@ -15,7 +15,7 @@
 
 <script>
 	export default {
-		title: "模块2",
+		title: "版本更新",
 		data() {
 			return {
 

@@ -30,8 +30,8 @@ const DEFAULT_CONFIG = {
 		layout: [18, 6],
 		//小组件分布，com取值:views/home/components 文件名
 		copmsList: [
-			[{ title: "模块1", com: 'C1' },{ title: "模块3", com: 'C3' }],
-			[{ title: "模块2", com: 'C2' }],
+			[{ title: "实时收入", com: 'C1' },{ title: "周收入对比", com: 'C3' }],
+			[{ title: "版本更新", com: 'C2' }],
 			[]
 		]
 	}

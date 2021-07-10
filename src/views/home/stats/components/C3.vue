@@ -8,7 +8,7 @@
 	import scEcharts from '@/components/scEcharts';
 
 	export default {
-		title:"模块3",
+		title:"周收入对比",
 		components: {
 			scEcharts
 		},
