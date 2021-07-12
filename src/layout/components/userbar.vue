@@ -7,7 +7,7 @@
 			<el-badge :hidden="msgList.length==0" :value="msgList.length" class="badge" type="danger">
 				<i class="el-icon-chat-dot-round"></i>
 			</el-badge>
-			<el-drawer title="新消息" v-model="msg" :size="400" destroy-on-close>
+			<el-drawer title="新消息" v-model="msg" :size="400" append-to-body destroy-on-close>
 				<el-container>
 					<el-main class="nopadding">
 						<el-scrollbar>
@@ -149,7 +149,7 @@
 	.msg-list li a:hover {background: #ecf5ff;}
 	.msg-list__icon {width: 40px;margin-right: 15px;}
 	.msg-list__main {flex: 1;}
-	.msg-list__main h2 {font-size: 15px;}
-	.msg-list__main p {font-size: 12px;color: #999;line-height: 1.8;}
+	.msg-list__main h2 {font-size: 15px;font-weight: normal;color: #333;}
+	.msg-list__main p {font-size: 12px;color: #999;line-height: 1.8;margin-top: 5px;}
 	.msg-list__time {width: 100px;text-align: right;color: #999;}
 </style>
