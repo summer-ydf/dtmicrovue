@@ -1,28 +1,38 @@
 <template>
-	<el-form :model="form" :rules="rules" ref="dialogForm" label-width="100px" label-position="left">
-		<el-form-item label="所属字典" prop="dic">
-			<el-cascader v-model="form.dic" :options="dic" :props="dicProps" :show-all-levels="false" clearable></el-cascader>
-		</el-form-item>
-		<el-form-item label="项名称" prop="name">
-			<el-input v-model="form.name" clearable></el-input>
-		</el-form-item>
-		<el-form-item label="键值" prop="key">
-			<el-input v-model="form.key" clearable></el-input>
-		</el-form-item>
-		<el-form-item label="是否有效" prop="yx">
-			<el-switch v-model="form.yx" active-value="1" inactive-value="0"></el-switch>
-		</el-form-item>
-	</el-form>
+	<el-dialog :title="titleMap[mode]" v-model="visible" :width="330" destroy-on-close @closed="$emit('closed')">
+		<el-form :model="form" :rules="rules" ref="dialogForm" label-width="100px" label-position="left">
+			<el-form-item label="所属字典" prop="dic">
+				<el-cascader v-model="form.dic" :options="dic" :props="dicProps" :show-all-levels="false" clearable></el-cascader>
+			</el-form-item>
+			<el-form-item label="项名称" prop="name">
+				<el-input v-model="form.name" clearable></el-input>
+			</el-form-item>
+			<el-form-item label="键值" prop="key">
+				<el-input v-model="form.key" clearable></el-input>
+			</el-form-item>
+			<el-form-item label="是否有效" prop="yx">
+				<el-switch v-model="form.yx" active-value="1" inactive-value="0"></el-switch>
+			</el-form-item>
+		</el-form>
+		<template #footer>
+			<el-button @click="visible=false" >取 消</el-button>
+			<el-button type="primary" :loading="isSaveing" @click="submit()">保 存</el-button>
+		</template>
+	</el-dialog>
 </template>
 
 <script>
 	export default {
-		props: {
-			mode: { type: String, default: "add" },
-			params: { type: Object, default: () => {} }
-		},
+		emits: ['success', 'closed'],
 		data() {
 			return {
+				mode: "add",
+				titleMap: {
+					add: '新增项',
+					edit: '编辑项'
+				},
+				visible: false,
+				isSaveing: false,
 				form: {
 					id: "",
 					dic: "",
@@ -56,18 +66,31 @@
 			this.getDic()
 		},
 		methods: {
+			//显示
+			open(mode='add'){
+				this.mode = mode;
+				this.visible = true;
+				return this;
+			},
 			//获取字典列表
 			async getDic(){
 				var res = await this.$API.dic.list.get();
 				this.dic = res.data;
 			},
 			//表单提交方法
-			submit(callback){
-				this.$refs.dialogForm.validate((valid) => {
+			submit(){
+				this.$refs.dialogForm.validate(async (valid) => {
 					if (valid) {
-						callback(this.form)
-					}else{
-						return false;
+						this.isSaveing = true;
+						var res = await this.$API.user.save.post(this.form);
+						this.isSaveing = false;
+						if(res.code == 200){
+							this.$emit('success', this.form, this.mode)
+							this.visible = false;
+							this.$message.success("操作成功")
+						}else{
+							this.$alert(res.message, "提示", {type: 'error'})
+						}
 					}
 				})
 			},

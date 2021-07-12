@@ -61,21 +61,9 @@
 		</el-container>
 	</el-container>
 
-	<el-dialog :title="titleMap[dicMode]" v-model="dicDialogVisible" :width="330" destroy-on-close>
-		<dic-dialog ref="dicDialog" :mode="dicMode"></dic-dialog>
-		<template #footer>
-			<el-button @click="dicDialogVisible=false" >取 消</el-button>
-			<el-button type="primary" @click="saveDic()" :loading="isDicSaveing">保 存</el-button>
-		</template>
-	</el-dialog>
+	<dic-dialog v-if="dialog.dic" ref="dicDialog" @success="handleDicSuccess" @closed="dialog.dic=false"></dic-dialog>
 
-	<el-dialog :title="titleMap[listMode]" v-model="listDialogVisible" :width="330" destroy-on-close>
-		<list-dialog ref="listDialog" :mode="listMode" :params="listDialogParams"></list-dialog>
-		<template #footer>
-			<el-button @click="listDialogVisible=false" >取 消</el-button>
-			<el-button type="primary" @click="saveList()" :loading="isListSaveing">保 存</el-button>
-		</template>
-	</el-dialog>
+	<list-dialog v-if="dialog.list" ref="listDialog" @success="handleListSuccess" @closed="dialog.list=false"></list-dialog>
 
 </template>
 
@@ -92,15 +80,11 @@
 		},
 		data() {
 			return {
-				showDicloading: true,
-				dicDialogVisible: false,
-				isDicSaveing: false,
-				dicMode: 'add',
-				titleMap: {
-					add: "新增",
-					edit: "编辑",
-					show: "查看"
+				dialog: {
+					dic: false,
+					info: false
 				},
+				showDicloading: true,
 				dicList: [],
 				dicFilterText: '',
 				dicProps: {
@@ -108,10 +92,6 @@
 				},
 				listApi: null,
 				listApiParams: {},
-				listDialogVisible: false,
-				listDialogParams: {},
-				isListSaveing: false,
-				listMode: 'add',
 				selection: []
 			}
 		},
@@ -150,59 +130,19 @@
 			},
 			//树增加
 			addDic(){
-				this.dicMode = 'add';
-				this.dicDialogVisible = true;
+				this.dialog.dic = true
+				this.$nextTick(() => {
+					this.$refs.dicDialog.open()
+				})
 			},
 			//编辑树
 			dicEdit(data){
-				this.dicMode = 'edit';
-				this.dicDialogVisible = true;
+				this.dialog.dic = true
 				this.$nextTick(() => {
 					var editNode = this.$refs.dic.getNode(data.id);
 					var editNodeParentId =  editNode.level==1?undefined:editNode.parent.data.id
 					data.parentId = editNodeParentId
-					this.$refs.dicDialog.setData(data)
-				})
-			},
-			//保存数据
-			saveDic(){
-				this.$refs.dicDialog.submit(async (formData) => {
-					this.isDicSaveing = true;
-					var res = await this.$API.user.save.post(formData);
-					this.isDicSaveing = false;
-					if(res.code == 200){
-						//这里选择刷新整个表格 OR 插入/编辑现有表格数据
-						if(this.dicMode == 'add'){
-							formData.id = (Math.random() * (500 - 400 + 1) | 0) + 400;
-							if(this.dicList.length > 0){
-								this.$refs.table.upData({
-									code: formData.code
-								})
-							}else{
-								this.listApiParams = {
-									code: formData.code
-								}
-								this.listApi = this.$API.dic.info;
-							}
-							this.$refs.dic.append(formData, formData.parentId[0])
-							this.$refs.dic.setCurrentKey(formData.id)
-						}
-						if(this.dicMode == 'edit'){
-							var editNode = this.$refs.dic.getNode(formData.id);
-							//判断是否移动？
-							var editNodeParentId =  editNode.level==1?undefined:editNode.parent.data.id
-							if(editNodeParentId != formData.parentId){
-								var obj = editNode.data;
-								this.$refs.dic.remove(formData.id)
-								this.$refs.dic.append(obj, formData.parentId[0])
-							}
-							Object.assign(editNode.data, formData)
-						}
-						this.dicDialogVisible = false;
-						this.$message.success("操作成功")
-					}else{
-						this.$alert(res.message, "提示", {type: 'error'})
-					}
+					this.$refs.dicDialog.open('edit').setData(data)
 				})
 			},
 			//树点击事件
@@ -258,17 +198,20 @@
 			},
 			//添加明细
 			addInfo(){
-				var dicCurrentKey = this.$refs.dic.getCurrentKey();
-				this.listDialogParams = {code: dicCurrentKey};
-				this.listMode = 'add';
-				this.listDialogVisible = true;
+				this.dialog.list = true
+				this.$nextTick(() => {
+					var dicCurrentKey = this.$refs.dic.getCurrentKey();
+					const data = {
+						dic: dicCurrentKey
+					}
+					this.$refs.listDialog.open().setData(data)
+				})
 			},
 			//编辑明细
 			table_edit(row){
-				this.listMode = 'edit';
-				this.listDialogVisible = true;
+				this.dialog.list = true
 				this.$nextTick(() => {
-					this.$refs.listDialog.setData(row)
+					this.$refs.listDialog.open('edit').setData(row)
 				})
 			},
 			//删除明细
@@ -332,6 +275,45 @@
 					row.yx = val;
 					this.$message.success(`操作成功id:${row.id} val:${val}`)
 				}, 500)
+			},
+			//本地更新数据
+			handleDicSuccess(data, mode){
+				if(mode=='add'){
+					data.id = new Date().getTime()
+					if(this.dicList.length > 0){
+						this.$refs.table.upData({
+							code: data.code
+						})
+					}else{
+						this.listApiParams = {
+							code: data.code
+						}
+						this.listApi = this.$API.dic.info;
+					}
+					this.$refs.dic.append(data, data.parentId[0])
+					this.$refs.dic.setCurrentKey(data.id)
+				}else if(mode=='edit'){
+					var editNode = this.$refs.dic.getNode(data.id);
+					//判断是否移动？
+					var editNodeParentId =  editNode.level==1?undefined:editNode.parent.data.id
+					if(editNodeParentId != data.parentId){
+						var obj = editNode.data;
+						this.$refs.dic.remove(data.id)
+						this.$refs.dic.append(obj, data.parentId[0])
+					}
+					Object.assign(editNode.data, data)
+				}
+			},
+			//本地更新数据
+			handleListSuccess(data, mode){
+				if(mode=='add'){
+					data.id = new Date().getTime()
+					this.$refs.table.tableData.push(data)
+				}else if(mode=='edit'){
+					this.$refs.table.tableData.filter(item => item.id===data.id ).forEach(item => {
+						Object.assign(item, data)
+					})
+				}
 			}
 		}
 	}
