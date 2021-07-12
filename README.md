@@ -5,12 +5,14 @@
 
 <p align="center">
 	<a href="https://v3.vuejs.org/" target="_blank">
-		<img src="https://img.shields.io/badge/vue.js-vue3.x-green" alt="vue">
+		<img src="https://img.shields.io/badge/vue.js-3.x-green" alt="vue">
 	</a>
 	<a href="https://element-plus.gitee.io/#/zh-CN/component/changelog" target="_blank">
 		<img src="https://img.shields.io/badge/element--plus-latest-blue" alt="element plus">
 	</a>
 </p>
+
+<h1>SCUI Admin</h1>
 
 </div>
 
@@ -20,14 +22,14 @@ SCUI 是一个中后台前端解决方案，基于VUE3和elementPlus实现。
 
 SCUI的宗旨是 让一切复杂的东西傻瓜化。
 
-### 特点
-- 拥有市面上绝大部分前端框架的功能
-- 多个独家组件、业务模板和代码生成器
-- 完整的鉴权体系和高精度权限控制
-- 不使用本地MOCK，而使用真实网络API对接
-- 统一的配置和API管理，支持build后配置热更新
-- 减少带宽请求和前端算力上多次优化，并且持续着
-- 永不收费，持续更新
+## 特点
+- **组件** 多个独家组件、业务模板和代码生成器
+- **权限** 完整的鉴权体系和高精度权限控制
+- **布局** 提供多套布局模式，满足各种视觉需求
+- **API** 完善的API管理，使用真实网络MOCK
+- **配置** 统一的全局配置和组件配置，支持build后配置热更新
+- **性能** 在减少带宽请求和前端算力上多次优化，并且持续着
+- **其他** 多功能视图标签、动态权限菜单、控制台组态化、统一异常处理等等
 
 ## 演示和文档
 
