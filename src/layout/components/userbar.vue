@@ -3,35 +3,42 @@
 		<div class="screen panel-item hidden-sm-and-down" @click="screen">
 			<i class="el-icon-full-screen"></i>
 		</div>
-		<el-popover placement="bottom" :width="360" trigger="click">
-			<template #reference>
-				<div class="msg panel-item">
-					<el-badge :hidden="msgList.length==0" :value="msgList.length" class="badge" type="danger">
-						<i class="el-icon-bell"></i>
-					</el-badge>
-				</div>
-			</template>
-			<div>
-				<el-empty v-if="msgList.length==0" description="暂无新消息"></el-empty>
-				<div v-else class="msgList">
-					<header>
-						<label>通知</label>
-						<el-link :underline="false" href="javascript:void(0);" @click="markRead">全部标记已读</el-link>
-					</header>
-					<ul>
+		<div class="msg panel-item" @click="showMsg">
+			<el-badge :hidden="msgList.length==0" :value="msgList.length" class="badge" type="danger">
+				<i class="el-icon-chat-dot-round"></i>
+			</el-badge>
+			<el-drawer title="新消息" v-model="msg" :size="400" destroy-on-close>
+				<el-container>
+					<el-main class="nopadding">
 						<el-scrollbar>
-							<li v-for="item in msgList" v-bind:key="item.id">
-								<a :href="item.link" target="_blank">
-									<h2>{{item.title}}</h2>
-									<p>{{item.describe}}</p>
-								</a>
-							</li>
+							<ul class="msg-list">
+								<li v-for="item in msgList" v-bind:key="item.id">
+									<a :href="item.link" target="_blank">
+										<div class="msg-list__icon">
+											<el-badge is-dot type="danger">
+												<el-avatar :size="40" :src="item.avatar"></el-avatar>
+											</el-badge>
+										</div>
+										<div class="msg-list__main">
+											<h2>{{item.title}}</h2>
+											<p>{{item.describe}}</p>
+										</div>
+										<div class="msg-list__time">
+											<p>{{item.time}}</p>
+										</div>
+									</a>
+								</li>
+								<el-empty v-if="msgList.length==0" description="暂无新消息" :image-size="100"></el-empty>
+							</ul>
 						</el-scrollbar>
-					</ul>
-					<footer><el-link :underline="false" href="https://gitee.com/lolicode/scui" target="_blank">前往通知中心</el-link></footer>
-				</div>
-			</div>
-		</el-popover>
+					</el-main>
+					<el-footer>
+						<el-button type="primary" size="small">消息中心</el-button>
+						<el-button size="small" @click="markRead">全部设为已读</el-button>
+					</el-footer>
+				</el-container>
+			</el-drawer>
+		</div>
 		<el-dropdown trigger="click" @command="handleUser" style="height: 100%;">
 			<div class="user panel-item">
 				<el-avatar :size="30">{{ userNameF }}</el-avatar>
@@ -54,18 +61,34 @@
 			return {
 				userName: "",
 				userNameF: "",
+				msg: false,
 				msgList: [
 					{
 						id: 1,
-						title: "关于版本发布的通知",
-						describe: "点进去Gitee获取最新开源版本",
-						link: "https://gitee.com/lolicode/scui"
+						type: 'user',
+						avatar: "img/avatar.jpg",
+						title: "Skuya",
+						describe: "如果喜欢就点个星星支持一下哦",
+						link: "https://gitee.com/lolicode/scui",
+						time: "5分钟前"
 					},
 					{
 						id: 2,
+						type: 'user',
+						avatar: "img/avatar2.gif",
+						title: "Lolowan",
+						describe: "点进去Gitee获取最新开源版本",
+						link: "https://gitee.com/lolicode/scui",
+						time: "14分钟前"
+					},
+					{
+						id: 3,
+						type: 'system',
+						avatar: "img/logo.png",
 						title: "感谢登录SCUI Admin",
 						describe: "Vue 3.0 + Vue-Router 4.0 + ElementPlus + Axios 后台管理系统。",
-						link: "https://gitee.com/lolicode/scui"
+						link: "https://gitee.com/lolicode/scui",
+						time: "2020年7月24日"
 					}
 				]
 			}
@@ -101,6 +124,10 @@
 				var element = document.documentElement;
 				this.$TOOL.screen(element)
 			},
+			//显示短消息
+			showMsg(){
+				this.msg = true
+			},
 			//标记已读
 			markRead(){
 				this.msgList = []
@@ -117,13 +144,12 @@
 	.user-bar .user {display: flex;align-items: center;}
 	.user-bar .user label {display: inline-block;margin-left:5px;font-size: 12px;cursor:pointer;}
 
-	.msgList header {height:35px;line-height: 35px;display: flex;justify-content: space-between;}
-	.msgList footer {height:35px;line-height: 35px;text-align:center;}
-	.msgList ul {height:180px;border-top: 1px solid #eee;border-bottom: 1px solid #eee;}
-	.msgList ul li a {display: inline-block;width: 100%;height: 100%;padding:10px;border: 1px solid transparent;cursor:pointer;}
-	.msgList ul li h2 {font-size: 14px;font-weight: normal;line-height: 1.8;}
-	.msgList ul li h2 i {margin-right: 10px;}
-	.msgList ul li p {font-size: 12px;color: #999;line-height: 1.8;}
-	.msgList ul li a:hover {background: #ecf5ff;border-top: 1px solid #d9ecff;border-bottom: 1px solid #d9ecff;}
-	.msgList ul li a:hover h2 {color: #409EFF;}
+	.msg-list li {border-top:1px solid #eee;}
+	.msg-list li a {display: flex;padding:20px;}
+	.msg-list li a:hover {background: #ecf5ff;}
+	.msg-list__icon {width: 40px;margin-right: 15px;}
+	.msg-list__main {flex: 1;}
+	.msg-list__main h2 {font-size: 15px;}
+	.msg-list__main p {font-size: 12px;color: #999;line-height: 1.8;}
+	.msg-list__time {width: 100px;text-align: right;color: #999;}
 </style>
