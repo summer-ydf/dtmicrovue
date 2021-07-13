@@ -41,6 +41,15 @@
 		watch: {
 			$route(e) {
 				this.addViewTags(e);
+				//判断标签容器是否出现滚动条
+				this.$nextTick(() => {
+					const tags = this.$refs.tags
+					if(tags.scrollWidth > tags.clientWidth){
+						//确保当前标签在可视范围内
+						let targetTag = tags.querySelector(".active")
+						targetTag.scrollIntoView()
+					}
+				})
 			},
 			contextMenuVisible(value) {
 				var _this = this;
@@ -63,6 +72,7 @@
 		},
 		mounted() {
 			this.tagDrop();
+			this.scrollInit()
 		},
 		methods: {
 			//标签拖拽排序
@@ -104,6 +114,15 @@
 				this.contextMenuVisible = true;
 				this.left = e.clientX + 1;
 				this.top = e.clientY + 1;
+				
+				//FIX 右键菜单边缘化位置处理
+				this.$nextTick(() => {
+					let sp = document.getElementById("contextmenu");
+					if(document.body.offsetWidth - e.clientX < sp.offsetWidth){
+						this.left = document.body.offsetWidth - sp.offsetWidth + 1;
+						this.top = e.clientY + 1;
+					}
+				})
 			},
 			//关闭右键菜单
 			closeMenu() {
@@ -174,7 +193,24 @@
 				}
 				window.open(url);
 				this.contextMenuVisible = false
-			}
+			},
+			//横向滚动
+			scrollInit(){
+				const scrollDiv = this.$refs.tags;
+				scrollDiv.addEventListener('mousewheel', handler, false)
+				function handler(event) {
+					const detail = event.wheelDelta || event.detail;
+					const moveForwardStep = 1;
+					const moveBackStep = -1;
+					let step = 0;
+					if (detail < 0) {
+						step = moveForwardStep * 50;
+					}else{
+						step = moveBackStep * 50;
+					}
+					scrollDiv.scrollLeft += step;
+				}
+			},
 		}
 	}
 </script>
@@ -182,6 +218,7 @@
 <style>
 	.contextmenu {
 		position: fixed;
+		width: 200px;
 		margin:0;
 		border-radius: 0px;
 		background: #fff;
