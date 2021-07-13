@@ -197,13 +197,14 @@
 			//横向滚动
 			scrollInit(){
 				const scrollDiv = this.$refs.tags;
-				scrollDiv.addEventListener('mousewheel', handler, false)
+				scrollDiv.addEventListener('mousewheel', handler, false) || scrollDiv.addEventListener("DOMMouseScroll", handler, false)
 				function handler(event) {
 					const detail = event.wheelDelta || event.detail;
+					//火狐上滚键值-3 下滚键值3，其他内核上滚键值120 下滚键值-120
 					const moveForwardStep = 1;
 					const moveBackStep = -1;
 					let step = 0;
-					if (detail < 0) {
+					if (detail == 3 ||  detail < 0 && detail != -3) {
 						step = moveForwardStep * 50;
 					}else{
 						step = moveBackStep * 50;
