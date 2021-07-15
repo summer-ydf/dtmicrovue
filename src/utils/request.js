@@ -12,7 +12,7 @@ axios.interceptors.request.use(
 	(config) => {
 		let userInfo = tool.data.get("user");
 		if(userInfo){
-			config.headers[sysConfig.TOKEN_NAME] = userInfo.token
+			config.headers[sysConfig.TOKEN_NAME] = sysConfig.TOKEN_PREFIX + userInfo.token
 		}
 		if(!sysConfig.REQUEST_CACHE && config.method == 'get'){
 			config.params = config.params || {};
