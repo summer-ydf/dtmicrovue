@@ -14,6 +14,10 @@ axios.interceptors.request.use(
 		if(userInfo){
 			config.headers[sysConfig.TOKEN_NAME] = userInfo.token
 		}
+		if(!sysConfig.REQUEST_CACHE && config.method == 'get'){
+			config.params = config.params || {};
+			config.params['_'] = new Date().getTime();
+		}
 		return config;
 	},
 	(error) => {
