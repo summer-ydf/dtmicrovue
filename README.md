@@ -53,5 +53,8 @@ npm run serve
 ```
 启动完成后浏览器访问 http://localhost:2800
 
+## 感谢
+![fastmock](https://www.fastmock.site/resource/images/logo.png)
+
 ## 支持
 如果觉得本项目还不错或在工作中有所启发，请在Gitee(码云)帮开发者点亮星星，这是对开发者最大的支持和鼓励！
