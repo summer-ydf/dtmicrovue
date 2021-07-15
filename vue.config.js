@@ -7,9 +7,19 @@ module.exports = {
 	// build编译后不生成资源MAP文件
 	productionSourceMap: false,
 
+	//开发服务,build后的生产模式还需nginx代理
 	devServer: {
 		open: false, //运行后自动打开游览器
-		port: 2800 //挂载端口
+		port: 2800, //挂载端口
+		proxy: {
+			'/api': {
+				target: 'https://www.fastmock.site/mock/44c807475f7eeba73409792255781935/api',
+				ws: true,
+				pathRewrite: {
+					'^/api': '/'
+				}
+			}
+		}
 	},
 
 	chainWebpack: config => {
