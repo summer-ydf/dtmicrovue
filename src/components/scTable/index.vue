@@ -1,7 +1,7 @@
 <template>
 	<div class="scTable" ref="scTableMain" v-loading="loading">
 		<div class="scTable-table">
-			<el-table :data="tableData" :row-key="rowKey" :key="toggleIndex" ref="scTable" :height="tableHeight" :stripe="stripe" :highlight-current-row="highlightCurrentRow"  @selection-change="selectionChange" @current-change="currentChange">
+			<el-table :data="tableData" :row-key="rowKey" :key="toggleIndex" ref="scTable" :height="tableHeight" :stripe="stripe" :highlight-current-row="highlightCurrentRow"  @selection-change="selectionChange" @current-change="currentChange" @sort-change="sortChange">
 				<slot></slot>
 				<el-table-column v-for="(item, index) in userColumn" :key="index" :label="item.label" :prop="item.prop" :width="item.width">
 					<template #default="scope">
@@ -50,6 +50,7 @@
 			data: { type: Object, default: () => {} },
 			rowKey: { type: String, default: "" },
 			column: { type: Object, default: () => {} },
+			remoteSort: { type: Boolean, default: false },
 			hidePagination: { type: Boolean, default: false },
 			hideDo: { type: Boolean, default: false },
 			stripe: { type: Boolean, default: false },
@@ -75,6 +76,8 @@
 				pageSize: config.pageSize,
 				total: 0,
 				currentPage: 1,
+				prop: null,
+				order: null,
 				loading: false,
 				tableHeight:'100%',
 				tableParams: this.params,
@@ -113,7 +116,9 @@
 				this.loading = true;
 				var reqData = {
 					[config.request.page]: this.currentPage,
-					[config.request.pageSize]: this.pageSize
+					[config.request.pageSize]: this.pageSize,
+					[config.request.prop]: this.prop,
+					[config.request.order]: this.order
 				}
 				Object.assign(reqData, this.tableParams)
 				try {
@@ -158,6 +163,20 @@
 			removeColumn(index){
 				this.$refs.columnSetting.remove(index)
 				this.toggleIndex += 1;
+			},
+			//排序事件
+			sortChange(obj){
+				if(!this.remoteSort){
+					return false
+				}
+				if(obj.column && obj.prop){
+					this.prop = obj.prop
+					this.order = obj.order
+				}else{
+					this.prop = null
+					this.order = null
+				}
+				this.getData()
 			},
 			//转发原装方法&事件
 			selectionChange(selection){

@@ -26,18 +26,18 @@
 					</div>
 				</el-header>
 				<el-main class="nopadding">
-					<scTable ref="table" :apiObj="apiObj" @selection-change="selectionChange" stripe>
+					<scTable ref="table" :apiObj="apiObj" @selection-change="selectionChange" stripe remoteSort>
 						<el-table-column type="selection" width="50"></el-table-column>
-						<el-table-column label="ID" prop="id" width="80"></el-table-column>
+						<el-table-column label="ID" prop="id" width="80" sortable='custom'></el-table-column>
 						<el-table-column label="头像" width="80">
 							<template #default="scope">
 								<el-avatar :src="scope.row.avatar" size="small"></el-avatar>
 							</template>
 						</el-table-column>
-						<el-table-column label="登录账号" prop="userName" width="150"></el-table-column>
-						<el-table-column label="姓名" prop="name" width="150"></el-table-column>
-						<el-table-column label="所属角色" prop="groupName" width="200"></el-table-column>
-						<el-table-column label="加入时间" prop="date" width="150"></el-table-column>
+						<el-table-column label="登录账号" prop="userName" width="150" sortable='custom'></el-table-column>
+						<el-table-column label="姓名" prop="name" width="150" sortable='custom'></el-table-column>
+						<el-table-column label="所属角色" prop="groupName" width="200" sortable='custom'></el-table-column>
+						<el-table-column label="加入时间" prop="date" width="150" sortable='custom'></el-table-column>
 						<el-table-column label="操作" fixed="right" align="right" width="140">
 							<template #default="scope">
 								<el-button type="text" size="small" @click="table_show(scope.row, scope.$index)">查看</el-button>
