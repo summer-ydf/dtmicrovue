@@ -1,7 +1,7 @@
 <template>
 	<div class="scTable" ref="scTableMain" v-loading="loading">
 		<div class="scTable-table">
-			<el-table :data="tableData" :row-key="rowKey" :key="toggleIndex" ref="scTable" :height="tableHeight" :stripe="stripe" :highlight-current-row="highlightCurrentRow"  @selection-change="selectionChange" @current-change="currentChange" @sort-change="sortChange">
+			<el-table :data="tableData" :row-key="rowKey" :key="toggleIndex" ref="scTable" :height="tableHeight" :stripe="stripe" :highlight-current-row="highlightCurrentRow"  @selection-change="selectionChange" @current-change="currentChange" @sort-change="sortChange" @filter-change="filterChange">
 				<slot></slot>
 				<el-table-column v-for="(item, index) in userColumn" :key="index" :label="item.label" :prop="item.prop" :width="item.width">
 					<template #default="scope">
@@ -46,11 +46,12 @@
 		},
 		props: {
 			apiObj: { type: Object, default: () => {} },
-			params: { type: Object, default: () => {} },
+			params: { type: Object, default: () => ({}) },
 			data: { type: Object, default: () => {} },
 			rowKey: { type: String, default: "" },
 			column: { type: Object, default: () => {} },
 			remoteSort: { type: Boolean, default: false },
+			remoteFilter: { type: Boolean, default: false },
 			hidePagination: { type: Boolean, default: false },
 			hideDo: { type: Boolean, default: false },
 			stripe: { type: Boolean, default: false },
@@ -152,7 +153,7 @@
 			//更新数据
 			upData(params){
 				this.currentPage = 1;
-				this.tableParams = params;
+				Object.assign(this.tableParams, params || {})
 				this.getData()
 			},
 			//自定义变化事件
@@ -177,6 +178,16 @@
 					this.order = null
 				}
 				this.getData()
+			},
+			//过滤事件
+			filterChange(filters){
+				if(!this.remoteFilter){
+					return false
+				}
+				Object.keys(filters).forEach(key => {
+					filters[key] = filters[key].join(',')
+				})
+				this.upData(filters)
 			},
 			//转发原装方法&事件
 			selectionChange(selection){
