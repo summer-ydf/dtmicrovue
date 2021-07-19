@@ -11,7 +11,7 @@
 	<el-container>
 		<el-header>
 			<div class="left-panel">
-				<el-button type="primary" icon="el-icon-plus"></el-button>
+				<el-button type="primary" icon="el-icon-plus" @click="add"></el-button>
 				<el-button v-if="selection.length>0" type="danger" plain icon="el-icon-delete"></el-button>
 				<el-button v-if="selection.length>0">变更状态</el-button>
 				<el-button v-if="selection.length>0">推送至队列</el-button>
@@ -65,7 +65,7 @@
 							<el-button  type="text" size="small">更多<i class="el-icon-arrow-down el-icon--right"></i></el-button>
 							<template #dropdown>
 								<el-dropdown-menu>
-									<el-dropdown-item>编辑</el-dropdown-item>
+									<el-dropdown-item @click="table_edit(scope.row, scope.$index)">编辑</el-dropdown-item>
 									<el-dropdown-item>推送至队列</el-dropdown-item>
 									<el-dropdown-item divided>删除</el-dropdown-item>
 								</el-dropdown-menu>
@@ -165,9 +165,19 @@
 			selectionChange(selection){
 				this.selection = selection;
 			},
+			add(){
+				this.$router.push({
+					path: `/template/list/save`
+				});
+			},
 			table_show(row, index){
 				console.log(row, index);
 				this.info = true;
+			},
+			table_edit(row){
+				this.$router.push({
+					path: `/template/list/save/${row.id}`
+				});
 			},
 			filterHandler(value, row, column){
 				const property = column.property;
