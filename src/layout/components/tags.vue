@@ -44,7 +44,7 @@
 				//判断标签容器是否出现滚动条
 				this.$nextTick(() => {
 					const tags = this.$refs.tags
-					if(tags.scrollWidth > tags.clientWidth){
+					if(tags && tags.scrollWidth > tags.clientWidth){
 						//确保当前标签在可视范围内
 						let targetTag = tags.querySelector(".active")
 						targetTag.scrollIntoView()

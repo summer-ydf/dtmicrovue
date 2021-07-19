@@ -9,8 +9,12 @@
 
 <template>
 	<div class="sc-page-header">
+		<div class="sc-page-header__icon">
+			<span><i class="el-icon-burger"></i></span>
+		</div>
 		<div class="sc-page-header__title">
-			<h2>新开标签页面</h2>
+			<h2 v-if="id">编辑页面 ID:{{id}}</h2>
+			<h2 v-else>新增页面</h2>
 			<p>可用于非常复杂的表单提交，如一些较为简单的表单提交应使用dialog或者drawer更合适</p>
 		</div>
 	</div>
@@ -39,7 +43,7 @@
 					<el-input v-model="form.name" placeholder="请输入名称" clearable></el-input>
 				</el-form-item>
 				<el-form-item>
-					<el-button type="primary" size="medium">保 存</el-button>
+					<el-button type="primary" size="medium" @click="save">保 存</el-button>
 				</el-form-item>
 			</el-form>
 		</el-card>
@@ -73,13 +77,19 @@
 			}
 		},
 		methods: {
-
+			save(){
+				console.log(this.$store);
+			}
 		}
 	}
 </script>
 
 <style>
-	.sc-page-header {background: #fff;border-bottom: 1px solid #e6e6e6;padding:25px 25px;}
-	.sc-page-header__title h2 {font-size: 17px;color: #3c4a54;font-weight: bold;}
+	.sc-page-header {background: #fff;border-bottom: 1px solid #e6e6e6;padding:20px 25px;display: flex;}
+	.sc-page-header__icon {width: 50px;}
+	.sc-page-header__icon span {display: inline-block;width: 30px;height: 30px;background: #409EFF;border-radius: 40%;display: flex;align-items: center;justify-content: center;}
+	.sc-page-header__icon span i {color: #fff;font-size: 14px;}
+	.sc-page-header__title {flex: 1;}
+	.sc-page-header__title h2 {font-size: 17px;color: #3c4a54;font-weight: bold;margin-top: 3px;}
 	.sc-page-header__title p {font-size: 13px;color: #999;margin-top: 15px;}
 </style>
