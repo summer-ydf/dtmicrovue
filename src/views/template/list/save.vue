@@ -1,24 +1,16 @@
 <!--
- * @Descripttion: 文件描述
+ * @Descripttion: 多路由复用一个路由组件DEMO文件
  * @version: 1.0
- * @Author: 编写作者
- * @Date: 创建时间
- * @LastEditors: 最后更新作者
- * @LastEditTime: 最后更新时间
+ * @Author: sakuya
+ * @Date: 2021年7月20日09:28:19
+ * @LastEditors:
+ * @LastEditTime:
 -->
 
 <template>
-	<div class="sc-page-header">
-		<div class="sc-page-header__icon">
-			<span><i class="el-icon-burger"></i></span>
-		</div>
-		<div class="sc-page-header__title">
-			<h2 v-if="id">编辑页面 ID:{{id}}</h2>
-			<h2 v-else>新增页面</h2>
-			<p>可用于非常复杂的表单提交，如一些较为简单的表单提交应使用dialog或者drawer更合适</p>
-		</div>
-	</div>
+	<sc-page-header title="页面标题" description="可用于非常复杂的表单提交，如一些较为简单的表单提交应使用dialog或者drawer更合适" icon="el-icon-burger"></sc-page-header>
 	<el-main>
+		<el-alert title="因为keep-alive只接受组件name,导致多路由共用组件时,关闭或刷新一个标签导致其他同一组件的页面缓存失效,后续还在寻找完美的解决方案." type="error" style="margin-bottom: 15px;"></el-alert>
 		<el-card shadow="never">
 			<el-form :model="form" :rules="rules" ref="form" label-width="100px">
 				<el-form-item label="名称" prop="name">
@@ -83,13 +75,3 @@
 		}
 	}
 </script>
-
-<style>
-	.sc-page-header {background: #fff;border-bottom: 1px solid #e6e6e6;padding:20px 25px;display: flex;}
-	.sc-page-header__icon {width: 50px;}
-	.sc-page-header__icon span {display: inline-block;width: 30px;height: 30px;background: #409EFF;border-radius: 40%;display: flex;align-items: center;justify-content: center;}
-	.sc-page-header__icon span i {color: #fff;font-size: 14px;}
-	.sc-page-header__title {flex: 1;}
-	.sc-page-header__title h2 {font-size: 17px;color: #3c4a54;font-weight: bold;margin-top: 3px;}
-	.sc-page-header__title p {font-size: 13px;color: #999;margin-top: 15px;}
-</style>

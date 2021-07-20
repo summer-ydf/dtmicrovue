@@ -18,6 +18,7 @@ import scUpload from './components/scUpload'
 import scUploadMultiple from './components/scUpload/multiple'
 import scFormTable from './components/scFormTable'
 import scTableSelect from './components/scTableSelect'
+import scPageHeader from './components/scPageHeader'
 import auth from './directives/auth'
 
 const app = createApp(App);
@@ -40,6 +41,7 @@ app.component('scUpload', scUpload);
 app.component('scUploadMultiple', scUploadMultiple);
 app.component('scFormTable', scFormTable);
 app.component('scTableSelect', scTableSelect);
+app.component('scPageHeader', scPageHeader);
 
 //注册全局指令
 app.directive('auth', auth)
