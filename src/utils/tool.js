@@ -5,6 +5,8 @@
  * @LastEditTime: 2021年6月28日19:13:13
  */
 
+import CryptoJS from 'crypto-js';
+
 const tool = {}
 
 /* localStorage */
@@ -93,6 +95,34 @@ tool.groupSeparator = function (num) {
 	return num.replace(/(\d)(?=(\d{3})+\.)/g, function ($0, $1) {
 		return $1 + ',';
 	}).replace(/\.$/, '');
+}
+
+/* 常用加解密 */
+tool.crypto = {
+	//MD5加密
+	MD5(data){
+		return CryptoJS.MD5(data).toString()
+	},
+	//BASE64加解密
+	BASE64: {
+		encrypt(data){
+			return CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(data))
+		},
+		decrypt(cipher){
+			return CryptoJS.enc.Base64.parse(cipher).toString(CryptoJS.enc.Utf8)
+		}
+	},
+	//AES加解密
+	AES: {
+		encrypt(data, secretKey){
+			const result = CryptoJS.AES.encrypt(data, CryptoJS.enc.Utf8.parse(secretKey))
+			return result.toString()
+		},
+		decrypt(cipher, secretKey){
+			const result = CryptoJS.AES.decrypt(cipher, CryptoJS.enc.Utf8.parse(secretKey))
+			return CryptoJS.enc.Utf8.stringify(result);
+		}
+	}
 }
 
 export default tool
