@@ -23,15 +23,15 @@ const api = {
 		login: {
 			url: `${config.API_URL}/login`,
 			name: "登录获取用户菜单和权限,全部权限",
-			get: async function(){
-				return await http.get(this.url);
+			get: async function(params={}){
+				return await http.get(this.url, params);
 			}
 		},
 		login_demo: {
 			url: `${config.API_URL}/login_user`,
 			name: "登录获取用户菜单和权限，部分权限",
-			get: async function(){
-				return await http.get(this.url);
+			get: async function(params={}){
+				return await http.get(this.url, params);
 			}
 		},
 		list: {

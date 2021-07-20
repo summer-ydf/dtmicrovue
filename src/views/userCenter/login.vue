@@ -170,7 +170,11 @@
 			},
 			login: async function() {
 				this.islogin = true;
-				var userInfo = await this.$API.user.login.get();
+				var data = {
+					user: this.$TOOL.crypto.MD5(this.ruleForm.user),
+					password: this.$TOOL.crypto.MD5(this.ruleForm.password)
+				}
+				var userInfo = await this.$API.user.login.get(data);
 				this.$TOOL.data.set("user", userInfo.data);
 				this.$router.replace({
 					path: '/'
@@ -180,7 +184,11 @@
 			},
 			login_demo: async function() {
 				this.islogin = true;
-				var userInfo = await this.$API.user.login_demo.get();
+				var data = {
+					user: this.$TOOL.crypto.MD5(this.ruleForm.user),
+					password: this.$TOOL.crypto.MD5(this.ruleForm.password)
+				}
+				var userInfo = await this.$API.user.login_demo.get(data);
 				this.$TOOL.data.set("user", userInfo.data);
 				this.$router.replace({
 					path: '/'

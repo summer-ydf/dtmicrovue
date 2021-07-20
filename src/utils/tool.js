@@ -1,8 +1,8 @@
 /*
  * @Descripttion: 工具集
- * @version: 1.0
+ * @version: 1.1
  * @LastEditors: sakuya
- * @LastEditTime: 2021年6月28日19:13:13
+ * @LastEditTime: 2021年7月20日10:58:41
  */
 
 import CryptoJS from 'crypto-js';
