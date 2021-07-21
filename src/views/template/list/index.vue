@@ -30,33 +30,34 @@
 		</el-header>
 		<el-main class="nopadding">
 			<scTable ref="table" :data="list" :column="column" @selection-change="selectionChange" stripe>
+				<!-- 扩展行 -->
+				<el-table-column type="expand">
+					<template #default="props">
+						<div>{{ props.row.name }}</div>
+					</template>
+				</el-table-column>
+
+				<!-- 各列自定义template -->
+				<template #state="scope">
+					<em v-if="scope.row.state=='1'" class="state state-1"></em>
+					<em v-if="scope.row.state=='2'" class="state state-2 status-processing"></em>
+				</template>
+				<template #name="scope">
+					<h4>{{scope.row.name}}</h4>
+					<p>{{scope.row.subtitle}}</p>
+				</template>
+				<template #type="scope">
+					<el-tag>{{scope.row.type}}</el-tag>
+				</template>
+				<template #progress="scope">
+					<el-progress v-if="scope.row.state=='1'" :percentage="scope.row.progress"></el-progress>
+					<el-progress v-if="scope.row.state=='2'" :percentage="scope.row.progress" status="exception"></el-progress>
+				</template>
+
+				<!-- 固定列-选择列 -->
 				<el-table-column type="selection" width="50"></el-table-column>
-				<el-table-column label="ID" prop="id" width="80" sortable></el-table-column>
-				<el-table-column label="状态" prop="state" width="60" :filters="[{text: '正常', value: '1'}, {text: '异常', value: '2'}]" :filter-method="filterHandler">
-					<template #default="scope">
-						<em v-if="scope.row.state=='1'" class="state state-1"></em>
-						<em v-if="scope.row.state=='2'" class="state state-2 status-processing"></em>
-					</template>
-				</el-table-column>
-				<el-table-column label="名称" prop="name" width="300">
-					<template #default="scope">
-						<h4>{{scope.row.name}}</h4>
-						<p>{{scope.row.subtitle}}</p>
-					</template>
-				</el-table-column>
-				<el-table-column label="类型" prop="type" width="100" :filters="[{text: '数据', value: '数据'}, {text: '表单', value: '表单'}]" :filter-method="filterHandler">
-					<template #default="scope">
-						<el-tag>{{scope.row.type}}</el-tag>
-					</template>
-				</el-table-column>
-				<el-table-column label="负责人" prop="user" width="100"></el-table-column>
-				<el-table-column label="进度" prop="progress" width="250">
-					<template #default="scope">
-						<el-progress v-if="scope.row.state=='1'" :percentage="scope.row.progress"></el-progress>
-						<el-progress v-if="scope.row.state=='2'" :percentage="scope.row.progress" status="exception"></el-progress>
-					</template>
-				</el-table-column>
-				<el-table-column label="创建时间" prop="time" width="150" sortable></el-table-column>
+
+				<!-- 固定列-操作列 -->
 				<el-table-column label="操作" fixed="right" align="right" width="200">
 					<template #default="scope">
 						<el-button type="text" size="small" @click="table_show(scope.row, scope.$index)">查看</el-button>
@@ -127,8 +128,46 @@
 					}
 				],
 				column: [
-					{label: "状态值", prop: "state", width: "100"},
-					{label: "进度值", prop: "progress", width: "150"},
+					{
+						label: "ID",
+						prop: "id",
+						width: "100",
+						sortable: true,
+						hide: true,
+					},
+					{
+						label: "名称",
+						prop: "name",
+						width: "300"
+					},
+					{
+						label: "状态",
+						prop: "state",
+						width: "100",
+						filters: [{text: '正常', value: '1'}, {text: '异常', value: '2'}]
+					},
+					{
+						label: "类型",
+						prop: "type",
+						width: "100",
+						filters: [{text: '数据', value: '数据'}, {text: '表单', value: '表单'}]
+					},
+					{
+						label: "负责人",
+						prop: "user",
+						width: "100"
+					},
+					{
+						label: "进度",
+						prop: "progress",
+						width: "250"
+					},
+					{
+						label: "创建时间",
+						prop: "time",
+						width: "150",
+						sortable: true
+					},
 				],
 				group: "0",
 				selection: [],

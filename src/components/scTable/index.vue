@@ -3,15 +3,19 @@
 		<div class="scTable-table">
 			<el-table :data="tableData" :row-key="rowKey" :key="toggleIndex" ref="scTable" :height="tableHeight" :stripe="stripe" :highlight-current-row="highlightCurrentRow"  @selection-change="selectionChange" @current-change="currentChange" @sort-change="sortChange" @filter-change="filterChange">
 				<slot></slot>
-				<el-table-column v-for="(item, index) in userColumn" :key="index" :label="item.label" :prop="item.prop" :width="item.width">
-					<template #default="scope">
-						{{scope.row[item.prop]}}
-					</template>
-					<template #header>
-						{{item.label}}
-						<i class="el-icon-remove" style="color: #F56C6C;cursor: pointer;" @click="removeColumn(index)"></i>
-					</template>
-				</el-table-column>
+				<template v-for="(item, index) in userColumn" :key="index">
+					<el-table-column v-if="!item.hide" :column-key="item.prop" :label="item.label" :prop="item.prop" :width="item.width" :sortable="item.sortable" :fixed="item.fixed" :filters="item.filters" :filter-method="remoteFilter||!item.filters?null:filterHandler">
+						<template #default="scope">
+							<slot :name="item.prop" v-bind="scope">
+								{{scope.row[item.prop]}}
+							</slot>
+						</template>
+						<template #header>
+							{{item.label}}
+							<i class="el-icon-remove" style="color: #F56C6C;cursor: pointer;" @click="removeColumn(index)"></i>
+						</template>
+					</el-table-column>
+				</template>
 				<el-table-column min-width="1"></el-table-column>
 				<template #empty>
 					<el-empty :description="emptyText" :image-size="100"></el-empty>
@@ -24,7 +28,7 @@
 			</div>
 			<div class="scTable-do" v-if="!hideDo">
 				<el-button @click="refresh" icon="el-icon-refresh" circle style="margin-left:15px"></el-button>
-				<el-popover placement="top" title="设置" :width="500" trigger="click">
+				<el-popover placement="top" title="设置" :width="600" trigger="click">
 					<template #reference>
 						<el-button icon="el-icon-setting" circle style="margin-left:15px"></el-button>
 					</template>
@@ -82,7 +86,7 @@
 				loading: false,
 				tableHeight:'100%',
 				tableParams: this.params,
-				userColumn: []
+				userColumn: this.column
 			}
 		},
 		created() {
@@ -178,6 +182,11 @@
 					this.order = null
 				}
 				this.getData()
+			},
+			//本地过滤
+			filterHandler(value, row, column){
+				const property = column.property;
+				return row[property] === value;
 			},
 			//过滤事件
 			filterChange(filters){
