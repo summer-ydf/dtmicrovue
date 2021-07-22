@@ -1,102 +1,117 @@
 <template>
-	<div>
-	<div class="setting-column">
-		<div class="sys">
-			<h4>左固定</h4>
+	<div v-if="usercolumn.length>0" class="setting-column">
+		<div class="setting-column__title">
+			<span class="move_b"></span>
+			<span class="show_b">显示</span>
+			<span class="name_b">名称</span>
+			<span class="width_b">宽度</span>
+			<span class="sortable_b">排序</span>
+			<span class="fixed_b">固定</span>
+		</div>
+		<div class="setting-column__list" ref="list" v-loading="isSave">
 			<ul>
-				<draggable v-model="sys" animation="200" group="people" :sort="false" item-key="prop">
-					<template #item="{ element }">
-						<li>{{ element.label }}</li>
-					</template>
-					<template #footer>
-						<el-empty v-if="sys.length == 0" description="没有隐藏列" :image-size="50"></el-empty>
-					</template>
-				</draggable>
+				<li v-for="item in usercolumn" :key="item.prop">
+					<span class="move_b">
+						<el-tag class="move" style="cursor: move;"><i class="el-icon-d-caret"></i></el-tag>
+					</span>
+					<span class="show_b">
+						<el-switch v-model="item.hide" :active-value="false" :inactive-value="true"></el-switch>
+					</span>
+					<span class="name_b" :title="item.prop">{{ item.label }}</span>
+					<span class="width_b">
+						<el-input v-model="item.width" placeholder="auto" size="mini"></el-input>
+					</span>
+					<span class="sortable_b">
+						<el-switch v-model="item.sortable"></el-switch>
+					</span>
+					<span class="fixed_b">
+						<el-switch v-model="item.fixed"></el-switch>
+					</span>
+				</li>
 			</ul>
 		</div>
-		<div class="user">
-			<h4>普通</h4>
-			<ul>
-				<draggable v-model="user" animation="200" group="people" @change="change" item-key="prop">
-					<template #item="{ element }">
-						<li>{{ element.label }} <el-checkbox v-model="element.sortable">排序</el-checkbox></li>
-					</template>
-					<template #footer>
-						<el-empty v-if="user.length == 0" description="没有显示列" :image-size="50"></el-empty>
-					</template>
-				</draggable>
-			</ul>
-		</div>
-		<div class="fixedRight">
-			<h4>右固定</h4>
-			<ul>
-				<draggable v-model="fixedRight" animation="200" group="people" :sort="false" item-key="prop">
-					<template #item="{ element }">
-						<li>{{ element.label }}</li>
-					</template>
-					<template #footer>
-						<el-empty v-if="fixedRight.length == 0" description="没有隐藏列" :image-size="50"></el-empty>
-					</template>
-				</draggable>
-			</ul>
+		<div class="setting-column__bottom">
+			<el-button @click="backDefaul" :disabled="isSave">重置</el-button>
+			<el-button @click="save" :loading="isSave" type="primary">保存</el-button>
 		</div>
 	</div>
-	<el-button @click="backDefaul">重置</el-button>
-	</div>
+	<el-empty v-else description="暂无可配置的列" :image-size="80"></el-empty>
 </template>
 
 <script>
-	import draggable from 'vuedraggable'
+	import Sortable from 'sortablejs'
 
 	export default {
 		components: {
-			draggable
+			Sortable
 		},
 		props: {
 			column: { type: Object, default: () => {} }
 		},
 		data() {
 			return {
-				defaultColumn: JSON.parse(JSON.stringify(this.column||[])),
-				sys: [],
-				user: [],
-				fixedRight: []
+				isSave: false,
+				usercolumn: JSON.parse(JSON.stringify(this.column||[]))
+			}
+		},
+		watch:{
+			usercolumn: {
+				handler(){
+					this.$emit('userChange', this.usercolumn)
+				},
+				deep: true
 			}
 		},
 		mounted() {
-			//this.sys = this.column.filter(item => item.hide ) || []
-			//this.user = this.column.filter(item => !item.hide ) || []
+			this.usercolumn.length>0 && this.rowDrop()
 		},
 		methods: {
+			rowDrop(){
+				const _this = this
+				const tbody = this.$refs.list.querySelector('ul')
+				Sortable.create(tbody, {
+					handle: ".move",
+					animation: 300,
+					ghostClass: "ghost",
+					onEnd({ newIndex, oldIndex }) {
+						const tableData = _this.usercolumn
+						const currRow = tableData.splice(oldIndex, 1)[0]
+						tableData.splice(newIndex, 0, currRow)
+					}
+				})
+			},
 			backDefaul(){
-				var defaultColumn = JSON.parse(JSON.stringify(this.defaultColumn));
-				this.sys = defaultColumn.filter(item => item.hide ) || []
-				this.user = defaultColumn.filter(item => !item.hide ) || []
-				console.log(defaultColumn)
-				this.$emit('userChange', defaultColumn)
+				this.usercolumn = JSON.parse(JSON.stringify(this.column||[]))
 			},
-			change(evt){
-				if(evt.added){
-					delete evt.added.element.hide
-				}else if(evt.removed){
-					evt.removed.element.hide=true
-				}
-				this.$emit('userChange', {...this.sys, ...this.user})
-			},
-			remove(index){
-				this.sys.push(this.user[index]);
-				this.user.splice(index, 1);
+			save(){
+				this.$emit('save', this.usercolumn)
 			}
 		}
 	}
 </script>
 
 <style scoped>
-	.setting-column {display:flex;}
-	.setting-column > div > ul {margin-top: 15px;height:300px;overflow: auto;}
-	.setting-column > div > ul > div {height: 100%;}
-	.setting-column > div > ul li {cursor: move;font-size: 12px;list-style-type: none;height:32px;line-height: 32px;background: #ecf5ff;color: #409EFF;border: 1px solid #d9ecff;border-radius: 4px;padding: 0 8px;margin-bottom:5px;}
-	.setting-column .sys {width: 150px;margin-right:15px;padding-right:15px;border-right: 1px solid #eee;}
-	.setting-column .user {flex: 1;}
-	.sortable-ghost {opacity: 0.5;}
+	.setting-column {}
+
+	.setting-column__title {border-bottom: 1px solid #EBEEF5;padding-bottom:15px;}
+	.setting-column__title span {display: inline-block;font-weight: bold;color: #909399;font-size: 12px;}
+	.setting-column__title span.move_b {width: 30px;margin-right:15px;}
+	.setting-column__title span.show_b {width: 60px;}
+	.setting-column__title span.name_b {width: 160px;}
+	.setting-column__title span.width_b {width: 60px;margin-right:15px;}
+	.setting-column__title span.sortable_b {width: 60px;}
+	.setting-column__title span.fixed_b {width: 60px;}
+
+	.setting-column__list {max-height:312px;overflow: auto;}
+	.setting-column__list li {list-style: none;margin:10px 0;}
+	.setting-column__list li>span {display: inline-block;font-size: 12px;}
+	.setting-column__list li span.move_b {width: 30px;margin-right:15px;}
+	.setting-column__list li span.show_b {width: 60px;}
+	.setting-column__list li span.name_b {width: 160px;}
+	.setting-column__list li span.width_b {width: 60px;margin-right:15px;}
+	.setting-column__list li span.sortable_b {width: 60px;}
+	.setting-column__list li span.fixed_b {width: 60px;}
+	.setting-column__list li.ghost {opacity: 0.3;}
+
+	.setting-column__bottom {border-top: 1px solid #EBEEF5;padding-top:15px;text-align: right;}
 </style>

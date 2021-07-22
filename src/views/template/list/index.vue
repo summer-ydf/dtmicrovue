@@ -1,10 +1,10 @@
 <!--
  * @Descripttion: 详情列表模板
- * @version: 1.0
+ * @version: 1.1
  * @Author: sakuya
  * @Date: 2021年6月16日15:05:15
- * @LastEditors:
- * @LastEditTime:
+ * @LastEditors: sakuya
+ * @LastEditTime: 2021年7月22日12:18:50
 -->
 
 <template>
@@ -23,19 +23,11 @@
 					<el-radio-button label="2">弃坑 (1)</el-radio-button>
 					<el-radio-button label="3">其他</el-radio-button>
 				</el-radio-group>
-
 				<scFilterBar :options="options" @change="change"></scFilterBar>
-
 			</div>
 		</el-header>
 		<el-main class="nopadding">
-			<scTable ref="table" :data="list" :column="column" @selection-change="selectionChange" stripe>
-				<!-- 扩展行 -->
-				<el-table-column type="expand">
-					<template #default="props">
-						<div>{{ props.row.name }}</div>
-					</template>
-				</el-table-column>
+			<scTable tableName="templateList" ref="table" :data="list" :column="column" @selection-change="selectionChange" stripe>
 
 				<!-- 各列自定义template -->
 				<template #state="scope">
@@ -55,10 +47,10 @@
 				</template>
 
 				<!-- 固定列-选择列 -->
-				<el-table-column type="selection" width="50"></el-table-column>
+				<el-table-column type="selection" width="50" fixed></el-table-column>
 
 				<!-- 固定列-操作列 -->
-				<el-table-column label="操作" fixed="right" align="right" width="200">
+				<el-table-column label="操作" fixed="right" align="right" width="120">
 					<template #default="scope">
 						<el-button type="text" size="small" @click="table_show(scope.row, scope.$index)">查看</el-button>
 						<el-divider direction="vertical"></el-divider>

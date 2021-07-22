@@ -10,10 +10,6 @@
 								{{scope.row[item.prop]}}
 							</slot>
 						</template>
-						<template #header>
-							{{item.label}}
-							<i class="el-icon-remove" style="color: #F56C6C;cursor: pointer;" @click="removeColumn(index)"></i>
-						</template>
 					</el-table-column>
 				</template>
 				<el-table-column min-width="1"></el-table-column>
@@ -28,11 +24,11 @@
 			</div>
 			<div class="scTable-do" v-if="!hideDo">
 				<el-button @click="refresh" icon="el-icon-refresh" circle style="margin-left:15px"></el-button>
-				<el-popover placement="top" title="设置" :width="600" trigger="click">
+				<el-popover placement="top" title="列设置" :width="500" trigger="click">
 					<template #reference>
 						<el-button icon="el-icon-setting" circle style="margin-left:15px"></el-button>
 					</template>
-					<columnSetting ref="columnSetting" @userChange="columnSettingChange" :column="column"></columnSetting>
+					<columnSetting ref="columnSetting" @userChange="columnSettingChange" @save="columnSettingSave" :column="column"></columnSetting>
 				</el-popover>
 			</div>
 		</div>
@@ -49,6 +45,7 @@
 			columnSetting
 		},
 		props: {
+			tableName: { type: String, default: "" },
 			apiObj: { type: Object, default: () => {} },
 			params: { type: Object, default: () => ({}) },
 			data: { type: Object, default: () => {} },
@@ -165,9 +162,9 @@
 				this.userColumn = userColumn;
 				this.toggleIndex += 1;
 			},
-			removeColumn(index){
-				this.$refs.columnSetting.remove(index)
-				this.toggleIndex += 1;
+			//自定义列保存
+			columnSettingSave(userColumn){
+				config.columnSettingSave(this.tableName, userColumn, this.$refs.columnSetting)
 			},
 			//排序事件
 			sortChange(obj){
