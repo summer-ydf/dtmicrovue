@@ -61,7 +61,7 @@
 					}
 					//递归循环
 					if(item.children&&item.children.length > 0){
-						this.filterUrl(item.children);
+						item.children = this.filterUrl(item.children);
 					}
 
 				})
