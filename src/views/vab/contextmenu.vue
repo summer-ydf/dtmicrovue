@@ -11,12 +11,17 @@
 	<el-main>
 		<el-row :gutter="15">
 			<el-col :lg="12">
-				<el-card shadow="never" @contextmenu.prevent="openMenu($event)">
-					contextmenu
+				<el-card shadow="never">
+					<el-table ref="table" :data="tableData" highlight-current-row @row-contextmenu="rowContextmenu">
+						<el-table-column prop="id" label="ID" width="50"></el-table-column>
+						<el-table-column prop="name" label="NAME" width="220"></el-table-column>
+						<el-table-column prop="date" label="DATE"></el-table-column>
+						<el-table-column prop="state" label="STATE"></el-table-column>
+					</el-table>
 				</el-card>
 			</el-col>
 			<el-col :lg="12">
-				<el-card shadow="never" @contextmenu.prevent="openMenu($event)">
+				<el-card shadow="never" @contextmenu.prevent="openMenu">
 					<div style="height:1000px"></div>
 					contextmenu
 				</el-card>
@@ -24,169 +29,80 @@
 		</el-row>
 	</el-main>
 
-	<transition name="el-zoom-in-top">
-		<div v-if="visible" ref="contextmenu" class="sc-contextmenu" :style="{left:left+'px',top:top+'px'}" @contextmenu.prevent="fun">
-			<ul class="sc-contextmenu__menu">
-				<li><span class="title"><i class="sc-contextmenu__icon"></i>返回(B)</span><span class="sc-contextmenu__suffix">Alt+←</span></li>
-				<li><span class="title"><i class="sc-contextmenu__icon"></i>前进(O)</span><span class="sc-contextmenu__suffix">Alt+→</span></li>
-				<li><span class="title"><i class="sc-contextmenu__icon el-icon-refresh"></i>重新加载(R)</span><span class="sc-contextmenu__suffix">Ctrl+R</span></li>
-				<hr>
-				<li><span class="title"><i class="sc-contextmenu__icon"></i>网页另存为(S)...</span></li>
-				<li><span class="title"><i class="sc-contextmenu__icon"></i>复制网页地址</span></li>
-				<hr>
-				<li @mouseenter="openSubmenu($event)"  @mouseleave="closeSubmenu($event)">
-					<span class="title"><i class="sc-contextmenu__icon"></i>切换兼容性模式</span>
-					<span class="sc-contextmenu__suffix"><i class="el-icon-arrow-right"></i></span>
-					<ul class="sc-contextmenu__menu">
-						<li><span class="title"><i class="sc-contextmenu__icon"></i>二级菜单1</span></li>
-						<li @mouseenter="openSubmenu($event)"  @mouseleave="closeSubmenu($event)">
-							<span class="title"><i class="sc-contextmenu__icon"></i>二级菜单2</span>
-							<span class="sc-contextmenu__suffix"><i class="el-icon-arrow-right"></i></span>
-							<ul class="sc-contextmenu__menu">
-								<li><span class="title"><i class="sc-contextmenu__icon"></i>三级菜单1</span></li>
-								<li><span class="title"><i class="sc-contextmenu__icon"></i>三级菜单2</span></li>
-								<li><span class="title"><i class="sc-contextmenu__icon"></i>三级菜单3333333333333333333</span></li>
-							</ul>
-						</li>
-						<li><span class="title"><i class="sc-contextmenu__icon"></i>二级菜单3</span></li>
-					</ul>
-				</li>
-				<hr>
-				<li class="disabled"><span class="title"><i class="sc-contextmenu__icon"></i>属性(P)</span></li>
-			</ul>
-		</div>
-	</transition>
+	<sc-contextmenu ref="contextmenu" @command="handleCommand" @visible-change="visibleChange">
+		<sc-contextmenu-item command="a" title="返回(B)" suffix="Alt+←"></sc-contextmenu-item>
+		<sc-contextmenu-item command="b" title="重新加载(R)" suffix="Ctrl+R" icon="el-icon-refresh"></sc-contextmenu-item>
+		<sc-contextmenu-item title="切换兼容性模式" divided>
+			<sc-contextmenu-item command="c1" title="二级菜单1"></sc-contextmenu-item>
+			<sc-contextmenu-item title="二级菜单2">
+				<sc-contextmenu-item command="c2-1" title="三级菜单1"></sc-contextmenu-item>
+				<sc-contextmenu-item command="c2-2" title="三级菜单2"></sc-contextmenu-item>
+				<sc-contextmenu-item command="c2-3" title="三级菜单3"></sc-contextmenu-item>
+			</sc-contextmenu-item>
+			<sc-contextmenu-item command="c3" title="二级菜单3"></sc-contextmenu-item>
+		</sc-contextmenu-item>
+		<sc-contextmenu-item  command="d" title="属性(P)" divided :disabled="row.state==0"></sc-contextmenu-item>
+	</sc-contextmenu>
 
 </template>
 
 <script>
+	import scContextmenu from '@/components/scContextmenu'
+	import scContextmenuItem from '@/components/scContextmenu/item'
 	export default {
 		name: 'contextmenu',
+		components: {
+			scContextmenu,
+			scContextmenuItem
+		},
 		data() {
 			return {
-				visible: false,
-				top: 0,
-				left: 0
-			}
-		},
-		watch: {
-			visible(value) {
-				var _this = this;
-				var cm = function(e){
-					let sp = _this.$refs.contextmenu
-					if(sp&&!sp.contains(e.target)){
-						_this.closeMenu()
+				row: {},
+				tableData: [
+					{
+						id: '1',
+						name: 'Sakuya',
+						date: '2021-10-10',
+						state: 1
+					},
+					{
+						id: '2',
+						name: 'Lolowan(此行右键属性禁用)',
+						date: '2021-10-09',
+						state: 0
+					},
+					{
+						id: '3',
+						name: 'Ali',
+						date: '2021-10-08',
+						state: 1
 					}
-				}
-				if (value) {
-					document.body.addEventListener('click', e=>cm(e))
-				}else{
-					document.body.removeEventListener('click',  e=>cm(e))
-				}
+				]
 			}
 		},
 		mounted() {
 
 		},
 		methods: {
-			fun(){
-				return false;
+			rowContextmenu(row, column, event){
+				this.row = row
+				this.$refs.table.setCurrentRow(row);
+				this.$refs.contextmenu.openMenu(event)
 			},
-			openMenu(e) {
-				this.visible = true
-				this.left = e.clientX + 1
-				this.top = e.clientY + 1
-
-				this.$nextTick(() => {
-					var ex = e.clientX + 1
-					var ey = e.clientY + 1
-					var innerWidth = window.innerWidth
-					var innerHeight = window.innerHeight
-					var menuHeight = this.$refs.contextmenu.offsetHeight
-					var menuWidth = this.$refs.contextmenu.offsetWidth
-					//位置修正公示
-					//left = (当前点击X + 菜单宽度 > 可视区域宽度 ? 可视区域宽度 - 菜单宽度 : 当前点击X)
-					//top = (当前点击Y + 菜单高度 > 可视区域高度 ? 当前点击Y - 菜单高度 : 当前点击Y)
-					this.left = ex + menuWidth > innerWidth ? innerWidth - menuWidth : ex
-					this.top = ey + menuHeight > innerHeight ? ey - menuHeight : ey
-				})
-
+			openMenu(e){
+				this.$refs.contextmenu.openMenu(e)
 			},
-			closeMenu() {
-				this.visible = false;
+			handleCommand(command){
+				this.$message('click on item ' + command)
 			},
-			openSubmenu(e){
-				var menu = e.target.querySelector('ul')
-				menu.style.display = 'inline-block'
-				var rect = menu.getBoundingClientRect()
-				var menuX = rect.left
-				var menuY = rect.top
-				var innerWidth = window.innerWidth
-				var innerHeight = window.innerHeight
-				var menuHeight = menu.offsetHeight
-				var menuWidth = menu.offsetWidth
-				if(menuX + menuWidth > innerWidth){
-					menu.style.left = 'auto'
-					menu.style.right = '100%'
+			visibleChange(visible){
+				if(!visible){
+					this.row = {}
 				}
-				if(menuY + menuHeight > innerHeight){
-					menu.style.top = 'auto'
-					menu.style.bottom = '0'
-				}
-			},
-			closeSubmenu(e){
-				var menu = e.target.querySelector('ul')
-				menu.removeAttribute("style")
-				menu.style.display = 'none'
 			}
 		}
 	}
 </script>
 
 <style scoped>
-	.sc-contextmenu {position: fixed;}
-
-	.sc-contextmenu__menu {display: inline-block;min-width: 120px;border: 1px solid #e4e7ed;background: #fff;box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);z-index: 3000;list-style-type: none;padding: 10px 0;}
-
-
-
-	.sc-contextmenu__menu > hr {
-		margin:5px 0;
-		border: none;
-		height: 1px;
-		font-size: 0px;
-		background-color: #ebeef5;
-	}
-	.sc-contextmenu__menu > li {
-		margin:0;
-		cursor: pointer;
-		line-height: 30px;
-		padding: 0 17px 0 10px;
-		color: #606266;
-		display: flex;
-		justify-content: space-between;
-		white-space: nowrap;
-		text-decoration: none;
-		position: relative;
-	}
-	.sc-contextmenu__menu > li:hover {
-		background-color: #ecf5ff;
-		color: #66b1ff;
-	}
-	.sc-contextmenu__menu > li.disabled {
-		cursor: not-allowed;
-		color: #bbb;
-		background: transparent;
-	}
-	.sc-contextmenu__icon {
-		display: inline-block;
-		width: 14px;
-		font-size: 14px;
-		margin-right: 10px;
-	}
-	.sc-contextmenu__suffix {margin-left: 40px;color: #999;}
-
-	.sc-contextmenu__menu li ul {position: absolute;top:0px;left:100%;display: none;margin: -10px 0;}
-	/* .sc-contextmenu__menu li:hover > ul {display: inline-block;} */
-
 </style>
