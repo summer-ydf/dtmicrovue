@@ -12,7 +12,13 @@
 		<el-row :gutter="15">
 			<el-col :lg="12">
 				<el-card shadow="never">
+					<el-alert title="试试右键表格行看看. 支持多级菜单, 动态菜单等等等..." type="success" style="margin-bottom:20px;"></el-alert>
 					<el-table ref="table" :data="tableData" highlight-current-row @row-contextmenu="rowContextmenu">
+						<el-table-column type="expand">
+							<template #default="props">
+								<el-empty :description="props.row.id + ' 自定义扩展行'" :image-size="60"></el-empty>
+							</template>
+						</el-table-column>
 						<el-table-column prop="id" label="ID" width="50"></el-table-column>
 						<el-table-column prop="name" label="NAME" width="220"></el-table-column>
 						<el-table-column prop="date" label="DATE"></el-table-column>
@@ -22,8 +28,9 @@
 			</el-col>
 			<el-col :lg="12">
 				<el-card shadow="never" @contextmenu.prevent="openMenu">
-					<div style="height:1000px"></div>
-					contextmenu
+					<div style="height:500px;display: flex;flex-direction: column;align-items: center;justify-content: center;color: #999;">
+						试试看在上下左右四个角落右键，看看边缘位置修正效果
+					</div>
 				</el-card>
 			</el-col>
 		</el-row>
@@ -41,7 +48,8 @@
 			</sc-contextmenu-item>
 			<sc-contextmenu-item command="c3" title="二级菜单3"></sc-contextmenu-item>
 		</sc-contextmenu-item>
-		<sc-contextmenu-item  command="d" title="属性(P)" divided :disabled="row.state==0"></sc-contextmenu-item>
+		<sc-contextmenu-item  command="d" title="属性(P)" divided :disabled="row&&row.state==0"></sc-contextmenu-item>
+		<sc-contextmenu-item  command="e" title="设置state=1" v-if="row&&row.state==0"></sc-contextmenu-item>
 	</sc-contextmenu>
 
 </template>
@@ -57,7 +65,7 @@
 		},
 		data() {
 			return {
-				row: {},
+				row: null,
 				tableData: [
 					{
 						id: '1',
@@ -90,14 +98,18 @@
 				this.$refs.contextmenu.openMenu(event)
 			},
 			openMenu(e){
+				this.row = null
 				this.$refs.contextmenu.openMenu(e)
 			},
 			handleCommand(command){
 				this.$message('click on item ' + command)
+				if(command == 'e'){
+					this.row.state = 1
+				}
 			},
 			visibleChange(visible){
 				if(!visible){
-					this.row = {}
+					this.$refs.table.setCurrentRow();
 				}
 			}
 		}

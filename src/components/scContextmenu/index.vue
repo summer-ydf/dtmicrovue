@@ -5,7 +5,7 @@
  * @Date: 2021年7月23日09:25:57
  * @LastEditors:
  * @LastEditTime:
- * @other: 代码完全开源，欢迎拿来主义，也欢迎PR
+ * @other: 代码完全开源，欢迎参考，也欢迎PR
 -->
 
 <template>
