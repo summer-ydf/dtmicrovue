@@ -48,6 +48,7 @@
 				this.crop = new Cropper(this.$refs.img, {
 					viewMode: 2,
 					dragMode: 'move',
+					responsive: false,
 					aspectRatio: this.aspectRatio,
 					preview: this.$refs.preview
 				})
