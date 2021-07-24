@@ -8,7 +8,7 @@
 			<a v-else :href="img" class="file" target="_blank"><i class="el-icon-document"></i></a>
 		</div>
 		<div v-else class="sc-upload-uploader">
-			<el-upload ref="upload" class="uploader" :accept="accept" :action="action" :show-file-list="false" :before-upload="before" :on-success="success" :on-error="error" :http-request="request">
+			<el-upload ref="upload" class="uploader" :auto-upload="!cropper" :on-change="change" :accept="accept" :action="action" :show-file-list="false" :before-upload="before" :on-success="success" :on-error="error" :http-request="request">
 				<slot>
 					<div class="file-empty">
 						<i :class="icon"></i>
@@ -17,12 +17,21 @@
 				</slot>
 			</el-upload>
 		</div>
+		<el-dialog title="剪裁" v-model="cropperDialogVisible" :width="580" destroy-on-close>
+			<sc-cropper :src="cropperImg" :compress="compress" :aspectRatio="aspectRatio" ref="cropper"></sc-cropper>
+			<template #footer>
+				<el-button @click="cropperDialogVisible=false" >取 消</el-button>
+				<el-button type="primary" @click="cropperSave">确 定</el-button>
+			</template>
+		</el-dialog>
 		<el-input v-model="img" style="display:none"></el-input>
 	</div>
 </template>
 
 <script>
-	import config from "@/config/upload";
+	import config from "@/config/upload"
+	import scCropper from '@/components/scCropper';
+
 
 	export default {
 		props: {
@@ -35,7 +44,13 @@
 			maxSize: { type: Number, default: config.maxSize },
 			title: { type: String, default: "" },
 			icon: { type: String, default: "el-icon-plus" },
+			cropper: { type: Boolean, default: false },
+			compress: {type: Number, default: 1},
+			aspectRatio:  {type: Number, default: NaN},
 			onSuccess: { type: Function, default: () => { return true } }
+		},
+		components: {
+			scCropper
 		},
 		data() {
 			return {
@@ -46,7 +61,10 @@
 				style: {
 					width: this.width + "px",
 					height: this.height + "px"
-				}
+				},
+				cropperDialogVisible: false,
+				cropperImg: "",
+				cropperUploadFile: null
 			}
 		},
 		watch:{
@@ -63,6 +81,14 @@
 			this.img = this.modelValue;
 		},
 		methods: {
+			cropperSave(){
+				var uploadFile = this.$refs.upload.uploadFiles[0].raw
+				this.$refs.cropper.getCropFile(file => {
+					this.cropperUploadFile = file
+					this.$refs.upload.submit()
+				}, uploadFile.name, uploadFile.type)
+				this.cropperDialogVisible = false
+			},
 			isImg(fileUrl){
 				var strRegex = "(.jpg|.png|.gif|.jpeg)$";
 				var re = new RegExp(strRegex);
@@ -72,7 +98,22 @@
 					this.fileIsImg=false;
 				}
 			},
+			change(file){
+				if(this.cropper && file.status=='ready'){
+					this.isImg(file.name)
+					if(!this.fileIsImg){
+						this.$notify.warning({
+							title: '上传文件警告',
+							message: '选择的文件非图像类文件'
+						})
+						return false
+					}
+					this.cropperDialogVisible = true
+					this.cropperImg = URL.createObjectURL(file.raw)
+				}
+			},
 			before(file){
+				file = this.cropper ? this.cropperUploadFile : file
 				const maxSize = file.size / 1024 / 1024 < this.maxSize;
 				if (!maxSize) {
 					this.$message.warning(`上传文件大小不能超过 ${this.maxSize}MB!`);
@@ -114,7 +155,8 @@
 					apiObj = this.apiObj;
 				}
 				const data = new FormData();
-				data.append("file", param.file);
+				var file = this.cropper ? this.cropperUploadFile : param.file
+				data.append("file", file);
 				apiObj.post(data).then(res => {
 					param.onSuccess(res)
 				}).catch(err => {

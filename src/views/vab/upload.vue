@@ -10,6 +10,7 @@
 					<p>自定义插槽</p>
 				</div>
 			</sc-upload>
+			<sc-upload v-model="imgurl4" title="开启剪裁" :cropper="true" :compress="1" :aspectRatio="1/1"></sc-upload>
 		</el-card>
 
 		<el-card shadow="never" header="在验证表单中使用">
@@ -51,6 +52,7 @@
 				imgurl: "img/avatar.jpg",
 				imgurl2: "",
 				imgurl3: "",
+				imgurl4: "",
 				form: {
 					img1: "",
 					img2: "",
