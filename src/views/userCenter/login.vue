@@ -151,6 +151,7 @@
 		created: function() {
 			this.$TOOL.data.remove("user")
 			this.$TOOL.data.remove("grid")
+			this.$TOOL.data.remove("my-mods")
 			this.$store.commit("clearViewTags")
 			this.$store.commit("clearKeepLive")
 			this.$store.commit("clearIframeList")
