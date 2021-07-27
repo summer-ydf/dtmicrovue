@@ -4,11 +4,11 @@
 	<el-drawer ref="mobileNavBox" title="移动端菜单" :size="240" v-model="nav" direction="ltr" :with-header="false" destroy-on-close>
 		<el-container class="mobile-nav">
 			<el-header>
-				<div class="logo-bar"><img class="logo" src="img/logo.png"><span>SCUI</span></div>
+				<div class="logo-bar"><img class="logo" src="img/logo.png"><span>{{ $CONFIG.APP_NAME }}</span></div>
 			</el-header>
 			<el-main>
 				<el-scrollbar>
-					<el-menu :default-active="$route.meta.active || $route.fullPath" @select="select" router background-color="transparent" text-color="#fff" active-text-color="#409EFF">
+					<el-menu :default-active="$route.meta.active || $route.fullPath" @select="select" router background-color="#212d3d" text-color="#fff" active-text-color="#409EFF">
 						<NavMenu :navMenus="menu"></NavMenu>
 					</el-menu>
 				</el-scrollbar>
@@ -133,4 +133,5 @@
 	.mobile-nav .el-main {padding:0;}
 	.mobile-nav .logo-bar {display: flex;align-items: center;font-weight: bold;font-size: 20px;color: #fff;}
 	.mobile-nav .logo-bar img {width: 30px;margin-right: 10px;}
+	.mobile-nav .el-submenu__title:hover {background: #fff!important;}
 </style>
