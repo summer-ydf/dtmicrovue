@@ -41,7 +41,7 @@
 			modelValue: { type: String, default: "" },
 			action: { type: String, default: "" },
 			apiObj: { type: Object, default: () => {} },
-			accept: { type: String, default: ".jpg, .png, .jpeg, .gif" },
+			accept: { type: String, default: "image/gif, image/jpeg, image/png" },
 			maxSize: { type: Number, default: config.maxSize },
 			title: { type: String, default: "" },
 			icon: { type: String, default: "el-icon-plus" }
