@@ -32,6 +32,15 @@ const routes = [{
 							icon: "el-icon-user",
 						},
 						component: () => import(/* webpackChunkName: "usercenter" */ '@/views/userCenter'),
+					},
+					{
+						name: "iconSelect",
+						path: "/vab/iconselect",
+						meta: {
+							title: "图标选择器",
+							icon: "el-icon-orange",
+						},
+						component: () => import(/* webpackChunkName: "usercenter" */ '@/views/vab/iconselect'),
 					}
 				]
 			}
