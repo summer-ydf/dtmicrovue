@@ -17,13 +17,15 @@
 				<el-button v-if="selection.length>0">推送至队列</el-button>
 			</div>
 			<div class="right-panel">
-				<el-radio-group v-model="group">
-					<el-radio-button label="0">所有</el-radio-button>
-					<el-radio-button label="1">未完成 (2)</el-radio-button>
-					<el-radio-button label="2">弃坑 (1)</el-radio-button>
-					<el-radio-button label="3">其他</el-radio-button>
-				</el-radio-group>
-				<scFilterBar :options="options" @change="change"></scFilterBar>
+				<div class="right-panel-search">
+					<el-radio-group v-model="group">
+						<el-radio-button label="0">所有</el-radio-button>
+						<el-radio-button label="1">未完成 (2)</el-radio-button>
+						<el-radio-button label="2">弃坑 (1)</el-radio-button>
+						<el-radio-button label="3">其他</el-radio-button>
+					</el-radio-group>
+					<scFilterBar :options="options" @change="change"></scFilterBar>
+				</div>
 			</div>
 		</el-header>
 		<el-main class="nopadding">
