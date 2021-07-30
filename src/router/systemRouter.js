@@ -41,6 +41,15 @@ const routes = [{
 							icon: "el-icon-orange",
 						},
 						component: () => import(/* webpackChunkName: "usercenter" */ '@/views/vab/iconselect'),
+					},
+					{
+						name: "filterbar2",
+						path: "/vab/filterbar2",
+						meta: {
+							title: "过滤器v2",
+							icon: "el-icon-set-up",
+						},
+						component: () => import(/* webpackChunkName: "usercenter" */ '@/views/vab/filterbar2'),
 					}
 				]
 			}
