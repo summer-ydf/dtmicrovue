@@ -7,7 +7,6 @@
 	</div>
 	<div style="margin-top: 20px;">
 		<el-button type="primary" round @click="golog">更新日志</el-button>
-		<el-button type="primary" round @click="go">反馈</el-button>
 		<el-button type="primary" round @click="gogit">gitee</el-button>
 	</div>
 
@@ -27,9 +26,6 @@
 		methods: {
 			golog(){
 				window.open("https://gitee.com/lolicode/scui/releases")
-			},
-			go(){
-				window.open("https://support.qq.com/product/323856")
 			},
 			gogit(){
 				window.open("https://gitee.com/lolicode/scui")
