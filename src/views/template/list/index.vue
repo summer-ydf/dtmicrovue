@@ -209,7 +209,10 @@
 			},
 			table_edit(row){
 				this.$router.push({
-					path: `/template/list/save/${row.id}`
+					path: `/template/list/save`,
+					query: {
+						id: row.id
+					}
 				});
 			},
 			filterHandler(value, row, column){

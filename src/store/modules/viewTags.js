@@ -4,7 +4,7 @@ export default {
 	},
 	mutations: {
 		pushViewTags(state, route){
-			let target = state.viewTags.find((item) => item.path === route.path)
+			let target = state.viewTags.find((item) => item.fullPath === route.fullPath)
 			let isName = route.name
 			if(!target && isName){
 				state.viewTags.push(route)
@@ -12,15 +12,23 @@ export default {
 		},
 		removeViewTags(state, route){
 			state.viewTags.forEach((item, index) => {
-				if (item.path === route.path){
+				if (item.fullPath === route.fullPath){
 					state.viewTags.splice(index, 1)
 				}
 			})
 		},
 		updateViewTags(state, route){
 			state.viewTags.forEach((item) => {
-				if (item.path == route.path){
+				if (item.fullPath == route.fullPath){
 					item = Object.assign(item, route)
+				}
+			})
+		},
+		updateViewTagsTitle(state, title='', fullPath){
+			const nowFullPath = fullPath || location.hash.substring(1)
+			state.viewTags.forEach((item) => {
+				if (item.fullPath == nowFullPath){
+					item.meta.title = title
 				}
 			})
 		},

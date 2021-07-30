@@ -67,7 +67,9 @@
 			}
 		},
 		created() {
-			this.addViewTags(this.$router.options.routes[0].children[0].children[0]);
+			const dashboardRoute = this.$router.options.routes[0].children[0].children[0]
+			dashboardRoute.fullPath = dashboardRoute.path
+			this.addViewTags(dashboardRoute);
 			this.addViewTags(this.$route);
 		},
 		mounted() {
@@ -92,7 +94,7 @@
 			},
 			//高亮tag
 			isActive(route) {
-				return route.path === this.$route.path
+				return route.fullPath === this.$route.fullPath
 			},
 			//关闭tag
 			closeSelectedTag(tag) {
@@ -114,7 +116,7 @@
 				this.contextMenuVisible = true;
 				this.left = e.clientX + 1;
 				this.top = e.clientY + 1;
-				
+
 				//FIX 右键菜单边缘化位置处理
 				this.$nextTick(() => {
 					let sp = document.getElementById("contextmenu");
@@ -134,9 +136,10 @@
 				var nowTag = this.contextMenuItem;
 				this.contextMenuVisible = false
 				//判断是否当前路由，否的话跳转
-				if(this.$route.path != nowTag.path){
+				if(this.$route.fullPath != nowTag.fullPath){
 					this.$router.push({
-						path: nowTag.path
+						path: nowTag.fullPath,
+						query: nowTag.query
 					})
 				}
 				this.$store.commit("refreshIframe", nowTag)
@@ -163,7 +166,7 @@
 				var nowTag = this.contextMenuItem;
 				var tags = [...this.tagList];
 				tags.forEach(tag => {
-					if(tag.meta&&tag.meta.affix || nowTag.path==tag.path){
+					if(tag.meta&&tag.meta.affix || nowTag.fullPath==tag.fullPath){
 						return true
 					}else{
 						this.closeSelectedTag(tag)
@@ -176,9 +179,10 @@
 				var nowTag = this.contextMenuItem;
 				this.contextMenuVisible = false
 				//判断是否当前路由，否的话跳转
-				if(this.$route.path != nowTag.path){
+				if(this.$route.fullPath != nowTag.fullPath){
 					this.$router.push({
-						path: nowTag.path
+						path: nowTag.fullPath,
+						query: nowTag.query
 					})
 				}
 				var element = document.getElementById('adminui-main')
