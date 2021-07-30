@@ -24,8 +24,8 @@ export default {
 				}
 			})
 		},
-		updateViewTagsTitle(state, title='', fullPath){
-			const nowFullPath = fullPath || location.hash.substring(1)
+		updateViewTagsTitle(state, title=''){
+			const nowFullPath = location.hash.substring(1)
 			state.viewTags.forEach((item) => {
 				if (item.fullPath == nowFullPath){
 					item.meta.title = title

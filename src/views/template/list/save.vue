@@ -61,7 +61,6 @@
 		mounted() {
 			if(this.id){
 				//更改tag标签
-				//updateViewTagsTitle 可携带第2个参数，要更改哪个fullPath的标题，不设置就是变更当前
 				this.$store.commit("updateViewTagsTitle", `详情ID:${this.id}`)
 			}
 		},
