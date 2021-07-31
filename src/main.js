@@ -10,7 +10,7 @@ import store from './store'
 import api from './api'
 import tool from './utils/tool'
 import http from "./utils/request"
-import permission from './utils/permission'
+import { permission, rolePermission } from './utils/permission'
 import errorHandler from './utils/errorHandler'
 import scTable from './components/scTable'
 import scFilterBar from './components/scFilterBar'
@@ -20,6 +20,7 @@ import scFormTable from './components/scFormTable'
 import scTableSelect from './components/scTableSelect'
 import scPageHeader from './components/scPageHeader'
 import auth from './directives/auth'
+import role from './directives/role'
 
 const app = createApp(App);
 
@@ -29,6 +30,7 @@ app.config.globalProperties.$TOOL = tool;
 app.config.globalProperties.$HTTP = http;
 app.config.globalProperties.$API = api;
 app.config.globalProperties.$AUTH = permission;
+app.config.globalProperties.$ROLE = rolePermission;
 
 app.use(store);
 app.use(router);
@@ -45,6 +47,7 @@ app.component('scPageHeader', scPageHeader);
 
 //注册全局指令
 app.directive('auth', auth)
+app.directive('role', role)
 
 //全局代码错误捕捉
 app.config.errorHandler = errorHandler

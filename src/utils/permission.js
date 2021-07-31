@@ -1,6 +1,6 @@
 import tool from '@/utils/tool';
 
-let permission = (data) => {
+export function permission(data) {
 	let userInfo = tool.data.get("user");
 	if(!userInfo){
 		return false;
@@ -12,4 +12,16 @@ let permission = (data) => {
 	let isHave = permissions.includes(data);
 	return isHave;
 }
-export default permission;
+
+export function rolePermission(data) {
+	let userInfo = tool.data.get("user");
+	if(!userInfo){
+		return false;
+	}
+	let role = userInfo.userInfo.role;
+	if(!role){
+		return false;
+	}
+	let isHave = role.includes(data);
+	return isHave;
+}
