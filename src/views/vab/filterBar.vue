@@ -111,6 +111,12 @@
 						}
 					},
 					{
+						label: '开关',
+						value: 'switch',
+						type: 'switch',
+						operator: '=',
+					},
+					{
 						label: '日期单选',
 						value: 'date',
 						type: 'date',

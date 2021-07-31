@@ -65,7 +65,7 @@
 												<!-- 日期时间范围 -->
 												<el-date-picker v-if="item.field.type=='datetimerange'" v-model="item.value" type="datetimerange" value-format="YYYY-MM-DD HH:mm:ss" start-placeholder="开始日期" end-placeholder="结束日期" style="width: 100%;"></el-date-picker>
 												<!-- 开关 -->
-												<el-switch v-if="item.field.type=='switch'" v-model="item.value"></el-switch>
+												<el-switch v-if="item.field.type=='switch'" v-model="item.value" active-value="1" inactive-value="0"></el-switch>
 											</td>
 											<td>
 												<i class="el-icon-delete del" @click="delFilter(index)"></i>
@@ -97,7 +97,7 @@
 </template>
 
 <script>
-	import config from "@/config/filterBar";
+	import config from "@/config/filterBar"
 	import my from './my'
 
 	export default {

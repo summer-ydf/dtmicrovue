@@ -9,7 +9,9 @@
 
 <template>
 	<div class="sc-filter-my">
-		<el-skeleton v-if="loading" :rows="2" animated />
+		<div v-if="loading" class="sc-filter-my-loading">
+			<el-skeleton :rows="2" animated />
+		</div>
 		<template v-else>
 			<el-empty v-if="myFilter.length<=0" :image-size="100">
 				<template #description>
@@ -18,7 +20,15 @@
 				</template>
 			</el-empty>
 			<ul v-else class="sc-filter-my-list">
-				<li v-for="(item, index) in myFilter" :key="index"><el-tag closable size="medium" effect="dark" type="info" @click="selectMyfilter(item)" @close="closeMyfilter(item, index)">{{item.title}}</el-tag></li>
+				<h2>我的常用过滤</h2>
+				<li v-for="(item, index) in myFilter" :key="index" @click="selectMyfilter(item)">
+					<label>{{item.title}}</label>
+					<el-popconfirm title="确认删除此常用过滤吗？" @confirm="closeMyfilter(item, index)">
+						<template #reference>
+							<i class="el-icon-delete del" @click.stop="()=>{}"></i>
+						</template>
+					</el-popconfirm>
+				</li>
 			</ul>
 		</template>
 	</div>
@@ -57,23 +67,17 @@
 				this.$emit('selectMyfilter', item)
 			},
 			//删除常用过滤
-			closeMyfilter(item, index){
-				this.$confirm('此操作将永久删除该常用, 是否继续?', '提示', {
-					type: 'warning'
-				}).then(async () => {
-					try {
-						var del = await config.delMy(this.filterName)
-					}catch (error) {
-						return false
-					}
-					if(!del){
-						return false
-					}
-					this.myFilter.splice(index, 1)
-					this.$message.success('删除常用成功')
-				}).catch(() => {
-					//
-				})
+			async closeMyfilter(item, index){
+				try {
+					var del = await config.delMy(this.filterName)
+				}catch (error) {
+					return false
+				}
+				if(!del){
+					return false
+				}
+				this.myFilter.splice(index, 1)
+				this.$message.success('删除常用成功')
 			},
 			//远程获取我的常用
 			async getMyfilter(){
@@ -90,8 +94,14 @@
 </script>
 
 <style scoped>
-	.sc-filter-my {padding:15px;}
-	.sc-filter-my-list {list-style-type: none;}
-	.sc-filter-my-list li {margin-bottom: 15px;}
-	.sc-filter-my-list li .el-tag {cursor: pointer;}
+	.sc-filter-my {}
+	.sc-filter-my-loading {padding:15px;}
+	.sc-filter-my-list {list-style-type: none;background: #fff;border-bottom: 1px solid #e6e6e6;}
+	.sc-filter-my-list h2 {font-size: 12px;color: #999;font-weight: normal;padding:20px;}
+	.sc-filter-my-list li {padding:12px 20px;cursor: pointer;position: relative;color: #3c4a54;padding-right:80px;}
+	.sc-filter-my-list li:hover {background: #ecf5ff;color: #409EFF;}
+	.sc-filter-my-list li label {cursor: pointer;font-size: 14px;line-height: 1.8;}
+	.sc-filter-my-list li label span {color: #999;margin-right: 10px;}
+	.sc-filter-my-list li .del {position: absolute;right:20px;top:8px;border-radius:50%;width: 32px;height: 32px;display: flex;align-items: center;justify-content: center;color: #999;}
+	.sc-filter-my-list li .del:hover {background: #F56C6C;color: #fff;}
 </style>
