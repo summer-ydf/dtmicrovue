@@ -39,9 +39,8 @@
 												<el-tag size="medium">{{index+1}}</el-tag>
 											</td>
 											<td>
-												<el-select v-model="item.field" placeholder="过滤字段" filterable @change="fieldChange(item)">
-													<el-option v-for="field in fields" :key="field.value" :label="field.label" :value="field"></el-option>
-												</el-select>
+												<py-select v-model="item.field" :options="fields" placeholder="过滤字段" filterable @change="fieldChange(item)">
+												</py-select>
 											</td>
 											<td>
 												<el-select v-model="item.operator" placeholder="运算符">
@@ -98,11 +97,13 @@
 
 <script>
 	import config from "@/config/filterBar"
+	import pySelect from './pySelect'
 	import my from './my'
 
 	export default {
 		name: 'filterBar',
 		components: {
+			pySelect,
 			my
 		},
 		props: {
