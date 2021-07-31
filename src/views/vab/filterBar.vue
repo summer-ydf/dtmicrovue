@@ -1,9 +1,9 @@
 <template>
 	<el-main>
 		<el-card shadow="never">
-			<scFilterBar :options="options" :defaultFilter="defaultFilter" @change="change"></scFilterBar>
+			<scFilterBar filterName="filterName" :options="options" @filterChange="change"></scFilterBar>
 		</el-card>
-		<el-alert title="SCUI 独创的过滤条Filterbar,可配置不同类型的过滤字段,以及异步获取数据,操作上方过滤条查看下方change事件的回调,在表格查询的场景下非常合适" type="success" style="margin:20px 0;"></el-alert>
+		<el-alert title="SCUI 独创的过滤条Filterbar,可配置不同类型的过滤字段,以及异步获取数据,在@/config/filterBar.js中可以更改运算符以及其他配置,操作上方过滤条查看下方change事件的回调,在表格查询的场景下非常合适" type="success" style="margin:20px 0;"></el-alert>
 		<el-card shadow="never">
 			<pre>{{ filterData }}</pre>
 		</el-card>
@@ -24,14 +24,19 @@
 				defaultFilter : [],
 				options: [
 					{
-						label: '输入框',
-						value: 'name',
-						type: 'text'
+						label: '订单号',
+						value: 'id',
+						type: 'text',
+						selected: true,
+						placeholder: '请输入订单号'
 					},
 					{
-						label: '固定下拉框',
+						label: '类型',
 						value: 'type',
 						type: 'select',
+						operator: '=',
+						selected: true,
+						placeholder: '请选择类型',
 						extend: {
 							data:[
 								{
@@ -46,9 +51,11 @@
 						}
 					},
 					{
-						label: '固定下拉框(多选)',
+						label: '类型(多选)',
 						value: 'type2',
 						type: 'select',
+						operator: '=',
+						placeholder: '请选择类型',
 						extend: {
 							multiple: true,
 							data:[
@@ -64,28 +71,42 @@
 						}
 					},
 					{
-						label: '异步下拉框',
-						value: 'type3',
+						label: '通知(异步)',
+						value: 'noticeType',
 						type: 'select',
+						operator: '=',
+						placeholder: '请选择通知类型',
 						extend: {
 							request: async () => {
-								var list = await this.$API.demo.select.get();
-								return list.data;
+								var list = await this.$API.dic.info.get()
+								return list.data.map(item => {
+									return {
+										label: item.name,
+										value: item.key
+									}
+								})
 							}
 						}
 					},
 					{
-						label: '远程搜索下拉框',
-						value: 'type4',
+						label: '通知(远程搜索)',
+						value: 'noticeType2',
 						type: 'select',
+						operator: '=',
+						placeholder: '请输入关键词后检索',
 						extend: {
 							remote: true,
 							request: async (query) => {
 								var data = {
 									keyword: query,
 								}
-								var list = await this.$API.demo.select.get(data);
-								return list.data;
+								var list = await this.$API.dic.info.get(data)
+								return list.data.map(item => {
+									return {
+										label: item.name,
+										value: item.key
+									}
+								})
 							}
 						}
 					},
