@@ -5,6 +5,7 @@ import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import tool from '@/utils/tool';
 import systemRouter from './systemRouter';
+import {beforeEach, afterEach} from './scrollBehavior';
 
 //系统路由
 const routes = systemRouter
@@ -29,7 +30,7 @@ var isGetApiRouter = false;
 
 router.beforeEach(async (to, from, next) => {
 	NProgress.start()
-	
+
 	//动态标题
 	document.title = `${to.meta.title} - ${config.APP_NAME}`
 
@@ -60,10 +61,12 @@ router.beforeEach(async (to, from, next) => {
 		}
 		isGetApiRouter = true;
 	}
+	beforeEach(to, from)
 	next();
 });
 
-router.afterEach(() => {
+router.afterEach((to, from) => {
+	afterEach(to, from)
 	NProgress.done()
 });
 
