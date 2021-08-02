@@ -165,7 +165,7 @@
 				var params = {
 					groupId: data.id
 				}
-				this.$refs.table.upData(params)
+				this.$refs.table.reload(params)
 			},
 			//搜索
 			upsearch(){

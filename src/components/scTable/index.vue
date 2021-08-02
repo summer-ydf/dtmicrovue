@@ -20,7 +20,7 @@
 		</div>
 		<div class="scTable-page">
 			<div class="scTable-pagination">
-				<el-pagination v-if="!hidePagination" background :small="true" :layout="paginationLayout" :total="total" :page-size="pageSize" v-model:currentPage="currentPage" @current-change="reload"></el-pagination>
+				<el-pagination v-if="!hidePagination" background :small="true" :layout="paginationLayout" :total="total" :page-size="pageSize" v-model:currentPage="currentPage" @current-change="paginationChange"></el-pagination>
 			</div>
 			<div class="scTable-do" v-if="!hideDo">
 				<el-button @click="refresh" icon="el-icon-refresh" circle style="margin-left:15px"></el-button>
@@ -143,7 +143,7 @@
 				this.$refs.scTable.$el.querySelector('.el-table__body-wrapper').scrollTop = 0
 			},
 			//分页点击
-			reload(){
+			paginationChange(){
 				this.getData();
 			},
 			//刷新数据
@@ -151,10 +151,20 @@
 				this.$refs.scTable.clearSelection();
 				this.getData();
 			},
-			//更新数据
-			upData(params){
-				this.currentPage = 1;
+			//更新数据 合并上一次params
+			upData(params, page=1){
+				this.currentPage = page;
+				this.$refs.scTable.clearSelection();
 				Object.assign(this.tableParams, params || {})
+				this.getData()
+			},
+			//重载数据 替换params
+			reload(params, page=1){
+				this.currentPage = page;
+				this.tableParams = params || {}
+				this.$refs.scTable.clearSelection();
+				this.$refs.scTable.clearSort()
+				this.$refs.scTable.clearFilter()
 				this.getData()
 			},
 			//自定义变化事件

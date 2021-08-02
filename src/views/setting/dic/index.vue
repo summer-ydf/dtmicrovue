@@ -147,7 +147,7 @@
 			},
 			//树点击事件
 			dicClick(data){
-				this.$refs.table.upData({
+				this.$refs.table.reload({
 					code: data.code
 				})
 			},
