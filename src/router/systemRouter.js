@@ -32,6 +32,15 @@ const routes = [{
 							icon: "el-icon-user",
 						},
 						component: () => import(/* webpackChunkName: "usercenter" */ '@/views/userCenter'),
+					},
+					{
+						name: "report",
+						path: "/template/report",
+						meta: {
+							title: "分析报表",
+							icon: "el-icon-data-analysis",
+						},
+						component: () => import(/* webpackChunkName: "report" */ '@/views/template/report'),
 					}
 				]
 			}
