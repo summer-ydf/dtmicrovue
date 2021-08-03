@@ -41,6 +41,15 @@ const routes = [{
 							icon: "el-icon-data-analysis",
 						},
 						component: () => import(/* webpackChunkName: "report" */ '@/views/template/report'),
+					},
+					{
+						name: "dicselect",
+						path: "/vab/dicselect",
+						meta: {
+							title: "字典选择器",
+							icon: "el-icon-document-copy",
+						},
+						component: () => import(/* webpackChunkName: "dicselect" */ '@/views/vab/dicselect'),
 					}
 				]
 			}
