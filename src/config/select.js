@@ -3,7 +3,7 @@ import API from "@/api";
 //字典选择器配置
 
 export default {
-	apiObj: API.dic.get,				//上传请求API对象
+	dicApiObj: API.dic.get,				//获取字典接口对象
 	parseData: function (res) {
 		return {
 			data: res.data,				//分析行数据字段结构
@@ -15,7 +15,7 @@ export default {
 		name: 'name'					//规定搜索字段
 	},
 	props: {
-		label: 'name',					//映射label显示字段
-		value: 'key',					//映射value值字段
+		label: 'label',					//映射label显示字段
+		value: 'value',					//映射value值字段
 	}
 }

@@ -19,7 +19,7 @@ import scUploadMultiple from './components/scUpload/multiple'
 import scFormTable from './components/scFormTable'
 import scTableSelect from './components/scTableSelect'
 import scPageHeader from './components/scPageHeader'
-import scDicSelect from './components/scDicSelect'
+import scSelect from './components/scSelect'
 import auth from './directives/auth'
 import role from './directives/role'
 
@@ -45,7 +45,7 @@ app.component('scUploadMultiple', scUploadMultiple);
 app.component('scFormTable', scFormTable);
 app.component('scTableSelect', scTableSelect);
 app.component('scPageHeader', scPageHeader);
-app.component('scDicSelect', scDicSelect);
+app.component('scSelect', scSelect);
 
 //注册全局指令
 app.directive('auth', auth)

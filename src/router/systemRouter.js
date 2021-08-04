@@ -43,13 +43,13 @@ const routes = [{
 						component: () => import(/* webpackChunkName: "report" */ '@/views/template/report'),
 					},
 					{
-						name: "dicselect",
-						path: "/vab/dicselect",
+						name: "scselect",
+						path: "/vab/select",
 						meta: {
-							title: "字典选择器",
+							title: "异步选择器",
 							icon: "el-icon-document-copy",
 						},
-						component: () => import(/* webpackChunkName: "dicselect" */ '@/views/vab/dicselect'),
+						component: () => import(/* webpackChunkName: "select" */ '@/views/vab/select'),
 					}
 				]
 			}

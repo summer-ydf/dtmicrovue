@@ -88,7 +88,7 @@ const api = {
 			}
 		},
 		get: {
-			url: `${config.API_URL}/dic_info`,
+			url: `${config.API_URL}/dic`,
 			name: "获取字典数据",
 			get: async function(params){
 				return await http.get(this.url, params);
