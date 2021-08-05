@@ -60,7 +60,8 @@
 <style scoped>
 	.sc-statistic-title {font-size: 12px;color: #999;margin-bottom: 10px;}
 	.sc-statistic-tips {margin-left: 5px;}
-	.sc-statistic-content {font-size: 21px;color: #333;}
+	.sc-statistic-content {font-size: 20px;color: #333;}
+	.sc-statistic-content-value {font-weight: bold;}
 	.sc-statistic-content-prefix {margin-right: 5px;}
 	.sc-statistic-content-suffix {margin-left: 5px;font-size: 12px;}
 	.sc-statistic-description {margin-top: 10px;color: #999;}
