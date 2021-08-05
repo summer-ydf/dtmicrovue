@@ -46,8 +46,8 @@
 		name: 'scselect',
 		data() {
 			return {
-				value: '',
-				value2: [],
+				value: '3',
+				value2: ['1', '3'],
 				value3: '',
 				value4: ''
 			}
