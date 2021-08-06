@@ -32,15 +32,6 @@ const routes = [{
 							icon: "el-icon-user",
 						},
 						component: () => import(/* webpackChunkName: "usercenter" */ '@/views/userCenter'),
-					},
-					{
-						name: "scselect",
-						path: "/vab/select",
-						meta: {
-							title: "异步选择器",
-							icon: "el-icon-document-copy",
-						},
-						component: () => import(/* webpackChunkName: "select" */ '@/views/vab/select'),
 					}
 				]
 			}
