@@ -65,10 +65,11 @@ var http = {
 	 * @param  {接口地址} url
 	 * @param  {请求参数} params
 	 */
-	get: function(url, params) {
+	get: function(url, params={}, headers={}) {
 		return new Promise((resolve, reject) => {
 			axios.get(url, {
-					params: params
+					params: params,
+					headers: headers
 				})
 				.then((response) => {
 					resolve(response.data);
@@ -83,9 +84,9 @@ var http = {
 	 * @param  {接口地址} url
 	 * @param  {请求参数} params
 	 */
-	post: function(url, params) {
+	post: function(url, params={}, headers={}) {
 		return new Promise((resolve, reject) => {
-			axios.post(url, params)
+			axios.post(url, params, {headers: headers})
 				.then((response) => {
 					resolve(response.data);
 				})
