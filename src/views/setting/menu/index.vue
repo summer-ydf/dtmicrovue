@@ -6,10 +6,10 @@
 					<el-input placeholder="输入关键字进行过滤" v-model="menuFilterText" clearable></el-input>
 				</el-header>
 				<el-main class="nopadding">
-					<el-tree ref="menu" class="menu" node-key="name" :data="menuList" :props="menuProps" draggable highlight-current :expand-on-click-node="false" check-strictly show-checkbox :filter-node-method="menuFilterNode" @node-click="menuClick">
+					<el-tree ref="menu" class="menu" node-key="name" :data="menuList" :props="menuProps" draggable highlight-current :expand-on-click-node="false" check-strictly show-checkbox :filter-node-method="menuFilterNode" @node-click="menuClick" @node-drop="nodeDrop">
 
 						<template #default="{node, data}">
-							<span class="custom-tree-node">
+							<span class="custom-tree-node el-tree-node__label">
 								<span class="label">{{ node.label }}</span>
 								<span class="do">
 									<i class="el-icon-plus" @click.stop="add(node, data)"></i>
@@ -75,8 +75,12 @@
 			//树过滤
 			menuFilterNode(value, data){
 				if (!value) return true;
-				var targetText = data.name;
+				var targetText = data.meta.title;
 				return targetText.indexOf(value) !== -1;
+			},
+			//树拖拽
+			nodeDrop(draggingNode, dropNode, dropType){
+				this.$message(`拖拽对象：${draggingNode.data.meta.title}, 释放对象：${dropNode.data.meta.title}, 释放对象的位置：${dropType}`)
 			},
 			//增加
 			add(node){
