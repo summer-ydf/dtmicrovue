@@ -65,4 +65,6 @@
 	.sc-statistic-content-prefix {margin-right: 5px;}
 	.sc-statistic-content-suffix {margin-left: 5px;font-size: 12px;}
 	.sc-statistic-description {margin-top: 10px;color: #999;}
+
+	[data-theme='dark'] .sc-statistic-content {color: #d0d0d0;}
 </style>

@@ -27,6 +27,9 @@ const DEFAULT_CONFIG = {
 	//是否开启多标签
 	LAYOUT_TAGS: true,
 
+	//语言
+	LANG: 'zh-cn',
+
 	//控制台首页默认布局
 	DEFAULT_GRID: {
 		//默认分栏数量和宽度 例如 [24] [18,6] [8,8,8] [6,12,6]

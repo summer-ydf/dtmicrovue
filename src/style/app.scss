@@ -1,5 +1,5 @@
 /* 全局 */
-#app, body, html {width: 100%;height: 100%;background-color: @--color-background;font-size: 12px;}
+#app, body, html {width: 100%;height: 100%;background-color: #f6f8f9;font-size: 12px;}
 a {color: #333;text-decoration: none;}
 a:hover, a:focus {color: #000;text-decoration: none;}
 a:link {text-decoration: none;}
@@ -51,7 +51,7 @@ a,button,input,textarea{-webkit-tap-highlight-color:rgba(0,0,0,0);box-sizing: bo
 .aminui-side-split li i {font-size: 18px;}
 .aminui-side-split li p {margin-top:5px;}
 .aminui-side-split li:hover {background: rgba(255, 255, 255, 0.1);}
-.aminui-side-split li.active {background: @--color-primary;}
+.aminui-side-split li.active {background: #409EFF;}
 
 .adminui-side-split-scroll::-webkit-scrollbar-thumb {background-color: rgba(255, 255, 255, 0.4);border-radius:5px;}
 .adminui-side-split-scroll::-webkit-scrollbar-thumb:hover {background-color: rgba(255, 255, 255, 0.5);}
@@ -86,8 +86,8 @@ a,button,input,textarea{-webkit-tap-highlight-color:rgba(0,0,0,0);box-sizing: bo
 .adminui-tags li i {margin-left:10px;padding:3px;border-radius: 3px;}
 .adminui-tags li i:hover {background: rgba(0,0,0,.2);color: #fff;}
 .adminui-tags li:hover {background: #ecf5ff;}
-.adminui-tags li.active {background: @--color-primary;}
+.adminui-tags li.active {background: #409EFF;}
 .adminui-tags li.active a {color: #fff;}
 .adminui-tags li.sortable-ghost {opacity: 0;}
 
-.adminui-main {overflow: auto;background-color: @--color-background;flex: 1;}
+.adminui-main {overflow: auto;background-color: #f6f8f9;flex: 1;}

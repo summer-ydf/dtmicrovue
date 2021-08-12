@@ -215,4 +215,8 @@
 	.number-data .item p {font-size: 20px;color: #121315;margin-top: 10px;}
 
 	.chart {border-top: 1px solid #f0f0f0;margin-top: 20px;padding-top: 20px;}
+
+	[data-theme='dark'] .number-data .item {border-color: var(--el-border-color-base);}
+	[data-theme='dark'] .number-data .item p {color: #d0d0d0;}
+	[data-theme='dark'] .chart {border-color: var(--el-border-color-base);}
 </style>

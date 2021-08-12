@@ -14,11 +14,17 @@ const T = {
 		'top': '40',
 		'containLabel': true
 	},
+	"legend": {
+		"textStyle": {
+			"color": "#999"
+		},
+		"inactiveColor": "rgba(128,128,128,0.4)"
+	},
 	"categoryAxis": {
 		"axisLine": {
 			"show": true,
 			"lineStyle": {
-				"color": "#eee",
+				"color": "rgba(128,128,128,0.2)",
 				"width": 1
 			}
 		},
@@ -56,7 +62,12 @@ const T = {
 				"color": "#999"
 			}
 		},
-
+		"splitLine": {
+			"show": true,
+			"lineStyle": {
+				"color": "rgba(128,128,128,0.2)"
+			}
+		}
 	}
 }
 

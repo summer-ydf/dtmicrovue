@@ -282,4 +282,8 @@
 	.root:deep(.el-tabs__header) {margin: 0;}
 	.root:deep(.el-tabs__content) {flex: 1;background: #f6f8f9;}
 	.root:deep(.el-tabs__content) .el-tab-pane{overflow: auto;height:100%;}
+
+	[data-theme='dark'] .root:deep(.el-tabs__content) {background: none;}
+	[data-theme='dark'] .sc-filter-main {background: none;border-color:var(--el-border-color-base) ;}
+	
 </style>

@@ -122,7 +122,7 @@
 	.myMods li i {font-size: 26px;color: #fff;}
 	.myMods li p {font-size: 12px;color: #fff;margin-top: 10px;width: 100%;white-space:nowrap;text-overflow:ellipsis;overflow: hidden;}
 
-	.modItem-add {background: #fff;border: 1px dashed #ddd;cursor: pointer;}
+	.modItem-add {border: 1px dashed #ddd;cursor: pointer;}
 	.modItem-add i {font-size: 30px;color: #999!important;}
 	.modItem-add:hover,.modItem-add:hover i {border-color: #409EFF;color: #409EFF!important;}
 

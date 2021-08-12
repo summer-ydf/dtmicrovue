@@ -1,5 +1,5 @@
 import ElementPlus from 'element-plus'
-import locale from 'element-plus/lib/locale/lang/zh-cn'
+import i18n from './locales'
 import 'element-plus/lib/theme-chalk/index.css'
 import 'element-plus/lib/theme-chalk/display.css'
 import { createApp } from 'vue'
@@ -35,7 +35,9 @@ app.config.globalProperties.$ROLE = rolePermission;
 
 app.use(store);
 app.use(router);
-app.use(ElementPlus, {size: 'small', locale: locale});
+
+app.use(ElementPlus, {size: 'small'});
+app.use(i18n);
 
 //注册全局组件
 app.component('scTable', scTable);

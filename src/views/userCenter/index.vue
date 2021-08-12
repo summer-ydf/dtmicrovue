@@ -37,7 +37,7 @@
 			<el-col :lg="16">
 				<el-card shadow="never">
 					<el-tabs tab-position="top">
-						<el-tab-pane label="近期动态">
+						<el-tab-pane :label="$t('user.dynamic')">
 							<el-timeline style="margin-top:20px;padding-left:10px;">
 								<el-timeline-item v-for="(activity, index) in activities" :key="index" :timestamp="activity.timestamp" placement="top">
 									<div class="activity-item">
@@ -47,7 +47,7 @@
 								</el-timeline-item>
 							</el-timeline>
 						</el-tab-pane>
-						<el-tab-pane label="基本信息">
+						<el-tab-pane :label="$t('user.info')">
 							<el-form ref="form" :model="form" label-width="80px" style="width: 460px;margin-top:20px;">
 								<el-form-item label="账号">
 									<el-input v-model="form.user" disabled></el-input>
@@ -71,25 +71,18 @@
 								</el-form-item>
 							</el-form>
 						</el-tab-pane>
-						<el-tab-pane label="个人设置">
-							<el-form ref="form" :model="form" label-width="120px" style="width: 460px;margin-top:20px;">
-								<el-form-item label="布局">
-									<el-select v-model="config.theme" placeholder="请选择">
-										<el-option label="常规" value="0"></el-option>
-										<el-option label="分栏" value="1"></el-option>
+						<el-tab-pane :label="$t('user.settings')">
+							<el-form ref="form" :model="form" label-width="120px" style="margin-top:20px;">
+								<el-form-item :label="$t('user.nightmode')">
+									<el-switch v-model="config.theme" active-value="dark" inactive-value="default"></el-switch>
+									<div class="el-form-item-msg">{{ $t('user.nightmode_msg') }}</div>
+								</el-form-item>
+								<el-form-item :label="$t('user.language')">
+									<el-select v-model="config.lang">
+										<el-option label="简体中文" value="zh-cn"></el-option>
+										<el-option label="English" value="en"></el-option>
 									</el-select>
-								</el-form-item>
-								<el-form-item label="控制台自由布局">
-									<el-switch v-model="config.diy"></el-switch>
-								</el-form-item>
-								<el-form-item label="多标签">
-									<el-switch v-model="config.tags"></el-switch>
-								</el-form-item>
-								<el-form-item label="系统通知">
-									<el-switch v-model="config.msg"></el-switch>
-								</el-form-item>
-								<el-form-item>
-									<el-button type="primary">保存</el-button>
+									<div class="el-form-item-msg">{{ $t('user.language_msg') }}</div>
 								</el-form-item>
 							</el-form>
 						</el-tab-pane>
@@ -156,12 +149,23 @@
 					about: "正所谓富贵险中求"
 				},
 				config: {
-					theme: '1',
-					diy: true,
-					tags: true,
-					msg: true
+					lang: this.$TOOL.data.get('APP_LANG')||this.$CONFIG.LANG,
+					theme: this.$TOOL.data.get('APP_THEME')
 				}
 			}
+		},
+		watch:{
+			'config.theme'(val){
+				document.body.setAttribute('data-theme', val)
+				this.$TOOL.data.set("APP_THEME", val);
+			},
+			'config.lang'(val){
+				this.$i18n.locale = val
+				this.$TOOL.data.set("APP_LANG", val);
+			}
+		},
+		methods: {
+
 		}
 	}
 </script>
@@ -172,4 +176,7 @@
 	.activity-item label {color: #333;margin-right:10px;}
 	.activity-item .el-avatar {margin-right:10px;}
 	.activity-item .el-tag {margin-right:10px;}
+
+	[data-theme='dark'] .user-info-bottom {border-color: var(--el-border-color-base);}
+	[data-theme='dark'] .activity-item label {color: #999;}
 </style>

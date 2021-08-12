@@ -1,16 +1,16 @@
 <template>
-	<router-view></router-view>
+	<el-config-provider :i18n="$i18n.t">
+		<router-view></router-view>
+	</el-config-provider>
 </template>
 
 <script>
 	export default {
-		name: 'App',
-		setup() {
-			
-		}
+		name: 'App'
 	}
 </script>
 
-<style lang="less">
-	@import '@/style/style.less';
+<style lang="scss">
+	@import '@/style/style.scss';
+	@import '@/style/theme/dark.scss';
 </style>

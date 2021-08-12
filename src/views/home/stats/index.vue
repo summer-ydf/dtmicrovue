@@ -133,4 +133,6 @@
 	.data-box .item .icon i {font-size: 18px;background: #409EFF;color: #fff;border-radius: 50%;width:32px;height: 32px;display: flex;align-items: center;justify-content: center;}
 	.data-box .item p span.up {color: #F56C6C;}
 	.data-box .item p span.down {color: #67C23A;}
+	
+	[data-theme='dark'] .welTop .main h2 {color: var(--el-text-color-regular);}
 </style>
