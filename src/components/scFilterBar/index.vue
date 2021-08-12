@@ -204,6 +204,25 @@
 			},
 			//选择常用过滤
 			selectMyfilter(item){
+				//常用过滤回显当前过滤项
+				this.filter = []
+				this.fields.forEach((field) => {
+					var filterValue = item.filterObj[field.value]
+					if(filterValue){
+						var operator = filterValue.split("|")[1]
+						var value = filterValue.split("|")[0]
+						if(field.type=='select' && field.extend.multiple){
+							value = value.split(",")
+						}else if(field.type=='daterange'){
+							value = value.split(",")
+						}
+						this.filter.push({
+							field: field,
+							operator: operator,
+							value:  value
+						})
+					}
+				})
 				this.filterObjLength = Object.keys(item.filterObj).length
 				this.$emit('filterChange',item.filterObj)
 				this.drawer = false
