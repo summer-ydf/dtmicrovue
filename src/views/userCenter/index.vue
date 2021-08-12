@@ -81,6 +81,7 @@
 									<el-select v-model="config.lang">
 										<el-option label="简体中文" value="zh-cn"></el-option>
 										<el-option label="English" value="en"></el-option>
+										<el-option label="日本語" value="ja"></el-option>
 									</el-select>
 									<div class="el-form-item-msg">{{ $t('user.language_msg') }}</div>
 								</el-form-item>
@@ -149,8 +150,8 @@
 					about: "正所谓富贵险中求"
 				},
 				config: {
-					lang: this.$TOOL.data.get('APP_LANG')||this.$CONFIG.LANG,
-					theme: this.$TOOL.data.get('APP_THEME')
+					lang: this.$TOOL.data.get('APP_LANG') || this.$CONFIG.LANG,
+					theme: this.$TOOL.data.get('APP_THEME') || 'default'
 				}
 			}
 		},

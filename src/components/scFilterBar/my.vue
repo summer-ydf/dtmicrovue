@@ -106,4 +106,7 @@
 	.sc-filter-my-list li .del:hover {background: #F56C6C;color: #fff;}
 
 	[data-theme='dark'] .sc-filter-my .el-empty h2 {color: #fff;}
+	[data-theme='dark'] .sc-filter-my-list {background: none;border-color:var(--el-border-color-base);}
+	[data-theme='dark'] .sc-filter-my-list li {color: #d0d0d0;}
+	[data-theme='dark'] .sc-filter-my-list li:hover {background: var(--el-color-white);}
 </style>

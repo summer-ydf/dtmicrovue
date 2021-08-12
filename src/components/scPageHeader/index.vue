@@ -46,4 +46,7 @@
 	.sc-page-header__title {flex: 1;}
 	.sc-page-header__title h2 {font-size: 17px;color: #3c4a54;font-weight: bold;margin-top: 3px;}
 	.sc-page-header__title p {font-size: 13px;color: #999;margin-top: 15px;}
+
+	[data-theme='dark'] .sc-page-header {background:#2b2b2b ;border-color:var(--el-border-color-base);}
+	[data-theme='dark'] .sc-page-header__title h2 {color: #d0d0d0;}
 </style>
