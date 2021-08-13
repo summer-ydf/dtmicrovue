@@ -1,162 +1,38 @@
-import config from "@/config";
-import http from "@/utils/request";
-
 /**
  * 所有接口集合
  * 每个接口对象需含有以下字段
- * @url 接口的URL地址
- * @name 接口名称
- * @get|post 返回请求接口的函数
+ * 开发者可将不同的业务模块细化分离处理
+ * @param  {接口地址} url
+ * @param  {接口名称描述} name
+ * @param  {请求类型 get|post|put|patch|delete} type
  */
 
+//公共模块
+import common from './model/common'
+//用户模块
+import user from './model/user'
+//角色模块
+import role from './model/role'
+//字典模块
+import dic from './model/dic'
+//应用模块
+import app from './model/app'
+//菜单模块
+import menu from './model/menu'
+//日志模块
+import log from './model/log'
+//演示模块
+import demo from './model/demo'
+
 const api = {
-	default: {
-		upload: {
-			url: `${config.API_URL}/upload`,
-			name: "文件上传",
-			post: async function(data){
-				return await http.post(this.url, data);
-			}
-		}
-	},
-	user: {
-		login: {
-			url: `${config.API_URL}/login`,
-			name: "登录获取用户菜单和权限,全部权限",
-			get: async function(params={}){
-				return await http.get(this.url, params);
-			}
-		},
-		login_demo: {
-			url: `${config.API_URL}/login_user`,
-			name: "登录获取用户菜单和权限，部分权限",
-			get: async function(params={}){
-				return await http.get(this.url, params);
-			}
-		},
-		list: {
-			url: `${config.API_URL}/user_list`,
-			name: "获取用户列表",
-			get: async function(params={}){
-				return await http.get(this.url, params);
-			}
-		},
-		save: {
-			url: `${config.API_URL}/post`,
-			name: "新增编辑用户",
-			post: async function(params={}){
-				return await http.post(this.url, params);
-			}
-		},
-		del: {
-			url: `${config.API_URL}/post`,
-			name: "删除用户",
-			post: async function(params={}){
-				return await http.post(this.url, params);
-			}
-		}
-	},
-	role: {
-		select: {
-			url: `${config.API_URL}/role`,
-			name: "角色选择列表",
-			get: async function(){
-				return await http.get(this.url);
-			}
-		},
-		list: {
-			url: `${config.API_URL}/role`,
-			name: "角色列表",
-			get: async function(){
-				return await http.get(this.url);
-			}
-		}
-	},
-	dic: {
-		list: {
-			url: `${config.API_URL}/dic_list`,
-			name: "字典列表",
-			get: async function(){
-				return await http.get(this.url);
-			}
-		},
-		info: {
-			url: `${config.API_URL}/dic_info`,
-			name: "字典明细",
-			get: async function(params){
-				return await http.get(this.url, params);
-			}
-		},
-		get: {
-			url: `${config.API_URL}/dic`,
-			name: "获取字典数据",
-			get: async function(params){
-				return await http.get(this.url, params);
-			}
-		}
-	},
-	app: {
-		list: {
-			url: `${config.API_URL}/app`,
-			name: "应用列表",
-			get: async function(){
-				return await http.get(this.url);
-			}
-		}
-	},
-	menu: {
-		list: {
-			url: `${config.API_URL}/login`,
-			name: "菜单管理",
-			get: async function(){
-				// 这里接口对象偷懒重复了登录接口
-				var res = await http.get(this.url);
-					res.data = res.data.menuList;
-				return res;
-			}
-		}
-	},
-	log: {
-		list: {
-			url: `${config.API_URL}/loglist`,
-			name: "日志列表",
-			get: async function(params){
-				return await http.get(this.url, params);
-			}
-		}
-	},
-	demo: {
-		page: {
-			url: `${config.API_URL}/page`,
-			name: "分页列表",
-			get: async function(params){
-				return await http.get(this.url, params);
-			}
-		},
-		upload: {
-			url: `${config.API_URL}/upload`,
-			name: "文件上传接口",
-			post: async function(data){
-				return await http.post(this.url, data);
-			}
-		},
-		select: {
-			url: `${config.API_URL}/json/select.json`,
-			name: "下拉菜单数据",
-			get: async function(data){
-				return await http.get(this.url, data);
-			}
-		},
-		demolist: {
-			list: {
-				url: `${config.API_URL}/json/list.json`,
-				name: "列表数据",
-				get: async function(data){
-					return await http.get(this.url, data);
-				}
-			}
-		}
-	}
+	common,
+	user,
+	role,
+	dic,
+	app,
+	menu,
+	log,
+	demo
 }
 
 export default api;

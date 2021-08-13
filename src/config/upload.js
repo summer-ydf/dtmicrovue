@@ -3,7 +3,7 @@ import API from "@/api";
 //上传配置
 
 export default {
-	apiObj: API.default.upload,			//上传请求API对象
+	apiObj: API.common.upload,			//上传请求API对象
 	maxSize: 10,						//最大文件大小 默认10MB
 	parseData: function (res) {
 		return {

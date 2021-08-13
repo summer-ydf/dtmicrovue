@@ -64,35 +64,100 @@ var http = {
 	/** get 请求
 	 * @param  {接口地址} url
 	 * @param  {请求参数} params
+	 * @param  {参数} config
 	 */
-	get: function(url, params={}, headers={}) {
+	get: function(url, params={}, config={}) {
 		return new Promise((resolve, reject) => {
-			axios.get(url, {
-					params: params,
-					headers: headers
-				})
-				.then((response) => {
-					resolve(response.data);
-				})
-				.catch((error) => {
-					reject(error);
-				});
+			axios({
+				method: 'get',
+				url: url,
+				params: params,
+				...config
+			}).then((response) => {
+				resolve(response.data);
+			}).catch((error) => {
+				reject(error);
+			})
 		})
 	},
 
 	/** post 请求
 	 * @param  {接口地址} url
-	 * @param  {请求参数} params
+	 * @param  {请求参数} data
+	 * @param  {参数} config
 	 */
-	post: function(url, params={}, headers={}) {
+	post: function(url, data={}, config={}) {
 		return new Promise((resolve, reject) => {
-			axios.post(url, params, {headers: headers})
-				.then((response) => {
-					resolve(response.data);
-				})
-				.catch((error) => {
-					reject(error);
-				});
+			axios({
+				method: 'post',
+				url: url,
+				data: data,
+				...config
+			}).then((response) => {
+				resolve(response.data);
+			}).catch((error) => {
+				reject(error);
+			})
+		})
+	},
+
+	/** put 请求
+	 * @param  {接口地址} url
+	 * @param  {请求参数} data
+	 * @param  {参数} config
+	 */
+	put: function(url, data={}, config={}) {
+		return new Promise((resolve, reject) => {
+			axios({
+				method: 'put',
+				url: url,
+				data: data,
+				...config
+			}).then((response) => {
+				resolve(response.data);
+			}).catch((error) => {
+				reject(error);
+			})
+		})
+	},
+
+	/** patch 请求
+	 * @param  {接口地址} url
+	 * @param  {请求参数} data
+	 * @param  {参数} config
+	 */
+	patch: function(url, data={}, config={}) {
+		return new Promise((resolve, reject) => {
+			axios({
+				method: 'patch',
+				url: url,
+				data: data,
+				...config
+			}).then((response) => {
+				resolve(response.data);
+			}).catch((error) => {
+				reject(error);
+			})
+		})
+	},
+
+	/** delete 请求
+	 * @param  {接口地址} url
+	 * @param  {请求参数} data
+	 * @param  {参数} config
+	 */
+	delete: function(url, data={}, config={}) {
+		return new Promise((resolve, reject) => {
+			axios({
+				method: 'delete',
+				url: url,
+				data: data,
+				...config
+			}).then((response) => {
+				resolve(response.data);
+			}).catch((error) => {
+				reject(error);
+			})
 		})
 	}
 }
