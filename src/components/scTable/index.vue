@@ -1,7 +1,7 @@
 <template>
 	<div class="scTable" ref="scTableMain" v-loading="loading">
 		<div class="scTable-table">
-			<el-table :data="tableData" :row-key="rowKey" :key="toggleIndex" ref="scTable" :height="tableHeight" :stripe="stripe" :highlight-current-row="highlightCurrentRow"  @selection-change="selectionChange" @current-change="currentChange" @row-click="rowClick" @sort-change="sortChange" @filter-change="filterChange">
+			<el-table :data="tableData" :row-key="rowKey" :key="toggleIndex" ref="scTable" :height="tableHeight" :stripe="stripe" :highlight-current-row="highlightCurrentRow" :show-summary="showSummary" :summary-method="summaryMethod" @selection-change="selectionChange" @current-change="currentChange" @row-click="rowClick" @sort-change="sortChange" @filter-change="filterChange">
 				<slot></slot>
 				<template v-for="(item, index) in userColumn" :key="index">
 					<el-table-column v-if="!item.hide" :column-key="item.prop" :label="item.label" :prop="item.prop" :width="item.width" :sortable="item.sortable" :fixed="item.fixed" :filters="item.filters" :filter-method="remoteFilter||!item.filters?null:filterHandler">
@@ -57,6 +57,8 @@
 			hideDo: { type: Boolean, default: false },
 			stripe: { type: Boolean, default: false },
 			highlightCurrentRow: { type: Boolean, default: false },
+			showSummary: { type: Boolean, default: false },
+			summaryMethod: { type: Function, default: () => {} },
 			paginationLayout: { type: String, default: "total, prev, pager, next, jumper" },
 		},
 		watch: {
