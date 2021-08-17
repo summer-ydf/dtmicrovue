@@ -29,6 +29,9 @@ const DEFAULT_CONFIG = {
 
 	//语言
 	LANG: 'zh-cn',
+	
+	//主题颜色
+	COLOR: '',
 
 	//控制台首页默认布局
 	DEFAULT_GRID: {

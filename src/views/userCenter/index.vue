@@ -77,6 +77,9 @@
 									<el-switch v-model="config.theme" active-value="dark" inactive-value="default"></el-switch>
 									<div class="el-form-item-msg">{{ $t('user.nightmode_msg') }}</div>
 								</el-form-item>
+								<el-form-item label="主题颜色">
+									<el-color-picker v-model="config.colorPrimary" :predefine="colorList">></el-color-picker>
+								</el-form-item>
 								<el-form-item :label="$t('user.language')">
 									<el-select v-model="config.lang">
 										<el-option label="简体中文" value="zh-cn"></el-option>
@@ -95,6 +98,8 @@
 </template>
 
 <script>
+	import colorTool from '@/utils/color'
+
 	export default {
 		name: 'userCenter',
 		data() {
@@ -149,9 +154,11 @@
 					sex: "1",
 					about: "正所谓富贵险中求"
 				},
+				colorList: ['#409EFF', '#009688', '#536dfe', '#ff5c93', '#c62f2f', '#fd726d'],
 				config: {
 					lang: this.$TOOL.data.get('APP_LANG') || this.$CONFIG.LANG,
-					theme: this.$TOOL.data.get('APP_THEME') || 'default'
+					theme: this.$TOOL.data.get('APP_THEME') || 'default',
+					colorPrimary: this.$TOOL.data.get('APP_COLOR') || this.$CONFIG.COLOR || '#409EFF'
 				}
 			}
 		},
@@ -163,6 +170,13 @@
 			'config.lang'(val){
 				this.$i18n.locale = val
 				this.$TOOL.data.set("APP_LANG", val);
+			},
+			'config.colorPrimary'(val){
+				document.documentElement.style.setProperty('--el-color-primary', val);
+				for (let i = 1; i <= 9; i++) {
+					document.documentElement.style.setProperty(`--el-color-primary-light-${i}`, colorTool.lighten(val,i/10));
+				}
+				this.$TOOL.data.set("APP_COLOR", val);
 			}
 		},
 		methods: {

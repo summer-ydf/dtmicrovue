@@ -86,7 +86,7 @@
 	.login_bg {position: absolute;top:0px;left:0px;right:0px;bottom:0px;}
 	.login_container {position: absolute;top:50%;left:50%;width: 1100px;margin: 0 auto;z-index: 1;transform: translate(-50%, -50%);}
 	.login_body {width: inherit;display: flex;box-shadow: 0px 20px 80px 0px rgba(0,0,0,0.3);}
-	.login-sidebox {width: 50%;padding: 60px;color: #fff;background:#3887e5;position: relative;overflow: hidden;}
+	.login-sidebox {width: 50%;padding: 60px;color: #fff;background:var(--el-color-primary);position: relative;overflow: hidden;}
 	.login-sidebox__title h2 {font-size: 30px;}
 	.login-sidebox__title h4 {font-size: 18px;margin-top: 10px;font-weight: normal;}
 	.login-sidebox__title p {font-size: 14px;margin-top:10px;line-height: 1.8;color: rgba(255,255,255,0.6);}

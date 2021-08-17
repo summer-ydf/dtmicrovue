@@ -13,6 +13,10 @@
 			</el-select>
 		</el-form-item>
 		<el-divider></el-divider>
+		<el-form-item label="主题颜色">
+			<el-color-picker v-model="colorPrimary" :predefine="colorList">></el-color-picker>
+		</el-form-item>
+		<el-divider></el-divider>
 		<el-form-item label="框架布局">
 			<el-select v-model="layout" placeholder="请选择">
 				<el-option label="默认" value="default"></el-option>
@@ -32,6 +36,8 @@
 </template>
 
 <script>
+	import colorTool from '@/utils/color'
+
 	export default {
 		data(){
 			return {
@@ -39,7 +45,9 @@
 				menuIsCollapse: this.$store.state.global.menuIsCollapse,
 				layoutTags: this.$store.state.global.layoutTags,
 				lang: this.$TOOL.data.get('APP_LANG') || this.$CONFIG.LANG,
-				theme: this.$TOOL.data.get('APP_THEME') || 'default'
+				theme: this.$TOOL.data.get('APP_THEME') || 'default',
+				colorList: ['#409EFF', '#009688', '#536dfe', '#ff5c93', '#c62f2f', '#fd726d'],
+				colorPrimary: this.$TOOL.data.get('APP_COLOR') || this.$CONFIG.COLOR || '#409EFF'
 			}
 		},
 		watch: {
@@ -59,6 +67,13 @@
 			lang(val){
 				this.$i18n.locale = val
 				this.$TOOL.data.set("APP_LANG", val);
+			},
+			colorPrimary(val){
+				document.documentElement.style.setProperty('--el-color-primary', val);
+				for (let i = 1; i <= 9; i++) {
+					document.documentElement.style.setProperty(`--el-color-primary-light-${i}`, colorTool.lighten(val,i/10));
+				}
+				this.$TOOL.data.set("APP_COLOR", val);
 			}
 		}
 	}
