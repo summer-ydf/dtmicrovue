@@ -2,7 +2,7 @@
 
 	<div style="height: 248px;text-align: center;">
 		<img src="img/ver.svg" style="height:150px"/>
-		<h2 style="margin-top: 15px;">SCUI {{$CONFIG.APP_VER}}</h2>
+		<h2 style="margin-top: 15px;">SCUI {{$CONFIG.CORE_VER}}</h2>
 		<p style="color: #999;margin-top: 10px;line-height: 2;">更新日志移到了gitee维护了，点击下方更新日志按钮查看</p>
 	</div>
 	<div style="margin-top: 20px;">
