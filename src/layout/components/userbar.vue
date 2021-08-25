@@ -48,6 +48,7 @@
 				<el-dropdown-menu>
 					<el-dropdown-item command="uc">个人设置</el-dropdown-item>
 					<el-dropdown-item command="cmd">CMD</el-dropdown-item>
+					<el-dropdown-item command="clearCache">清除缓存</el-dropdown-item>
 					<el-dropdown-item divided command="outLogin">退出登录</el-dropdown-item>
 				</el-dropdown-menu>
 			</template>
@@ -94,7 +95,7 @@
 			}
 		},
 		created() {
-			var userInfo = this.$TOOL.data.get("user").userInfo;
+			var userInfo = this.$TOOL.data.get("USER_INFO");
 			this.userName = userInfo.userName;
 			this.userNameF = this.userName.substring(0,1);
 		},
@@ -106,6 +107,21 @@
 				}
 				if(command == "cmd"){
 					this.$router.push({path: '/cmd'});
+				}
+				if(command == "clearCache"){
+					this.$confirm('清除缓存会将系统初始化，包括登录状态、主题、语言设置等，是否继续？','提示', {
+						type: 'info',
+					}).then(() => {
+						const loading = this.$loading()
+						this.$TOOL.data.clear()
+						this.$router.replace({path: '/login'})
+						setTimeout(()=>{
+							loading.close()
+							location.reload()
+						},1000)
+					}).catch(() => {
+						//取消
+					})
 				}
 				if(command == "outLogin"){
 					this.$confirm('确认是否退出当前用户？','提示', {

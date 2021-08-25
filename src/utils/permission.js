@@ -1,11 +1,7 @@
 import tool from '@/utils/tool';
 
 export function permission(data) {
-	let userInfo = tool.data.get("user");
-	if(!userInfo){
-		return false;
-	}
-	let permissions = userInfo.permissions;
+	let permissions = tool.data.get("PERMISSIONS");
 	if(!permissions){
 		return false;
 	}
@@ -14,11 +10,11 @@ export function permission(data) {
 }
 
 export function rolePermission(data) {
-	let userInfo = tool.data.get("user");
+	let userInfo = tool.data.get("USER_INFO");
 	if(!userInfo){
 		return false;
 	}
-	let role = userInfo.userInfo.role;
+	let role = userInfo.role;
 	if(!role){
 		return false;
 	}

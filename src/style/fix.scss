@@ -34,21 +34,19 @@
 .el-tabs__nav-wrap::after {height: 1px;}
 .el-table th.is-sortable {transition: .1s;}
 .el-table th.is-sortable:hover {background: #eee;}
+.el-table .el-table__body-wrapper {background: #f6f8f9;}
 .el-col .el-card {margin-bottom: 15px;}
-.el-button--small.is-circle {padding:9px;}
-.el-button--mini.is-circle {padding:7px;}
 
 /* 动态值 */
-.el-button:active {border-color: var(--el-color-primary);color: var(--el-color-primary);}
+.el-button--default:active, .el-button--default.is-plain:active {border-color: var(--el-color-primary-darken-1, #0d84ff);color: var(--el-color-primary-darken-1, #0d84ff);}
 .el-button--primary {background-color: var(--el-color-primary);border-color: var(--el-color-primary);}
 .el-button--primary:focus, .el-button--primary:hover {background: var(--el-color-primary-light-2);border-color: var(--el-color-primary-light-2);}
-.el-button--primary:active {background-color: var(--el-color-primary);border-color: var(--el-color-primary);color: #fff;}
-.el-button--primary.is-plain {background: var(--el-color-primary-light-9);border-color: var(--el-color-primary-light-1);color: var(--el-color-primary);}
+.el-button--primary:active {background-color: var(--el-color-primary-darken-1, #0d84ff);border-color: var(--el-color-primary-darken-1, #0d84ff);color: #fff;}
+.el-button--primary.is-plain {background: var(--el-color-primary-light-9);border-color: var(--el-color-primary-light-6);color: var(--el-color-primary);}
 .el-button--primary.is-plain:focus, .el-button--primary.is-plain:hover {background-color: var(--el-color-primary);border-color: var(--el-color-primary);}
-.el-button--primary.is-plain:active {background-color: var(--el-color-primary);border-color: var(--el-color-primary);}
+.el-button--primary.is-plain:active {background-color: var(--el-color-primary-darken-1, #0d84ff);border-color: var(--el-color-primary-darken-1, #0d84ff);}
 .el-button--primary.is-plain.is-disabled, .el-button--primary.is-plain.is-disabled:active, .el-button--primary.is-plain.is-disabled:focus, .el-button--primary.is-plain.is-disabled:hover {background: var(--el-color-primary-light-9);border-color: var(--el-color-primary-light-8);color: var(--el-color-primary-light-4);}
 .el-button--text:focus, .el-button--text:hover {color: var(--el-color-primary-light-2);border-color: transparent;background-color: transparent;}
-.el-tag {background-color: var(--el-color-primary-light-9);border-color: var(--el-color-primary-light-8);color: var(--el-color-primary);}
 .el-menu-item.is-active {background: var(--el-color-primary-light-9);color: var(--el-color-primary)!important;}
 
 .adminui-header {background-color: var(--el-color-primary);}

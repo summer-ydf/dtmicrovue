@@ -1,5 +1,5 @@
 <template>
-	<el-dialog :title="titleMap[mode]" v-model="visible" :width="330" destroy-on-close @closed="$emit('closed')">
+	<el-dialog :title="titleMap[mode]" v-model="visible" :width="400" destroy-on-close @closed="$emit('closed')">
 		<el-form :model="form" :rules="rules" ref="dialogForm" label-width="100px" label-position="left">
 			<el-form-item label="所属字典" prop="dic">
 				<el-cascader v-model="form.dic" :options="dic" :props="dicProps" :show-all-levels="false" clearable></el-cascader>
@@ -55,6 +55,7 @@
 				dicProps: {
 					value: "id",
 					label: "name",
+					emitPath: false,
 					checkStrictly: true
 				}
 			}
@@ -74,7 +75,7 @@
 			},
 			//获取字典列表
 			async getDic(){
-				var res = await this.$API.dic.list.get();
+				var res = await this.$API.system.dic.tree.get();
 				this.dic = res.data;
 			},
 			//表单提交方法
@@ -82,7 +83,7 @@
 				this.$refs.dialogForm.validate(async (valid) => {
 					if (valid) {
 						this.isSaveing = true;
-						var res = await this.$API.user.save.post(this.form);
+						var res = await this.$API.demo.post.post(this.form);
 						this.isSaveing = false;
 						if(res.code == 200){
 							this.$emit('success', this.form, this.mode)

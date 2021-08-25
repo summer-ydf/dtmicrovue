@@ -9,29 +9,17 @@
 
 //公共模块
 import common from './model/common'
-//用户模块
-import user from './model/user'
-//角色模块
-import role from './model/role'
-//字典模块
-import dic from './model/dic'
-//应用模块
-import app from './model/app'
-//菜单模块
-import menu from './model/menu'
-//日志模块
-import log from './model/log'
+//授权模块
+import auth from './model/auth'
+//系统模块
+import system from './model/system'
 //演示模块
 import demo from './model/demo'
 
 const api = {
 	common,
-	user,
-	role,
-	dic,
-	app,
-	menu,
-	log,
+	auth,
+	system,
 	demo
 }
 

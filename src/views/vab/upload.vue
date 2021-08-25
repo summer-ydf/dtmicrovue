@@ -48,7 +48,7 @@
 		name: 'upload',
 		data() {
 			return {
-				uploadApi: this.$API.demo.upload,
+				uploadApi: this.$API.common.upload,
 				imgurl: "img/avatar.jpg",
 				imgurl2: "",
 				imgurl3: "",

@@ -75,7 +75,7 @@
 				showGrouploading: false,
 				groupFilterText: '',
 				group: [],
-				apiObj: this.$API.user.list,
+				apiObj: this.$API.system.user.list,
 				selection: [],
 				search: {
 					name: null
@@ -115,7 +115,7 @@
 			//删除
 			async table_del(row, index){
 				var reqData = {id: row.id}
-				var res = await this.$API.user.del.post(reqData);
+				var res = await this.$API.demo.post.post(reqData);
 				if(res.code == 200){
 					//这里选择刷新整个表格 OR 插入/编辑现有表格数据
 					this.$refs.table.tableData.splice(index, 1);
@@ -149,7 +149,8 @@
 			},
 			//加载树数据
 			async getGroup(){
-				var res = await this.$API.role.select.get();
+				this.showGrouploading = true;
+				var res = await this.$API.system.role.list.get();
 				this.showGrouploading = false;
 				var allNode ={id: '', label: '所有'}
 				res.data.unshift(allNode);
@@ -169,7 +170,7 @@
 			},
 			//搜索
 			upsearch(){
-
+				this.$refs.table.upData(this.search)
 			},
 			//本地更新数据
 			handleSuccess(data, mode){

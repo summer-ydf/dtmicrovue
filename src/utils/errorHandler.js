@@ -4,6 +4,11 @@
  */
 
 export default (error, vm)=>{
+	//过滤HTTP请求错误
+	if(error.status){
+		return false
+	}
+	
 	var errorMap = {
 		InternalError: "Javascript引擎内部错误",
 		ReferenceError: "未找到对象",

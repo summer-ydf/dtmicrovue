@@ -32,6 +32,29 @@ tool.data = {
 	}
 }
 
+/*sessionStorage*/
+tool.session = {
+	set(table, settings) {
+		var _set = JSON.stringify(settings)
+		return sessionStorage.setItem(table, _set);
+	},
+	get(table) {
+		var data = sessionStorage.getItem(table);
+		try {
+			data = JSON.parse(data)
+		} catch (err) {
+			return null
+		}
+		return data;
+	},
+	remove(table) {
+		return sessionStorage.removeItem(table);
+	},
+	clear() {
+		return sessionStorage.clear();
+	}
+}
+
 /* Fullscreen */
 tool.screen = function (element) {
 	var isFull = !!(document.webkitIsFullScreen || document.mozFullScreen || document.msFullscreenElement || document.fullscreenElement);

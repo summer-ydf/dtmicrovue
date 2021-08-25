@@ -6,7 +6,7 @@
 
 <script>
 	import colorTool from '@/utils/color'
-	
+
 	export default {
 		name: 'App',
 		created() {
@@ -17,6 +17,7 @@
 				for (let i = 1; i <= 9; i++) {
 					document.documentElement.style.setProperty(`--el-color-primary-light-${i}`, colorTool.lighten(app_color,i/10));
 				}
+				document.documentElement.style.setProperty(`--el-color-primary-darken-1`, colorTool.darken(app_color,0.1));
 			}
 		}
 	}

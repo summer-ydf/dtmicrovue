@@ -5,12 +5,19 @@
 
 				<div class="login-form">
 					<div class="login-logo">
-						<img class="logo" :alt="appName" src="img/logo.png">
+						<img class="logo" :alt="$CONFIG.APP_NAME" src="img/logo.png">
 						<h2>用户登录</h2>
 					</div>
 					<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0" size="large">
 						<el-form-item prop="user">
-							<el-input v-model="ruleForm.user" prefix-icon="el-icon-user" clearable placeholder="用户名 / 手机 / 邮箱"></el-input>
+							<el-input v-model="ruleForm.user" prefix-icon="el-icon-user" clearable placeholder="用户名 / 手机 / 邮箱">
+								<template #append>
+									<el-select v-model="userType" placeholder="请选择" style="width: 130px;">
+										<el-option label="管理员" value="admin"></el-option>
+										<el-option label="用户" value="user"></el-option>
+									</el-select>
+								</template>
+							</el-input>
 						</el-form-item>
 						<el-form-item prop="password">
 							<el-input v-model="ruleForm.password" prefix-icon="el-icon-lock" clearable show-password placeholder="请输入密码"></el-input>
@@ -26,35 +33,7 @@
 							</el-row>
 						</el-form-item>
 						<el-form-item>
-							<el-dropdown  style="width: 100%;">
-								<el-button type="primary" style="width: 100%;" :loading="islogin" round>登 录<i class="el-icon-arrow-down el-icon--right"></i></el-button>
-								<template #dropdown>
-									<el-dropdown-menu>
-										<el-dropdown-item @click="submitForm('ruleForm', 'admin')">
-											<div class="demo-user-item">
-												<div class="icon">
-													<el-avatar src="img/avatar.jpg"></el-avatar>
-												</div>
-												<div class="info">
-													<h2>Sakuya</h2>
-													<p>超级管理员(Administrator)</p>
-												</div>
-											</div>
-										</el-dropdown-item>
-										<el-dropdown-item @click="submitForm('ruleForm', 'user')">
-											<div class="demo-user-item">
-												<div class="icon">
-													<el-avatar src="img/avatar2.gif"></el-avatar>
-												</div>
-												<div class="info">
-													<h2>Lolowan</h2>
-													<p>普通用户(User)</p>
-												</div>
-											</div>
-										</el-dropdown-item>
-									</el-dropdown-menu>
-								</template>
-							</el-dropdown>
+							<el-button type="primary" style="width: 100%;" :loading="islogin" round @click="login">登 录</el-button>
 						</el-form-item>
 					</el-form>
 
@@ -76,13 +55,97 @@
 					<img src="img/loginbg.svg"/>
 				</div>
 			</div>
-			<div class="login-footer">© {{appName}} {{appVar}}</div>
+			<div class="login-footer">© {{$CONFIG.APP_NAME}} {{$CONFIG.APP_VER}}</div>
 		</div>
 	</div>
 </template>
 
-<style scoped>
+<script>
+	export default {
+		data() {
+			return {
+				userType: 'admin',
+				ruleForm: {
+					user: "admin",
+					password: "admin",
+					autologin: false
+				},
+				rules: {
+					user: [
+						{required: true, message: '请输入用户名', trigger: 'blur'}
+					],
+					password: [
+						{required: true, message: '请输入密码', trigger: 'blur'}
+					]
+				},
+				islogin: false
+			}
+		},
+		watch:{
+			userType(val){
+				if(val == 'admin'){
+					this.ruleForm.user = 'admin'
+					this.ruleForm.password = 'admin'
+				}else if(val == 'user'){
+					this.ruleForm.user = 'user'
+					this.ruleForm.password = 'user'
+				}
+			}
+		},
+		created: function() {
+			this.$TOOL.data.remove("TOKEN")
+			this.$TOOL.data.remove("USER_INFO")
+			this.$TOOL.data.remove("MENU")
+			this.$TOOL.data.remove("PERMISSIONS")
+			this.$store.commit("clearViewTags")
+			this.$store.commit("clearKeepLive")
+			this.$store.commit("clearIframeList")
+			console.log('%c SCUI %c Gitee: https://gitee.com/lolicode/scui', 'background:#666;color:#fff;border-radius:3px;', '')
+		},
+		methods: {
+			async login(){
+				this.islogin = true
+				var data = {
+					username: this.ruleForm.user,
+					password: this.$TOOL.crypto.MD5(this.ruleForm.password)
+				}
+				//获取token
+				var user = await this.$API.auth.token.post(data)
+				if(user.code == 200){
+					this.$TOOL.data.set("TOKEN", user.data.token)
+					this.$TOOL.data.set("USER_INFO", user.data.userInfo)
+				}else{
+					this.islogin = false
+					this.$message.warning(user.message)
+					return false
+				}
+				//获取菜单
+				var menu = null
+				if(this.ruleForm.user == 'admin'){
+					menu = await this.$API.system.menu.myMenus.get()
+				}else{
+					menu = await this.$API.demo.menu.get()
+				}
+				if(menu.code == 200){
+					this.$TOOL.data.set("MENU", menu.data.menu)
+					this.$TOOL.data.set("PERMISSIONS", menu.data.permissions)
+				}else{
+					this.islogin = false
+					this.$message.warning(menu.message)
+					return false
+				}
 
+				this.$router.replace({
+					path: '/'
+				})
+				this.$message.success("Login Success 登录成功")
+				this.islogin = false
+			}
+		}
+	}
+</script>
+
+<style scoped>
 	.login_bg {position: absolute;top:0px;left:0px;right:0px;bottom:0px;}
 	.login_container {position: absolute;top:50%;left:50%;width: 1100px;margin: 0 auto;z-index: 1;transform: translate(-50%, -50%);}
 	.login_body {width: inherit;display: flex;box-shadow: 0px 20px 80px 0px rgba(0,0,0,0.3);}
@@ -128,78 +191,3 @@
 	.login-footer {margin-top: 0;}
 	}
 </style>
-
-<script>
-	export default {
-		data() {
-			return {
-				appName: this.$CONFIG.APP_NAME,
-				appVar: this.$CONFIG.APP_VER,
-				ruleForm: {
-					user: "admin",
-					password: "admin",
-					autologin: false
-				},
-				rules: {
-					user: [
-						{required: true, message: '请输入用户名', trigger: 'blur'}
-					],
-					password: [
-						{required: true, message: '请输入密码', trigger: 'blur'}
-					]
-				},
-				islogin: false
-			}
-		},
-		created: function() {
-			this.$TOOL.data.remove("user")
-			this.$TOOL.data.remove("grid")
-			this.$TOOL.data.remove("my-mods")
-			this.$store.commit("clearViewTags")
-			this.$store.commit("clearKeepLive")
-			this.$store.commit("clearIframeList")
-			console.log('%c SCUI %c Gitee: https://gitee.com/lolicode/scui', 'background:#666;color:#fff;border-radius:3px;', '')
-		},
-		methods: {
-			submitForm(formName, type) {
-				this.$refs[formName].validate((valid) => {
-					if (valid) {
-						type=='admin' && this.login()
-						type=='user' && this.login_demo()
-					}else{
-						console.log('error submit!!');
-						return false;
-					}
-				})
-			},
-			login: async function() {
-				this.islogin = true;
-				var data = {
-					user: this.$TOOL.crypto.MD5(this.ruleForm.user),
-					password: this.$TOOL.crypto.MD5(this.ruleForm.password)
-				}
-				var userInfo = await this.$API.user.login.get(data);
-				this.$TOOL.data.set("user", userInfo.data);
-				this.$router.replace({
-					path: '/'
-				});
-				//开启欢迎词
-				this.$message.success("Login Success 登录成功")
-			},
-			login_demo: async function() {
-				this.islogin = true;
-				var data = {
-					user: this.$TOOL.crypto.MD5(this.ruleForm.user),
-					password: this.$TOOL.crypto.MD5(this.ruleForm.password)
-				}
-				var userInfo = await this.$API.user.login_demo.get(data);
-				this.$TOOL.data.set("user", userInfo.data);
-				this.$router.replace({
-					path: '/'
-				});
-				//开启欢迎词
-				this.$message.success("Login Success 登录成功")
-			}
-		}
-	}
-</script>

@@ -118,7 +118,7 @@
 					}
 				],
 				date: [],
-				apiObj: this.$API.log.list,
+				apiObj: this.$API.system.log.list,
 				search: {
 					keyword: ""
 				}

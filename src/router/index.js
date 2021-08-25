@@ -32,9 +32,9 @@ router.beforeEach(async (to, from, next) => {
 	NProgress.start()
 
 	//动态标题
-	document.title = `${to.meta.title} - ${config.APP_NAME}`
+	document.title = to.meta.title ? `${to.meta.title} - ${config.APP_NAME}` : `${config.APP_NAME}`
 
-	let userInfo = tool.data.get("user");
+	let token = tool.data.get("TOKEN");
 
 	if(to.path === "/login"){
 		isGetApiRouter = false;
@@ -42,7 +42,7 @@ router.beforeEach(async (to, from, next) => {
 		return false;
 	}
 
-	if(!userInfo){
+	if(!token){
 		next({
 			path: '/login'
 		});
@@ -51,7 +51,8 @@ router.beforeEach(async (to, from, next) => {
 
 	//加载API路由
 	if(!isGetApiRouter){
-		var apiRouter = filterAsyncRouter(userInfo.menuList);
+		let menu = tool.data.get("MENU");
+		var apiRouter = filterAsyncRouter(menu);
 		apiRouter.forEach(item => {
 			router.addRoute("layout", item)
 		})

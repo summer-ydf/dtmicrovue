@@ -49,7 +49,7 @@
 				dialog: {
 					save: false
 				},
-				apiObj: this.$API.app.list,
+				apiObj: this.$API.system.app.list,
 				selection: []
 			}
 		},

@@ -31,7 +31,7 @@
 			}
 		},
 		created(){
-			this.dashboard = this.$TOOL.data.get("user").dashboard;
+			this.dashboard = this.$TOOL.data.get("USER_INFO").dashboard || '0';
 		},
 		mounted(){
 

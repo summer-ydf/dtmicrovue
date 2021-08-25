@@ -14,3 +14,9 @@
 .static-table {border-collapse: collapse;width: 100%;font-size: 14px;margin-bottom: 45px;line-height: 1.5em;}
 .static-table th {text-align: left;white-space: nowrap;color: #909399;font-weight: 400;border-bottom: 1px solid #dcdfe6;padding: 15px;max-width: 250px;}
 .static-table td {border-bottom: 1px solid #dcdfe6;padding: 15px;max-width: 250px;color: #606266;}
+
+/*header-tabs*/
+.header-tabs {padding:0;display:block;border:0!important;height:auto;}
+.header-tabs .el-tabs {border:0;box-shadow:none;}
+.header-tabs .el-tabs__content {display: none;}
+.header-tabs .el-tabs__item {font-size: 12px;}

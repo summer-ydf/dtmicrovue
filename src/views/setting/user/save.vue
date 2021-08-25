@@ -1,44 +1,26 @@
 <template>
 	<el-dialog :title="titleMap[mode]" v-model="visible" :width="500" destroy-on-close @closed="$emit('closed')">
-		<el-form :model="form" :rules="rules" :disabled="mode=='show'" ref="dialogForm" label-width="100px" label-position="top">
-			<el-row :gutter="20">
-				<el-col :span="24">
-					<el-form-item label="头像" prop="avatar">
-						<sc-upload v-model="form.avatar" title="上传头像"></sc-upload>
-					</el-form-item>
-				</el-col>
-			</el-row>
-			<el-row :gutter="20">
-				<el-col :span="12">
-					<el-form-item label="登录账号" prop="userName">
-						<el-input v-model="form.userName" placeholder="用于登录系统" clearable></el-input>
-					</el-form-item>
-				</el-col>
-				<el-col :span="12">
-					<el-form-item label="姓名" prop="name">
-						<el-input v-model="form.name" placeholder="请输入完整的真实姓名" clearable></el-input>
-					</el-form-item>
-				</el-col>
-			</el-row>
-			<el-row :gutter="20" v-if="mode=='add'">
-				<el-col :span="12">
-					<el-form-item label="登录密码" prop="password">
-						<el-input type="password" v-model="form.password" clearable show-password></el-input>
-					</el-form-item>
-				</el-col>
-				<el-col :span="12">
-					<el-form-item label="确认密码" prop="password2">
-						<el-input type="password" v-model="form.password2" clearable show-password></el-input>
-					</el-form-item>
-				</el-col>
-			</el-row>
-			<el-row :gutter="20">
-				<el-col :span="24">
-					<el-form-item label="所属角色" prop="group">
-						<el-cascader v-model="form.group" :options="groups" :props="groupsProps" :show-all-levels="false" clearable style="width: 100%;"></el-cascader>
-					</el-form-item>
-				</el-col>
-			</el-row>
+		<el-form :model="form" :rules="rules" :disabled="mode=='show'" ref="dialogForm" label-width="100px" label-position="left">
+			<el-form-item label="头像" prop="avatar">
+				<sc-upload v-model="form.avatar" title="上传头像"></sc-upload>
+			</el-form-item>
+			<el-form-item label="登录账号" prop="userName">
+				<el-input v-model="form.userName" placeholder="用于登录系统" clearable></el-input>
+			</el-form-item>
+			<el-form-item label="姓名" prop="name">
+				<el-input v-model="form.name" placeholder="请输入完整的真实姓名" clearable></el-input>
+			</el-form-item>
+			<template v-if="mode=='add'">
+				<el-form-item label="登录密码" prop="password">
+					<el-input type="password" v-model="form.password" clearable show-password></el-input>
+				</el-form-item>
+				<el-form-item label="确认密码" prop="password2">
+					<el-input type="password" v-model="form.password2" clearable show-password></el-input>
+				</el-form-item>
+			</template>
+			<el-form-item label="所属角色" prop="group">
+				<el-cascader v-model="form.group" :options="groups" :props="groupsProps" :show-all-levels="false" clearable style="width: 100%;"></el-cascader>
+			</el-form-item>
 		</el-form>
 		<template #footer>
 			<el-button @click="visible=false" >取 消</el-button>
@@ -123,7 +105,7 @@
 			},
 			//加载树数据
 			async getGroup(){
-				var res = await this.$API.role.select.get();
+				var res = await this.$API.system.role.list.get();
 				this.groups = res.data;
 			},
 			//表单提交方法
@@ -131,7 +113,7 @@
 				this.$refs.dialogForm.validate(async (valid) => {
 					if (valid) {
 						this.isSaveing = true;
-						var res = await this.$API.user.save.post(this.form);
+						var res = await this.$API.demo.post.post(this.form);
 						this.isSaveing = false;
 						if(res.code == 200){
 							this.$emit('success', this.form, this.mode)

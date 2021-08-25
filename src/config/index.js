@@ -3,19 +3,25 @@ const DEFAULT_CONFIG = {
 	APP_NAME: "SCUI",
 
 	//版本号
-	APP_VER: "1.2.1",
-	
+	APP_VER: "1.2.2",
+
 	//内核版本号
-	CORE_VER: "1.2.1",
-	
+	CORE_VER: "1.2.2",
+
 	//接口地址
 	API_URL: "/api",
+
+	//请求超时
+	TIMEOUT: 1000,
 
 	//TokenName
 	TOKEN_NAME: "Authorization",
 
 	//Token前缀，注意最后有个空格，如不需要需设置空字符串
 	TOKEN_PREFIX: "Bearer ",
+
+	//追加其他头
+	HEADERS: {},
 
 	//请求是否开启缓存
 	REQUEST_CACHE: false,
@@ -32,7 +38,7 @@ const DEFAULT_CONFIG = {
 
 	//语言
 	LANG: 'zh-cn',
-	
+
 	//主题颜色
 	COLOR: '',
 

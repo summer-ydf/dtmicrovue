@@ -98,7 +98,7 @@
 				},1000)
 			},
 			async getMenu(){
-				var res = await this.$API.menu.list.get();
+				var res = await this.$API.system.menu.list.get();
 				this.menu.list = res.data;
 			},
 			getGroup(){

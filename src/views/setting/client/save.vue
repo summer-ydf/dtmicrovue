@@ -80,7 +80,7 @@
 				this.$refs.dialogForm.validate(async (valid) => {
 					if (valid) {
 						this.isSaveing = true;
-						var res = await this.$API.user.save.post(this.form);
+						var res = await this.$API.demo.post.post(this.form);
 						this.isSaveing = false;
 						if(res.code == 200){
 							this.$emit('success', this.form, this.mode)

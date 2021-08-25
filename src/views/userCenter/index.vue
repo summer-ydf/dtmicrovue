@@ -176,6 +176,7 @@
 				for (let i = 1; i <= 9; i++) {
 					document.documentElement.style.setProperty(`--el-color-primary-light-${i}`, colorTool.lighten(val,i/10));
 				}
+				document.documentElement.style.setProperty(`--el-color-primary-darken-1`, colorTool.darken(val,0.1));
 				this.$TOOL.data.set("APP_COLOR", val);
 			}
 		},

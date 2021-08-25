@@ -9,6 +9,30 @@
 
 <template>
 	<el-container>
+		<el-header style="display: block;height:auto;">
+			<el-row :gutter="15">
+				<el-col :lg="6">
+					<sc-statistic title="数量" value="12"  suffix="项"></sc-statistic>
+				</el-col>
+				<el-col :lg="6">
+					<sc-statistic title="总进度" value="70.0" suffix="%"></sc-statistic>
+				</el-col>
+				<el-col :lg="6">
+					<sc-statistic title="收入" value="0.0" prefix="¥" groupSeparator></sc-statistic>
+				</el-col>
+				<el-col :lg="6">
+					<sc-statistic title="支出" value="200" prefix="¥" groupSeparator></sc-statistic>
+				</el-col>
+			</el-row>
+		</el-header>
+		<el-header class="header-tabs">
+			<el-tabs type="border-card">
+				<el-tab-pane label="所有"></el-tab-pane>
+				<el-tab-pane label="未完成 (2)"></el-tab-pane>
+				<el-tab-pane label="弃坑"></el-tab-pane>
+				<el-tab-pane label="其他"></el-tab-pane>
+			</el-tabs>
+		</el-header>
 		<el-header>
 			<div class="left-panel">
 				<el-button type="primary" icon="el-icon-plus" @click="add"></el-button>
@@ -18,12 +42,6 @@
 			</div>
 			<div class="right-panel">
 				<div class="right-panel-search">
-					<el-radio-group v-model="group">
-						<el-radio-button label="0">所有</el-radio-button>
-						<el-radio-button label="1">未完成 (2)</el-radio-button>
-						<el-radio-button label="2">弃坑 (1)</el-radio-button>
-						<el-radio-button label="3">其他</el-radio-button>
-					</el-radio-group>
 					<scFilterBar :options="options" @change="change"></scFilterBar>
 				</div>
 			</div>
@@ -80,12 +98,14 @@
 </template>
 
 <script>
+	import scStatistic from '@/components/scStatistic';
 	import scFilterBar from '@/components/scFilterBar';
 	import info from './info'
 
 	export default {
 		name: 'list',
 		components: {
+			scStatistic,
 			scFilterBar,
 			info
 		},

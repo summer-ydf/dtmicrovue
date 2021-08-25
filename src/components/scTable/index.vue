@@ -124,7 +124,12 @@
 					[config.request.prop]: this.prop,
 					[config.request.order]: this.order
 				}
+				if(this.hidePagination){
+					delete reqData[config.request.page]
+					delete reqData[config.request.pageSize]
+				}
 				Object.assign(reqData, this.tableParams)
+
 				try {
 					var res = await this.apiObj.get(reqData);
 				}catch(error){
@@ -138,8 +143,12 @@
 					this.emptyText = response.msg;
 				}else{
 					this.emptyText = "暂无数据";
-					this.tableData = response.rows;
-					this.total = response.total;
+					if(this.hidePagination){
+						this.tableData = response.data || [];
+					}else{
+						this.tableData = response.rows || [];
+					}
+					this.total = response.total || 0;
 					this.loading = false;
 				}
 				this.$refs.scTable.$el.querySelector('.el-table__body-wrapper').scrollTop = 0

@@ -1,6 +1,6 @@
 {
 	"name": "scui",
-	"version": "1.2.1",
+	"version": "1.2.2",
 	"private": true,
 	"scripts": {
 		"serve": "vue-cli-service serve",
@@ -14,7 +14,7 @@
 		"cropperjs": "1.5.12",
 		"crypto-js": "4.1.1",
 		"echarts": "5.1.2",
-		"element-plus": "1.0.2-beta.70",
+		"element-plus": "1.0.2-beta.71",
 		"nprogress": "0.2.0",
 		"sortablejs": "1.14.0",
 		"tinymce": "5.8.2",

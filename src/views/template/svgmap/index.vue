@@ -1,50 +1,33 @@
 <!--
- * @Descripttion: SVG平面布置图模板
- * @version: 1.0
+ * @Descripttion: SVG MAP
+ * @version: 2.0
  * @Author: sakuya
  * @Date: 2021年6月16日15:05:15
- * @LastEditors:
- * @LastEditTime:
+ * @LastEditors: sakuya
+ * @LastEditTime: 2021年8月23日13:42:58
 -->
 
 <template>
 	<el-container>
-		<el-aside width="210px">
-			<el-container>
-				<el-header>
-					<el-input placeholder="输入关键字进行过滤" v-model="filterText" clearable></el-input>
-				</el-header>
-				<el-main class="nopadding">
-					<el-tree ref="tree" class="menu" node-key="id" :data="treeList" :highlight-current="true" :expand-on-click-node="false" :filter-node-method="treeFilterNode">
-					</el-tree>
-				</el-main>
-			</el-container>
-		</el-aside>
-		<el-main class="nopadding" style="background: #f6f8f9;" v-loading="svgLoading">
+
+		<el-main class="nopadding" style="background: #f6f8f9;" v-loading="mapLoading">
 			<scEcharts ref="map" :option="option"></scEcharts>
 		</el-main>
 		<el-aside width="340px" style="border-left: 1px solid #e6e6e6;border-right: 0;padding:15px;">
-			<el-descriptions title="computer-c1" :column="1" border>
-				<el-descriptions-item label="name">c1</el-descriptions-item>
-				<el-descriptions-item label="category">computer</el-descriptions-item>
+			<el-descriptions title="Shanghai China" :column="1" border>
+				<el-descriptions-item label="region">Shanghai</el-descriptions-item>
+				<el-descriptions-item label="area">6340.5 km2</el-descriptions-item>
 				<el-descriptions-item label="state"><em class="state state-1 status-processing"></em></el-descriptions-item>
 			</el-descriptions>
 			<el-collapse style="margin-top: 15px;">
-				<el-collapse-item title="screen" name="1">
+				<el-collapse-item title="video monitor" name="1">
 					<div class="screen" style="background: #000;height:180px;color: #999;text-align: center;">
-						<i class="el-icon-menu" style="font-size: 40px;margin-top: 50px;"></i>
-						<p>windows 10</p>
+						<i class="el-icon-video-camera" style="font-size: 40px;margin-top: 50px;"></i>
+						<p>camera</p>
 					</div>
-				</el-collapse-item>
-				<el-collapse-item title="user" name="2">
-					<div>
-						<el-avatar> S </el-avatar>
-					</div>
-				</el-collapse-item>
-				<el-collapse-item title="network log" name="3">
-					<el-empty description="NO DATA" :image-size="60"></el-empty>
 				</el-collapse-item>
 			</el-collapse>
+			<el-alert title="地图数据来自阿里项目 DATAV.GeoAtlas" type="info" style="margin-top: 15px;"></el-alert>
 		</el-aside>
 	</el-container>
 </template>
@@ -59,35 +42,7 @@
 		},
 		data() {
 			return {
-				svgLoading: false,
-				filterText: "",
-				treeList: [
-					{
-						label: 'computer',
-						children: [
-							{label: 'c1'},
-							{label: 'c2'},
-							{label: 'c3'},
-							{label: 'c4'},
-							{label: 'c5'},
-							{label: '...'}
-						]
-					},
-					{
-						label: 'network',
-						children: [
-							{label: 'W1'},
-							{label: 'W2'}
-						]
-					}
-				],
-				info: {},
-				option: {}
-			}
-		},
-		watch: {
-			filterText(val) {
-				this.$refs.tree.filter(val);
+				mapLoading: false
 			}
 		},
 		mounted() {
@@ -95,24 +50,30 @@
 		},
 		methods: {
 			async getSvg(){
-				this.svgLoading = true;
-				var svg = await this.$HTTP.get('img/floorplan.svg')
-				this.svgLoading = false;
-				scEcharts.registerMap('floorplan', { svg: svg });
+				this.mapLoading = true;
+				var map = await this.$HTTP.get('img/shanghai.json')
+				this.mapLoading = false;
+				scEcharts.registerMap('shanghai', map);
 
 				this.option = {
 					title: {
-						text: 'Floorplan Demo',
-						subtext: '非常适用于室内布局/电子版布局/停车场监控等业务场景',
+						text: 'Map Demo',
+						subtext: '可用于展示GeoJson/SVG的地图或者其它图形',
 						left: '20',
 						top: '20'
 					},
 					tooltip: {
 					},
 					geo: {
-						map: 'floorplan',
+						map: 'shanghai',
+						zoom: 1,
 						roam: true,
 						selectedMode: 'single',
+						itemStyle: {
+							areaColor: 'rgba(128, 128, 128, 0.1)',
+							borderColor: 'rgba(0, 0, 0, 0.2)',
+							borderWidth: 1
+						},
 						select: {
 							itemStyle: {
 								color: 'rgba(0, 153, 255, 0.8)'
@@ -140,8 +101,7 @@
 							tooltip: 2
 						},
 						data: [
-							[137.01938166540623, 51.93905433869099],
-							[192.73843670517726, 52.00025351818228]
+							[121.3154759073276, 30.819428360452587]
 						]
 					}
 				}
@@ -159,12 +119,6 @@
 					    console.log(dataPoint);
 
 				});
-			},
-			//树过滤
-			treeFilterNode(value, data){
-				if (!value) return true;
-				var targetText = data.label;
-				return targetText.indexOf(value) !== -1;
 			},
 		}
 	}
