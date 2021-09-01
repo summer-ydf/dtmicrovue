@@ -11,6 +11,9 @@
 			<el-tab-pane label="user">
 				<pre class="code">{{json.user}}</pre>
 			</el-tab-pane>
+			<el-tab-pane label="token">
+				<pre class="code">{{json.token}}</pre>
+			</el-tab-pane>
 			<el-tab-pane label="grid">
 				<pre class="code">{{json.grid}}</pre>
 			</el-tab-pane>
@@ -34,6 +37,7 @@
 				title: "CMD",
 				json: {
 					user: null,
+					token: null,
 					grid: null,
 					config: null,
 					api: null,
@@ -41,7 +45,8 @@
 			}
 		},
 		created() {
-			this.json.user = this.$TOOL.data.get("user");
+			this.json.user = this.$TOOL.data.get("USER_INFO");
+			this.json.token = this.$TOOL.data.get("TOKEN");
 			this.json.grid = this.$TOOL.data.get("grid")||'null';
 			this.json.config = this.$CONFIG;
 			this.json.api = this.$API;

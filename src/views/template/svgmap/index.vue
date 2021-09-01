@@ -42,7 +42,8 @@
 		},
 		data() {
 			return {
-				mapLoading: false
+				mapLoading: false,
+				option: {}
 			}
 		},
 		mounted() {

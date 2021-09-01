@@ -3,16 +3,16 @@ const DEFAULT_CONFIG = {
 	APP_NAME: "SCUI",
 
 	//版本号
-	APP_VER: "1.2.2",
+	APP_VER: "1.2.3",
 
 	//内核版本号
-	CORE_VER: "1.2.2",
+	CORE_VER: "1.2.3",
 
 	//接口地址
 	API_URL: "/api",
 
 	//请求超时
-	TIMEOUT: 1000,
+	TIMEOUT: 10000,
 
 	//TokenName
 	TOKEN_NAME: "Authorization",
@@ -45,12 +45,12 @@ const DEFAULT_CONFIG = {
 	//控制台首页默认布局
 	DEFAULT_GRID: {
 		//默认分栏数量和宽度 例如 [24] [18,6] [8,8,8] [6,12,6]
-		layout: [18, 6],
+		layout: [12, 6, 6],
 		//小组件分布，com取值:views/home/components 文件名
 		copmsList: [
-			[{ title: "实时收入", com: 'C1' },{ title: "周收入对比", com: 'C3' }],
-			[{ title: "版本更新", com: 'C2' }],
-			[]
+			['welcome'],
+			['about', 'var'],
+			['time', 'progress']
 		]
 	}
 }

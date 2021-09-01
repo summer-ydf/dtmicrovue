@@ -10,13 +10,13 @@
 				<span>{{navMenu.meta.title}}</span>
 			</template>
 		</el-menu-item>
-		<el-submenu v-else :index="navMenu.path">
+		<el-sub-menu v-else :index="navMenu.path">
 			<template #title>
 				<i v-if="navMenu.meta&&navMenu.meta.icon" :class="navMenu.meta.icon || 'el-icon-menu'"></i>
 				<span>{{navMenu.meta.title}}</span>
 			</template>
 			<NavMenu :navMenus="navMenu.children"></NavMenu>
-		</el-submenu>
+		</el-sub-menu>
 	</template>
 </template>
 

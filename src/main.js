@@ -1,7 +1,7 @@
 import ElementPlus from 'element-plus'
 import i18n from './locales'
-import 'element-plus/lib/theme-chalk/index.css'
-import 'element-plus/lib/theme-chalk/display.css'
+import 'element-plus/dist/index.css'
+import 'element-plus/theme-chalk/display.css'
 import { createApp } from 'vue'
 import App from './App.vue'
 import config from "./config"
@@ -20,8 +20,10 @@ import scFormTable from './components/scFormTable'
 import scTableSelect from './components/scTableSelect'
 import scPageHeader from './components/scPageHeader'
 import scSelect from './components/scSelect'
+import scDialog from './components/scDialog'
 import auth from './directives/auth'
 import role from './directives/role'
+import time from './directives/time'
 
 const app = createApp(App);
 
@@ -48,10 +50,12 @@ app.component('scFormTable', scFormTable);
 app.component('scTableSelect', scTableSelect);
 app.component('scPageHeader', scPageHeader);
 app.component('scSelect', scSelect);
+app.component('scDialog', scDialog);
 
 //注册全局指令
 app.directive('auth', auth)
 app.directive('role', role)
+app.directive('time', time)
 
 //全局代码错误捕捉
 app.config.errorHandler = errorHandler

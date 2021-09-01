@@ -3,12 +3,13 @@
 	.el-form-item {display: block;}
 	.el-form-item__label {display: block;text-align: left;padding: 0 0 10px;}
 	.el-dialog {width: 90%!important;}
+	.el-dialog.is-fullscreen {width: 100%!important;}
 	.el-drawer.rtl {width: 90%!important;}
 	.el-form-item__content {margin-left: 0px!important;}
 
 	.adminui-main {
-		.el-container {display: block;height:auto;}
-		.el-aside {width: 100%!important;border: 0}
+		>.el-container {display: block;height:auto;}
+		>.el-container > .el-aside {width: 100%!important;border: 0}
 	}
 	.scTable {
 		.el-table,

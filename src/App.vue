@@ -1,5 +1,5 @@
 <template>
-	<el-config-provider :i18n="$i18n.t">
+	<el-config-provider :locale="$i18n.messages[$i18n.locale].el">
 		<router-view></router-view>
 	</el-config-provider>
 </template>

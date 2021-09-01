@@ -1,10 +1,10 @@
 <!--
  * @Descripttion: 图标选择器组件
- * @version: 1.0
+ * @version: 1.1
  * @Author: sakuya
  * @Date: 2021年7月27日10:02:46
- * @LastEditors:
- * @LastEditTime:
+ * @LastEditors: sakuya
+ * @LastEditTime: 2021年8月26日13:59:51
 -->
 
 <template>
@@ -61,6 +61,9 @@
 		watch:{
 			modelValue(val){
 				this.defaultValue = val
+			},
+			defaultValue(val){
+				this.$emit('update:modelValue', val)
 			}
 		},
 		mounted() {

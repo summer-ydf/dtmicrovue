@@ -106,7 +106,10 @@
 	.el-calendar {
 		--el-calendar-selected-background-color: #222225;
 	}
-
+	.el-dropdown__popper {
+		--el-dropdown-menuItem-hover-fill: #222225;
+	}
+	
 	/* 布局 */
 	.adminui-header {background: $--background;}
 	.aminui-side-split {background: $--background;}

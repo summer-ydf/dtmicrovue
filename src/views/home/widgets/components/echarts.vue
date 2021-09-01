@@ -1,7 +1,7 @@
 <template>
-	<div v-loading="loading">
+	<el-card shadow="hover" header="实时收入" v-loading="loading">
 		<scEcharts ref="c1" height="300px" :option="option"></scEcharts>
-	</div>
+	</el-card>
 </template>
 
 <script>
@@ -9,6 +9,8 @@
 
 	export default {
 		title: "实时收入",
+		icon: "el-icon-data-line",
+		description: "Echarts组件演示",
 		components: {
 			scEcharts
 		},

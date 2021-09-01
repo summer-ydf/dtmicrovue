@@ -88,11 +88,6 @@
 				userColumn: this.column
 			}
 		},
-		created() {
-			this.$nextTick(() => {
-				this.upTableHeight()
-			})
-		},
 		mounted() {
 			if(this.apiObj){
 				this.getData();
@@ -100,6 +95,13 @@
 				this.tableData = this.data;
 				this.total = this.tableData.length
 			}
+			this.$nextTick(() => {
+				this.upTableHeight()
+			})
+			window.addEventListener("resize", this.upTableHeight, true)
+		},
+		unmounted(){
+			window.removeEventListener("resize", this.upTableHeight, true)
 		},
 		activated(){
 			this.$nextTick(() => {

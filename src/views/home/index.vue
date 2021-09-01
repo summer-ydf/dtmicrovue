@@ -10,19 +10,19 @@
 		</el-main>
 	</div>
 	<work v-if="dashboard=='1'" @on-mounted="onMounted"></work>
-	<stats v-else @on-mounted="onMounted"></stats>
+	<widgets v-else @on-mounted="onMounted"></widgets>
 </template>
 
 <script>
 	import { defineAsyncComponent } from 'vue';
-	const stats = defineAsyncComponent(() => import('./stats'));
 	const work = defineAsyncComponent(() => import('./work'));
+	const widgets = defineAsyncComponent(() => import('./widgets'));
 
 	export default {
 		name: "dashboard",
 		components: {
-			stats,
-			work
+			work,
+			widgets
 		},
 		data(){
 			return {
