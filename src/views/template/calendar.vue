@@ -115,7 +115,7 @@
 		},
 		computed: {
 			day(){
-				return this.$TOOL.dateFormat(this.toDay);
+				return this.$TOOL.dateFormat(this.toDay,"yyyy-MM-dd");
 			},
 			dayItem(){
 				return this.getData(this.day)
@@ -129,7 +129,7 @@
 				var curDate = new Date()
 				var oneDayTime = 24*60*60*1000
 				var rDate = new Date(curDate.getTime() + (oneDayTime*n) )
-				return this.$TOOL.dateFormat(rDate);
+				return this.$TOOL.dateFormat(rDate, "yyyy-MM-dd");
 			}
 		}
 	}

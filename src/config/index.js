@@ -3,10 +3,10 @@ const DEFAULT_CONFIG = {
 	APP_NAME: "SCUI",
 
 	//版本号
-	APP_VER: "1.2.4",
+	APP_VER: "1.2.5",
 
 	//内核版本号
-	CORE_VER: "1.2.4",
+	CORE_VER: "1.2.5",
 
 	//接口地址
 	API_URL: "/api",
@@ -49,7 +49,7 @@ const DEFAULT_CONFIG = {
 		//小组件分布，com取值:views/home/components 文件名
 		copmsList: [
 			['welcome'],
-			['about', 'var'],
+			['about', 'ver'],
 			['time', 'progress']
 		]
 	}

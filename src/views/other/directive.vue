@@ -25,6 +25,11 @@
 			</p>
 			<el-alert title="指令方式日期时间转换,如设置'tip'修饰符将会转换成相对时间,并且每60秒自动更新" style="margin-top: 20px;"></el-alert>
 		</el-card>
+		<el-card shadow="never" header="v-copy 一键复制" style="margin-top: 15px;">
+			<el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="copyText"></el-input>
+			<el-button v-copy="copyText" type="primary" style="margin-top: 15px;">复制</el-button>
+			<el-alert title="点击复制按钮会将文本框绑定的值复制到剪切板, 试着粘贴到其他地方看看效果" style="margin-top: 20px;"></el-alert>
+		</el-card>
 	</el-main>
 </template>
 
@@ -35,7 +40,8 @@
 			return {
 				time1: new Date(),
 				time2: new Date().setMinutes(new Date().getMinutes()-1),
-				time3: new Date().setMinutes(new Date().getMinutes()-120)
+				time3: new Date().setMinutes(new Date().getMinutes()-120),
+				copyText: '测试复制内容'
 			}
 		},
 		created() {

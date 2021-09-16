@@ -8,7 +8,7 @@
 					<el-input v-model="form.title"></el-input>
 				</el-form-item>
 				<el-form-item label="表格" prop="list">
-					<sc-form-table v-model="form.list" :addTemplate="addTemplate" placeholder="暂无数据">
+					<sc-form-table v-model="form.list" :addTemplate="addTemplate" drag-sort placeholder="暂无数据">
 						<el-table-column prop="time" label="时间" width="180">
 							<template #default="scope">
 								<el-time-select v-model="scope.row.time"></el-time-select>

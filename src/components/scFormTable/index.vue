@@ -1,6 +1,6 @@
 <template>
 	<div class="sc-form-table">
-		<el-table :data="data" border stripe>
+		<el-table :data="data" ref="table" :key="toggleIndex" border stripe>
 			<el-table-column type="index" width="50" fixed="left">
 				<template #header>
 					<el-button type="primary" icon="el-icon-plus" size="mini" circle @click="rowAdd"></el-button>
@@ -8,8 +8,13 @@
 				<template #default="scope">
 					<div class="sc-form-table-handle">
 						<span>{{scope.$index + 1}}</span>
-						<el-button type="danger" icon="el-icon-delete" size="mini" circle @click="rowDel(scope.row, scope.$index)"></el-button>
+						<el-button type="danger" icon="el-icon-delete" size="mini" plain circle @click="rowDel(scope.row, scope.$index)"></el-button>
 					</div>
+				</template>
+			</el-table-column>
+			<el-table-column label="" width="51" v-if="dragSort">
+				<template #default>
+					<el-tag class="move" style="cursor: move;"><i class="el-icon-d-caret"></i></el-tag>
 				</template>
 			</el-table-column>
 			<slot></slot>
@@ -22,19 +27,26 @@
 </template>
 
 <script>
+	import Sortable from 'sortablejs'
+
 	export default {
 		props: {
 			modelValue: { type: Array, default: () => [] },
 			addTemplate: { type: Object, default: () => {} },
-			placeholder: { type: String, default: "暂无数据" }
+			placeholder: { type: String, default: "暂无数据" },
+			dragSort: { type: Boolean, default: false }
 		},
 		data(){
 			return {
 				data: [],
+				toggleIndex: 0
 			}
 		},
 		mounted(){
 			this.data = this.modelValue
+			if(this.dragSort){
+				this.rowDrop()
+			}
 		},
 		watch:{
 			modelValue(){
@@ -48,6 +60,24 @@
 			}
 		},
 		methods: {
+			rowDrop(){
+				const _this = this
+				const tbody = this.$refs.table.$el.querySelector('.el-table__body-wrapper tbody')
+				Sortable.create(tbody, {
+					handle: ".move",
+					animation: 300,
+					ghostClass: "ghost",
+					onEnd({ newIndex, oldIndex }) {
+						const tableData = _this.data
+						const currRow = tableData.splice(oldIndex, 1)[0]
+						tableData.splice(newIndex, 0, currRow)
+						_this.toggleIndex += 1
+						_this.$nextTick(() => {
+							_this.rowDrop()
+						})
+					}
+				})
+			},
 			rowAdd(){
 				this.data.push({...this.addTemplate})
 			},

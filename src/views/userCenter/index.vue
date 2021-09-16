@@ -180,6 +180,20 @@
 				this.$TOOL.data.set("APP_COLOR", val);
 			}
 		},
+		//路由跳转进来 判断from是否有特殊标识做特殊处理
+		beforeRouteEnter (to, from, next){
+			next((vm)=>{
+				if(from.is){
+					//删除特殊标识，防止标签刷新重复执行
+					delete from.is
+					//执行特殊方法
+					vm.$alert('路由跳转过来后含有特殊标识，做特殊处理', '提示', {
+						type: 'success',
+						center: true
+					}).then(() => {}).catch(() => {})
+				}
+			})
+		},
 		methods: {
 
 		}

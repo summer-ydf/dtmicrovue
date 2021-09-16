@@ -24,6 +24,7 @@ import scDialog from './components/scDialog'
 import auth from './directives/auth'
 import role from './directives/role'
 import time from './directives/time'
+import copy from './directives/copy'
 
 const app = createApp(App);
 
@@ -56,6 +57,7 @@ app.component('scDialog', scDialog);
 app.directive('auth', auth)
 app.directive('role', role)
 app.directive('time', time)
+app.directive('copy', copy)
 
 //全局代码错误捕捉
 app.config.errorHandler = errorHandler
