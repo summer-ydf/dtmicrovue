@@ -76,5 +76,21 @@ export default {
 				return await http.get(this.url, params);
 			}
 		}
+	},
+	table: {
+		list: {
+			url: `${config.API_URL}/system/table/list`,
+			name: "表格列管理列表",
+			get: async function(params){
+				return await http.get(this.url, params);
+			}
+		},
+		info: {
+			url: `${config.API_URL}/system/table/info`,
+			name: "表格列管理详情",
+			get: async function(params){
+				return await http.get(this.url, params);
+			}
+		}
 	}
 }
