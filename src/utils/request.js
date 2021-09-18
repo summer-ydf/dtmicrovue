@@ -170,6 +170,30 @@ var http = {
 				reject(error);
 			})
 		})
+	},
+
+	/** jsonp 请求
+	 * @param  {接口地址} url
+	 * @param  {JSONP回调函数名称} name
+	 */
+	jsonp: function(url, name='jsonp'){
+		return new Promise((resolve) => {
+			var script = document.createElement('script')
+			var _id = `jsonp${Math.ceil(Math.random() * 1000000)}`
+			script.id = _id
+			script.type = 'text/javascript'
+			script.src = url
+			window[name] =(response) => {
+				resolve(response)
+				document.getElementsByTagName('head')[0].removeChild(script)
+				try {
+					delete window[name];
+				}catch(e){
+					window[name] = undefined;
+				}
+			}
+			document.getElementsByTagName('head')[0].appendChild(script)
+		})
 	}
 }
 
