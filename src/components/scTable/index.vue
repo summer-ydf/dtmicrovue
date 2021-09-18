@@ -253,6 +253,34 @@
 					filters[key] = filters[key].join(',')
 				})
 				this.upData(filters)
+			},
+			//原生方法转发
+			clearSelection(){
+				this.$refs.scTable.clearSelection()
+			},
+			toggleRowSelection(row, selected){
+				this.$refs.scTable.toggleRowSelection(row, selected)
+			},
+			toggleAllSelection(){
+				this.$refs.scTable.toggleAllSelection()
+			},
+			toggleRowExpansion(row, expanded){
+				this.$refs.scTable.toggleRowExpansion(row, expanded)
+			},
+			setCurrentRow(row){
+				this.$refs.scTable.setCurrentRow(row)
+			},
+			clearSort(){
+				this.$refs.scTable.clearSort()
+			},
+			clearFilter(columnKey){
+				this.$refs.scTable.clearFilter(columnKey)
+			},
+			doLayout(){
+				this.$refs.scTable.doLayout()
+			},
+			sort(prop, order){
+				this.$refs.scTable.sort(prop, order)
 			}
 		}
 	}
