@@ -138,11 +138,17 @@ tool.crypto = {
 	//AES加解密
 	AES: {
 		encrypt(data, secretKey){
-			const result = CryptoJS.AES.encrypt(data, CryptoJS.enc.Utf8.parse(secretKey))
+			const result = CryptoJS.AES.encrypt(data, CryptoJS.enc.Utf8.parse(secretKey), {
+				mode: CryptoJS.mode.ECB,
+				padding: CryptoJS.pad.Pkcs7
+			})
 			return result.toString()
 		},
 		decrypt(cipher, secretKey){
-			const result = CryptoJS.AES.decrypt(cipher, CryptoJS.enc.Utf8.parse(secretKey))
+			const result = CryptoJS.AES.decrypt(cipher, CryptoJS.enc.Utf8.parse(secretKey), {
+				mode: CryptoJS.mode.ECB,
+				padding: CryptoJS.pad.Pkcs7
+			})
 			return CryptoJS.enc.Utf8.stringify(result);
 		}
 	}
