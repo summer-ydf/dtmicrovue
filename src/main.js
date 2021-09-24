@@ -21,6 +21,7 @@ import scTableSelect from './components/scTableSelect'
 import scPageHeader from './components/scPageHeader'
 import scSelect from './components/scSelect'
 import scDialog from './components/scDialog'
+import scForm from './components/scForm'
 import auth from './directives/auth'
 import role from './directives/role'
 import time from './directives/time'
@@ -52,6 +53,7 @@ app.component('scTableSelect', scTableSelect);
 app.component('scPageHeader', scPageHeader);
 app.component('scSelect', scSelect);
 app.component('scDialog', scDialog);
+app.component('scForm', scForm);
 
 //注册全局指令
 app.directive('auth', auth)
