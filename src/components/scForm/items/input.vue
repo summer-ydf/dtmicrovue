@@ -1,5 +1,5 @@
 <template>
-	<el-input v-model="form[item.name]" :placeholder="item.options.placeholder"></el-input>
+	<el-input v-model="value" :placeholder="item.options.placeholder"></el-input>
 </template>
 
 <script>
@@ -11,14 +11,14 @@
 		},
 		data() {
 			return {
-				form: this.modelValue
+				value: this.modelValue
 			}
 		},
 		watch:{
 			modelValue(val){
-				this.form = val
+				this.value = val
 			},
-			form(val){
+			value(val){
 				this.$emit("update:modelValue", val)
 			}
 		},

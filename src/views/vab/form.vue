@@ -1,8 +1,13 @@
 <template>
 	<el-main>
 		<el-row :gutter="15">
+			<el-col :lg="6">
+				<el-card shadow="never" header="1.参数配置">
+					<pre>{{config2}}</pre>
+				</el-card>
+			</el-col>
 			<el-col :lg="12">
-				<el-card shadow="never" header="表单渲染器">
+				<el-card shadow="never" header="2.渲染器">
 					<sc-form :config="config2" v-model="data"></sc-form>
 				</el-card>
 				<el-card shadow="never" header="" v-if="false">
@@ -22,8 +27,8 @@
 					</el-form>
 				</el-card>
 			</el-col>
-			<el-col :lg="12">
-				<el-card shadow="never" header="表单渲染器">
+			<el-col :lg="6">
+				<el-card shadow="never" header="3.表单输出">
 					<pre>{{data}}</pre>
 				</el-card>
 			</el-col>
@@ -32,8 +37,13 @@
 </template>
 
 <script>
+	//import scCode from '@/components/scCode';
+
 	export default {
 		name: 'formRender',
+		components: {
+			//scCode
+		},
 		data() {
 			return {
 				d: {
@@ -47,26 +57,80 @@
 				},
 				data: {
 					name: "Activity name",
-					
+					checkbox: {
+						option1: true
+					},
+					checkboxGroup: ["option1"],
+					select: ["1"],
+					select2: "1"
 				},
 				config2: {
 					labelWidth: '130px',
 					labelPosition: 'right',
 					size: 'medium',
-					items: [
+					formItems: [
 						{
 							label: "Activity name",
+							message: "123",
 							name: "name",
-							value: "",
+							value: "123",
 							component: "input",
 							options: {
 								placeholder: "Activity name",
+							},
+							rules: [
+								{required: true, message: "Please input Activity name", trigger: "blur"}
+							],
+							requiredHandle: "$.required==true",
+						},
+						{
+							label: "Select",
+							name: "select",
+							value: "",
+							component: "select",
+							span: 12,
+							options: {
+								multiple: true,
+								items:[
+									{
+										label: "选项1",
+										value: "1"
+									},
+									{
+										label: "选项2",
+										value: "2"
+									}
+								]
+							},
+							rules: [
+								{required: true, message: "Please input Activity name", trigger: "change"}
+							],
+							requiredHandle: "$.required==true",
+						},
+						{
+							label: "Select2",
+							name: "select2",
+							value: "",
+							component: "select",
+							span: 12,
+							options: {
+								items:[
+									{
+										label: "选项1",
+										value: "1"
+									},
+									{
+										label: "选项2",
+										value: "2"
+									}
+								]
 							}
 						},
 						{
 							label: "Checkbox",
 							name: "checkbox",
 							component: "checkbox",
+							span: 12,
 							options: {
 								items:[
 									{
@@ -81,7 +145,95 @@
 									}
 								]
 							}
-						}
+						},
+						{
+							label: "Checkbox group",
+							name: "checkboxGroup",
+							value: [],
+							component: "checkboxGroup",
+							span: 12,
+							options: {
+								items:[
+									{
+										label: "选项1",
+										value: "option1"
+									},
+									{
+										label: "选项2",
+										value: "option2"
+									}
+								]
+							}
+						},
+						{
+							label: "Required handle",
+							name: "required",
+							value: false,
+							component: "switch",
+						},
+						{
+							label: "Upload",
+							component: "upload",
+							options: {
+								items:[
+									{
+										label: "图像1",
+										name: "img1",
+										value: ""
+									},
+									{
+										label: "图像2",
+										name: "img2",
+										value: ""
+									}
+								]
+							},
+							hideHandle: "$.required==true"
+						},
+						{
+							label: "Date",
+							name: "date",
+							value: "",
+							component: "date",
+							options: {
+								type: "datetime",
+								valueFormat: "YYYY-MM-DD HH:mm:ss",
+								defaultTime: new Date(2000, 1, 1, 12, 0, 0),
+								shortcuts: [
+									{
+										text: '今天',
+										value: new Date(),
+									}
+								]
+							},
+							rules: [
+								{required: true, message: "Please input Data", trigger: "change"}
+							],
+						},
+						{
+							label: "Number",
+							name: "number",
+							value: 0,
+							component: "number",
+						},
+						{
+							label: "Radio",
+							name: "radio",
+							value: "",
+							component: "radio",
+							options: {
+								items:[
+									{
+										label: "选项1",
+										value: "1"
+									},
+									{
+										label: "选项2",
+										value: "2"
+									}
+								]
+							}
+						},
 					]
 				},
 				config: {

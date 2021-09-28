@@ -1,10 +1,14 @@
 <template>
-	<el-checkbox v-model="value" :label="item.label"></el-checkbox>
+	<el-col>
+		<el-form-item :prop="item.name">
+			<sc-upload v-model="value" :title="item.label"></sc-upload>
+		</el-form-item>
+	</el-col>
 </template>
 
 <script>
 	export default {
-		name: 'checkboxGroupRender',
+		name: 'uploadRender',
 		props: {
 			modelValue: [String, Number, Boolean, Date, Object, Array],
 			item: { type: Object, default: () => {} }
