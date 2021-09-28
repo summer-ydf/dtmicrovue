@@ -3,12 +3,12 @@
 		<el-row :gutter="15">
 			<el-col :lg="6">
 				<el-card shadow="never" header="1.参数配置">
-					<pre>{{config2}}</pre>
+					<pre>{{config3}}</pre>
 				</el-card>
 			</el-col>
 			<el-col :lg="12">
 				<el-card shadow="never" header="2.渲染器">
-					<sc-form :config="config2" v-model="data"></sc-form>
+					<sc-form :config="config3" v-model="data2"></sc-form>
 				</el-card>
 				<el-card shadow="never" header="" v-if="false">
 					<el-form ref="formref" :model="d" label-width="100px" label-position="right" :rules="rules">
@@ -29,7 +29,7 @@
 			</el-col>
 			<el-col :lg="6">
 				<el-card shadow="never" header="3.表单输出">
-					<pre>{{data}}</pre>
+					<pre>{{data2}}</pre>
 				</el-card>
 			</el-col>
 		</el-row>
@@ -55,7 +55,8 @@
 						{ required: true, message: '请输入活动名称', trigger: 'blur' }
 					]
 				},
-				data: {
+				data: {},
+				data2: {
 					name: "Activity name",
 					checkbox: {
 						option1: true
@@ -64,7 +65,8 @@
 					select: ["1"],
 					select2: "1"
 				},
-				config2: {
+				config2: {},
+				config3: {
 					labelWidth: '130px',
 					labelPosition: 'right',
 					size: 'medium',
@@ -76,6 +78,7 @@
 							value: "123",
 							component: "input",
 							options: {
+								maxlength: "20",
 								placeholder: "Activity name",
 							},
 							rules: [
@@ -90,6 +93,10 @@
 							component: "select",
 							span: 12,
 							options: {
+								remote: {
+									api: '/api/system/dic/get',
+									data: {name: 'a'}
+								},
 								multiple: true,
 								items:[
 									{
@@ -114,6 +121,10 @@
 							component: "select",
 							span: 12,
 							options: {
+								remote: {
+									api: '/api/system/dic/get',
+									data: {name: 'b'}
+								},
 								items:[
 									{
 										label: "选项1",
@@ -219,7 +230,7 @@
 						{
 							label: "Radio",
 							name: "radio",
-							value: "",
+							value: "1",
 							component: "radio",
 							options: {
 								items:[
@@ -384,7 +395,12 @@
 			}
 		},
 		mounted() {
-
+			// setTimeout(()=>{
+			// 	this.config2 = this.config3
+			// },1000)
+			// setTimeout(()=>{
+			// 	this.data = this.data2
+			// },1500)
 		},
 		methods: {
 			onSubmit(){

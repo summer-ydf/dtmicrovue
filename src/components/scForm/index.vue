@@ -8,14 +8,16 @@
 -->
 
 <template>
-	<el-form ref="form" :model="form" :label-width="config.labelWidth || '100px'" :label-position="config.labelPosition">
+	<el-skeleton v-if="loading || Object.keys(form).length==0" animated />
+
+	<el-form v-else ref="form" :model="form" label-width="130px" :label-position="config.labelPosition">
 		<el-row :gutter="15">
 			<template v-for="(item, index) in config.formItems" :key="index">
 				<el-col :span="item.span || 24" v-if="!hideHandle(item)">
 					<el-form-item :label="item.label" :prop="item.name" :rules="rulesHandle(item)">
 						<!-- input -->
 						<template v-if="item.component=='input'" >
-							<el-input v-model="form[item.name]" :placeholder="item.options.placeholder" clearable></el-input>
+							<el-input v-model="form[item.name]" :placeholder="item.options.placeholder" clearable :maxlength="item.options.maxlength" show-word-limit></el-input>
 						</template>
 						<!-- checkbox -->
 						<template v-else-if="item.component=='checkbox'" >
@@ -94,6 +96,8 @@
 </template>
 
 <script>
+	import http from "@/utils/request"
+
 	import { defineAsyncComponent } from 'vue';
 	const inputRender = defineAsyncComponent(() => import('./items/input'));
 
@@ -119,7 +123,8 @@
 		},
 		data() {
 			return {
-				form: {}
+				form: {},
+				loading: false
 			}
 		},
 		watch:{
@@ -128,10 +133,11 @@
 			}
 		},
 		created() {
-			this.setForm()
+
 		},
 		mounted() {
-
+			this.setForm()
+			this.getData()
 		},
 		methods: {
 			//构建form对象
@@ -159,6 +165,21 @@
 				})
 				this.form = this.deepMerge(this.form, this.modelValue)
 				//this.form = Object.assign({}, this.form, this.modelValue)
+			},
+			getData() {
+				this.loading = true
+				var remoteData = []
+				this.config.formItems.forEach((item) => {
+					if(item.options && item.options.remote){
+						var req = http.get(item.options.remote.api, item.options.remote.data).then(res=>{
+							item.options.items = res.data
+						})
+						remoteData.push(req)
+					}
+				})
+				Promise.all(remoteData).then(()=>{
+					this.loading = false
+				})
 			},
 			deepMerge(obj1, obj2) {
 				let key;
