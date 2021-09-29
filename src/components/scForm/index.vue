@@ -8,9 +8,9 @@
 -->
 
 <template>
-	<el-skeleton v-if="loading || Object.keys(form).length==0" animated />
+	<el-skeleton v-if="renderLoading || Object.keys(form).length==0" animated />
 
-	<el-form v-else ref="form" :model="form" label-width="130px" :label-position="config.labelPosition">
+	<el-form v-else ref="form" :model="form" :label-width="config.labelWidth" :label-position="config.labelPosition" v-loading="loading" element-loading-text="Loading...">
 		<el-row :gutter="15">
 			<template v-for="(item, index) in config.formItems" :key="index">
 				<el-col :span="item.span || 24" v-if="!hideHandle(item)">
@@ -52,6 +52,10 @@
 								<el-option v-for="option in item.options.items" :key="option.value" :label="option.label" :value="option.value"></el-option>
 							</el-select>
 						</template>
+						<!-- cascader -->
+						<template v-else-if="item.component=='cascader'" >
+							<el-cascader v-model="form[item.name]" :options="item.options.items" clearable></el-cascader>
+						</template>
 						<!-- date -->
 						<template v-else-if="item.component=='date'" >
 							<el-date-picker v-model="form[item.name]" :type="item.options.type" :shortcuts="item.options.shortcuts" :default-time="item.options.defaultTime" :value-format="item.options.valueFormat" :placeholder="item.options.placeholder || '请选择'"></el-date-picker>
@@ -66,29 +70,31 @@
 								<el-radio v-for="_item in item.options.items" :key="_item.value" :label="_item.value">{{_item.label}}</el-radio>
 							</el-radio-group>
 						</template>
+						<!-- color -->
+						<template v-else-if="item.component=='color'" >
+							<el-color-picker v-model="form[item.name]" />
+						</template>
+						<!-- rate -->
+						<template v-else-if="item.component=='rate'" >
+							<el-rate style="margin-top: 6px;" v-model="form[item.name]"></el-rate>
+						</template>
+						<!-- slider -->
+						<template v-else-if="item.component=='slider'" >
+							<el-slider v-model="form[item.name]" :marks="item.options.marks"></el-slider>
+						</template>
 						<!-- noComponent -->
 						<template v-else>
 							未匹配到相应组件 {{item.component}}
 						</template>
+						<div v-if="item.message" class="el-form-item-msg">{{item.message}}</div>
 					</el-form-item>
 				</el-col>
 			</template>
-
-
-			<!-- <template v-for="(item, index) in config.items" :key="index">
-				<el-col v-if="!hideHandle(item)" :span="item.span || 24">
-					<el-form-item v-if="item.name" :label="item.label" :prop="item.name" :rules="rulesHandle(item)">
-						<component :is="`${item.component}-render`" v-model="form[item.name]" :item="item"></component>
-					</el-form-item>
-					<el-form-item v-else :label="item.label" :rules="rulesHandle(item)">
-						<component  v-for="(_item, _index) in item.options.items" :key="_index" :is="`${item.component}-render`" v-model="form[_item.name]" :item="_item"></component>
-					</el-form-item>
-				</el-col>
-			</template> -->
 			<el-col :span="24">
 				<el-form-item>
-					<el-button type="primary" @click="submit">提交</el-button>
-					<el-button>取消</el-button>
+					<slot>
+						<el-button type="primary" @click="submit">提交</el-button>
+					</slot>
 				</el-form-item>
 			</el-col>
 		</el-row>
@@ -99,49 +105,58 @@
 	import http from "@/utils/request"
 
 	import { defineAsyncComponent } from 'vue';
-	const inputRender = defineAsyncComponent(() => import('./items/input'));
-
-	//import inputRender from './items/input'
-	import selectRender from './items/select'
-	import checkboxRender from './items/checkbox'
-	import checkboxGroupRender from './items/checkboxGroup'
-	import switchRender from './items/switch'
-	import uploadRender from './items/upload'
+	const uploadRender = defineAsyncComponent(() => import('./items/upload'));
 
 	export default {
 		props: {
 			modelValue: { type: Object, default: () => {} },
-			config: { type: Object, default: () => {} }
+			config: { type: Object, default: () => {} },
+			loading: { type: Boolean, default: false },
 		},
 		components: {
-			inputRender,
-			selectRender,
-			checkboxRender,
-			checkboxGroupRender,
-			switchRender,
 			uploadRender
 		},
 		data() {
 			return {
 				form: {},
-				loading: false
+				renderLoading: false
 			}
 		},
 		watch:{
-			form(val){
-				this.$emit("update:modelValue", val)
+			modelValue(){
+				if(this.hasConfig){
+					this.deepMerge(this.form, this.modelValue)
+				}
+			},
+			config(){
+				this.render()
+			},
+			form:{
+				handler(val){
+					this.$emit("update:modelValue", val)
+				},
+				deep: true
+			}
+		},
+		computed: {
+			hasConfig(){
+				return Object.keys(this.config).length>0
+			},
+			hasValue(){
+				return Object.keys(this.modelValue).length>0
 			}
 		},
 		created() {
 
 		},
 		mounted() {
-			this.setForm()
-			this.getData()
+			if(this.hasConfig){
+				this.render()
+			}
 		},
 		methods: {
 			//构建form对象
-			setForm(){
+			render() {
 				this.config.formItems.forEach((item) => {
 					if(item.component == 'checkbox'){
 						if(item.name){
@@ -163,11 +178,14 @@
 						this.form[item.name] = item.value
 					}
 				})
-				this.form = this.deepMerge(this.form, this.modelValue)
-				//this.form = Object.assign({}, this.form, this.modelValue)
+				if(this.hasValue){
+					this.form = this.deepMerge(this.form, this.modelValue)
+				}
+				this.getData()
 			},
+			//处理远程选项数据
 			getData() {
-				this.loading = true
+				this.renderLoading = true
 				var remoteData = []
 				this.config.formItems.forEach((item) => {
 					if(item.options && item.options.remote){
@@ -178,19 +196,19 @@
 					}
 				})
 				Promise.all(remoteData).then(()=>{
-					this.loading = false
+					this.renderLoading = false
 				})
 			},
+			//合并深结构对象
 			deepMerge(obj1, obj2) {
 				let key;
 				for (key in obj2) {
 					obj1[key] = obj1[key] && obj1[key].toString() === "[object Object]" && (obj2[key] && obj2[key].toString() === "[object Object]") ? this.deepMerge(obj1[key], obj2[key]) : (obj1[key] = obj2[key])
 				}
-				return {...obj1};
+				return obj1
+				//return JSON.parse(JSON.stringify(obj1))
 			},
-			updata(val, item){
-				console.log(val, item)
-			},
+			//处理动态隐藏
 			hideHandle(item){
 				if(item.hideHandle){
 					const exp = eval(item.hideHandle.replace(/\$/g,"this.form"))
@@ -198,6 +216,7 @@
 				}
 				return false
 			},
+			//处理动态必填
 			rulesHandle(item){
 				if(item.requiredHandle){
 					const exp = eval(item.requiredHandle.replace(/\$/g,"this.form"))
@@ -206,15 +225,16 @@
 				}
 				return item.rules
 			},
+			//数据验证
+			validate(valid, obj){
+				return this.$refs.form.validate(valid, obj)
+			},
+			resetFields(){
+				return this.$refs.form.resetFields()
+			},
+			//提交
 			submit(){
-				this.$refs.form.validate((valid) => {
-					if (valid) {
-						console.log(this.form)
-						alert('submit!')
-					}else{
-						return false
-					}
-				})
+				this.$emit("submit", this.form)
 			}
 		}
 	}
