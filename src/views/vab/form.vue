@@ -12,7 +12,7 @@
 				</el-card>
 				<el-card shadow="never" header="双向绑定">
 					<el-button type="primary" @click="setName">改变输入框的值</el-button>
-					<el-button type="primary" @click="setConfig">改变配置labelPosition</el-button>
+					<el-button type="primary" @click="setConfig">改变指定栅格配置</el-button>
 				</el-card>
 			</el-col>
 			<el-col :lg="12">

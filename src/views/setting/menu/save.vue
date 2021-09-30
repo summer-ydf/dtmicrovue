@@ -1,10 +1,10 @@
 <template>
-	<el-row :gutter="20">
+	<el-row :gutter="40">
 		<el-col v-if="!form.id">
 			<el-empty description="请选择左侧菜单后操作" :image-size="100"></el-empty>
 		</el-col>
 		<template v-else>
-			<el-col :xl="12" :lg="16">
+			<el-col :lg="12">
 				<h2>{{form.meta.title || "新增菜单"}}</h2>
 				<el-form :model="form" :rules="rules" ref="dialogForm" label-width="80px" label-position="left">
 					<el-form-item label="显示名称" prop="meta.title">
@@ -59,21 +59,20 @@
 				</el-form>
 
 			</el-col>
-			<el-col :xl="12" :lg="8">
-				<el-alert title="温馨提示" class="tips">
-					<p>
-						<b>排序和位置：</b>
-						可以通过拖拽菜单树来完成排序和更改位置的操作
-					</p>
-					<p>
-						<b>别名：</b>
-						系统唯一且与内置组件名一致，当类型为菜单时充当路由name，当类型为按钮时充当权限标识，当类型为Iframe和外链时充当http://链接地址
-					</p>
-					<p>
-						<b>视图：</b>
-						如父节点、链接或Iframe等没有视图的菜单不需要填写。视图地址需在VUE源码中@/views/中相对应的地址，前缀不需要填写“/”
-					</p>
-				</el-alert>
+			<el-col :lg="12" class="apilist">
+				<h2>接口权限</h2>
+				<sc-form-table v-model="form.apiList" :addTemplate="apiListAddTemplate" placeholder="暂无匹配接口权限">
+					<el-table-column prop="code" label="标识" width="150">
+						<template #default="scope">
+							<el-input v-model="scope.row.code" placeholder="请输入内容"></el-input>
+						</template>
+					</el-table-column>
+					<el-table-column prop="url" label="Api url">
+						<template #default="scope">
+							<el-input v-model="scope.row.url" placeholder="请输入内容"></el-input>
+						</template>
+					</el-table-column>
+				</sc-form-table>
 			</el-col>
 		</template>
 	</el-row>
@@ -105,7 +104,8 @@
 						active: "",
 						color: "",
 						type: "menu"
-					}
+					},
+					apiList: []
 				},
 				menuOptions: [],
 				menuProps: {
@@ -123,6 +123,10 @@
 					'#c71585'
 				],
 				rules: [],
+				apiListAddTemplate: {
+					code: "",
+					url: ""
+				},
 				loading: false
 			}
 		},
@@ -174,6 +178,8 @@
 
 <style scoped>
 	h2 {font-size: 17px;color: #3c4a54;padding:0 0 30px 0;}
-	.tips {line-height: 1.8;padding:20px;}
-	.tips p {margin-bottom: 10px;}
+	.apilist {border-left: 1px solid #eee;}
+
+	[data-theme="dark"] h2 {color: #fff;}
+	[data-theme="dark"] .apilist {border-color: #434343;}
 </style>
