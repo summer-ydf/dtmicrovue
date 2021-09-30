@@ -187,10 +187,37 @@
 						}
 					},
 					{
+						label: "表格选择器",
+						name: "tableselect",
+						value: {},
+						component: "tableselect",
+						span: 24,
+						options: {
+							apiObj: '$API.demo.page',
+							column: [
+								{
+									label: "ID",
+									prop: "id",
+									width:150
+								},
+								{
+									label: "姓名",
+									prop: "user"
+								}
+							],
+							props: {
+								label: 'user',
+								value: 'id',
+								keyword: "keyword"
+							}
+						}
+					},
+					{
 						label: "多选框",
 						name: "checkbox",
 						component: "checkbox",
 						span: 24,
+						message: "多选框配置加上 name 表示拥有嵌套关系。否则将值“平铺”在form对象",
 						options: {
 							items:[
 								{
@@ -313,7 +340,12 @@
 						value: 0,
 						component: "rate",
 					},
-
+					{
+						label: "富文本",
+						name: "text",
+						value: "",
+						component: "editor",
+					},
 				]
 			}
 
@@ -325,7 +357,12 @@
 				checkboxGroup: ["option1"],
 				select: ["1"],
 				select2: "1",
-				cascader: ['resource','docs']
+				cascader: ['resource','docs'],
+				tableselect: {
+					user: "何敏",
+					id: "360000197302144442"
+				},
+				text: "<p><span style=\"font-size: 28px;\">Editor</span></p>\n<table style=\"border-collapse: collapse; width: 100%;\" border=\"1\">\n<tbody>\n<tr>\n<td style=\"width: 47.4544%; background-color: #ecf0f1;\">Name</td>\n<td style=\"width: 47.4544%;\">SCUI</td>\n</tr>\n<tr>\n<td style=\"width: 47.4544%; background-color: #ecf0f1;\">Describe</td>\n<td style=\"width: 47.4544%;\">Super color UI Admin</td>\n</tr>\n</tbody>\n</table>"
 			}
 
 			setTimeout(()=>{
@@ -336,7 +373,7 @@
 			setTimeout(()=>{
 				this.form = form
 				this.loading = false
-			},1500)
+			},100)
 		},
 		methods: {
 			setName(){
@@ -347,11 +384,12 @@
 				this.config.formItems[2].span = this.config.formItems[2].span==24?12:24
 			},
 			save(){
-				this.$refs.formref.validate((valid) => {
+				this.$refs.formref.validate((valid, obj) => {
 					if (valid) {
 						console.log(this.form)
 						alert('submit!')
 					}else{
+						this.$refs.formref.scrollToField(Object.keys(obj)[0])
 						return false
 					}
 				})

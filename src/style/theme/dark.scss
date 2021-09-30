@@ -52,6 +52,9 @@
 		--el-color-info: $--text-color;
 		border-color: $--border-color;
 	}
+	.el-input .el-input__count .el-input__count-inner {
+		background: none;
+	}
 	.el-radio {
 		--el-radio-font-color: #d0d0d0;
 	}

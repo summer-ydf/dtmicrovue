@@ -62,12 +62,12 @@
 
 		},
 		watch: {
-			modelValue(){
-				this.defaultValue = this.modelValue
-				this.autoCurrentLabel()
-			},
-			defaultValue(){
-
+			modelValue:{
+				handler(){
+					this.defaultValue = this.modelValue
+					this.autoCurrentLabel()
+				},
+				deep: true
 			}
 		},
 		mounted() {

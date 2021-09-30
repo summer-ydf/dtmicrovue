@@ -82,9 +82,17 @@
 						<template v-else-if="item.component=='slider'" >
 							<el-slider v-model="form[item.name]" :marks="item.options.marks"></el-slider>
 						</template>
+						<!-- tableselect -->
+						<template v-else-if="item.component=='tableselect'" >
+							<tableselect-render v-model="form[item.name]" :item="item"></tableselect-render>
+						</template>
+						<!-- editor -->
+						<template v-else-if="item.component=='editor'" >
+							<sc-editor v-model="form[item.name]" placeholder="请输入" :height="400"></sc-editor>
+						</template>
 						<!-- noComponent -->
 						<template v-else>
-							未匹配到相应组件 {{item.component}}
+							<el-tag type="danger">[{{item.component}}] Component not found</el-tag>
 						</template>
 						<div v-if="item.message" class="el-form-item-msg">{{item.message}}</div>
 					</el-form-item>
@@ -104,8 +112,9 @@
 <script>
 	import http from "@/utils/request"
 
-	import { defineAsyncComponent } from 'vue';
-	const uploadRender = defineAsyncComponent(() => import('./items/upload'));
+	import { defineAsyncComponent } from 'vue'
+	const tableselectRender = defineAsyncComponent(() => import('./items/tableselect'))
+	const scEditor = defineAsyncComponent(() => import('@/components/scEditor'))
 
 	export default {
 		props: {
@@ -114,7 +123,8 @@
 			loading: { type: Boolean, default: false },
 		},
 		components: {
-			uploadRender
+			tableselectRender,
+			scEditor
 		},
 		data() {
 			return {
@@ -171,9 +181,17 @@
 							})
 						}
 					}else if(item.component == 'upload'){
-						item.options.items.forEach((option) => {
-							 this.form[option.name] = option.value
-						})
+						if(item.name){
+							const value = {}
+							item.options.items.forEach((option) => {
+								 value[option.name] = option.value
+							})
+							this.form[item.name] = value
+						}else{
+							item.options.items.forEach((option) => {
+								 this.form[option.name] = option.value
+							})
+						}
 					}else{
 						this.form[item.name] = item.value
 					}
@@ -228,6 +246,9 @@
 			//数据验证
 			validate(valid, obj){
 				return this.$refs.form.validate(valid, obj)
+			},
+			scrollToField(prop){
+				return this.$refs.form.scrollToField(prop)
 			},
 			resetFields(){
 				return this.$refs.form.resetFields()
