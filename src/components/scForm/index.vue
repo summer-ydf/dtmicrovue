@@ -14,7 +14,8 @@
 		<el-row :gutter="15">
 			<template v-for="(item, index) in config.formItems" :key="index">
 				<el-col :span="item.span || 24" v-if="!hideHandle(item)">
-					<el-form-item :label="item.label" :prop="item.name" :rules="rulesHandle(item)">
+					<sc-title  v-if="item.component=='title'"  :title="item.label"></sc-title>
+					<el-form-item v-else :label="item.label" :prop="item.name" :rules="rulesHandle(item)">
 						<!-- input -->
 						<template v-if="item.component=='input'" >
 							<el-input v-model="form[item.name]" :placeholder="item.options.placeholder" clearable :maxlength="item.options.maxlength" show-word-limit></el-input>

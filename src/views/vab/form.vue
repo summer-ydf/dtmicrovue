@@ -55,6 +55,10 @@
 				size: 'medium',
 				formItems: [
 					{
+						label: "ElementPlus",
+						component: "title",
+					},
+					{
 						label: "输入框",
 						name: "name",
 						value: "",
@@ -187,32 +191,6 @@
 						}
 					},
 					{
-						label: "表格选择器",
-						name: "tableselect",
-						value: {},
-						component: "tableselect",
-						span: 24,
-						options: {
-							apiObj: '$API.demo.page',
-							column: [
-								{
-									label: "ID",
-									prop: "id",
-									width:150
-								},
-								{
-									label: "姓名",
-									prop: "user"
-								}
-							],
-							props: {
-								label: 'user',
-								value: 'id',
-								keyword: "keyword"
-							}
-						}
-					},
-					{
 						label: "多选框",
 						name: "checkbox",
 						component: "checkbox",
@@ -231,7 +209,8 @@
 									value: false
 								}
 							]
-						}
+						},
+						hideHandle: "$.required==true"
 					},
 					{
 						label: "多选框组",
@@ -250,7 +229,8 @@
 									value: "option2"
 								}
 							]
-						}
+						},
+						hideHandle: "$.required==true"
 					},
 					{
 						label: "单选",
@@ -268,7 +248,8 @@
 									value: "2"
 								}
 							]
-						}
+						},
+						hideHandle: "$.required==true"
 					},
 					{
 						label: "开关",
@@ -276,25 +257,6 @@
 						message: "演示如何使用表达式动态显隐和必填，试试打开和关闭开关",
 						value: false,
 						component: "switch",
-					},
-					{
-						label: "上传",
-						component: "upload",
-						options: {
-							items:[
-								{
-									label: "图像1",
-									name: "img1",
-									value: ""
-								},
-								{
-									label: "图像2",
-									name: "img2",
-									value: ""
-								}
-							]
-						},
-						hideHandle: "$.required==true"
 					},
 					{
 						label: "日期/时间",
@@ -339,6 +301,54 @@
 						name: "rate",
 						value: 0,
 						component: "rate",
+					},
+					{
+						label: "SCUI扩展",
+						component: "title",
+					},
+					{
+						label: "表格选择器",
+						name: "tableselect",
+						value: {},
+						component: "tableselect",
+						span: 24,
+						options: {
+							apiObj: '$API.demo.page',
+							column: [
+								{
+									label: "ID",
+									prop: "id",
+									width:150
+								},
+								{
+									label: "姓名",
+									prop: "user"
+								}
+							],
+							props: {
+								label: 'user',
+								value: 'id',
+								keyword: "keyword"
+							}
+						}
+					},
+					{
+						label: "上传",
+						component: "upload",
+						options: {
+							items:[
+								{
+									label: "图像1",
+									name: "img1",
+									value: ""
+								},
+								{
+									label: "图像2",
+									name: "img2",
+									value: ""
+								}
+							]
+						}
 					},
 					{
 						label: "富文本",

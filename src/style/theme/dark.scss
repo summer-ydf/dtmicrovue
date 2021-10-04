@@ -112,7 +112,7 @@
 	.el-dropdown__popper {
 		--el-dropdown-menuItem-hover-fill: #222225;
 	}
-	
+
 	/* 布局 */
 	.adminui-header {background: $--background;}
 	.aminui-side-split {background: $--background;}
@@ -231,4 +231,6 @@
 		#Mask {fill: #222;}
 		#Oval-Copy-2 {fill: #1d1d1d;}
 	}
+
+	.sc-title {color: #d0d0d0;border-color: $--border-color;}
 }

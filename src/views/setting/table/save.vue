@@ -4,6 +4,7 @@
 			<el-main style="padding:0 20px 20px 20px">
 
 				<el-form ref="dialogForm" :model="form" :rules="rules" label-width="100px" label-position="top">
+					<sc-title title="基础"></sc-title>
 					<el-row :gutter="20">
 						<el-col :span="16">
 							<el-form-item label="表格名称" prop="name">
@@ -20,7 +21,8 @@
 						<el-checkbox v-model="form.remoteSort" label="远程排序"></el-checkbox>
 						<el-checkbox v-model="form.remoteFilter" label="远程过滤"></el-checkbox>
 					</el-form-item>
-					<el-form-item label="表格列" prop="column">
+					<sc-title title="表格列"></sc-title>
+					<el-form-item prop="column">
 						<sc-form-table v-model="form.column" :addTemplate="addTemplate" drag-sort placeholder="暂无数据">
 							<el-table-column prop="label" label="名称">
 								<template #default="scope">
