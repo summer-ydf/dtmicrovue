@@ -195,7 +195,7 @@
 						name: "checkbox",
 						component: "checkbox",
 						span: 24,
-						message: "多选框配置加上 name 表示拥有嵌套关系。否则将值“平铺”在form对象",
+						tips: "多选框配置加上 name 表示拥有嵌套关系。否则将值“平铺”在form对象",
 						options: {
 							items:[
 								{

@@ -15,7 +15,13 @@
 			<template v-for="(item, index) in config.formItems" :key="index">
 				<el-col :span="item.span || 24" v-if="!hideHandle(item)">
 					<sc-title  v-if="item.component=='title'"  :title="item.label"></sc-title>
-					<el-form-item v-else :label="item.label" :prop="item.name" :rules="rulesHandle(item)">
+					<el-form-item v-else :prop="item.name" :rules="rulesHandle(item)">
+						<template #label>
+							{{item.label}}
+							<el-tooltip v-if="item.tips" :content="item.tips">
+								<i class="el-icon-question"></i>
+							</el-tooltip>
+						</template>
 						<!-- input -->
 						<template v-if="item.component=='input'" >
 							<el-input v-model="form[item.name]" :placeholder="item.options.placeholder" clearable :maxlength="item.options.maxlength" show-word-limit></el-input>
