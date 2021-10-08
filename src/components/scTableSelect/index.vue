@@ -33,6 +33,7 @@
 		props: {
 			modelValue: null,
 			apiObj: { type: Object, default: () => {} },
+			params: { type: Object, default: () => {} },
 			placeholder: { type: String, default: "请选择" },
 			multiple: { type: Boolean, default: false },
 			disabled: { type: Boolean, default: false },
@@ -93,6 +94,7 @@
 					[this.defaultProps.pageSize]: this.pageSize,
 					[this.defaultProps.keyword]: this.keyword
 				}
+				Object.assign(reqData, this.params)
 				var res = await this.apiObj.get(reqData);
 				var parseData = config.parseData(res)
 				this.tableData = parseData.rows;
