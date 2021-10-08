@@ -3,6 +3,7 @@
 import tool from '@/utils/tool'
 
 export default {
+	successCode: 200,					//请求完成代码
 	pageSize: 20,						//表格每一页条数
 	parseData: function (res) {			//数据分析
 		return {

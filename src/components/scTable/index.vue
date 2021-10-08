@@ -155,7 +155,7 @@
 					this.emptyText = "数据格式错误";
 					return false;
 				}
-				if(response.code != 200){
+				if(response.code != config.successCode){
 					this.loading = false;
 					this.emptyText = response.msg;
 				}else{

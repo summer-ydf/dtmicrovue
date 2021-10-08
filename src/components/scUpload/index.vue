@@ -131,7 +131,7 @@
 					return false;
 				}
 				var response = config.parseData(res);
-				if(response.code != 200){
+				if(response.code != config.successCode){
 					this.$message.warning(response.msg || "上传文件未知错误")
 				}else{
 					this.img = response.src;

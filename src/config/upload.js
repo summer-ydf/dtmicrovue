@@ -4,6 +4,7 @@ import API from "@/api";
 
 export default {
 	apiObj: API.common.upload,			//上传请求API对象
+	successCode: 200,					//请求完成代码
 	maxSize: 10,						//最大文件大小 默认10MB
 	parseData: function (res) {
 		return {
