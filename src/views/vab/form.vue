@@ -33,13 +33,8 @@
 </template>
 
 <script>
-	//import scCode from '@/components/scCode';
-
 	export default {
 		name: 'formRender',
-		components: {
-			//scCode
-		},
 		data() {
 			return {
 				loading: false,
