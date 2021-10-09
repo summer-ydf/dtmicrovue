@@ -32,24 +32,6 @@ const routes = [{
 							icon: "el-icon-user",
 						},
 						component: () => import(/* webpackChunkName: "usercenter" */ '@/views/userCenter'),
-					},
-					{
-						name: "tableSetting",
-						path: "/setting/table",
-						meta: {
-							title: "表格列管理",
-							icon: "el-icon-s-fold",
-						},
-						component: () => import(/* webpackChunkName: "tableSetting" */ '@/views/setting/table'),
-					},
-					{
-						name: "formRender",
-						path: "/vab/form",
-						meta: {
-							title: "动态表单",
-							icon: "el-icon-receiving",
-						},
-						component: () => import(/* webpackChunkName: "formRender" */ '@/views/vab/form'),
 					}
 				]
 			}

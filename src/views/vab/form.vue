@@ -385,8 +385,8 @@
 				this.form.name = "New Title"
 			},
 			setConfig(){
-				this.config.formItems[1].span = this.config.formItems[1].span==24?12:24
 				this.config.formItems[2].span = this.config.formItems[2].span==24?12:24
+				this.config.formItems[3].span = this.config.formItems[3].span==24?12:24
 			},
 			save(){
 				this.$refs.formref.validate((valid, obj) => {
