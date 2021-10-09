@@ -3,10 +3,10 @@ const DEFAULT_CONFIG = {
 	APP_NAME: "SCUI",
 
 	//版本号
-	APP_VER: "1.2.5",
+	APP_VER: "1.2.6",
 
 	//内核版本号
-	CORE_VER: "1.2.5",
+	CORE_VER: "1.2.6",
 
 	//接口地址
 	API_URL: "/api",
