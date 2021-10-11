@@ -7,8 +7,8 @@
 			<el-image v-if="fileIsImg" class="image" :src="tempImg || img" :preview-src-list="[img]" fit="cover" hide-on-click-modal append-to-body :z-index="9999"></el-image>
 			<a v-else :href="img" class="file" target="_blank"><i class="el-icon-document"></i></a>
 		</div>
-		<div v-else class="sc-upload-uploader">
-			<el-upload ref="upload" class="uploader" :auto-upload="!cropper" :on-change="change" :accept="accept" :action="action" :show-file-list="false" :before-upload="before" :on-success="success" :on-error="error" :http-request="request">
+		<div v-else class="sc-upload-uploader" @click="fileSelect && showfileSelect()">
+			<el-upload ref="upload" class="uploader" :disabled="fileSelect" :auto-upload="!cropper" :on-change="change" :accept="accept" :action="action" :show-file-list="false" :before-upload="before" :on-success="success" :on-error="error" :http-request="request">
 				<slot>
 					<div class="file-empty">
 						<i :class="icon"></i>
@@ -24,14 +24,22 @@
 				<el-button type="primary" @click="cropperSave">确 定</el-button>
 			</template>
 		</el-dialog>
+		<el-dialog title="打开" v-model="fileSelectDialogVisible" :width="880" destroy-on-close>
+			<sc-file-select @submit="fileSelectSubmit">
+				<template #do>
+					<el-button @click="fileSelectDialogVisible=false" >取 消</el-button>
+				</template>
+			</sc-file-select>
+		</el-dialog>
 		<el-input v-model="img" style="display:none"></el-input>
 	</div>
 </template>
 
 <script>
+	import { defineAsyncComponent } from 'vue'
 	import config from "@/config/upload"
-	import scCropper from '@/components/scCropper';
-
+	const scCropper = defineAsyncComponent(() => import('@/components/scCropper'))
+	const scFileSelect = defineAsyncComponent(() => import('@/components/scFileSelect'))
 
 	export default {
 		props: {
@@ -44,13 +52,15 @@
 			maxSize: { type: Number, default: config.maxSize },
 			title: { type: String, default: "" },
 			icon: { type: String, default: "el-icon-plus" },
+			fileSelect: { type: Boolean, default: false },
 			cropper: { type: Boolean, default: false },
 			compress: {type: Number, default: 1},
 			aspectRatio:  {type: Number, default: NaN},
 			onSuccess: { type: Function, default: () => { return true } }
 		},
 		components: {
-			scCropper
+			scCropper,
+			scFileSelect
 		},
 		data() {
 			return {
@@ -64,7 +74,8 @@
 				},
 				cropperDialogVisible: false,
 				cropperImg: "",
-				cropperUploadFile: null
+				cropperUploadFile: null,
+				fileSelectDialogVisible: false,
 			}
 		},
 		watch:{
@@ -81,6 +92,13 @@
 			this.img = this.modelValue;
 		},
 		methods: {
+			showfileSelect(){
+				this.fileSelectDialogVisible = true
+			},
+			fileSelectSubmit(val){
+				this.img = val
+				this.fileSelectDialogVisible = false
+			},
 			cropperSave(){
 				var uploadFile = this.$refs.upload.uploadFiles[0].raw
 				this.$refs.cropper.getCropFile(file => {
