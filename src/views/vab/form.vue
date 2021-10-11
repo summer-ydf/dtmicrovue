@@ -95,7 +95,7 @@
 						span: 24,
 						options: {
 							remote: {
-								api: '/api/system/dic/get',
+								api: `${this.$CONFIG.API_URL}/system/dic/get`,
 								data: {name: 'a'}
 							},
 							multiple: true,
@@ -123,7 +123,7 @@
 						span: 24,
 						options: {
 							remote: {
-								api: '/api/system/dic/get',
+								api: `${this.$CONFIG.API_URL}/system/dic/get`,
 								data: {name: 'b'}
 							},
 							items:[
