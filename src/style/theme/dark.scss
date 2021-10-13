@@ -31,13 +31,7 @@
 	#app {background: $--background;color: $--text-color;}
 
 	/* 登录 */
-	.login_bg {background: $--background !important;}
-	.login-form {background: $--card-background !important;}
-	.login-logo h2 {color: $--text-color !important;}
-	@media (max-width: 1000px){
-		.login_bg {background: $--card-background !important;}
-		.login_container {background: $--card-background !important;}
-	}
+	.login_bg {background: $--card-background !important;}
 
 	.el-menu {
 		--el-menu-item-hover-fill: rgba(0,0,0,0.2);

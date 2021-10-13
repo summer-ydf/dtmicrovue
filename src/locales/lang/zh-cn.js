@@ -1,4 +1,19 @@
 export default {
+	login: {
+		slogan: '高性能 / 精致 / 优雅',
+		describe: '基于Vue3 + Element-Plus 的中后台前端解决方案。',
+		signInTitle: '用户登录',
+		rememberMe: '记住我',
+		forgetPassword: '忘记密码',
+		signIn: '登录',
+		signInOther: '其他登录方式',
+		userPlaceholder: '用户名 / 手机 / 邮箱',
+		userError: '请输入用户名',
+		PWPlaceholder: '请输入密码',
+		PWError: '请输入密码',
+		admin: '管理员',
+		user: '用户'
+	},
 	user: {
 		dynamic: '近期动态',
 		info: '个人信息',
