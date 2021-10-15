@@ -29,17 +29,7 @@
 		},
 		methods: {
 			a(){},
-			hasChildren(item){
-				var flag = true
-				if (item.children) {
-					if (item.children.every(item => item.meta.hidden)){
-						flag = false
-					}
-				}else{
-					flag = false
-				}
-				return flag;
-			}
+			hasChildren:(item) => item.children && item.children.every(item => !item.meta.hidden)
 		}
 	}
 </script>
