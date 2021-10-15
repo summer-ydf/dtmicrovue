@@ -25,7 +25,7 @@
 				</div>
 				<div class="adminui-side-scroll">
 					<el-scrollbar>
-						<el-menu :default-active="$route.meta.active || $route.fullPath" router :collapse="menuIsCollapse">
+						<el-menu :default-active="active" router :collapse="menuIsCollapse">
 							<NavMenu :navMenus="nextMenu"></NavMenu>
 						</el-menu>
 					</el-scrollbar>
@@ -60,7 +60,7 @@
 			<div v-if="!ismobile" :class="menuIsCollapse?'aminui-side isCollapse':'aminui-side'">
 				<div class="adminui-side-scroll">
 					<el-scrollbar>
-						<el-menu :default-active="$route.meta.active || $route.fullPath" router :collapse="menuIsCollapse">
+						<el-menu :default-active="active" router :collapse="menuIsCollapse">
 							<NavMenu :navMenus="menu"></NavMenu>
 						</el-menu>
 					</el-scrollbar>
@@ -96,7 +96,7 @@
 			<Side-m v-if="ismobile"></Side-m>
 			<div class="aminui-body el-container">
 				<div v-if="!ismobile" class="adminui-header-menu">
-					<el-menu :default-active="$route.meta.active || $route.fullPath" router mode="horizontal">
+					<el-menu :default-active="active" router mode="horizontal">
 						<NavMenu :navMenus="menu"></NavMenu>
 					</el-menu>
 				</div>
@@ -130,7 +130,7 @@
 				</div>
 				<div class="adminui-side-scroll">
 					<el-scrollbar>
-						<el-menu :default-active="$route.meta.active || $route.fullPath" router :collapse="menuIsCollapse">
+						<el-menu :default-active="active" router :collapse="menuIsCollapse">
 							<NavMenu :navMenus="nextMenu"></NavMenu>
 						</el-menu>
 					</el-scrollbar>
@@ -182,7 +182,8 @@
 				settingDialog: false,
 				menu: [],
 				nextMenu: [],
-				pmenu: {}
+				pmenu: {},
+				active: ''
 			}
 		},
 		computed:{
@@ -236,6 +237,9 @@
 				var home = this.$router.options.routes[0].children[0];
 				this.pmenu = this.$route.matched[1] || home;
 				this.nextMenu = this.filterUrl(this.pmenu.children);
+				this.$nextTick(()=>{
+					this.active = this.$route.meta.active || this.$route.fullPath;
+				})
 			},
 			//点击显示
 			showMenu(route) {
