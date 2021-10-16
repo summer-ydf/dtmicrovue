@@ -36,7 +36,11 @@
 				<Topbar v-if="!ismobile"></Topbar>
 				<Tags v-if="!ismobile && layoutTags"></Tags>
 				<div class="adminui-main" id="adminui-main">
-					<router-view></router-view>
+					<router-view v-slot="{ Component }">
+					    <keep-alive :include="this.$store.state.keepAlive.keepLiveRoute">
+					        <component :is="Component" :key="$route.fullPath" v-if="$store.state.keepAlive.routeShow"/>
+					    </keep-alive>
+					</router-view>
 					<iframe-view></iframe-view>
 				</div>
 			</div>
@@ -71,7 +75,11 @@
 				<Topbar v-if="!ismobile"></Topbar>
 				<Tags v-if="!ismobile && layoutTags"></Tags>
 				<div class="adminui-main" id="adminui-main">
-					<router-view></router-view>
+					<router-view v-slot="{ Component }">
+					    <keep-alive :include="this.$store.state.keepAlive.keepLiveRoute">
+					        <component :is="Component" :key="$route.fullPath" v-if="$store.state.keepAlive.routeShow"/>
+					    </keep-alive>
+					</router-view>
 					<iframe-view></iframe-view>
 				</div>
 			</div>
@@ -101,7 +109,11 @@
 					</el-menu>
 				</div>
 				<div class="adminui-main" id="adminui-main">
-					<router-view></router-view>
+					<router-view v-slot="{ Component }">
+					    <keep-alive :include="this.$store.state.keepAlive.keepLiveRoute">
+					        <component :is="Component" :key="$route.fullPath" v-if="$store.state.keepAlive.routeShow"/>
+					    </keep-alive>
+					</router-view>
 					<iframe-view></iframe-view>
 				</div>
 			</div>
@@ -143,7 +155,11 @@
 				</Topbar>
 				<Tags v-if="!ismobile && layoutTags"></Tags>
 				<div class="adminui-main" id="adminui-main">
-					<router-view></router-view>
+					<router-view v-slot="{ Component }">
+					    <keep-alive :include="this.$store.state.keepAlive.keepLiveRoute">
+					        <component :is="Component" :key="$route.fullPath" v-if="$store.state.keepAlive.routeShow"/>
+					    </keep-alive>
+					</router-view>
 					<iframe-view></iframe-view>
 				</div>
 			</div>
@@ -204,8 +220,6 @@
 			this.onLayoutResize();
 			window.addEventListener('resize', this.onLayoutResize);
 			var menu = this.$TOOL.data.get("MENU");
-			var home = this.$router.options.routes[0].children[0];
-			menu.unshift(home);
 			this.menu = this.filterUrl(menu);
 			this.showThis()
 		},
@@ -234,8 +248,7 @@
 			},
 			//路由监听高亮
 			showThis(){
-				var home = this.$router.options.routes[0].children[0];
-				this.pmenu = this.$route.matched[1] || home;
+				this.pmenu = this.$route.meta.breadcrumb ? this.$route.meta.breadcrumb[0] : {}
 				this.nextMenu = this.filterUrl(this.pmenu.children);
 				this.$nextTick(()=>{
 					this.active = this.$route.meta.active || this.$route.fullPath;

@@ -16,6 +16,7 @@ const routes_404 = {
 	hidden: true,
 	component: () => import(/* webpackChunkName: "404" */ '@/views/other/404'),
 }
+let routes_404_r = ()=>{}
 
 const router = createRouter({
 	history: createWebHashHistory(),
@@ -29,14 +30,18 @@ document.title = config.APP_NAME
 var isGetApiRouter = false;
 
 router.beforeEach(async (to, from, next) => {
-	NProgress.start()
 
+	NProgress.start()
 	//动态标题
 	document.title = to.meta.title ? `${to.meta.title} - ${config.APP_NAME}` : `${config.APP_NAME}`
 
 	let token = tool.data.get("TOKEN");
 
 	if(to.path === "/login"){
+		//删除路由(替换当前layout路由)
+		router.addRoute(routes[0])
+		//删除路由(404)
+		routes_404_r()
 		isGetApiRouter = false;
 		next();
 		return false;
@@ -53,10 +58,11 @@ router.beforeEach(async (to, from, next) => {
 	if(!isGetApiRouter){
 		let menu = tool.data.get("MENU");
 		var apiRouter = filterAsyncRouter(menu);
+		apiRouter = flatAsyncRoutes(apiRouter)
 		apiRouter.forEach(item => {
 			router.addRoute("layout", item)
 		})
-		router.addRoute(routes_404)
+		routes_404_r = router.addRoute(routes_404)
 		if (to.matched.length == 0) {
 			router.push(to.fullPath);
 		}
@@ -78,7 +84,6 @@ router.onError((error) => {
 		message: error.message
 	});
 });
-
 
 //转换
 function filterAsyncRouter(routerMap) {
@@ -112,5 +117,30 @@ function loadComponent(component){
 
 }
 
+//路由扁平化
+function flatAsyncRoutes(routes, breadcrumb=[]) {
+	let res = []
+	routes.forEach(route => {
+		const tmp = {...route}
+        if (tmp.children) {
+            let childrenBreadcrumb = [...breadcrumb]
+            childrenBreadcrumb.push(route)
+            let tmpRoute = { ...route }
+            tmpRoute.meta.breadcrumb = childrenBreadcrumb
+            delete tmpRoute.children
+            res.push(tmpRoute)
+            let childrenRoutes = flatAsyncRoutes(tmp.children, childrenBreadcrumb)
+            childrenRoutes.map(item => {
+                res.push(item)
+            })
+        } else {
+            let tmpBreadcrumb = [...breadcrumb]
+            tmpBreadcrumb.push(tmp)
+            tmp.meta.breadcrumb = tmpBreadcrumb
+            res.push(tmp)
+        }
+    })
+    return res
+}
 
 export default router

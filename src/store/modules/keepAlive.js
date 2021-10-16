@@ -1,6 +1,6 @@
 export default {
 	state: {
-		keepLiveRoute: ['empty'],
+		keepLiveRoute: [],
 		routeKey: null,
 		routeShow: true
 	},
@@ -17,7 +17,7 @@ export default {
 			}
 		},
 		clearKeepLive(state){
-			state.keepLiveRoute = ['empty']
+			state.keepLiveRoute = []
 		},
 		setRouteKey(state, key){
 			state.routeKey = key

@@ -174,6 +174,14 @@
 					menu = await this.$API.demo.menu.get()
 				}
 				if(menu.code == 200){
+					if(menu.data.menu.length==0){
+						this.islogin = false
+						this.$alert("当前用户无任何菜单权限，请联系系统管理员", "无权限访问", {
+							type: 'error',
+							center: true
+						})
+						return false
+					}
 					this.$TOOL.data.set("MENU", menu.data.menu)
 					this.$TOOL.data.set("PERMISSIONS", menu.data.permissions)
 				}else{

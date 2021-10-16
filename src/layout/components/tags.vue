@@ -67,16 +67,28 @@
 			}
 		},
 		created() {
-			const dashboardRoute = this.$router.options.routes[0].children[0].children[0]
+			var menu = this.$TOOL.data.get("MENU")
+			var dashboardRoute = this.treeFind(menu, node => node.path==this.$CONFIG.DASHBOARD_URL)
 			dashboardRoute.fullPath = dashboardRoute.path
-			this.addViewTags(dashboardRoute);
-			this.addViewTags(this.$route);
+			this.addViewTags(dashboardRoute)
+			this.addViewTags(this.$route)
 		},
 		mounted() {
 			this.tagDrop();
 			this.scrollInit()
 		},
 		methods: {
+			//查找树
+			treeFind(tree, func){
+				for (const data of tree) {
+					if (func(data)) return data
+					if (data.children) {
+						const res = this.treeFind(data.children, func)
+						if (res) return res
+					}
+				}
+				return null
+			},
 			//标签拖拽排序
 			tagDrop(){
 				const target = this.$refs.tags

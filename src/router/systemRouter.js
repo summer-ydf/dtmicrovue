@@ -1,41 +1,13 @@
+import config from "@/config"
+
 //系统路由
-const routes = [{
+const routes = [
+	{
 		name: "layout",
 		path: "/",
 		component: () => import(/* webpackChunkName: "layout" */ '@/layout'),
-		redirect: '/dashboard',
-		children: [
-			{
-				name: "home",
-				path: "/home",
-				component: () => import(`@/views/other/empty`),
-				meta: {
-					title: "首页",
-					icon: "el-icon-platform-eleme"
-				},
-				children: [
-					{
-						name: "dashboard",
-						path: "/dashboard",
-						meta: {
-							title: "控制台",
-							icon: "el-icon-menu",
-							affix: true
-						},
-						component: () => import(/* webpackChunkName: "home" */ '@/views/home'),
-					},
-					{
-						name: "userCenter",
-						path: "/usercenter",
-						meta: {
-							title: "个人信息",
-							icon: "el-icon-user",
-						},
-						component: () => import(/* webpackChunkName: "usercenter" */ '@/views/userCenter'),
-					}
-				]
-			}
-		]
+		redirect: config.DASHBOARD_URL || '/dashboard',
+		children: []
 	},
 	{
 		path: "/cmd",
