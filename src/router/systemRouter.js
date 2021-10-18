@@ -10,13 +10,6 @@ const routes = [
 		children: []
 	},
 	{
-		path: "/cmd",
-		component: () => import(/* webpackChunkName: "cmd" */ '@/views/other/cmd'),
-		meta: {
-			title: "CMD"
-		}
-	},
-	{
 		path: "/login",
 		component: () => import(/* webpackChunkName: "login" */ '@/views/userCenter/login'),
 		meta: {
