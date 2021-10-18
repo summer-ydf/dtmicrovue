@@ -53,7 +53,11 @@ router.beforeEach(async (to, from, next) => {
 		});
 		return false;
 	}
-
+	
+	//整页路由处理
+	if(to.meta.fullpage){
+		to.matched = [to.matched[to.matched.length-1]]
+	}
 	//加载API路由
 	if(!isGetApiRouter){
 		let menu = tool.data.get("MENU");
