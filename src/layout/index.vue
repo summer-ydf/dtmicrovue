@@ -86,7 +86,7 @@
 		</section>
 	</template>
 
-	<!-- 经典布局 -->
+	<!-- 功能坞布局 -->
 	<template v-else-if="layout=='dock'">
 		<header class="adminui-header">
 			<div class="adminui-header-left">
@@ -96,18 +96,17 @@
 				</div>
 			</div>
 			<div class="adminui-header-right">
-				<userbar></userbar>
-			</div>
-		</header>
-
-		<section class="aminui-wrapper">
-			<Side-m v-if="ismobile"></Side-m>
-			<div class="aminui-body el-container">
 				<div v-if="!ismobile" class="adminui-header-menu">
-					<el-menu :default-active="active" router mode="horizontal">
+					<el-menu mode="horizontal" :default-active="active" router>
 						<NavMenu :navMenus="menu"></NavMenu>
 					</el-menu>
 				</div>
+				<Side-m v-if="ismobile"></Side-m>
+				<userbar></userbar>
+			</div>
+		</header>
+		<section class="aminui-wrapper">
+			<div class="aminui-body el-container">
 				<div class="adminui-main" id="adminui-main">
 					<router-view v-slot="{ Component }">
 					    <keep-alive :include="this.$store.state.keepAlive.keepLiveRoute">
