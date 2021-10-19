@@ -1,3 +1,12 @@
+<!--
+ * @Descripttion: 数据表格组件
+ * @version: 1.3
+ * @Author: sakuya
+ * @Date: 2021年10月19日16:04:54
+ * @LastEditors:
+ * @LastEditTime:
+-->
+
 <template>
 	<div class="scTable" :style="{'height':_height}" ref="scTableMain" v-loading="loading">
 		<div class="scTable-table">
