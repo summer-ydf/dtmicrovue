@@ -1,10 +1,16 @@
 <template>
 	<el-main>
-		<el-card shadow="never">
-			<scFilterBar filterName="filterName" :options="options" @filterChange="change"></scFilterBar>
+		<el-card shadow="never" header="过滤器">
+			<scFilterBar filterName="filterName" :options="options" @filterChange="change">
+				<template #default="{filterLength, openFilter}">
+					<el-badge :value="filterLength" type="danger" :hidden="filterLength<=0">
+						<el-button size="small" icon="sc-icon-filter-fill" @click="openFilter"></el-button>
+					</el-badge>
+				</template>
+			</scFilterBar>
 		</el-card>
 		<el-alert title="SCUI 独创的过滤条Filterbar,可配置不同类型的过滤字段,以及异步获取数据,在@/config/filterBar.js中可以更改运算符以及其他配置,操作上方过滤条查看下方change事件的回调,在表格查询的场景下非常合适" type="success" style="margin:20px 0;"></el-alert>
-		<el-card shadow="never">
+		<el-card shadow="never" header="返回值">
 			<pre>{{ filterData }}</pre>
 		</el-card>
 	</el-main>
@@ -114,17 +120,28 @@
 						label: '开关',
 						value: 'switch',
 						type: 'switch',
-						operator: '=',
+						operator: '='
 					},
 					{
 						label: '日期单选',
 						value: 'date',
 						type: 'date',
+						operator: '=',
+						operators: [
+							{
+								label: '等于',
+								value: '=',
+							},
+							{
+								label: '不等于',
+								value: '!=',
+							}
+						]
 					},
 					{
 						label: '日期范围',
 						value: 'date2',
-						type: 'daterange',
+						type: 'daterange'
 					}
 				]
 			}

@@ -1,17 +1,20 @@
 <!--
  * @Descripttion: 过滤器V2
- * @version: 2.0
+ * @version: 2.1
  * @Author: sakuya
  * @Date: 2021年7月30日14:48:41
- * @LastEditors:
- * @LastEditTime:
+ * @LastEditors: sakuya
+ * @LastEditTime: 2021年10月29日13:05:55
 -->
 
 <template>
 	<div class="sc-filterBar">
-		<el-badge :value="filterObjLength" type="danger" :hidden="filterObjLength<=0">
-			<el-button size="small" icon="sc-icon-filter-fill" @click="openFilter"></el-button>
-		</el-badge>
+		<slot :filterLength="filterObjLength" :openFilter="openFilter">
+			<el-badge :value="filterObjLength" type="danger" :hidden="filterObjLength<=0">
+				<el-button size="small" icon="sc-icon-filter-fill" @click="openFilter"></el-button>
+			</el-badge>
+		</slot>
+
 		<el-drawer title="过滤器" v-model="drawer" :size="650" append-to-body>
 			<el-container v-loading="saveLoading">
 				<el-main style="padding:0">
@@ -30,7 +33,7 @@
 										<colgroup>
 											<col width="50">
 											<col width="140">
-											<col width="120">
+											<col v-if="showOperator" width="120">
 											<col>
 											<col width="40">
 										</colgroup>
@@ -42,9 +45,9 @@
 												<py-select v-model="item.field" :options="fields" placeholder="过滤字段" filterable @change="fieldChange(item)">
 												</py-select>
 											</td>
-											<td>
+											<td v-if="showOperator">
 												<el-select v-model="item.operator" placeholder="运算符">
-													<el-option v-for="ope in operator" :key="ope.value" :label="ope.label" :value="ope.value"></el-option>
+													<el-option v-for="ope in item.field.operators || operator" :key="ope.value" :label="ope.label" :value="ope.value"></el-option>
 												</el-select>
 											</td>
 											<td>
@@ -108,6 +111,7 @@
 		},
 		props: {
 			filterName: { type: String, default: "" },
+			showOperator: { type: Boolean, default: true },
 			options: { type: Object, default: () => {} }
 		},
 		data() {
@@ -125,7 +129,7 @@
 			filterObj(){
 				const obj = {}
 				this.filter.forEach((item) => {
-					obj[item.field.value] = `${item.value}${config.separator}${item.operator}`
+					obj[item.field.value] = this.showOperator ? `${item.value}${config.separator}${item.operator}` : `${item.value}`
 				})
 				return obj
 			}
