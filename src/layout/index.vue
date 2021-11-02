@@ -19,7 +19,7 @@
 			</div>
 		</header>
 		<section class="aminui-wrapper">
-			<div v-if="!ismobile" :class="menuIsCollapse?'aminui-side isCollapse':'aminui-side'">
+			<div v-if="!ismobile && nextMenu.length>0" :class="menuIsCollapse?'aminui-side isCollapse':'aminui-side'">
 				<div v-if="!menuIsCollapse" class="adminui-side-top">
 					<h2>{{ pmenu.meta.title }}</h2>
 				</div>
@@ -135,7 +135,7 @@
 					</el-scrollbar>
 				</div>
 			</div>
-			<div v-if="!ismobile" :class="menuIsCollapse?'aminui-side isCollapse':'aminui-side'">
+			<div v-if="!ismobile && nextMenu.length>0" :class="menuIsCollapse?'aminui-side isCollapse':'aminui-side'">
 				<div v-if="!menuIsCollapse" class="adminui-side-top">
 					<h2>{{ pmenu.meta.title }}</h2>
 				</div>
@@ -257,6 +257,9 @@
 			showMenu(route) {
 				this.pmenu = route;
 				this.nextMenu = this.filterUrl(route.children);
+				if(!route.children && route.component){
+					this.$router.push({path: route.path})
+				}
 			},
 			//转换外部链接的路由
 			filterUrl(map){
