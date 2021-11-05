@@ -117,6 +117,22 @@
 						}
 					},
 					{
+						label: '关键词(标签)',
+						value: 'tags',
+						type: 'tags',
+						operator: 'include',
+						operators: [
+							{
+								label: '包含',
+								value: 'include',
+							},
+							{
+								label: '不包含',
+								value: 'notinclude',
+							}
+						]
+					},
+					{
 						label: '开关',
 						value: 'switch',
 						type: 'switch',
