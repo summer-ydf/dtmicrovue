@@ -42,6 +42,7 @@
 .el-button--primary {background-color: var(--el-color-primary);border-color: var(--el-color-primary);}
 .el-button--primary:focus, .el-button--primary:hover {background: var(--el-color-primary-light-2);border-color: var(--el-color-primary-light-2);}
 .el-button--primary:active {background-color: var(--el-color-primary-darken-1, #0d84ff);border-color: var(--el-color-primary-darken-1, #0d84ff);color: #fff;}
+.el-button--primary.is-disabled, .el-button--primary.is-disabled:active, .el-button--primary.is-disabled:focus, .el-button--primary.is-disabled:hover {background: var(--el-color-primary-light-5);border-color: var(--el-color-primary-light-5);}
 .el-button--primary.is-plain {background: var(--el-color-primary-light-9);border-color: var(--el-color-primary-light-6);color: var(--el-color-primary);}
 .el-button--primary.is-plain:focus, .el-button--primary.is-plain:hover {background-color: var(--el-color-primary);border-color: var(--el-color-primary);}
 .el-button--primary.is-plain:active {background-color: var(--el-color-primary-darken-1, #0d84ff);border-color: var(--el-color-primary-darken-1, #0d84ff);}
