@@ -109,11 +109,11 @@
 				return route.fullPath === this.$route.fullPath
 			},
 			//关闭tag
-			closeSelectedTag(tag) {
+			closeSelectedTag(tag, autoPushLatestView=true) {
 				this.$store.commit("removeViewTags", tag)
 				this.$store.commit("removeIframeList", tag)
 				this.$store.commit("removeKeepLive", tag.name)
-				if (this.isActive(tag)) {
+				if (autoPushLatestView && this.isActive(tag)) {
 					const latestView = this.tagList.slice(-1)[0]
 					if (latestView) {
 						this.$router.push(latestView)
@@ -176,12 +176,19 @@
 			//TAB 关闭其他
 			closeOtherTabs(){
 				var nowTag = this.contextMenuItem;
+				//判断是否当前路由，否的话跳转
+				if(this.$route.fullPath != nowTag.fullPath){
+					this.$router.push({
+						path: nowTag.fullPath,
+						query: nowTag.query
+					})
+				}
 				var tags = [...this.tagList];
 				tags.forEach(tag => {
 					if(tag.meta&&tag.meta.affix || nowTag.fullPath==tag.fullPath){
 						return true
 					}else{
-						this.closeSelectedTag(tag)
+						this.closeSelectedTag(tag, false)
 					}
 				})
 				this.contextMenuVisible = false
