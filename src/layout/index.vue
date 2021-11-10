@@ -218,7 +218,7 @@
 		created() {
 			this.onLayoutResize();
 			window.addEventListener('resize', this.onLayoutResize);
-			var menu = this.$TOOL.data.get("MENU");
+			var menu = this.$router.sc_getMenu();
 			this.menu = this.filterUrl(menu);
 			this.showThis()
 		},

@@ -67,11 +67,13 @@
 			}
 		},
 		created() {
-			var menu = this.$TOOL.data.get("MENU")
+			var menu = this.$router.sc_getMenu()
 			var dashboardRoute = this.treeFind(menu, node => node.path==this.$CONFIG.DASHBOARD_URL)
-			dashboardRoute.fullPath = dashboardRoute.path
-			this.addViewTags(dashboardRoute)
-			this.addViewTags(this.$route)
+			if(dashboardRoute){
+				dashboardRoute.fullPath = dashboardRoute.path
+				this.addViewTags(dashboardRoute)
+				this.addViewTags(this.$route)
+			}
 		},
 		mounted() {
 			this.tagDrop();

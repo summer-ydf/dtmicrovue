@@ -5,10 +5,18 @@ import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import tool from '@/utils/tool';
 import systemRouter from './systemRouter';
+import userRoutes from '@/config/route';
 import {beforeEach, afterEach} from './scrollBehavior';
 
 //系统路由
 const routes = systemRouter
+
+//插入转换且扁平化的静态路由
+var u_Routes = filterAsyncRouter(userRoutes.routes)
+	u_Routes = flatAsyncRoutes(u_Routes)
+var otherRoutes = filterAsyncRouter(userRoutes.otherRoutes)
+routes[0].children = u_Routes
+routes.push(...otherRoutes)
 
 //系统特殊路由
 const routes_404 = {
@@ -60,7 +68,7 @@ router.beforeEach(async (to, from, next) => {
 	}
 	//加载API路由
 	if(!isGetApiRouter){
-		let menu = tool.data.get("MENU");
+		let menu = tool.data.get("MENU") || [];
 		var apiRouter = filterAsyncRouter(menu);
 		apiRouter = flatAsyncRoutes(apiRouter)
 		apiRouter.forEach(item => {
@@ -88,6 +96,13 @@ router.onError((error) => {
 		message: error.message
 	});
 });
+
+//入侵追加自定义方法、对象
+router.sc_getMenu = () => {
+	var systemMenu = tool.data.get("MENU") || []
+	var menu = [...userRoutes.routes, ...systemMenu];
+	return menu
+}
 
 //转换
 function filterAsyncRouter(routerMap) {
