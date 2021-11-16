@@ -216,7 +216,9 @@
 
 	.el-calendar {background: $--card-background;}
 	.el-calendar__title {color: $--text-color;}
-
+	
+	.el-switch__core .el-switch__inner .is-icon, .el-switch__core .el-switch__inner .is-text {color: #fff;}
+	
 	.el-empty__image svg {
 		#Rectangle-Copy {fill: #111;}
 		#Rectangle-Copy-10 {fill: #555;}
