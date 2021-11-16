@@ -11,13 +11,6 @@ import {beforeEach, afterEach} from './scrollBehavior';
 //系统路由
 const routes = systemRouter
 
-//插入转换且扁平化的静态路由
-var u_Routes = filterAsyncRouter(userRoutes.routes)
-	u_Routes = flatAsyncRoutes(u_Routes)
-var otherRoutes = filterAsyncRouter(userRoutes.otherRoutes)
-routes[0].children = u_Routes
-routes.push(...otherRoutes)
-
 //系统特殊路由
 const routes_404 = {
 	path: "/:pathMatch(.*)*",
@@ -34,8 +27,8 @@ const router = createRouter({
 //设置标题
 document.title = config.APP_NAME
 
-//判断是否已加载过API路由
-var isGetApiRouter = false;
+//判断是否已加载过动态/静态路由
+var isGetRouter = false;
 
 router.beforeEach(async (to, from, next) => {
 
@@ -50,7 +43,7 @@ router.beforeEach(async (to, from, next) => {
 		router.addRoute(routes[0])
 		//删除路由(404)
 		routes_404_r()
-		isGetApiRouter = false;
+		isGetRouter = false;
 		next();
 		return false;
 	}
@@ -61,24 +54,29 @@ router.beforeEach(async (to, from, next) => {
 		});
 		return false;
 	}
-	
+
 	//整页路由处理
 	if(to.meta.fullpage){
 		to.matched = [to.matched[to.matched.length-1]]
 	}
-	//加载API路由
-	if(!isGetApiRouter){
-		let menu = tool.data.get("MENU") || [];
-		var apiRouter = filterAsyncRouter(menu);
-		apiRouter = flatAsyncRoutes(apiRouter)
-		apiRouter.forEach(item => {
+	//加载动态/静态路由
+	if(!isGetRouter){
+		let apiMenu = tool.data.get("MENU") || []
+		let userInfo = tool.data.get("USER_INFO")
+		let userMenu = treeFilter(userRoutes, node => {
+			return node.meta.role ? node.meta.role.filter(item=>userInfo.role.indexOf(item)>-1).length > 0 : true
+		})
+		let menu = [...userMenu, ...apiMenu]
+		var menuRouter = filterAsyncRouter(menu)
+		menuRouter = flatAsyncRoutes(menuRouter)
+		menuRouter.forEach(item => {
 			router.addRoute("layout", item)
 		})
 		routes_404_r = router.addRoute(routes_404)
 		if (to.matched.length == 0) {
 			router.push(to.fullPath);
 		}
-		isGetApiRouter = true;
+		isGetRouter = true;
 	}
 	beforeEach(to, from)
 	next();
@@ -99,8 +97,12 @@ router.onError((error) => {
 
 //入侵追加自定义方法、对象
 router.sc_getMenu = () => {
-	var systemMenu = tool.data.get("MENU") || []
-	var menu = [...userRoutes.routes, ...systemMenu];
+	var apiMenu = tool.data.get("MENU") || []
+	let userInfo = tool.data.get("USER_INFO")
+	let userMenu = treeFilter(userRoutes, node => {
+		return node.meta.role ? node.meta.role.filter(item=>userInfo.role.indexOf(item)>-1).length > 0 : true
+	})
+	var menu = [...userMenu, ...apiMenu]
 	return menu
 }
 
@@ -160,6 +162,14 @@ function flatAsyncRoutes(routes, breadcrumb=[]) {
         }
     })
     return res
+}
+
+//过滤树
+function treeFilter(tree, func) {
+	return tree.map(node => ({ ...node })).filter(node => {
+		node.children = node.children && treeFilter(node.children, func)
+		return func(node) || (node.children && node.children.length)
+	})
 }
 
 export default router
