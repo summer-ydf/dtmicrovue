@@ -51,8 +51,8 @@
 
 				<!-- 各列自定义template -->
 				<template #state="scope">
-					<em v-if="scope.row.state=='1'" class="state state-1"></em>
-					<em v-if="scope.row.state=='2'" class="state state-2 status-processing"></em>
+					<sc-status-indicator v-if="scope.row.state=='1'" type="primary"></sc-status-indicator>
+					<sc-status-indicator v-if="scope.row.state=='2'" pulse type="danger"></sc-status-indicator>
 				</template>
 				<template #name="scope">
 					<h4>{{scope.row.name}}</h4>
@@ -75,7 +75,7 @@
 						<el-button type="text" size="small" @click="table_show(scope.row, scope.$index)">查看</el-button>
 						<el-divider direction="vertical"></el-divider>
 						<el-dropdown>
-							<el-button  type="text" size="small">更多<i class="el-icon-arrow-down el-icon--right"></i></el-button>
+							<el-button  type="text" size="small">更多<el-icon class="el-icon--right"><el-icon-arrow-down /></el-icon></el-button>
 							<template #dropdown>
 								<el-dropdown-menu>
 									<el-dropdown-item @click="table_edit(scope.row, scope.$index)">编辑</el-dropdown-item>
@@ -246,24 +246,4 @@
 	}
 </script>
 
-<style scoped>
-	.state {width:8px;height:8px;background: #ddd;display: inline-block;border-radius: 50%;vertical-align: middle;}
-	.state-1 {background: #409EFF;}
-	.state-2 {background: #F56C6C;}
-	.status-processing {position: relative;}
-	.status-processing:after {position: absolute;top:0px;left:0px;width: 100%;height: 100%;border-radius: 50%;background: inherit;content: '';animation: warn 1.2s ease-in-out infinite;}
-
-	@keyframes warn {
-		0% {
-			transform: scale(0.5);
-			opacity: 1;
-		}
-		30% {
-			opacity: 1;
-		}
-		100% {
-			transform: scale(2);
-			opacity: 0;
-		}
-	}
-</style>
+<style></style>

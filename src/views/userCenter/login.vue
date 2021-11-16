@@ -6,9 +6,15 @@
 				<h4>{{ $t('login.slogan') }}</h4>
 				<p>{{ $t('login.describe') }}</p>
 				<div>
-					<span><i class="sc-icon-vuejs-fill"></i></span>
-					<span><i class="add el-icon-plus"></i></span>
-					<span><i class="el-icon-platform-eleme"></i></span>
+					<span>
+						<el-icon><sc-icon-vue /></el-icon>
+					</span>
+					<span>
+						<el-icon class="add"><el-icon-plus /></el-icon>
+					</span>
+					<span>
+						<el-icon><el-icon-eleme-filled /></el-icon>
+					</span>
 				</div>
 			</div>
 			<div class="login_adv__bottom">
@@ -69,7 +75,7 @@
 				<el-divider>{{ $t('login.signInOther') }}</el-divider>
 
 				<div class="login-oauth">
-					<el-button size="small" type="success" icon="sc-icon-wechat-fill" circle></el-button>
+					<el-button size="small" type="success" icon="sc-icon-wechat" circle></el-button>
 				</div>
 			</div>
 		</div>

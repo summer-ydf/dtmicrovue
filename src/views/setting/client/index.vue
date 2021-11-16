@@ -13,7 +13,7 @@
 				<el-table-column label="应用名称" prop="appName" width="250"></el-table-column>
 				<el-table-column label="状态" width="50">
 					<template #default>
-						<i class="el-icon-success" style="color: #67C23A;"></i>
+						<el-icon style="color: #67C23A;"><el-icon-circle-check-filled /></el-icon>
 					</template>
 				</el-table-column>
 				<el-table-column label="秘钥" prop="secret" show-overflow-tooltip width="150"></el-table-column>

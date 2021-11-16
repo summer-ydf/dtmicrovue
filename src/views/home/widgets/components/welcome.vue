@@ -7,15 +7,15 @@
 			</div>
 			<div class="tips">
 				<div class="tips-item">
-					<div class="tips-item-icon"><i class="el-icon-menu"></i></div>
+					<div class="tips-item-icon"><el-icon><el-icon-menu/></el-icon></div>
 					<div class="tips-item-message">这里是项目控制台，你可以点击右上方的“自定义”按钮来添加移除或者移动部件。</div>
 				</div>
 				<div class="tips-item">
-					<div class="tips-item-icon"><i class="el-icon-s-promotion"></i></div>
+					<div class="tips-item-icon"><el-icon><el-icon-promotion/></el-icon></div>
 					<div class="tips-item-message">在提高前端算力、减少带宽请求和代码执行力上多次优化，并且持续着。</div>
 				</div>
 				<div class="tips-item">
-					<div class="tips-item-icon"><i class="el-icon-milk-tea"></i></div>
+					<div class="tips-item-icon"><el-icon><el-icon-milk-tea/></el-icon></div>
 					<div class="tips-item-message">项目目的：让前端工作更快乐</div>
 				</div>
 			</div>

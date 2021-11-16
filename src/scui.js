@@ -22,6 +22,9 @@ import time from './directives/time'
 import copy from './directives/copy'
 import errorHandler from './utils/errorHandler'
 
+import * as elIcons from '@element-plus/icons'
+import * as scIcons from './assets/icons'
+
 export default {
 	install(app) {
 		//挂载全局对象
@@ -52,6 +55,15 @@ export default {
 		app.directive('role', role)
 		app.directive('time', time)
 		app.directive('copy', copy)
+
+		//统一注册el-icon图标
+		for(let icon in elIcons){
+			app.component(`ElIcon${icon}`, elIcons[icon])
+		}
+		//统一注册sc-icon图标
+		for(let icon in scIcons){
+			app.component(`ScIcon${icon}`, scIcons[icon])
+		}
 
 		//全局代码错误捕捉
 		app.config.errorHandler = errorHandler

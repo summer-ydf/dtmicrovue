@@ -14,8 +14,8 @@
 				<el-table-column label="执行时间" prop="time" width="200"></el-table-column>
 				<el-table-column label="执行结果" prop="state" width="100">
 					<template #default="scope">
-						<span v-if="scope.row.state==200" style="color: #67C23A;"><i class="el-icon-success"></i> 成功</span>
-						<span v-else style="color: #F56C6C;"><i class="el-icon-error"></i> 异常</span>
+						<span v-if="scope.row.state==200" style="color: #67C23A;"><el-icon><el-icon-success-filled /></el-icon></span>
+						<span v-else style="color: #F56C6C;"><el-icon><el-icon-circle-close-filled /></el-icon></span>
 					</template>
 				</el-table-column>
 				<el-table-column label="执行日志" prop="logs" width="100" fixed="right">

@@ -29,7 +29,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="sc-user-select__toicon"><i class="el-icon-right"></i></div>
+				<div class="sc-user-select__toicon"><el-icon><el-icon-arrow-right /></el-icon></div>
 				<div class="sc-user-select__selected">
 					<header>已选 ({{selected.length}})</header>
 					<ul>
@@ -60,7 +60,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="sc-user-select__toicon"><i class="el-icon-right"></i></div>
+				<div class="sc-user-select__toicon"><el-icon><el-icon-arrow-right /></el-icon></div>
 				<div class="sc-user-select__selected">
 					<header>已选 ({{selected.length}})</header>
 					<ul>
@@ -247,7 +247,7 @@
 	.sc-user-select__user footer {height:36px;padding-top:5px;border-top: 1px solid var(--el-border-color-light);}
 
 	.sc-user-select__toicon {display: flex;justify-content: center;align-items: center;margin:0 10px;}
-	.sc-user-select__toicon i {background: #ccc;width: 20px;height: 20px;text-align: center;line-height: 20px;border-radius:50%;color: #fff;}
+	.sc-user-select__toicon i {display: flex;justify-content: center;align-items: center;background: #ccc;width: 20px;height: 20px;text-align: center;line-height: 20px;border-radius:50%;color: #fff;}
 
 	.sc-user-select__selected {height:345px;width: 200px;border: 1px solid var(--el-border-color-light);background: var(--el-color-white);}
 	.sc-user-select__selected header {height:43px;line-height: 43px;border-bottom: 1px solid var(--el-border-color-light);padding:0 15px;font-size: 12px;}

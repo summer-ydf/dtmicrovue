@@ -7,7 +7,7 @@
 					<el-button type="primary" @click="print">普通打印</el-button>
 					<div style="height:20px"></div>
 					<div class="printMain" ref="printMain">
-						<div class="item">打印内容1 <i class="el-icon-platform-eleme"></i> <p class="no-print">忽略打印</p></div>
+						<div class="item">打印内容1 <el-icon><el-icon-eleme-filled /></el-icon> <p class="no-print">忽略打印</p></div>
 						<div style="page-break-after: always;"></div>
 						<div class="item">打印内容2</div>
 					</div>

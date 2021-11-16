@@ -2,7 +2,7 @@
 	<div class="node-wrap">
 		<div class="node-wrap-box start-node" @click="show">
 			<div class="title" style="background: #576a95;">
-				<i class="icon el-icon-user-solid"></i>
+				<el-icon class="icon"><el-icon-user-filled /></el-icon>
 				<span>{{ nodeConfig.nodeName }}</span>
 			</div>
 			<div class="content">
@@ -13,7 +13,7 @@
 		<el-drawer title="发起人" v-model="drawer" destroy-on-close append-to-body :size="500">
 			<template #title>
 				<div class="node-wrap-drawer__title">
-					<label @click="editTitle" v-if="!isEditTitle">{{form.nodeName}}<i class="node-wrap-drawer__title-edit el-icon-edit-outline"></i></label>
+					<label @click="editTitle" v-if="!isEditTitle">{{form.nodeName}}<el-icon class="node-wrap-drawer__title-edit"><el-icon-edit /></el-icon></label>
 					<el-input v-if="isEditTitle" ref="nodeTitle" v-model="form.nodeName" clearable @blur="saveTitle" @keyup.enter="saveTitle"></el-input>
 				</div>
 			</template>

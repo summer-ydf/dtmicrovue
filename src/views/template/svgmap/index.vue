@@ -22,7 +22,7 @@
 			<el-collapse style="margin-top: 15px;">
 				<el-collapse-item title="video monitor" name="1">
 					<div class="screen" style="background: #000;height:180px;color: #999;text-align: center;">
-						<i class="el-icon-video-camera" style="font-size: 40px;margin-top: 50px;"></i>
+						<el-icon style="font-size: 40px;margin-top: 50px;"><el-icon-video-play /></el-icon>
 						<p>camera</p>
 					</div>
 				</el-collapse-item>

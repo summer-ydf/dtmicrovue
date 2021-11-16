@@ -9,7 +9,7 @@
 				</div>
 				<ul v-if="!ismobile" class="nav">
 					<li v-for="item in menu" :key="item" :class="pmenu.path==item.path?'active':''" @click="showMenu(item)">
-						<i :class="item.meta.icon || 'el-icon-menu'"></i>
+						<el-icon><component :is="item.meta.icon || el-icon-menu" /></el-icon>
 						<span>{{ item.meta.title }}</span>
 					</li>
 				</ul>
@@ -128,7 +128,7 @@
 						<ul>
 							<li v-for="item in menu" :key="item" :class="pmenu.path==item.path?'active':''"
 								@click="showMenu(item)">
-								<i :class="item.meta.icon || 'el-icon-menu'"></i>
+								<el-icon><component :is="item.meta.icon || el-icon-menu" /></el-icon>
 								<p>{{ item.meta.title }}</p>
 							</li>
 						</ul>
@@ -165,7 +165,7 @@
 		</section>
 	</template>
 
-	<div class="layout-setting" @click="openSetting"><i class="el-icon-brush"></i></div>
+	<div class="layout-setting" @click="openSetting"><el-icon><el-icon-brush-filled /></el-icon></div>
 
 	<el-drawer title="布局实时演示" v-model="settingDialog" :size="400" append-to-body destroy-on-close>
 		<setting></setting>

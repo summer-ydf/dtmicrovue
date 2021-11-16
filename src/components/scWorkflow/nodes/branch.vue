@@ -7,17 +7,21 @@
 					<div class="condition-node">
 						<div class="condition-node-box">
 							<div class="auto-judge" @click="show(index)">
-								<div class="sort-left" v-if="index!=0" @click.stop="arrTransfer(index,-1)"><i class="el-icon-arrow-left"></i></div>
+								<div class="sort-left" v-if="index!=0" @click.stop="arrTransfer(index,-1)">
+									<el-icon><el-icon-arrow-left /></el-icon>
+								</div>
 								<div class="title">
 									<span class="node-title">{{ item.nodeName }}</span>
 									<span class="priority-title">优先级{{item.priorityLevel}}</span>
-									<i class="close el-icon-close" @click.stop="delTerm(index)"></i>
+									<el-icon class="close" @click.stop="delTerm(index)"><el-icon-close /></el-icon>
 								</div>
 								<div class="content">
 									<span v-if="toText(nodeConfig, index)">{{ toText(nodeConfig, index) }}</span>
 									<span v-else class="placeholder">请设置条件</span>
 								</div>
-								<div class="sort-right" v-if="index!=nodeConfig.conditionNodes.length-1" @click.stop="arrTransfer(index)"><i class="el-icon-arrow-right"></i></div>
+								<div class="sort-right" v-if="index!=nodeConfig.conditionNodes.length-1" @click.stop="arrTransfer(index)">
+									<el-icon><el-icon-arrow-right /></el-icon>
+								</div>
 							</div>
 							<add-node v-model="item.childNode"></add-node>
 						</div>
@@ -34,7 +38,7 @@
 		<el-drawer title="条件设置" v-model="drawer" destroy-on-close append-to-body :size="600">
 			<template #title>
 				<div class="node-wrap-drawer__title">
-					<label @click="editTitle" v-if="!isEditTitle">{{form.nodeName}}<i class="node-wrap-drawer__title-edit el-icon-edit-outline"></i></label>
+					<label @click="editTitle" v-if="!isEditTitle">{{form.nodeName}}<el-icon class="node-wrap-drawer__title-edit"><el-icon-edit /></el-icon></label>
 					<el-input v-if="isEditTitle" ref="nodeTitle" v-model="form.nodeName" clearable @blur="saveTitle" @keyup.enter="saveTitle"></el-input>
 				</div>
 			</template>

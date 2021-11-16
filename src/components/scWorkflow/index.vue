@@ -71,7 +71,7 @@
 		.node-wrap-box {display: inline-flex;flex-direction: column;position: relative;width: 220px;min-height: 72px;flex-shrink: 0;background: rgb(255, 255, 255);border-radius: 4px;cursor: pointer;box-shadow: 0 2px 5px 0 rgba(0,0,0,.1);}
 		.node-wrap-box::before {content: "";position: absolute;top: -12px;left: 50%;transform: translateX(-50%);width: 0px;border-style: solid;border-width: 8px 6px 4px;border-color: rgb(202, 202, 202) transparent transparent;background: #f6f8f9;}
 		.node-wrap-box.start-node:before {content: none}
-		.node-wrap-box .title {height:24px;line-height: 24px;color: #fff;padding-left: 16px;padding-right: 30px;border-radius: 4px 4px 0 0;position: relative;}
+		.node-wrap-box .title {height:24px;line-height: 24px;color: #fff;padding-left: 16px;padding-right: 30px;border-radius: 4px 4px 0 0;position: relative;display: flex;align-items: center;}
 		.node-wrap-box .title .icon {margin-right: 5px;}
 		.node-wrap-box .title .close {font-size: 15px;position: absolute;top:50%;transform: translateY(-50%);right:10px;display: none;}
 		.node-wrap-box .content {position: relative;padding: 15px;}
@@ -133,7 +133,7 @@
 	.node-wrap-drawer__title {padding-right:40px;}
 	.node-wrap-drawer__title label {cursor: pointer;}
 	.node-wrap-drawer__title label:hover {border-bottom: 1px dashed #409eff;}
-	.node-wrap-drawer__title .node-wrap-drawer__title-edit {color: #409eff;margin-left: 10px;}
+	.node-wrap-drawer__title .node-wrap-drawer__title-edit {color: #409eff;margin-left: 10px;vertical-align: middle;}
 
 	[data-theme='dark'] .sc-workflow-design {
 		.node-wrap-box,.auto-judge {background: #2b2b2b;}

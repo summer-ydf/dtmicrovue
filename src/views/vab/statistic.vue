@@ -19,14 +19,14 @@
 			<el-col :lg="8">
 				<el-card shadow="never">
 					<sc-statistic title="今日净利润" value="112893.00" prefix="¥" groupSeparator>
-						比昨日<span class="up"><i class="el-icon-top"></i>+7.7%</span>
+						<sc-trend v-model="trendValue1"></sc-trend>
 					</sc-statistic>
 				</el-card>
 			</el-col>
 			<el-col :lg="8">
 				<el-card shadow="never">
 					<sc-statistic title="留言" value="112893" suffix="条" groupSeparator>
-						比昨日<span class="down"><i class="el-icon-bottom"></i>-18.9%</span>
+						<sc-trend v-model="trendValue2"></sc-trend>
 					</sc-statistic>
 				</el-card>
 			</el-col>
@@ -44,7 +44,8 @@
 		},
 		data() {
 			return {
-
+				trendValue1: 7.7,
+				trendValue2: -18.9
 			}
 		},
 		mounted() {

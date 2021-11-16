@@ -4,7 +4,7 @@
 			<li v-for="tag in tagList" v-bind:key="tag" :class="[isActive(tag)?'active':'',tag.meta.affix?'affix':'' ]" @contextmenu.prevent="openContextMenu($event, tag)">
 				<router-link :to="tag">
 				<span>{{ tag.meta.title }}</span>
-				<i v-if="!tag.meta.affix" class="el-icon-close" @click.prevent.stop='closeSelectedTag(tag)'></i>
+				<el-icon v-if="!tag.meta.affix" @click.prevent.stop='closeSelectedTag(tag)'><el-icon-close/></el-icon>
 				</router-link>
 			</li>
 		</ul>
@@ -12,13 +12,13 @@
 
 	<transition name="el-zoom-in-top">
 		<ul v-if="contextMenuVisible" :style="{left:left+'px',top:top+'px'}" class="contextmenu" id="contextmenu">
-			<li @click="refreshTab()"><i class="el-icon-refresh"></i>刷新</li>
+			<li @click="refreshTab()"><el-icon><el-icon-refresh/></el-icon>刷新</li>
 			<hr>
-			<li @click="closeTabs()" :class="contextMenuItem.meta.affix?'disabled':''"><i class="el-icon-close"></i>关闭标签</li>
-			<li @click="closeOtherTabs()"><i class="el-icon-folder-delete"></i>关闭其他标签</li>
+			<li @click="closeTabs()" :class="contextMenuItem.meta.affix?'disabled':''"><el-icon><el-icon-close/></el-icon>关闭标签</li>
+			<li @click="closeOtherTabs()"><el-icon><el-icon-folder-delete/></el-icon>关闭其他标签</li>
 			<hr>
-			<li @click="screen()"><i class="el-icon-full-screen"></i>全屏当前标签</li>
-			<li @click="openWindow()"><i class="el-icon-copy-document"></i>在新的窗口中打开</li>
+			<li @click="screen()"><el-icon><el-icon-full-screen/></el-icon>全屏当前标签</li>
+			<li @click="openWindow()"><el-icon><el-icon-copy-document/></el-icon>在新的窗口中打开</li>
 		</ul>
 	</transition>
 </template>
@@ -262,6 +262,8 @@
 		background-color: #ebeef5;
 	}
 	.contextmenu li {
+		display: flex;
+		align-items: center;
 		margin:0;
 		cursor: pointer;
 		line-height: 30px;

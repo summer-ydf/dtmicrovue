@@ -1,11 +1,11 @@
 <template>
 	<el-main>
-		<el-alert title="扩展了Element Plus图标库,也可以使用阿里iconfont在@/assets/font中新增自己的图标库,记得在@style/style.less中引入" type="success" style="margin-bottom:20px;"></el-alert>
+		<el-alert title="扩展了Element Plus图标库,可以在@/assets/icons中新增自己的SVG图标组件,记得在@/assets/icons/index.js中引入. 建议前往阿里iconfont复制SVG代码 https://www.iconfont.cn/collections/detail?spm=a313x.7781069.0.da5a778a4&cid=25353" type="success" style="margin-bottom:20px;"></el-alert>
 		<el-row :gutter="0" class="box">
 			<el-col :span="4" v-for="(icon, index) in icons" :key="index" >
 				<div class="icon-box">
-					<i :class="'sc-icon-'+icon.font_class"></i>
-					<p>{{ 'sc-icon-'+icon.font_class }}</p>
+					<el-icon><component :is="icon" /></el-icon>
+					<p>{{ icon }}</p>
 				</div>
 			</el-col>
 		</el-row>
@@ -14,15 +14,18 @@
 </template>
 
 <script>
-	import icons from '@/assets/font/scicon/iconfont.json'
+	import * as scIcons from '@/assets/icons'
+
 	export default {
 		data() {
 			return {
-				icons: ""
+				icons: []
 			}
 		},
 		mounted() {
-			this.icons = icons.glyphs
+			for(let icon in scIcons){
+				this.icons.push('sc-icon'+icon.replace(/[A-Z]/g,(match)=>'-'+match.toLowerCase()))
+			}
 		}
 	}
 </script>

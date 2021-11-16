@@ -4,7 +4,7 @@
 			<scFilterBar filterName="filterName" :options="options" @filterChange="change">
 				<template #default="{filterLength, openFilter}">
 					<el-badge :value="filterLength" type="danger" :hidden="filterLength<=0">
-						<el-button size="small" icon="sc-icon-filter-fill" @click="openFilter"></el-button>
+						<el-button size="small" icon="el-icon-filter" @click="openFilter"></el-button>
 					</el-badge>
 				</template>
 			</scFilterBar>

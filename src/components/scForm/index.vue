@@ -19,7 +19,7 @@
 						<template #label>
 							{{item.label}}
 							<el-tooltip v-if="item.tips" :content="item.tips">
-								<i class="el-icon-question"></i>
+								<el-icon><el-icon-question-filled /></el-icon>
 							</el-tooltip>
 						</template>
 						<!-- input -->

@@ -12,8 +12,8 @@
 								<span class="label">{{ node.label }}</span>
 								<span class="code">{{ data.code }}</span>
 								<span class="do">
-									<i class="el-icon-edit" @click.stop="dicEdit(data)"></i>
-									<i class="el-icon-delete" @click.stop="dicDel(node, data)"></i>
+									<el-icon @click.stop="dicEdit(data)"><el-icon-edit /></el-icon>
+									<el-icon @click.stop="dicDel(node, data)"><el-icon-delete /></el-icon>
 								</span>
 							</span>
 						</template>
@@ -36,7 +36,7 @@
 					<el-table-column type="selection" width="50"></el-table-column>
 					<el-table-column label="" width="50">
 						<template #default>
-							<el-tag class="move" style="cursor: move;"><i class="el-icon-d-caret"></i></el-tag>
+							<el-tag class="move" style="cursor: move;"><el-icon-d-caret style="width: 1em; height: 1em;"/></el-tag>
 						</template>
 					</el-table-column>
 					<el-table-column label="名称" prop="name" width="150"></el-table-column>

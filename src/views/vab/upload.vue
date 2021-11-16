@@ -3,10 +3,10 @@
 
 		<el-card shadow="never" header="基础示例">
 			<sc-upload v-model="imgurl"></sc-upload>
-			<sc-upload v-model="imgurl2" title="自定义标题" icon="el-icon-picture-outline"></sc-upload>
+			<sc-upload v-model="imgurl2" title="自定义标题" icon="el-icon-picture"></sc-upload>
 			<sc-upload v-model="imgurl3" :apiObj="uploadApi" accept=".xls,.xlsx" :on-success="success" :width="220">
 				<div class="custom-empty">
-					<i class="el-icon-upload"></i>
+					<el-icon><el-icon-upload /></el-icon>
 					<p>自定义插槽</p>
 				</div>
 			</sc-upload>
@@ -107,6 +107,6 @@
 	.imglist {margin-bottom:0;}
 	.imglist .el-col+.el-col {margin-left: 10px;}
 	.custom-empty {width: 100%;height: 100%;line-height: 1;display: flex;flex-direction: column;align-items: center;justify-content: center;}
-	.custom-empty i {font-size: 40px;color: #8c939d;}
+	.custom-empty i {font-size: 30px;color: #8c939d;}
 	.custom-empty p {font-size: 12px;font-weight: normal;color: #8c939d;margin-top: 10px;}
 </style>

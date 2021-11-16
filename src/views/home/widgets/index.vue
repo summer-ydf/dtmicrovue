@@ -23,7 +23,7 @@
 										<component :is="allComps[element]"></component>
 										<div v-if="customizing" class="customize-overlay">
 											<el-button class="close" type="danger" plain icon="el-icon-close" size="small" @click="remove(element)"></el-button>
-											<label><i :class="allComps[element].icon"></i>{{ allComps[element].title }}</label>
+											<label><el-icon><component :is="allComps[element].icon" /></el-icon>{{ allComps[element].title }}</label>
 										</div>
 									</div>
 								</template>
@@ -36,8 +36,8 @@
 		<div v-if="customizing" class="widgets-aside">
 			<el-container>
 				<el-header>
-					<div class="widgets-aside-title"><i class="el-icon-circle-plus"></i>添加部件</div>
-					<div class="widgets-aside-close" @click="close()"><i class="el-icon-close"></i></div>
+					<div class="widgets-aside-title"><el-icon><el-icon-circle-plus-filled/></el-icon>添加部件</div>
+					<div class="widgets-aside-close" @click="close()"><el-icon><el-icon-close /></el-icon></div>
 				</el-header>
 				<el-header style="height:auto">
 					<div class="selectLayout">
@@ -70,7 +70,7 @@
 							<el-empty description="没有部件啦" :image-size="60"></el-empty>
 						</div>
 						<div v-for="item in myCompsList" :key="item.title" class="widgets-list-item">
-							<div class="item-logo"><i :class="item.icon"></i></div>
+							<div class="item-logo"><el-icon><component :is="item.icon" /></el-icon></div>
 							<div class="item-info">
 								<h2>{{ item.title }}</h2>
 								<p>{{ item.description }}</p>

@@ -12,12 +12,12 @@
 						</div>
 						<div class="user-info-main">
 							<ul>
-								<li><label><i class="el-icon-user"></i></label><span>81883387@qq.com</span></li>
-								<li><label><i class="el-icon-present"></i></label><span>1988-05-07</span></li>
-								<li><label><i class="el-icon-male"></i></label><span>男</span></li>
-								<li><label><i class="el-icon-location-outline"></i></label><span>中国/上海/金山</span></li>
-								<li><label><i class="el-icon-office-building"></i></label><span>集团/上海分公司/软件研发部/摸鱼组</span></li>
-								<li><label><i class="el-icon-coin"></i></label><span>超级管理员</span></li>
+								<li><label><el-icon><el-icon-user /></el-icon></label><span>81883387@qq.com</span></li>
+								<li><label><el-icon><el-icon-present /></el-icon></label><span>1988-05-07</span></li>
+								<li><label><el-icon><el-icon-male /></el-icon></label><span>男</span></li>
+								<li><label><el-icon><el-icon-location /></el-icon></label><span>中国/上海/金山</span></li>
+								<li><label><el-icon><el-icon-office-building /></el-icon></label><span>集团/上海分公司/软件研发部/摸鱼组</span></li>
+								<li><label><el-icon><el-icon-coin /></el-icon></label><span>超级管理员</span></li>
 							</ul>
 						</div>
 						<div class="user-info-bottom">
@@ -74,7 +74,7 @@
 						<el-tab-pane :label="$t('user.settings')">
 							<el-form ref="form" :model="form" label-width="120px" style="margin-top:20px;">
 								<el-form-item :label="$t('user.nightmode')">
-									<el-switch v-model="config.theme" active-value="dark" inactive-value="default"></el-switch>
+									<el-switch v-model="config.theme" active-value="dark" inactive-value="default" inline-prompt active-icon="el-icon-moon" inactive-icon="el-icon-sunny"></el-switch>
 									<div class="el-form-item-msg">{{ $t('user.nightmode_msg') }}</div>
 								</el-form-item>
 								<el-form-item label="主题颜色">

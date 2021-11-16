@@ -2,9 +2,9 @@
 	<div class="node-wrap">
 		<div class="node-wrap-box" @click="show">
 			<div class="title" style="background: #3296fa;">
-				<i class="icon el-icon-s-promotion"></i>
+				<el-icon class="icon"><el-icon-promotion /></el-icon>
 				<span>{{ nodeConfig.nodeName }}</span>
-				<i class="close el-icon-close" @click.stop="delNode()"></i>
+				<el-icon class="close" @click.stop="delNode()"><el-icon-close /></el-icon>
 			</div>
 			<div class="content">
 				<span v-if="toText(nodeConfig)">{{ toText(nodeConfig) }}</span>
@@ -15,7 +15,7 @@
 		<el-drawer title="抄送人设置" v-model="drawer" destroy-on-close append-to-body :size="500">
 			<template #title>
 				<div class="node-wrap-drawer__title">
-					<label @click="editTitle" v-if="!isEditTitle">{{form.nodeName}}<i class="node-wrap-drawer__title-edit el-icon-edit-outline"></i></label>
+					<label @click="editTitle" v-if="!isEditTitle">{{form.nodeName}}<el-icon class="node-wrap-drawer__title-edit"><el-icon-edit /></el-icon></label>
 					<el-input v-if="isEditTitle" ref="nodeTitle" v-model="form.nodeName" clearable @blur="saveTitle" @keyup.enter="saveTitle"></el-input>
 				</div>
 			</template>

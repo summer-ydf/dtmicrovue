@@ -16,7 +16,7 @@
 		<el-aside style="width: 400px;border-left: 1px solid #e6e6e6;">
 			<el-container>
 				<el-header>
-					<h2 class="dayTitle"><i class="el-icon-date"></i>{{day}}</h2>
+					<h2 class="dayTitle"><el-icon><el-icon-calendar /></el-icon>{{day}}</h2>
 				</el-header>
 				<el-main>
 					<div class="task-list">
@@ -149,6 +149,6 @@
 	.task-list h2 {font-size: 14px;font-weight: normal;}
 	.task-bottom {display: flex;justify-content: space-between;align-items: center;margin-top: 10px;}
 	.task-bottom .tags .el-tag {margin-right: 5px;}
-	.dayTitle {font-size: 14px;}
+	.dayTitle {font-size: 14px;display: flex;align-items: center;}
 	.dayTitle i {color: #999;margin-right: 10px;}
 </style>

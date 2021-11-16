@@ -1,5 +1,5 @@
 <template>
-	<el-config-provider :locale="$i18n.messages[$i18n.locale].el">
+	<el-config-provider :locale="$i18n.messages[$i18n.locale].el" :button="{autoInsertSpace: false}">
 		<router-view></router-view>
 	</el-config-provider>
 </template>

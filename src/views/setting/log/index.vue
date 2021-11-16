@@ -22,9 +22,9 @@
 						<scTable ref="table" :apiObj="apiObj" stripe highlightCurrentRow @row-click="rowClick">
 							<el-table-column label="级别" prop="level" width="50">
 								<template #default="scope">
-									<i v-if="scope.row.level=='error'" class="el-icon-error" style="color: #F56C6C;font-size: 14px;"></i>
-									<i v-if="scope.row.level=='warn'" class="el-icon-warning" style="color: #E6A23C;font-size: 14px;"></i>
-									<i v-if="scope.row.level=='info'" class="el-icon-info" style="color: #409EFF;font-size: 14px;"></i>
+									<el-icon v-if="scope.row.level=='error'" style="color: #F56C6C;font-size: 14px;"><el-icon-circle-close-filled /></el-icon>
+									<el-icon v-if="scope.row.level=='warn'" style="color: #E6A23C;font-size: 14px;"><el-icon-warning-filled /></el-icon>
+									<el-icon v-if="scope.row.level=='info'" style="color: #409EFF;font-size: 14px;"><el-icon-info-filled /></el-icon>
 								</template>
 							</el-table-column>
 							<el-table-column label="ID" prop="id" width="180"></el-table-column>

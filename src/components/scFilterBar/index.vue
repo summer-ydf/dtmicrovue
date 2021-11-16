@@ -11,7 +11,7 @@
 	<div class="sc-filterBar">
 		<slot :filterLength="filterObjLength" :openFilter="openFilter">
 			<el-badge :value="filterObjLength" type="danger" :hidden="filterObjLength<=0">
-				<el-button size="small" icon="sc-icon-filter-fill" @click="openFilter"></el-button>
+				<el-button size="small" icon="el-icon-filter" @click="openFilter"></el-button>
 			</el-badge>
 		</slot>
 
@@ -72,7 +72,7 @@
 												<el-select v-if="item.field.type=='tags'" v-model="item.value" multiple filterable allow-create default-first-option no-data-text="输入关键词后按回车确认" :placeholder="item.field.placeholder||'请输入'"></el-select>
 											</td>
 											<td>
-												<i class="el-icon-delete del" @click="delFilter(index)"></i>
+												<el-icon class="del" @click="delFilter(index)"><el-icon-delete /></el-icon>
 											</td>
 										</tr>
 									</table>

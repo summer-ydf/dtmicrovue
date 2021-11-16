@@ -36,7 +36,7 @@ module.exports = {
 		}
 		config.optimization = {
 			splitChunks: {
-				chunks: "async",
+				chunks: "all",
 				automaticNameDelimiter: '~',
 				name: true,
 				cacheGroups: {
@@ -45,6 +45,10 @@ module.exports = {
 						name: "modules",
 						test: /[\\/]node_modules[\\/]/,
 						priority: -10
+					},
+					elicons: {
+						name: "elicons",
+						test: /[\\/]node_modules[\\/]@element-plus[\\/]icons[\\/]/
 					},
 					tinymce: {
 						name: "tinymce",

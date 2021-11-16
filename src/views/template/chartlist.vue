@@ -22,7 +22,7 @@
 										即通常说的Page View(PV)，用户每打开一个网站页面就被记录1次。用户多次打开同一页面，浏览量值累计。
 									</div>
 								</template>
-								<i class="el-icon-question"></i>
+								<el-icon><el-icon-question-filled /></el-icon>
 							</el-tooltip>
 						</h2>
 						<p>65,715</p>
@@ -35,7 +35,7 @@
 										一天之内您网站的独立访客数(以Cookie为依据)，一天内同一访客多次访问您网站只计算1个访客。
 									</div>
 								</template>
-								<i class="el-icon-question"></i>
+								<el-icon><el-icon-question-filled /></el-icon>
 							</el-tooltip>
 						</h2>
 						<p>8,936</p>
@@ -48,7 +48,7 @@
 										一天之内您网站的独立访问ip数。
 									</div>
 								</template>
-								<i class="el-icon-question"></i>
+								<el-icon><el-icon-question-filled /></el-icon>
 							</el-tooltip>
 						</h2>
 						<p>10,279</p>
@@ -61,7 +61,7 @@
 										只浏览了一个页面便离开了网站的访问次数占总的访问次数的百分比。
 									</div>
 								</template>
-								<i class="el-icon-question"></i>
+								<el-icon><el-icon-question-filled /></el-icon>
 							</el-tooltip>
 						</h2>
 						<p>27.92%</p>
@@ -74,7 +74,7 @@
 										访客在一次访问中，平均打开网站的时长。即每次访问中，打开第一个页面到关闭最后一个页面的平均值，打开一个页面时计算打开关闭的时间差。
 									</div>
 								</template>
-								<i class="el-icon-question"></i>
+								<el-icon><el-icon-question-filled /></el-icon>
 							</el-tooltip>
 						</h2>
 						<p>00:19:05</p>
@@ -210,7 +210,7 @@
 	.number-data {display: flex;}
 	.number-data .item {flex:1;border-right: 1px solid #f0f0f0;padding:0 20px;}
 	.number-data .item:last-child {border: 0;}
-	.number-data .item h2 {font-size: 12px;color: #787a7d;font-weight: normal;}
+	.number-data .item h2 {font-size: 12px;color: #787a7d;font-weight: normal;display: flex;align-items: center;}
 	.number-data .item h2 i {margin-left: 5px;color: #8cc5ff;cursor: pointer;}
 	.number-data .item p {font-size: 20px;color: #121315;margin-top: 10px;}
 

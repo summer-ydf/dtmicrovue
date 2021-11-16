@@ -1,11 +1,11 @@
 <template>
 	<div class="user-bar">
 		<div class="screen panel-item hidden-sm-and-down" @click="screen">
-			<i class="el-icon-full-screen"></i>
+			<el-icon><el-icon-full-screen /></el-icon>
 		</div>
 		<div class="msg panel-item" @click="showMsg">
 			<el-badge :hidden="msgList.length==0" :value="msgList.length" class="badge" type="danger">
-				<i class="el-icon-chat-dot-round"></i>
+				<el-icon><el-icon-chat-dot-round /></el-icon>
 			</el-badge>
 			<el-drawer title="新消息" v-model="msg" :size="400" append-to-body destroy-on-close>
 				<el-container>
@@ -39,10 +39,11 @@
 				</el-container>
 			</el-drawer>
 		</div>
-		<el-dropdown trigger="click" @command="handleUser" style="height: 100%;">
-			<div class="user panel-item">
+		<el-dropdown class="user panel-item" trigger="click" @command="handleUser">
+			<div class="user-avatar">
 				<el-avatar :size="30">{{ userNameF }}</el-avatar>
-				<label>{{ userName }}<i class="el-icon-arrow-down el-icon--right"></i></label>
+				<label>{{ userName }}</label>
+				<el-icon class="el-icon--right"><el-icon-arrow-down /></el-icon>
 			</div>
 			<template #dropdown>
 				<el-dropdown-menu>
@@ -156,8 +157,8 @@
 	.user-bar .panel-item {padding: 0 10px;cursor: pointer;height: 100%;display: flex;align-items: center;}
 	.user-bar .panel-item i {font-size: 16px;}
 	.user-bar .panel-item:hover {background: rgba(0, 0, 0, 0.1);}
-	.user-bar .user {display: flex;align-items: center;}
-	.user-bar .user label {display: inline-block;margin-left:5px;font-size: 12px;cursor:pointer;}
+	.user-bar .user-avatar {height:49px;display: flex;align-items: center;}
+	.user-bar .user-avatar label {display: inline-block;margin-left:5px;font-size: 12px;cursor:pointer;}
 
 	.msg-list li {border-top:1px solid #eee;}
 	.msg-list li a {display: flex;padding:20px;}
@@ -167,7 +168,7 @@
 	.msg-list__main h2 {font-size: 15px;font-weight: normal;color: #333;}
 	.msg-list__main p {font-size: 12px;color: #999;line-height: 1.8;margin-top: 5px;}
 	.msg-list__time {width: 100px;text-align: right;color: #999;}
-	
+
 	[data-theme='dark'] .msg-list__main h2 {color: #d0d0d0;}
 	[data-theme='dark'] .msg-list li {border-top:1px solid #363636;}
 	[data-theme='dark'] .msg-list li a:hover {background: #383838;}
