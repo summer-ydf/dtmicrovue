@@ -21,7 +21,7 @@
 						<sc-trend v-model="trendValue3" suffix="%"></sc-trend>
 					</el-space>
 
-					<p style="margin-top: 15px;color: #999;">金融行业可设置reverse反转颜色。</p>
+					<p style="margin-top: 15px;color: #999;">设置reverse可反转颜色。</p>
 				</el-card>
 			</el-col>
 			<el-col :lg="8">
@@ -30,7 +30,7 @@
 						<h2>持续更新中...</h2>
 						<p>非常欢迎提交Issue/PR完善和补充更多好玩的原子组件</p>
 						<p>原子组件库位置：@/components/scMini/*</p>
-						<el-button type="text">提交想法</el-button>
+						<el-button type="text" @click="goIssue">提交想法</el-button>
 					</div>
 				</el-card>
 			</el-col>
@@ -52,7 +52,9 @@
 
 		},
 		methods: {
-
+			goIssue(){
+				window.open("https://gitee.com/lolicode/scui/issues")
+			}
 		}
 	}
 </script>

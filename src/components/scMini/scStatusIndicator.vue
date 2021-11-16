@@ -21,7 +21,7 @@
 </script>
 
 <style scoped>
-	.sc-state {display: inline-block;background: #000;width: 10px;height: 10px;border-radius: 50%;vertical-align: middle;}
+	.sc-state {display: inline-block;background: #000;width: 8px;height: 8px;border-radius: 50%;vertical-align: middle;}
 	.sc-status-processing {position: relative;}
 	.sc-status-processing:after {position: absolute;top:0px;left:0px;width: 100%;height: 100%;border-radius: 50%;background: inherit;content: '';animation: warn 1.2s ease-in-out infinite;}
 

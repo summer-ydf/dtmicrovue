@@ -9,11 +9,11 @@
 
 <template>
 	<span class="sc-trend" :class="'sc-trend--'+type">
-		<el-icon v-if="type=='P'" class="sc-trend-icon"><el-icon-top /></el-icon>
-		<el-icon v-if="type=='N'" class="sc-trend-icon"><el-icon-bottom /></el-icon>
-		<el-icon v-if="type=='Z'" class="sc-trend-icon"><el-icon-right /></el-icon>
+		<el-icon v-if="iconType=='P'" class="sc-trend-icon"><el-icon-top /></el-icon>
+		<el-icon v-if="iconType=='N'" class="sc-trend-icon"><el-icon-bottom /></el-icon>
+		<el-icon v-if="iconType=='Z'" class="sc-trend-icon"><el-icon-right /></el-icon>
 		<em class="sc-trend-prefix">{{prefix}}</em>
-		<em class="sc-trend-value">{{absValue}}</em>
+		<em class="sc-trend-value">{{modelValue}}</em>
 		<em class="sc-trend-suffix">{{suffix}}</em>
 	</span>
 </template>
@@ -30,13 +30,23 @@
 			absValue(){
 				return Math.abs(this.modelValue);
 			},
+			iconType(v){
+				if(this.modelValue == 0){
+					v = 'Z'
+				}else if(this.modelValue < 0){
+					v = 'N'
+				}else if(this.modelValue > 0){
+					v = 'P'
+				}
+				return v
+			},
 			type(v){
 				if(this.modelValue == 0){
 					v = 'Z'
 				}else if(this.modelValue < 0){
-					v =  this.reverse?'N':'P'
+					v =  this.reverse?'P':'N'
 				}else if(this.modelValue > 0){
-					v =   this.reverse?'P':'N'
+					v =   this.reverse?'N':'P'
 				}
 				return v
 			}
