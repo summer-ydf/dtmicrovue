@@ -6,10 +6,10 @@ const DEFAULT_CONFIG = {
 	DASHBOARD_URL: "/dashboard",
 
 	//版本号
-	APP_VER: "1.3.2",
+	APP_VER: "1.4.0",
 
 	//内核版本号
-	CORE_VER: "1.3.2",
+	CORE_VER: "1.4.0",
 
 	//接口地址
 	API_URL: "/api",
