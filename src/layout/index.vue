@@ -165,6 +165,8 @@
 		</section>
 	</template>
 
+	<div class="main-maximize-exit" @click="exitMaximize"><el-icon><el-icon-close /></el-icon></div>
+
 	<div class="layout-setting" @click="openSetting"><el-icon><el-icon-brush-filled /></el-icon></div>
 
 	<el-drawer title="布局实时演示" v-model="settingDialog" :size="400" append-to-body destroy-on-close>
@@ -281,6 +283,10 @@
 					newMap.push(item)
 				})
 				return newMap;
+			},
+			//退出最大化
+			exitMaximize(){
+				document.getElementById('app').classList.remove('main-maximize')
 			}
 		}
 	}

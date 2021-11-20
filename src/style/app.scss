@@ -93,3 +93,12 @@ a,button,input,textarea{-webkit-tap-highlight-color:rgba(0,0,0,0);box-sizing: bo
 .adminui-tags li.sortable-ghost {opacity: 0;}
 
 .adminui-main {overflow: auto;background-color: #f6f8f9;flex: 1;}
+
+/*页面最大化*/
+.aminui.main-maximize {
+	.main-maximize-exit {display: block;}
+	.aminui-side-split, .aminui-side, .adminui-header, .adminui-topbar, .adminui-tags {display: none;}
+}
+.main-maximize-exit {display: none;position: fixed;z-index: 3000;top:-20px;left:50%;margin-left: -20px;border-radius: 50%;width: 40px;height: 40px;cursor: pointer;background: rgba(0,0,0,0.2);text-align: center;}
+.main-maximize-exit i {font-size: 14px;margin-top: 22px;color: #fff;}
+.main-maximize-exit:hover {background: rgba(0,0,0,0.4);}
