@@ -30,6 +30,9 @@
 						</el-menu>
 					</el-scrollbar>
 				</div>
+				<div class="adminui-side-bottom" @click="$store.commit('TOGGLE_menuIsCollapse')">
+					<el-icon><el-icon-expand v-if="menuIsCollapse"/><el-icon-fold v-else /></el-icon>
+				</div>
 			</div>
 			<Side-m v-if="ismobile"></Side-m>
 			<div class="aminui-body el-container">
@@ -68,6 +71,9 @@
 							<NavMenu :navMenus="menu"></NavMenu>
 						</el-menu>
 					</el-scrollbar>
+				</div>
+				<div class="adminui-side-bottom" @click="$store.commit('TOGGLE_menuIsCollapse')">
+					<el-icon><el-icon-expand v-if="menuIsCollapse"/><el-icon-fold v-else /></el-icon>
 				</div>
 			</div>
 			<Side-m v-if="ismobile"></Side-m>
@@ -123,6 +129,11 @@
 	<template v-else>
 		<section class="aminui-wrapper">
 			<div v-if="!ismobile" class="aminui-side-split">
+				<div class="aminui-side-split-top">
+					<router-link :to="$CONFIG.DASHBOARD_URL">
+						<img class="logo" :title="$CONFIG.APP_NAME" src="img/logo-r.png">
+					</router-link>
+				</div>
 				<div class="adminui-side-split-scroll">
 					<el-scrollbar>
 						<ul>
@@ -145,6 +156,9 @@
 							<NavMenu :navMenus="nextMenu"></NavMenu>
 						</el-menu>
 					</el-scrollbar>
+				</div>
+				<div class="adminui-side-bottom" @click="$store.commit('TOGGLE_menuIsCollapse')">
+					<el-icon><el-icon-expand v-if="menuIsCollapse"/><el-icon-fold v-else /></el-icon>
 				</div>
 			</div>
 			<Side-m v-if="ismobile"></Side-m>
