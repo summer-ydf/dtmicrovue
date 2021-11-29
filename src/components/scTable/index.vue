@@ -1,8 +1,8 @@
 <!--
  * @Descripttion: 数据表格组件
- * @version: 1.3
+ * @version: 1.4
  * @Author: sakuya
- * @Date: 2021年10月19日16:04:54
+ * @Date: 2021年11月29日21:51:15
  * @LastEditors:
  * @LastEditTime:
 -->
@@ -10,7 +10,7 @@
 <template>
 	<div class="scTable" :style="{'height':_height}" ref="scTableMain" v-loading="loading">
 		<div class="scTable-table">
-			<el-table v-bind="$attrs" :data="tableData" :row-key="rowKey" :key="toggleIndex" ref="scTable" height="100%" @sort-change="sortChange" @filter-change="filterChange">
+			<el-table v-bind="$attrs" :data="tableData" :row-key="rowKey" :key="toggleIndex" ref="scTable" height="100%" :summary-method="remoteSummary?remoteSummaryMethod:summaryMethod" @sort-change="sortChange" @filter-change="filterChange">
 				<slot></slot>
 				<template v-for="(item, index) in userColumn" :key="index">
 					<el-table-column v-if="!item.hide" :column-key="item.prop" :label="item.label" :prop="item.prop" :width="item.width" :sortable="item.sortable" :fixed="item.fixed" :filters="item.filters" :filter-method="remoteFilter||!item.filters?null:filterHandler">
@@ -61,9 +61,11 @@
 			height: { type: [String,Number], default: "100%" },
 			pageSize: { type: Number, default: config.pageSize },
 			rowKey: { type: String, default: "" },
+			summaryMethod: { type: Function, default: null },
 			column: { type: Object, default: () => {} },
 			remoteSort: { type: Boolean, default: false },
 			remoteFilter: { type: Boolean, default: false },
+			remoteSummary: { type: Boolean, default: false },
 			hidePagination: { type: Boolean, default: false },
 			hideDo: { type: Boolean, default: false },
 			paginationLayout: { type: String, default: "total, prev, pager, next, jumper" },
@@ -97,7 +99,8 @@
 				tableHeight:'100%',
 				tableParams: this.params,
 				userColumn: [],
-				customColumnShow: false
+				customColumnShow: false,
+				summary: {}
 			}
 		},
 		mounted() {
@@ -161,6 +164,7 @@
 						this.tableData = response.rows || [];
 					}
 					this.total = response.total || 0;
+					this.summary = response.summary || {};
 					this.loading = false;
 				}
 				this.$refs.scTable.$el.querySelector('.el-table__body-wrapper').scrollTop = 0
@@ -249,6 +253,24 @@
 				})
 				this.upData(filters)
 			},
+			//远程合计行处理
+			remoteSummaryMethod(param){
+				const {columns} = param
+				const sums = []
+				columns.forEach((column, index) => {
+					if(index === 0) {
+						sums[index] = '合计'
+						return
+					}
+					const values =  this.summary[column.property]
+					if(values){
+						sums[index] = values
+					}else{
+						sums[index] = ''
+					}
+				})
+				return sums
+			},
 			//原生方法转发
 			clearSelection(){
 				this.$refs.scTable.clearSelection()
@@ -286,4 +308,5 @@
 	.scTable-table {height: calc(100% - 50px);}
 	.scTable-page {height:50px;display: flex;align-items: center;justify-content: space-between;padding:0 15px;}
 	.scTable-do {white-space: nowrap;}
+	.scTable:deep(.el-table__footer) .cell {font-weight: bold;}
 </style>
