@@ -141,7 +141,7 @@
 				<el-tab-pane label="报警管理" lazy>
 					<el-main>
 						<el-card shadow="never" header="Event">
-							<scTable ref="table" :data="event" stripe>
+							<scTable ref="table" :data="event" stripe height="auto">
 								<el-table-column label="#" type="index" width="50"></el-table-column>
 								<el-table-column label="事件" prop="title" width="150"></el-table-column>
 								<el-table-column label="等级" prop="type" width="150"></el-table-column>
