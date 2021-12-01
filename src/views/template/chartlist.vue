@@ -92,7 +92,7 @@
 				</div>
 			</el-card>
 			<el-card shadow="never">
-				<scTable ref="table" :data="data">
+				<scTable ref="table" :data="data" show-summary height="auto">
 					<el-table-column label="来源类型" prop="type"></el-table-column>
 					<el-table-column label="网站基础指标" align="center">
 						<el-table-column label="访客数(UV)" prop="uv" width="150"></el-table-column>
