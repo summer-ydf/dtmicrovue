@@ -7,14 +7,6 @@ a:-webkit-any-link {text-decoration: none;}
 a,button,input,textarea{-webkit-tap-highlight-color:rgba(0,0,0,0);box-sizing: border-box;outline:none !important; -webkit-appearance: none;}
 * {margin: 0;padding: 0;box-sizing: border-box;outline: none;}
 
-/* 全局滚动条样式 */
-.scrollable {-webkit-overflow-scrolling: touch;}
-::-webkit-scrollbar {width: 5px;height: 5px;}
-::-webkit-scrollbar-thumb {background-color: rgba(50, 50, 50, 0.3);}
-::-webkit-scrollbar-thumb:hover {background-color: rgba(50, 50, 50, 0.6);}
-::-webkit-scrollbar-track {background-color: rgba(50, 50, 50, 0.1);}
-::-webkit-scrollbar-track:hover {background-color: rgba(50, 50, 50, 0.2);}
-
 /* 大布局样式 */
 .aminui {display: flex;flex-flow: column;}
 .aminui-wrapper {display: flex;flex:1;overflow: auto;}
