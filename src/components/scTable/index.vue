@@ -206,6 +206,7 @@
 					this.loading = false;
 				}
 				this.$refs.scTable.$el.querySelector('.el-table__body-wrapper').scrollTop = 0
+				this.$emit('dataChange', res, this.tableData)
 			},
 			//分页点击
 			paginationChange(){
