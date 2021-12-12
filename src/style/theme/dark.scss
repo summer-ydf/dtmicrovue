@@ -21,6 +21,7 @@
 	--el-disabled-border-color: #434343;
 	--el-disabled-bg-color: #2b2b2b;
 	--el-disabled-text-color: #5c5c5c;
+	--el-bg-color: #3f3f3f;
 	--el-bg-color-base: #3f3f3f;
 	--el-datepicker-inner-border-color: #434343;
 	--el-datepicker-inrange-background-color: #383838;
@@ -210,11 +211,14 @@
 	.el-button--primary.is-plain:active {background: #383838;}
 	.el-button.is-disabled, .el-button.is-disabled:hover {background: #383838;border-color: $--border-color;color: var(--el-button-disabled-font-color);}
 
+	.el-button--success, .el-button--info, .el-button--warning, .el-button--danger {color: #fff;}
+
 
 	.el-badge__content {color: #fff;}
 
 	.el-pagination.is-background .btn-next, .el-pagination.is-background .btn-prev, .el-pagination.is-background .el-pager li {background: #383838;}
-
+	.el-pagination.is-background .el-pager li:not(.disabled).active {color: #fff;}
+	
 	.el-descriptions__body {background: none;}
 
 	.el-alert--info.is-light {background: #383838;}
@@ -231,11 +235,11 @@
 
 	.el-step .el-step__icon {background: $--card-background;}
 
-	.el-popper.is-light {background: $--card-background;}
+	.el-popper.is-light {background: $--card-background;color: #d0d0d0;}
 	.el-popper.is-light .el-popper__arrow::before {background: $--card-background;}
-	
+
 	.el-color-picker__trigger {border-color: $--border-color;}
-	
+
 	.el-empty__image svg {
 		#Rectangle-Copy {fill: #111;}
 		#Rectangle-Copy-10 {fill: #555;}
