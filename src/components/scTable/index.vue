@@ -1,10 +1,10 @@
 <!--
  * @Descripttion: 数据表格组件
- * @version: 1.5
+ * @version: 1.6
  * @Author: sakuya
  * @Date: 2021年11月29日21:51:15
  * @LastEditors: sakuya
- * @LastEditTime: 2021年12月1日11:05:48
+ * @LastEditTime: 2021年12月12日12:49:50
 -->
 
 <template>
