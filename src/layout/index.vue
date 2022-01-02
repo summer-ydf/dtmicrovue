@@ -254,12 +254,7 @@
 				this.settingDialog = true;
 			},
 			onLayoutResize(){
-				const clientWidth = document.body.clientWidth;
-				if(clientWidth < 992){
-					this.$store.commit("SET_ismobile", true)
-				}else{
-					this.$store.commit("SET_ismobile", false)
-				}
+				this.$store.commit("SET_ismobile", document.body.clientWidth < 992)
 			},
 			//路由监听高亮
 			showThis(){
