@@ -1,10 +1,10 @@
 <!--
  * @Descripttion: 局部水印组件
- * @version: 1.0
+ * @version: 1.1
  * @Author: sakuya
  * @Date: 2021年12月18日12:16:16
- * @LastEditors:
- * @LastEditTime:
+ * @LastEditors: sakuya
+ * @LastEditTime: 2022年1月5日09:52:59
 -->
 
 <template>
@@ -62,5 +62,5 @@
 </script>
 
 <style scoped>
-	.sc-water-mark {position: relative;}
+	.sc-water-mark {position: relative;display: inherit;width: 100%;height: 100%;}
 </style>
