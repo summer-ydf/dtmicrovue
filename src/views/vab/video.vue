@@ -34,7 +34,7 @@
 			<el-col :lg="12">
 				<el-card shadow="never" header="HlS(m3u8)直播">
 					<sc-video
-						src="http://hsplay-360.v.btime.com/live_btime/btv_sn_20170706_s4/index.m3u8"
+						src="https://hsplay-360.v.btime.com/live_btime/btv_sn_20170706_s4/index.m3u8"
 						isLive
 					></sc-video>
 				</el-card>
