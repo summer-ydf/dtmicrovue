@@ -1,6 +1,6 @@
 const DEFAULT_CONFIG = {
 	//标题
-	APP_NAME: "SCUI",
+	APP_NAME: "DT Admin 后台管理端",
 
 	//首页地址
 	DASHBOARD_URL: "/dashboard",
@@ -13,6 +13,9 @@ const DEFAULT_CONFIG = {
 
 	//接口地址
 	API_URL: "/api",
+
+	//授权相关地址
+	AUTH_URL: "http://192.168.200.248:9090/auth",
 
 	//请求超时
 	TIMEOUT: 10000,

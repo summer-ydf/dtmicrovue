@@ -2,17 +2,15 @@ export default {
 	login: {
 		slogan: 'High performance / delicate / grace',
 		describe: 'Vue3 + element plus based front-end solutions in the background.',
-		signInTitle: 'Sign in',
 		rememberMe: 'Remember me',
 		forgetPassword: 'Forget password',
 		signIn: 'Sign in',
-		signInOther: 'Sign in with',
 		userPlaceholder: 'user / phone / email',
 		userError: 'Please input a user name',
 		PWPlaceholder: 'Please input a password',
 		PWError: 'Please input a password',
-		admin: 'Administrator',
-		user: 'User'
+		codePlaceholder: 'Please input a code',
+		codeError: 'Please input a code',
 	},
 	user: {
 		dynamic: 'Dynamic',

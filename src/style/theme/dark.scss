@@ -47,7 +47,7 @@
 		--el-disabled-fill-base: $--card-background;
 	}
 	.el-input-group__append, .el-input-group__prepend {
-		--el-background-color-base: #383838;
+		--el-background-color-base: #000;
 		--el-color-info: $--text-color;
 		border-color: $--border-color;
 	}
@@ -218,7 +218,7 @@
 
 	.el-pagination.is-background .btn-next, .el-pagination.is-background .btn-prev, .el-pagination.is-background .el-pager li {background: #383838;}
 	.el-pagination.is-background .el-pager li:not(.disabled).active {color: #fff;}
-	
+
 	.el-descriptions__body {background: none;}
 
 	.el-alert--info.is-light {background: #383838;}
