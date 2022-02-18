@@ -47,7 +47,7 @@
 	 */
 
 	export default {
-		name: 'chart',
+		name: 'A',
 		components: {
 			scEcharts
 		},

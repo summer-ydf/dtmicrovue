@@ -13,7 +13,7 @@ module.exports = {
 		port: 2800, //挂载端口
 		proxy: {
 			'/api': {
-				target: 'https://www.fastmock.site/mock/5039c4361c39a7e3252c5b55971f1bd3/api',
+				target: 'http://192.168.200.248:8082/api',
 				ws: true,
 				pathRewrite: {
 					'^/api': '/'

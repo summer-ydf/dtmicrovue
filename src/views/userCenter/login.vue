@@ -164,7 +164,12 @@
 				}
 				//获取token
 				var user = await this.$API.auth.token.post(data)
-				if(user.code == 200){
+				console.log("开始登录==============")
+				console.log(user)
+				if(user.code == 2000){
+					console.log("获取用户信息->>>")
+					console.log(user.data.token)
+					console.log(user.data.userInfo)
 					this.$TOOL.data.set("TOKEN", user.data.token)
 					this.$TOOL.data.set("USER_INFO", user.data.userInfo)
 				}else{
@@ -173,13 +178,18 @@
 					return false
 				}
 				//获取菜单
-				var menu = null
-				if(this.ruleForm.user == 'admin'){
-					menu = await this.$API.system.menu.myMenus.get()
-				}else{
-					menu = await this.$API.demo.menu.get()
-				}
-				if(menu.code == 200){
+				// var menu = null
+				// if(this.ruleForm.user == 'admin'){
+				// 	menu = await this.$API.system.menu.myMenus.get()
+				// 	console.log("获取菜单->>>")
+				// 	console.log(menu)
+				// }else{
+				// 	menu = await this.$API.demo.menu.get()
+				// }
+				var menu = await this.$API.auth.menu.get()
+				console.log("开始获取菜单==============")
+				console.log(menu)
+				if(menu.code == 2000){
 					if(menu.data.menu.length==0){
 						this.islogin = false
 						this.$alert("当前用户无任何菜单权限，请联系系统管理员", "无权限访问", {
