@@ -9,6 +9,12 @@ import CryptoJS from 'crypto-js';
 
 const tool = {}
 
+// 十六位十六进制数作为密钥（KEY必须和后台保持一致）
+const key = CryptoJS.enc.Utf8.parse("hJ6(vD2{hP1#fM2&");
+// 十六位十六进制数作为密钥偏移量
+const iv = CryptoJS.enc.Utf8.parse('iC2!qD3#eX1;dT0&');
+
+
 /* localStorage */
 tool.data = {
 	set(table, settings) {
@@ -137,19 +143,17 @@ tool.crypto = {
 	},
 	//AES加解密
 	AES: {
-		encrypt(data, secretKey){
-			const result = CryptoJS.AES.encrypt(data, CryptoJS.enc.Utf8.parse(secretKey), {
-				mode: CryptoJS.mode.ECB,
-				padding: CryptoJS.pad.Pkcs7
-			})
-			return result.toString()
+		encrypt(data) {
+			let srcs = CryptoJS.enc.Utf8.parse(data);
+			let encrypted = CryptoJS.AES.encrypt(srcs, key, { iv: iv, mode: CryptoJS.mode.CBC, padding: CryptoJS.pad.Pkcs7 });
+			return CryptoJS.enc.Base64.stringify(encrypted.ciphertext);
 		},
-		decrypt(cipher, secretKey){
-			const result = CryptoJS.AES.decrypt(cipher, CryptoJS.enc.Utf8.parse(secretKey), {
-				mode: CryptoJS.mode.ECB,
-				padding: CryptoJS.pad.Pkcs7
-			})
-			return CryptoJS.enc.Utf8.stringify(result);
+		decrypt(data) {
+			let encryptedHexStr = CryptoJS.enc.Base64.parse(data);
+			let srcs = CryptoJS.enc.Base64.stringify(encryptedHexStr);
+			let decrypt = CryptoJS.AES.decrypt(srcs, key, { iv: iv, mode: CryptoJS.mode.CBC, padding: CryptoJS.pad.Pkcs7 });
+			let decryptedStr = decrypt.toString(CryptoJS.enc.Utf8);
+			return decryptedStr.toString();
 		}
 	}
 }

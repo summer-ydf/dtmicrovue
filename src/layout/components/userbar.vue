@@ -96,8 +96,14 @@
 		},
 		created() {
 			var userInfo = this.$TOOL.data.get("USER_INFO");
-			this.userName = userInfo.userName;
-			this.userNameF = this.userName.substring(0,1);
+			console.log("首页->>>")
+			console.log(userInfo)
+			var user = this.$TOOL.crypto.AES.decrypt(userInfo)
+			console.log("解密->>>")
+			console.log(user)
+			console.log(user.username)
+			// this.userName = userInfo.username;
+			// this.userNameF = this.userName.substring(0,1);
 		},
 		methods: {
 			//个人信息

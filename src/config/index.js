@@ -16,6 +16,10 @@ const DEFAULT_CONFIG = {
 
 	//授权相关地址
 	AUTH_URL: "http://192.168.200.248:9090/auth",
+	CLIENT_ID: "cms",
+	CLIENT_SECRET: "dt%24pwd123",
+	GRANT_TYPE: "password",
+	SCOP: "web",
 
 	//请求超时
 	TIMEOUT: 10000,

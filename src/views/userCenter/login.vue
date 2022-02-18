@@ -134,20 +134,28 @@
 				var validate = await this.$refs.loginForm.validate().catch(()=>{})
 				if(!validate){ return false }
 				this.islogin = true
-				var data = {
-					username: this.ruleForm.username,
-					password: this.$TOOL.crypto.MD5(this.ruleForm.password)
-				}
+				var data = "client_id="+this.$CONFIG.CLIENT_ID+
+					"&"+"client_secret="+this.$CONFIG.CLIENT_SECRET+
+					"&"+"grant_type="+this.$CONFIG.GRANT_TYPE+
+					"&"+"scope="+this.$CONFIG.SCOP+
+					"&"+"username="+this.ruleForm.username+
+					"&"+"password="+this.ruleForm.password+
+					"&"+"valid_code="+this.ruleForm.code+
+					"&"+"claims={'username':'"+this.ruleForm.username+"','openid':'"+this.ruleForm.username+"','scope':'"+this.$CONFIG.SCOP+"'}"
 				//获取token
 				var user = await this.$API.auth.token.post(data)
 				console.log("开始登录==============")
 				console.log(user)
-				if(user.code === 2000){
+				console.log(user.access_token === undefined)
+				if(user.access_token !== undefined){
 					console.log("获取用户信息->>>")
-					console.log(user.data.token)
-					console.log(user.data.userInfo)
-					this.$TOOL.data.set("TOKEN", user.data.token)
-					this.$TOOL.data.set("USER_INFO", user.data.userInfo)
+					console.log(user.access_token)
+					console.log(user.claims)
+					console.log(user.refresh_token)
+					// this.$TOOL.data.set("TOKEN", user.data.token)
+					// this.$TOOL.data.set("USER_INFO", user.data.userInfo)
+					this.$TOOL.data.set("TOKEN", user.access_token)
+					this.$TOOL.data.set("USER_INFO", user.claims)
 				}else{
 					this.islogin = false
 					this.$message.warning(user.message)
