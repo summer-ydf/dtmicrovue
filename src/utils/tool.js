@@ -10,9 +10,9 @@ import CryptoJS from 'crypto-js';
 const tool = {}
 
 // 十六位十六进制数作为密钥（KEY必须和后台保持一致）
-const key = CryptoJS.enc.Utf8.parse("hJ6(vD2{hP1#fM2&");
+const key = CryptoJS.enc.Utf8.parse("CMDDTYDF&WY196KJ");
 // 十六位十六进制数作为密钥偏移量
-const iv = CryptoJS.enc.Utf8.parse('iC2!qD3#eX1;dT0&');
+const iv = CryptoJS.enc.Utf8.parse('CMDDTYDF&WY196KJ');
 
 
 /* localStorage */

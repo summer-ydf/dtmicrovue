@@ -73,8 +73,8 @@
 		data() {
 			return {
 				ruleForm: {
-					username: null,
-					password: null,
+					username: "admin",
+					password: "123456",
 					code: null,
 					autologin: false
 				},

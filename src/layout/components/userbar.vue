@@ -4,7 +4,7 @@
 			<el-icon><el-icon-full-screen /></el-icon>
 		</div>
 		<div class="msg panel-item" @click="showMsg">
-			<el-badge :hidden="msgList.length==0" :value="msgList.length" class="badge" type="danger">
+			<el-badge :hidden="msgList.length===0" :value="msgList.length" class="badge" type="danger">
 				<el-icon><el-icon-chat-dot-round /></el-icon>
 			</el-badge>
 			<el-drawer title="新消息" v-model="msg" :size="400" append-to-body destroy-on-close>
@@ -28,7 +28,7 @@
 										</div>
 									</a>
 								</li>
-								<el-empty v-if="msgList.length==0" description="暂无新消息" :image-size="100"></el-empty>
+								<el-empty v-if="msgList.length===0" description="暂无新消息" :image-size="100"></el-empty>
 							</ul>
 						</el-scrollbar>
 					</el-main>
@@ -60,6 +60,13 @@
 	export default {
 		data(){
 			return {
+			    userInfo: {
+                    scope: "",
+                    avatar: "",
+                    userid: "",
+                    jti: "",
+                    username: ""
+                },
 				userName: "",
 				userNameF: "",
 				msg: false,
@@ -95,26 +102,32 @@
 			}
 		},
 		created() {
-			var userInfo = this.$TOOL.data.get("USER_INFO");
-			console.log("首页->>>")
-			console.log(userInfo)
-			var user = this.$TOOL.crypto.AES.decrypt(userInfo)
-			console.log("解密->>>")
-			console.log(user)
-			console.log(user.username)
-			// this.userName = userInfo.username;
-			// this.userNameF = this.userName.substring(0,1);
+			let userData = this.$TOOL.data.get("USER_INFO");
+			let userAes = this.$TOOL.crypto.AES.decrypt(userData)
+            let a = userAes.replace("{","").replace("}","").replace(/\s*/g,"")
+            let temp = a.split(",")
+            const scope = temp[0].match(/scope=(\S*)/)[1];
+            const avatar = temp[1].match(/avatar=(\S*)/)[1];
+            const userid = temp[2].match(/userid=(\S*)/)[1];
+            const jti = temp[3].match(/jti=(\S*)/)[1];
+            let username = temp[4].match(/username=(\S*)/)[1].replace("\u0000\u0000\u0000\u0000\u0000\u0000","");
+            this.userInfo.scope = scope
+            this.userInfo.avatar = avatar
+            this.userInfo.userid = userid
+            this.userInfo.jti = jti
+            this.userInfo.username = username
+			this.userName = this.userInfo.username;
 		},
 		methods: {
 			//个人信息
 			handleUser(command) {
-				if(command == "uc"){
+				if(command === "uc"){
 					this.$router.push({path: '/usercenter'});
 				}
-				if(command == "cmd"){
+				if(command === "cmd"){
 					this.$router.push({path: '/cmd'});
 				}
-				if(command == "clearCache"){
+				if(command === "clearCache"){
 					this.$confirm('清除缓存会将系统初始化，包括登录状态、主题、语言设置等，是否继续？','提示', {
 						type: 'info',
 					}).then(() => {
@@ -129,7 +142,7 @@
 						//取消
 					})
 				}
-				if(command == "outLogin"){
+				if(command === "outLogin"){
 					this.$confirm('确认是否退出当前用户？','提示', {
 						type: 'warning',
 						confirmButtonText: '退出',

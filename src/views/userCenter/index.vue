@@ -23,12 +23,10 @@
 						<div class="user-info-bottom">
 							<h2>当前账号权限</h2>
 							<el-space wrap>
-								<el-tag v-auth="'user.add'">user.add</el-tag>
-								<el-tag v-auth="'user.edit'">user.edit</el-tag>
-								<el-tag v-if="$AUTH('user.delete')">user.delete</el-tag>
-								<el-tag v-if="$AUTH('list.add')">list.add</el-tag>
-								<el-tag v-if="$AUTH('list.edit')">list.edit</el-tag>
-								<el-tag v-if="$AUTH('list.delete')">list.delete</el-tag>
+								<el-tag v-auth="'user.list'">列表</el-tag>
+								<el-tag v-auth="'user.add'">添加</el-tag>
+								<el-tag v-if="$AUTH('user.list')">user.list</el-tag>
+								<el-tag v-if="$AUTH('user.add')">user.add</el-tag>
 							</el-space>
 						</div>
 					</div>

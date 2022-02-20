@@ -5,8 +5,7 @@ export function permission(data) {
 	if(!permissions){
 		return false;
 	}
-	let isHave = permissions.includes(data);
-	return isHave;
+    return permissions.includes(data);
 }
 
 export function rolePermission(data) {
@@ -18,6 +17,5 @@ export function rolePermission(data) {
 	if(!role){
 		return false;
 	}
-	let isHave = role.includes(data);
-	return isHave;
+    return role.includes(data);
 }
