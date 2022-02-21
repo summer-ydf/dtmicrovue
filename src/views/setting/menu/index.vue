@@ -68,9 +68,9 @@
 			//加载树数据
 			async getMenu(){
 				this.menuloading = true
-				var res = await this.$API.system.menu.list.get();
+				var res = await this.$API.system.menu.list.get()
 				this.menuloading = false
-				this.menuList = res.data;
+				this.menuList = res.data
 			},
 			//树点击
 			menuClick(data, node){
@@ -115,7 +115,7 @@
 			//删除菜单
 			async delMenu(){
 				var CheckedNodes = this.$refs.menu.getCheckedNodes()
-				if(CheckedNodes.length == 0){
+				if(CheckedNodes.length === 0){
 					this.$message.warning("请选择需要删除的项")
 					return false;
 				}
@@ -125,7 +125,7 @@
 					confirmButtonText: '删除',
 					confirmButtonClass: 'el-button--danger'
 				}).catch(() => {})
-				if(confirm != 'confirm'){
+				if(confirm !== 'confirm'){
 					return false
 				}
 
@@ -136,7 +136,7 @@
 				var res = await this.$API.demo.post.post(reqData)
 				this.menuloading = false
 
-				if(res.code == 200){
+				if(res.code === 2000){
 					CheckedNodes.forEach(item => {
 						var node = this.$refs.menu.getNode(item)
 						if(node.isCurrent){

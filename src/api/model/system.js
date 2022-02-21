@@ -11,7 +11,7 @@ export default {
 			}
 		},
 		list: {
-			url: `${config.API_URL}/system/menu/list`,
+			url: `${config.API_URL}/menu/list`,
 			name: "获取菜单",
 			get: async function(){
 				return await http.get(this.url);
