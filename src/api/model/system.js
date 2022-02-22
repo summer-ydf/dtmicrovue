@@ -31,6 +31,13 @@ export default {
 				return await http.post(this.url, data);
 			}
 		},
+        deleteBath: {
+            url: `${config.API_URL}/menu/deleteBath`,
+            name: "批量删除菜单",
+            delete: async function(data={}){
+                return await http.delete(this.url, data);
+            }
+        },
 	},
 	dic: {
 		tree: {

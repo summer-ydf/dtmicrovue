@@ -34,19 +34,11 @@
 					<el-form-item label="重定向" prop="redirect">
 						<el-input v-model="form.redirect" clearable placeholder=""></el-input>
 					</el-form-item>
-					<el-form-item label="菜单高亮" prop="active">
-						<el-input v-model="form.active" clearable placeholder=""></el-input>
-						<div class="el-form-item-msg">子节点或详情页需要高亮的上级菜单路由地址</div>
-					</el-form-item>
 					<el-form-item label="视图" prop="component">
 						<el-input v-model="form.component" clearable placeholder="">
 							<template #prepend>views/</template>
 						</el-input>
 						<div class="el-form-item-msg">如父节点、链接或Iframe等没有视图的菜单不需要填写</div>
-					</el-form-item>
-					<el-form-item label="颜色" prop="color">
-						<el-color-picker v-model="form.meta.color" :predefine="predefineColors"></el-color-picker>
-
 					</el-form-item>
 					<el-form-item label="是否隐藏" prop="meta.hidden">
 						<el-checkbox v-model="form.meta.hidden">隐藏菜单</el-checkbox>
@@ -101,8 +93,6 @@
 					meta:{
 						title: "",
 						icon: "",
-						active: "",
-						color: "",
 						type: "menu"
 					},
 					apiList: []

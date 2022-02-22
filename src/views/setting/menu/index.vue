@@ -6,8 +6,10 @@
 					<el-input placeholder="输入关键字进行过滤" v-model="menuFilterText" clearable></el-input>
 				</el-header>
 				<el-main class="nopadding">
-					<el-tree ref="menu" class="menu" node-key="id" :data="menuList" :props="menuProps" draggable highlight-current :expand-on-click-node="false" check-strictly show-checkbox :filter-node-method="menuFilterNode" @node-click="menuClick" @node-drop="nodeDrop">
-
+					<el-tree ref="menu" class="menu" node-key="id" :data="menuList" :props="menuProps"
+                             draggable highlight-current :expand-on-click-node="false"
+                             check-strictly show-checkbox :filter-node-method="menuFilterNode"
+                             @node-click="menuClick" @node-drop="nodeDrop">
 						<template #default="{node, data}">
 							<span class="custom-tree-node el-tree-node__label">
 								<span class="label">
@@ -74,7 +76,7 @@
 			},
 			//树点击
 			menuClick(data, node){
-				var pid = node.level==1?undefined:node.parent.data.id;
+				var pid = node.level===1?undefined:node.parent.data.id;
 				this.$refs.save.setData(data, pid)
 				this.$refs.main.$el.scrollTop = 0
 			},
@@ -133,7 +135,7 @@
 				var reqData = {
 					ids: CheckedNodes.map(item => item.id)
 				}
-				var res = await this.$API.demo.post.post(reqData)
+				var res = await this.$API.system.menu.deleteBath.delete(reqData)
 				this.menuloading = false
 
 				if(res.code === 2000){
