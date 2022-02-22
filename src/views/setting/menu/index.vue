@@ -103,7 +103,7 @@
 					}
 				}
 				this.menuloading = true
-				var res = await this.$API.demo.post.post(newMenuData)
+				var res = await this.$API.system.menu.generateId.get()
 				this.menuloading = false
 				newMenuData.id = res.data
 

@@ -159,9 +159,11 @@
 			//保存
 			async save(){
 				this.loading = true
-				var res = await this.$API.demo.post.post(this.form)
+				var res = await this.$API.system.menu.save.post(this.form)
+				console.log("添加返回=========")
+				console.log(res)
 				this.loading = false
-				if(res.code == 200){
+				if(res.code === 200){
 					this.$message.success("保存成功")
 				}else{
 					this.$message.warning(res.message)

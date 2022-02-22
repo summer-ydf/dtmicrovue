@@ -10,10 +10,10 @@ module.exports = {
 	//开发服务,build后的生产模式还需nginx代理
 	devServer: {
 		open: false, //运行后自动打开浏览器
-		port: 2800, //挂载端口
+		port: 2900, //挂载端口
 		proxy: {
 			'/api': {
-				target: 'http://192.168.31.158:9090/api',
+				target: 'http://192.168.200.248:9090/api',
 				ws: true,
 				pathRewrite: {
 					'^/api': '/'
