@@ -92,15 +92,6 @@
 					label: 'title',
 					checkStrictly: true
 				},
-				predefineColors: [
-					'#ff4500',
-					'#ff8c00',
-					'#ffd700',
-					'#67C23A',
-					'#00ced1',
-					'#409EFF',
-					'#c71585'
-				],
 				rules: [],
 				loading: false
 			}
