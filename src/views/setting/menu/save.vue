@@ -4,7 +4,7 @@
 			<el-empty description="请选择左侧菜单后操作" :image-size="100"></el-empty>
 		</el-col>
 		<template v-else>
-			<el-col :lg="12">
+			<el-col :lg="24">
 				<h2>{{form.meta.title || "新增菜单"}}</h2>
 				<el-form :model="form" :rules="rules" ref="dialogForm" label-width="80px" label-position="left">
 					<el-form-item label="显示名称" prop="meta.title">
@@ -24,6 +24,10 @@
 					<el-form-item label="别名" prop="name">
 						<el-input v-model="form.name" clearable placeholder="菜单别名"></el-input>
 						<div class="el-form-item-msg">系统唯一且与内置组件名一致，否则导致缓存失效。如类型为Iframe的菜单，别名将代替源地址显示在地址栏</div>
+					</el-form-item>
+					<el-form-item label="权限标识" prop="code">
+						<el-input v-model="form.code" clearable placeholder="权限标识"></el-input>
+						<div class="el-form-item-msg">系统菜单或者按钮权限标识代码，格式为：xxx:xxx，如：sys:add</div>
 					</el-form-item>
 					<el-form-item label="菜单图标" prop="meta.icon">
 						<sc-icon-select v-model="form.meta.icon" clearable></sc-icon-select>
@@ -51,21 +55,6 @@
 				</el-form>
 
 			</el-col>
-			<el-col :lg="12" class="apilist">
-				<h2>接口权限</h2>
-				<sc-form-table v-model="form.apiList" :addTemplate="apiListAddTemplate" placeholder="暂无匹配接口权限">
-					<el-table-column prop="code" label="标识" width="150">
-						<template #default="scope">
-							<el-input v-model="scope.row.code" placeholder="请输入内容"></el-input>
-						</template>
-					</el-table-column>
-					<el-table-column prop="url" label="Api url">
-						<template #default="scope">
-							<el-input v-model="scope.row.url" placeholder="请输入内容"></el-input>
-						</template>
-					</el-table-column>
-				</sc-form-table>
-			</el-col>
 		</template>
 	</el-row>
 
@@ -87,6 +76,7 @@
 					id: "",
 					parentId: "",
 					name: "",
+					code: "",
 					path: "",
 					component: "",
 					redirect: "",
@@ -95,7 +85,6 @@
 						icon: "",
 						type: "menu"
 					},
-					apiList: []
 				},
 				menuOptions: [],
 				menuProps: {
@@ -113,10 +102,6 @@
 					'#c71585'
 				],
 				rules: [],
-				apiListAddTemplate: {
-					code: "",
-					url: ""
-				},
 				loading: false
 			}
 		},
@@ -150,8 +135,7 @@
 			async save(){
 				this.loading = true
 				var res = await this.$API.system.menu.save.post(this.form)
-				console.log("添加返回=========")
-				console.log(res)
+
 				this.loading = false
 				if(res.code === 200){
 					this.$message.success("保存成功")
@@ -170,8 +154,5 @@
 
 <style scoped>
 	h2 {font-size: 17px;color: #3c4a54;padding:0 0 30px 0;}
-	.apilist {border-left: 1px solid #eee;}
-
 	[data-theme="dark"] h2 {color: #fff;}
-	[data-theme="dark"] .apilist {border-color: #434343;}
 </style>
