@@ -73,8 +73,8 @@ export default {
 	},
 	user: {
 		list: {
-			url: `${config.API_URL}/system/user/list`,
-			name: "获取用户列表",
+			url: `${config.API_URL}/operator/page`,
+			name: "获取用户分页列表",
 			get: async function(params){
 				return await http.get(this.url, params);
 			}
