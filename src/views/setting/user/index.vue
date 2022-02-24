@@ -120,8 +120,7 @@
 			},
 			//删除
 			async table_del(row, index){
-				var reqData = {id: row.id}
-				var res = await this.$API.demo.post.post(reqData);
+				var res = await this.$API.system.user.delete.delete(row.id);
 				if(res.code === 2000){
 					//这里选择刷新整个表格 OR 插入/编辑现有表格数据
 					this.$refs.table.tableData.splice(index, 1);
@@ -136,17 +135,18 @@
 					type: 'warning'
 				}).then(() => {
 					const loading = this.$loading();
-					this.selection.forEach(item => {
-						this.$refs.table.tableData.forEach((itemI, indexI) => {
-							if (item.id === itemI.id) {
-								this.$refs.table.tableData.splice(indexI, 1)
-							}
-						})
-					})
-					loading.close();
-					this.$message.success("操作成功")
-				}).catch(() => {
-
+					var reqData = {
+						ids: this.selection.map(item => item.id)
+					}
+					var res = this.$API.system.user.deleteBath.delete(reqData)
+					if(res.code === 2000){
+						loading.close();
+						//这里选择刷新整个表格 OR 插入/编辑现有表格数据
+						this.$refs.table.tableData.splice(null, 1);
+						this.$message.success("删除成功")
+					}else{
+						this.$alert("删除失败", "提示", {type: 'error'})
+					}
 				})
 			},
 			//表格选择后回调事件

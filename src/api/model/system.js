@@ -78,7 +78,21 @@ export default {
 			get: async function(params){
 				return await http.get(this.url, params);
 			}
-		}
+		},
+		delete: {
+			url: `${config.API_URL}/operator/delete/`,
+			name: "删除用户",
+			delete: async function(data={}){
+				return await http.delete(this.url + data,null);
+			}
+		},
+		deleteBath: {
+			url: `${config.API_URL}/operator/deleteBath`,
+			name: "批量删除用户",
+			delete: async function(data={}){
+				return await http.delete(this.url, data);
+			}
+		},
 	},
 	dept: {
 		list: {
