@@ -64,7 +64,7 @@ export default {
 	},
 	role: {
 		list: {
-			url: `${config.API_URL}/system/role/list`,
+			url: `${config.API_URL}/role/findAll`,
 			name: "获取角色列表",
 			get: async function(params){
 				return await http.get(this.url, params);
@@ -75,6 +75,15 @@ export default {
 		list: {
 			url: `${config.API_URL}/operator/page`,
 			name: "获取用户分页列表",
+			get: async function(params){
+				return await http.get(this.url, params);
+			}
+		}
+	},
+	dept: {
+		list: {
+			url: `${config.API_URL}/dept/list`,
+			name: "获取部门列表",
 			get: async function(params){
 				return await http.get(this.url, params);
 			}

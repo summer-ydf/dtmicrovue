@@ -1,6 +1,6 @@
 <template>
 	<el-container>
-		<el-aside width="200px" v-loading="showGrouploading">
+		<el-aside width="200px" v-loading="showDeptloading">
 			<el-container>
 				<el-header>
 					<el-input placeholder="输入关键字进行过滤" v-model="groupFilterText" clearable></el-input>
@@ -78,7 +78,7 @@
 				dialog: {
 					save: false
 				},
-				showGrouploading: false,
+				showDeptloading: false,
 				groupFilterText: '',
 				group: [],
 				apiObj: this.$API.system.user.list,
@@ -94,7 +94,7 @@
 			}
 		},
 		mounted() {
-			//this.getGroup()
+			this.getRoleList()
 		},
 		methods: {
 			//添加
@@ -122,7 +122,7 @@
 			async table_del(row, index){
 				var reqData = {id: row.id}
 				var res = await this.$API.demo.post.post(reqData);
-				if(res.code == 200){
+				if(res.code === 2000){
 					//这里选择刷新整个表格 OR 插入/编辑现有表格数据
 					this.$refs.table.tableData.splice(index, 1);
 					this.$message.success("删除成功")
@@ -153,13 +153,16 @@
 			selectionChange(selection){
 				this.selection = selection;
 			},
-			//加载树数据
-			async getGroup(){
-				this.showGrouploading = true;
-				var res = await this.$API.system.role.list.get();
-				this.showGrouploading = false;
+			//加载角色数据
+			async getRoleList(){
+				this.showDeptloading = true;
+				var res = await this.$API.system.dept.list.get();
+				console.log("部门数据返回=====")
+				console.log(res)
+				this.showDeptloading = false;
 				var allNode ={id: '', label: '所有'}
 				res.data.unshift(allNode);
+				console.log(res.data)
 				this.group = res.data;
 			},
 			//树过滤
@@ -180,10 +183,10 @@
 			},
 			//本地更新数据
 			handleSuccess(data, mode){
-				if(mode=='add'){
+				if(mode==='add'){
 					data.id = new Date().getTime()
 					this.$refs.table.tableData.unshift(data)
-				}else if(mode=='edit'){
+				}else if(mode==='edit'){
 					this.$refs.table.tableData.filter(item => item.id===data.id ).forEach(item => {
 						Object.assign(item, data)
 					})
