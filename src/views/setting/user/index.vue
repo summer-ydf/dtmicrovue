@@ -94,7 +94,7 @@
 			}
 		},
 		mounted() {
-			this.getRoleList()
+			this.getDeptList()
 		},
 		methods: {
 			//添加
@@ -131,38 +131,37 @@
 			},
 			//批量删除
 			async batch_del(){
-				this.$confirm(`确定删除选中的 ${this.selection.length} 项吗？`, '提示', {
+				var ids = []
+				var confirm = await this.$confirm(`确定删除选中的 ${this.selection.length} 项吗？`, '提示', {
 					type: 'warning'
-				}).then(() => {
-					const loading = this.$loading();
-					var reqData = {
-						ids: this.selection.map(item => item.id)
-					}
-					var res = this.$API.system.user.deleteBath.delete(reqData)
-					if(res.code === 2000){
-						loading.close();
-						//这里选择刷新整个表格 OR 插入/编辑现有表格数据
-						this.$refs.table.tableData.splice(null, 1);
-						this.$message.success("删除成功")
-					}else{
-						this.$alert("删除失败", "提示", {type: 'error'})
-					}
+				}).catch(() => {})
+				if(confirm !== 'confirm'){
+					return false
+				}
+				this.selection.forEach(item => {
+					ids.push(item.id)
 				})
+				const loading = this.$loading();
+				var res = await this.$API.system.user.deleteBath.delete(ids)
+				if(res.code === 2000){
+					loading.close();
+					this.$refs.table.reload()
+					this.$message.success("删除成功")
+				}else{
+					this.$message.warning("删除失败")
+				}
 			},
 			//表格选择后回调事件
 			selectionChange(selection){
 				this.selection = selection;
 			},
-			//加载角色数据
-			async getRoleList(){
+			//加载部门树数据
+			async getDeptList(){
 				this.showDeptloading = true;
 				var res = await this.$API.system.dept.list.get();
-				console.log("部门数据返回=====")
-				console.log(res)
 				this.showDeptloading = false;
 				var allNode ={id: '', label: '所有'}
 				res.data.unshift(allNode);
-				console.log(res.data)
 				this.group = res.data;
 			},
 			//树过滤
