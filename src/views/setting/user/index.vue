@@ -61,17 +61,22 @@
 		</el-container>
 	</el-container>
 
-	<save-dialog v-if="dialog.save" ref="saveDialog" @success="handleSuccess" @closed="dialog.save=false"></save-dialog>
-
+<!--	<save-dialog v-if="dialog.save" ref="saveDialog" @success="handleSuccess" @closed="dialog.save=false"></save-dialog>-->
+<!--	<el-drawer title="布局实时演示" v-model="dialog.save" :size="400" append-to-body destroy-on-close>-->
+<!--		<updateDialog></updateDialog>-->
+<!--	</el-drawer>-->
+	<update-dialog v-if="dialog.save" ref="updateDialog" @closed="dialog.save=false"></update-dialog>
 </template>
 
 <script>
 	import saveDialog from './save'
+	import updateDialog from './update'
 
 	export default {
 		name: 'user',
 		components: {
-			saveDialog
+			saveDialog,
+			updateDialog
 		},
 		data() {
 			return {
@@ -101,7 +106,7 @@
 			add(){
 				this.dialog.save = true
 				this.$nextTick(() => {
-					this.$refs.saveDialog.open()
+					this.$refs.updateDialog.open()
 				})
 			},
 			//编辑
