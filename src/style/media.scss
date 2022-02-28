@@ -36,4 +36,6 @@
 	.adminui-main > .el-container > .el-main {border-top: 1px solid #ebeef5;border-bottom: 1px solid #ebeef5;margin-top: 15px;}
 	.adminui-main > .el-container > .el-main + .el-aside {border-left: 0!important;border-top: 1px solid #ebeef5;margin-top: 15px;}
 	.adminui-main > .el-container > .el-container > .el-header {@extend .headerPublic}
+	/*全局设置右边抽屉打开布局*/
+	.drawer-footer{position: fixed;text-align: center;bottom: 0;padding: 8px 0;}
 }
