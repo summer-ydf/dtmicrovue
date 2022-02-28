@@ -69,6 +69,13 @@ export default {
 			get: async function(params){
 				return await http.get(this.url, params);
 			}
+		},
+		findAll: {
+			url: `${config.API_URL}/role/findAll`,
+			name: "获取所有角色信息",
+			get: async function(params){
+				return await http.get(this.url, params);
+			}
 		}
 	},
 	user: {
@@ -77,6 +84,13 @@ export default {
 			name: "获取用户分页列表",
 			get: async function(params){
 				return await http.get(this.url, params);
+			}
+		},
+		save: {
+			url: `${config.API_URL}/operator/save`,
+			name: "添加用户",
+			post: async function(data={}){
+				return await http.post(this.url, data);
 			}
 		},
 		delete: {

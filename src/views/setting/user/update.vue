@@ -14,22 +14,32 @@
 								<el-input type="password" v-model="form.password2" placeholder="请确认密码" clearable show-password></el-input>
 							</el-form-item>
 						</template>
-						<!--				<el-form-item label="所属角色" prop="group">-->
-						<!--					<el-cascader v-model="form.group" :options="groups" :props="groupsProps" :show-all-levels="false" clearable style="width: 100%;"></el-cascader>-->
-						<!--				</el-form-item>-->
-						<!--				<el-form-item label="头像" prop="avatar">-->
-						<!--					<sc-upload v-model="form.avatar" title="上传头像"></sc-upload>-->
-						<!--				</el-form-item>-->
-<!--						<template>-->
-<!--							<el-button @click="visible=false" >取 消</el-button>-->
-<!--							<el-button v-if="mode!=='show'" type="primary" :loading="isSaveing" @click="submit()">保 存</el-button>-->
-<!--						</template>-->
+						<el-form-item label="使用范围" prop="scope">
+							<el-radio-group v-model="form.scope">
+								<el-radio label="web">PC端</el-radio>
+								<el-radio label="app">手机端</el-radio>
+							</el-radio-group>
+						</el-form-item>
+						<el-form-item label="所属角色" prop="roleId">
+							<el-select v-model="form.roleIds" multiple placeholder="请选择用户角色">
+								<el-option
+									v-for="item in roles"
+									:key="item.id"
+									:label="item.name"
+									:value="item.id"
+								>
+								</el-option>
+							</el-select>
+						</el-form-item>
+						<el-form-item label="头像" prop="avatar">
+							<sc-upload v-model="form.avatar" title="上传头像"></sc-upload>
+						</el-form-item>
 					</el-form>
 				</el-col>
 				<el-row class="drawer-footer">
 					<el-col :span="24">
 						<el-button @click="visible=false" size="small">取 消</el-button>
-						<el-button type="primary" size="small">保 存</el-button>
+						<el-button v-if="mode!=='show'" :loading="isSaveing" @click="submit()" type="primary" size="small">保 存</el-button>
 					</el-col>
 				</el-row>
 			</el-row>
@@ -55,20 +65,20 @@
 				form: {
 					id:"",
 					username: "",
+					password: "",
 					avatar: "",
-					name: "",
-					group: ""
+					scope: "",
+					roleIds: []
 				},
+				//角色数据
+				roles:[],
 				//验证规则
 				rules: {
-					avatar:[
-						{required: true, message: '请上传头像'}
-					],
 					username: [
 						{required: true, message: '请输入登录账号'}
 					],
-					name: [
-						{required: true, message: '请输入真实姓名'}
+					scope: [
+						{required: true, message: '请输入使用范围'}
 					],
 					password: [
 						{required: true, message: '请输入登录密码'},
@@ -89,25 +99,33 @@
 								}
 							}}
 					],
-					group: [
-						{required: true, message: '请选择所属角色'}
+					roleIds: [
+						{required: true, message: '请选择所属角色',trigger: 'blur'}
 					]
 				},
 			}
 		},
+		created() {
+			this.getRole()
+		},
 		methods: {
 			//显示
-			open(mode = 'add') {
+			open(mode = 'add'){
 				this.mode = mode;
 				this.visible = true;
 				return this
+			},
+			//获取角色信息
+			async getRole(){
+				var res = await this.$API.system.role.findAll.get();
+				this.roles = res.data;
 			},
 			//表单提交方法
 			submit(){
 				this.$refs.dialogForm.validate(async (valid) => {
 					if (valid) {
 						this.isSaveing = true;
-						var res = await this.$API.demo.post.post(this.form);
+						var res = await this.$API.system.user.save.post(this.form);
 						this.isSaveing = false;
 						if(res.code === 2000){
 							this.$emit('success', this.form, this.mode)

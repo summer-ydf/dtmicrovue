@@ -78,6 +78,13 @@
 					code: null,
 					autologin: false
 				},
+				userInfo: {
+					scope: "",
+					avatar: "",
+					userid: "",
+					jti: "",
+					username: ""
+				},
 				rules: {
 					username: [
 						{required: true, message: this.$t('login.userError'), trigger: 'blur'}
@@ -154,15 +161,30 @@
 					console.log(user.refresh_token)
 					// this.$TOOL.data.set("TOKEN", user.data.token)
 					// this.$TOOL.data.set("USER_INFO", user.data.userInfo)
+
+					// 存储用户基础信息
+					let userAes = this.$TOOL.crypto.AES.decrypt(user.claims)
+					let a = userAes.replace("{","").replace("}","").replace(/\s*/g,"")
+					let temp = a.split(",")
+					const scope = temp[0].match(/scope=(\S*)/)[1];
+					const avatar = temp[1].match(/avatar=(\S*)/)[1];
+					const userid = temp[2].match(/userid=(\S*)/)[1];
+					const jti = temp[3].match(/jti=(\S*)/)[1];
+					let username = temp[4].match(/username=(\S*)/)[1].replace("\u0000\u0000\u0000\u0000\u0000\u0000","")
+					this.userInfo.scope = scope
+					this.userInfo.avatar = avatar
+					this.userInfo.userid = userid
+					this.userInfo.jti = jti
+					this.userInfo.username = username
 					this.$TOOL.data.set("TOKEN", user.access_token)
-					this.$TOOL.data.set("USER_INFO", user.claims)
+					this.$TOOL.data.set("USER_INFO", this.userInfo)
 				}else{
 					this.islogin = false
 					this.$message.warning(user.message)
 					return false
 				}
 				//获取菜单
-				var menu = await this.$API.auth.menu.get()
+				var menu = await this.$API.auth.myMenus.get(this.userInfo.userid)
 				console.log("开始获取菜单==============")
 				console.log(menu)
 				if(menu.code === 2000){

@@ -60,13 +60,6 @@
 	export default {
 		data(){
 			return {
-			    userInfo: {
-                    scope: "",
-                    avatar: "",
-                    userid: "",
-                    jti: "",
-                    username: ""
-                },
 				userName: "",
 				userNameF: "",
 				msg: false,
@@ -102,21 +95,24 @@
 			}
 		},
 		created() {
-			let userData = this.$TOOL.data.get("USER_INFO");
-			let userAes = this.$TOOL.crypto.AES.decrypt(userData)
-            let a = userAes.replace("{","").replace("}","").replace(/\s*/g,"")
-            let temp = a.split(",")
-            const scope = temp[0].match(/scope=(\S*)/)[1];
-            const avatar = temp[1].match(/avatar=(\S*)/)[1];
-            const userid = temp[2].match(/userid=(\S*)/)[1];
-            const jti = temp[3].match(/jti=(\S*)/)[1];
-            let username = temp[4].match(/username=(\S*)/)[1].replace("\u0000\u0000\u0000\u0000\u0000\u0000","");
-            this.userInfo.scope = scope
-            this.userInfo.avatar = avatar
-            this.userInfo.userid = userid
-            this.userInfo.jti = jti
-            this.userInfo.username = username
-			this.userName = this.userInfo.username;
+			let userInfo = this.$TOOL.data.get("USER_INFO");
+			console.log("登录成功获取用户信息==")
+			console.log(userInfo)
+			this.userName = userInfo.username;
+			// let userAes = this.$TOOL.crypto.AES.decrypt(userData)
+            // let a = userAes.replace("{","").replace("}","").replace(/\s*/g,"")
+            // let temp = a.split(",")
+            // const scope = temp[0].match(/scope=(\S*)/)[1];
+            // const avatar = temp[1].match(/avatar=(\S*)/)[1];
+            // const userid = temp[2].match(/userid=(\S*)/)[1];
+            // const jti = temp[3].match(/jti=(\S*)/)[1];
+            // let username = temp[4].match(/username=(\S*)/)[1].replace("\u0000\u0000\u0000\u0000\u0000\u0000","");
+            // this.userInfo.scope = scope
+            // this.userInfo.avatar = avatar
+            // this.userInfo.userid = userid
+            // this.userInfo.jti = jti
+            // this.userInfo.username = username
+			// this.userName = this.userInfo.username;
 		},
 		methods: {
 			//个人信息

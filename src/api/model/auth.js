@@ -9,11 +9,11 @@ export default {
 			return await http.post(this.url, data);
 		}
 	},
-	menu: {
-		url: `${config.API_URL}/menu/getOperatorMenu/248204704247877`,
+	myMenus: {
+		url: `${config.API_URL}/menu/getOperatorMenu/`,
 		name: "登录获取菜单",
-		get: async function(){
-			return await http.get(this.url);
+		get: async function(params){
+			return await http.get(this.url+params,null);
 		}
 	}
 }
