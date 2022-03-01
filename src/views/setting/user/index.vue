@@ -36,8 +36,12 @@
 						</el-table-column>
 						<el-table-column label="登录账号" prop="username" width="150" sortable='custom' column-key="filterUserName" :filters="[{text: '系统账号', value: '1'}, {text: '普通账号', value: '0'}]"></el-table-column>
 						<el-table-column label="使用范围" prop="scope" width="100" sortable='custom'></el-table-column>
-						<el-table-column label="所属角色" prop="roleName" width="150" sortable='custom'></el-table-column>
-						<el-table-column label="加入时间" prop="createTime" width="220" sortable='custom'></el-table-column>
+						<el-table-column label="所属角色" prop="roleNames" width="200" sortable='custom'>
+							<template #default="scope">
+								<el-tag v-for="item in scope.row.roleNameList" :key="item">{{item}}</el-tag>
+							</template>
+						</el-table-column>
+						<el-table-column label="创建时间" prop="createTime" width="150" sortable='custom'></el-table-column>
 						<el-table-column label="账号状态" prop="enabled" width="100" sortable='custom'>
 							<template #default="scope">
 								<el-button type="primary" plain size="small" v-if="scope.row.enabled">开启</el-button>
@@ -113,7 +117,8 @@
 			table_edit(row){
 				this.dialog.save = true
 				this.$nextTick(() => {
-					this.$refs.saveDialog.open('edit').setData(row)
+					// this.$refs.saveDialog.open('edit').setData(row)
+					this.$refs.updateDialog.open('edit').setData(row)
 				})
 			},
 			//查看

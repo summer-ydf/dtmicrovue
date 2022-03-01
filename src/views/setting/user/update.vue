@@ -20,7 +20,7 @@
 								<el-radio label="app">手机端</el-radio>
 							</el-radio-group>
 						</el-form-item>
-						<el-form-item label="所属角色" prop="roleId">
+						<el-form-item label="所属角色" prop="roleIds">
 							<el-select v-model="form.roleIds" multiple placeholder="请选择用户角色">
 								<el-option
 									v-for="item in roles"
@@ -105,7 +105,7 @@
 				},
 			}
 		},
-		created() {
+		mounted() {
 			this.getRole()
 		},
 		methods: {
@@ -125,6 +125,7 @@
 				this.$refs.dialogForm.validate(async (valid) => {
 					if (valid) {
 						this.isSaveing = true;
+						this.form.roleIds = this.form.roleIds.join(',')
 						var res = await this.$API.system.user.save.post(this.form);
 						this.isSaveing = false;
 						if(res.code === 2000){
@@ -139,6 +140,20 @@
 					}
 				})
 			},
+			//表单注入数据
+			setData(data){
+				this.form.id = data.id
+				this.form.username = data.username
+				this.form.avatar = data.avatar
+				this.form.scope = data.scope
+				// 字符串数组，改成数值数组
+				this.form.roleIds = data.roleIds.split(',').map(Number)
+
+				//可以和上面一样单个注入，也可以像下面一样直接合并进去
+				//Object.assign(this.form, data)
+				console.log("form=========")
+				console.log(data.roleIds.split(',').map(Number))
+			}
 		}
 	}
 </script>
