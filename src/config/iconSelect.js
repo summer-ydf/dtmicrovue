@@ -295,7 +295,8 @@ export default {
 				'sc-icon-bug-line',
 				'sc-icon-file-word',
 				'sc-icon-file-excel',
-				'sc-icon-file-ppt'
+				'sc-icon-file-ppt',
+				'sc-icon-dept'
 			]
 		}
 	]

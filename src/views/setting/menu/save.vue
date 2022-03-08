@@ -128,7 +128,7 @@
 				var res = await this.$API.system.menu.save.post(this.form)
 
 				this.loading = false
-				if(res.code === 200){
+				if(res.code === 2000){
 					this.$message.success("保存成功")
 				}else{
 					this.$message.warning(res.message)
