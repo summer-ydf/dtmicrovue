@@ -72,10 +72,6 @@ export default {
 		//保存
 		async save(){
 			this.loading = true
-			console.log("保存======")
-			console.log(this.form.id)
-			console.log(this.form.parentId)
-			console.log(this.form.label)
 			let res = await this.$API.system.dept.save.post(this.form)
 			this.loading = false
 			if(res.code === 2000){
@@ -86,9 +82,6 @@ export default {
 		},
 		//表单注入数据
 		setData(data, pid){
-			console.log("接受数据=======")
-			console.log(data)
-			console.log(pid)
 			this.form = data
 			this.form.parentId = pid
 		}

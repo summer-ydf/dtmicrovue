@@ -16,7 +16,7 @@
 									{{ node.label }}
 								</span>
 								<span class="do">
-									<el-icon @click.stop="add(node, data)"></el-icon>
+									<el-icon @click.stop="add(node, data)"><el-icon-plus/></el-icon>
 								</span>
 							</span>
 						</template>
