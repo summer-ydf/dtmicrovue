@@ -296,7 +296,10 @@ export default {
 				'sc-icon-file-word',
 				'sc-icon-file-excel',
 				'sc-icon-file-ppt',
-				'sc-icon-dept'
+				'sc-icon-dept',
+				'sc-icon-menu',
+				'sc-icon-user',
+				'sc-icon-role',
 			]
 		}
 	]

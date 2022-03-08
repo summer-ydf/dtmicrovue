@@ -3,8 +3,8 @@
 		<el-header>
 			<div class="left-panel">
 				<el-button type="primary" icon="el-icon-plus" @click="add"></el-button>
-				<el-button type="danger" plain icon="el-icon-delete" :disabled="selection.length==0" @click="batch_del"></el-button>
-				<el-button type="primary" plain :disabled="selection.length!=1" @click="permission">权限设置</el-button>
+				<el-button type="danger" plain icon="el-icon-delete" :disabled="selection.length===0" @click="batch_del"></el-button>
+				<el-button type="primary" plain :disabled="selection.length!==1" @click="permission">权限设置</el-button>
 			</div>
 			<div class="right-panel">
 				<div class="right-panel-search">
@@ -17,9 +17,9 @@
 			<scTable ref="table" :apiObj="apiObj" row-key="id" @selection-change="selectionChange" hidePagination>
 				<el-table-column type="selection" width="50"></el-table-column>
 				<el-table-column label="#" type="index" width="50"></el-table-column>
-				<el-table-column label="角色名称" prop="label" width="250"></el-table-column>
-				<el-table-column label="别名" prop="alias" width="150"></el-table-column>
-				<el-table-column label="排序" prop="sort" width="150"></el-table-column>
+				<el-table-column label="角色名称" prop="name" width="250"></el-table-column>
+				<el-table-column label="备注" prop="remark" width="150"></el-table-column>
+				<el-table-column label="创建时间" prop="createTime" width="150"></el-table-column>
 				<el-table-column label="操作" fixed="right" align="right" width="140">
 					<template #default="scope">
 						<el-button type="text" size="small" @click="table_show(scope.row, scope.$index)">查看</el-button>

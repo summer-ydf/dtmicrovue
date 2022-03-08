@@ -1,51 +1,53 @@
 <template>
-		<el-drawer :title="titleMap[mode]" v-model="visible" :size="400" append-to-body destroy-on-close @closed="$emit('closed')">
-			<el-row class="drawer-table">
-				<el-col :span="24">
-					<el-form :model="form" :rules="rules" :disabled="mode==='show'" ref="dialogForm" label-width="80px">
-						<el-form-item label="登录账号" prop="username">
-							<el-input v-model="form.username" placeholder="请输入登录账号" clearable></el-input>
-						</el-form-item>
-						<template v-if="mode==='add'">
-							<el-form-item label="登录密码" prop="password">
-								<el-input type="password" v-model="form.password" placeholder="请输入登录密码" clearable show-password></el-input>
-							</el-form-item>
-							<el-form-item label="确认密码" prop="password2">
-								<el-input type="password" v-model="form.password2" placeholder="请确认密码" clearable show-password></el-input>
-							</el-form-item>
-						</template>
-						<el-form-item label="使用范围" prop="scope">
-							<el-radio-group v-model="form.scope">
-								<el-radio label="web">PC端</el-radio>
-								<el-radio label="app">手机端</el-radio>
-							</el-radio-group>
-						</el-form-item>
-						<el-form-item label="所属角色" prop="roleIds">
-							<el-select v-model="form.roleIds" multiple placeholder="请选择用户角色">
-								<el-option
-									v-for="item in roles"
-									:key="item.id"
-									:label="item.name"
-									:value="item.id"
-								>
-								</el-option>
-							</el-select>
-						</el-form-item>
-						<el-form-item label="头像" prop="avatar">
-							<sc-upload v-model="form.avatar" title="上传头像"></sc-upload>
-						</el-form-item>
-					</el-form>
-				</el-col>
-				<el-row class="drawer-footer">
-					<el-col :span="24">
-						<el-button @click="visible=false" size="small">取 消</el-button>
-						<el-button v-if="mode!=='show'" :loading="isSaveing" @click="submit()" type="primary" size="small">保 存</el-button>
-					</el-col>
-				</el-row>
-			</el-row>
-
-
-		</el-drawer>
+    <el-drawer :title="titleMap[mode]" v-model="visible" :size="400" append-to-body destroy-on-close @closed="$emit('closed')">
+        <el-container>
+            <el-main class="nopadding">
+                <el-scrollbar>
+                    <el-row class="drawer-table">
+                        <el-col :span="24">
+                            <el-form :model="form" :rules="rules" :disabled="mode==='show'" ref="dialogForm" label-width="80px">
+                                <el-form-item label="登录账号" prop="username">
+                                    <el-input v-model="form.username" placeholder="请输入登录账号" clearable></el-input>
+                                </el-form-item>
+                                <template v-if="mode==='add'">
+                                    <el-form-item label="登录密码" prop="password">
+                                        <el-input type="password" v-model="form.password" placeholder="请输入登录密码" clearable show-password></el-input>
+                                    </el-form-item>
+                                    <el-form-item label="确认密码" prop="password2">
+                                        <el-input type="password" v-model="form.password2" placeholder="请确认密码" clearable show-password></el-input>
+                                    </el-form-item>
+                                </template>
+                                <el-form-item label="使用范围" prop="scope">
+                                    <el-radio-group v-model="form.scope">
+                                        <el-radio label="web">PC端</el-radio>
+                                        <el-radio label="app">手机端</el-radio>
+                                    </el-radio-group>
+                                </el-form-item>
+                                <el-form-item label="所属角色" prop="roleIds">
+                                    <el-select v-model="form.roleIds" multiple placeholder="请选择用户角色">
+                                        <el-option
+                                            v-for="item in roles"
+                                            :key="item.id"
+                                            :label="item.name"
+                                            :value="item.id"
+                                        >
+                                        </el-option>
+                                    </el-select>
+                                </el-form-item>
+                                <el-form-item label="头像" prop="avatar">
+                                    <sc-upload v-model="form.avatar" title="上传头像"></sc-upload>
+                                </el-form-item>
+                            </el-form>
+                        </el-col>
+                    </el-row>
+                </el-scrollbar>
+            </el-main>
+            <el-footer>
+                <el-button v-if="mode!=='show'" :loading="isSaveing" @click="submit()" type="primary" size="small">保 存</el-button>
+                <el-button size="small" @click="visible=false">取 消</el-button>
+            </el-footer>
+        </el-container>
+    </el-drawer>
 </template>
 
 <script>
