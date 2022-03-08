@@ -105,7 +105,7 @@
 					}
 				}
 				this.menuloading = true
-				var res = await this.$API.system.menu.generateId.get()
+				var res = await this.$API.common.generateId.get()
 				this.menuloading = false
 				newMenuData.id = res.data
 
@@ -162,6 +162,5 @@
 	.custom-tree-node .do {display: none;}
 	.custom-tree-node .do i {margin-left:5px;color: #999;padding:5px;}
 	.custom-tree-node .do i:hover {color: #333;}
-
 	.custom-tree-node:hover .do {display: inline-block;}
 </style>

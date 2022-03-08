@@ -115,7 +115,21 @@ export default {
 			get: async function(params){
 				return await http.get(this.url, params);
 			}
-		}
+		},
+		save: {
+			url: `${config.API_URL}/dept/save`,
+			name: "添加部门/修改部门",
+			post: async function(data={}){
+				return await http.post(this.url, data);
+			}
+		},
+		deleteBath: {
+			url: `${config.API_URL}/dept/bath_delete`,
+			name: "批量删除部门",
+			delete: async function(data={}){
+				return await http.delete(this.url, data);
+			}
+		},
 	},
 	app: {
 		list: {

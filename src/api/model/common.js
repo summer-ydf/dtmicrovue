@@ -24,5 +24,12 @@ export default {
 				return await http.get(this.url, params);
 			}
 		}
+	},
+	generateId: {
+		url: `${config.AUTH_URL}/anonymous/generate_id`,
+		name: "生成分布式唯一ID",
+		get: async function(){
+			return await http.get(this.url);
+		}
 	}
 }
