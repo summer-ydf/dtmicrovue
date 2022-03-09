@@ -106,7 +106,7 @@ export default {
 				return false;
 			}
 
-			var confirm = await this.$confirm('确认删除已选择的菜单吗？','提示', {
+			var confirm = await this.$confirm(`确定删除选中的 ${CheckedNodes.length} 项吗？`,'提示', {
 				type: 'warning',
 				confirmButtonText: '删除',
 				confirmButtonClass: 'el-button--danger'
@@ -116,20 +116,22 @@ export default {
 			}
 
 			this.deptLoading = true
-			var reqData = {
-				ids: CheckedNodes.map(item => item.id)
-			}
-			var res = await this.$API.system.menu.deleteBath.delete(reqData)
+			var ids = []
+			CheckedNodes.forEach(item => {
+				ids.push(item.id)
+			})
+
+			var res = await this.$API.system.dept.deleteBath.delete(ids)
 			this.deptLoading = false
 
 			if(res.code === 2000){
 				this.$message.success("删除成功")
 				CheckedNodes.forEach(item => {
-					var node = this.$refs.menu.getNode(item)
+					var node = this.$refs.dept.getNode(item)
 					if(node.isCurrent){
 						this.$refs.save.setData({})
 					}
-					this.$refs.menu.remove(item)
+					this.$refs.dept.remove(item)
 				})
 			}else{
 				this.$message.warning(res.message)
