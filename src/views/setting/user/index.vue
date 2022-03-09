@@ -38,7 +38,8 @@
 						<el-table-column label="使用范围" prop="scope" width="100" sortable='custom'></el-table-column>
 						<el-table-column label="所属角色" prop="roleNames" width="200" sortable='custom'>
 							<template #default="scope">
-								<el-tag v-for="item in scope.row.roleNameList" :key="item">{{item}}</el-tag>
+<!--								<el-tag v-for="item in scope.row.roleNames" :key="item">{{scope.row.roleNames}}</el-tag>-->
+								<el-tag>{{scope.row.roleNames}}</el-tag>
 							</template>
 						</el-table-column>
 						<el-table-column label="创建时间" prop="createTime" width="150" sortable='custom'></el-table-column>
