@@ -10,7 +10,7 @@ export default {
 		}
 	},
 	myMenus: {
-		url: `${config.API_URL}/menu/getOperatorMenu/`,
+		url: `${config.API_URL}/menu/get_operator_menu/`,
 		name: "登录获取菜单",
 		get: async function(params){
 			return await http.get(this.url+params,null);
