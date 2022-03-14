@@ -38,8 +38,7 @@
 						<el-table-column label="使用范围" prop="scope" width="100" sortable='custom'></el-table-column>
 						<el-table-column label="所属角色" prop="roleNames" width="200" sortable='custom'>
 							<template #default="scope">
-<!--								<el-tag v-for="item in scope.row.roleNames" :key="item">{{scope.row.roleNames}}</el-tag>-->
-								<el-tag>{{scope.row.roleNames}}</el-tag>
+								<el-tag v-for="item in (scope.row.roleNames.split(','))" :key="item">{{item}}</el-tag>
 							</template>
 						</el-table-column>
 						<el-table-column label="创建时间" prop="createTime" width="150" sortable='custom'></el-table-column>
@@ -49,9 +48,8 @@
 								<el-button type="danger" plain size="small" v-else>禁用</el-button>
 							</template>
 						</el-table-column>
-						<el-table-column label="操作" fixed="right" align="right" width="140">
+						<el-table-column label="操作" fixed="right" align="right" width="100">
 							<template #default="scope">
-								<el-button type="text" size="small" @click="table_show(scope.row, scope.$index)">查看</el-button>
 								<el-button type="text" size="small" @click="table_edit(scope.row, scope.$index)">编辑</el-button>
 								<el-popconfirm title="确定删除吗？" @confirm="table_del(scope.row, scope.$index)">
 									<template #reference>

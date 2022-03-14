@@ -34,6 +34,30 @@
                                         </el-option>
                                     </el-select>
                                 </el-form-item>
+                                <el-form-item label="所属部门" prop="roleIds">
+<!--                                    <el-select v-model="form.roleIds" multiple placeholder="请选择用户部门">-->
+<!--                                        <el-option-->
+<!--                                            v-for="item in roles"-->
+<!--                                            :key="item.id"-->
+<!--                                            :label="item.name"-->
+<!--                                            :value="item.id"-->
+<!--                                        >-->
+<!--                                        </el-option>-->
+<!--                                    </el-select>-->
+                                    <el-tree :data="treeData"
+                                             :props="treeProps"
+                                             show-checkbox
+                                             check-strictly
+                                             node-key="id"
+                                             default-expand-all
+                                             :expand-on-click-node="false"
+                                             :default-checked-keys="defKeys"
+                                             ref="treeRef"
+                                             @check-change="handleNodeClick"
+                                             empty-text="加载中，请稍后..."
+                                             style="height: 55vh;overflow: auto;"
+                                    ></el-tree>
+                                </el-form-item>
                                 <el-form-item label="头像" prop="avatar">
                                     <sc-upload v-model="form.avatar" title="上传头像"></sc-upload>
                                 </el-form-item>
@@ -63,6 +87,16 @@
 					edit: '编辑用户',
 					show: '查看'
 				},
+
+                // 所有部门数据
+                treeData: [],
+                // 树形控件的属性绑定对象
+                treeProps: {
+                    children: 'children',
+                    label: 'label'
+                },
+                // 默认选中的节点id值
+                defKeys: [],
 				//表单数据
 				form: {
 					id:"",
@@ -109,6 +143,7 @@
 		},
 		mounted() {
 			this.getRole()
+            this.getTreeData()
 		},
 		methods: {
 			//显示
@@ -155,7 +190,25 @@
 				//Object.assign(this.form, data)
 				console.log("form=========")
 				console.log(data.roleIds.split(',').map(Number))
-			}
+			},
+            // 树组件单选实现
+            handleNodeClick(data, checked) {
+                if(checked === true) {
+                    // this.userForm.deptName = data.name
+                    // this.userForm.deptId = data.id
+                    this.$refs.treeRef.setCheckedKeys([data.id]);
+                }
+                // else {
+                //     if (this.userForm.deptId === data.id) {
+                //         this.$refs.treeRef.setCheckedKeys([data.id]);
+                //     }
+                // }
+            },
+            // 获取所有部门信息
+            async getTreeData() {
+                var res = await this.$API.system.dept.list.get();
+                this.treeData = res.data
+            },
 		}
 	}
 </script>
