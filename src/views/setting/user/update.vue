@@ -88,6 +88,7 @@
 					avatar: "",
 					scope: "",
 					roleIds: [],
+					roleStringIds: [],
 					deptId: "",
 					deptName: ""
 				},
@@ -148,7 +149,7 @@
 						console.log("保存===============")
 						console.log(JSON.stringify(this.form))
 						this.saveLoading = true;
-						// this.form.roleIds = this.form.roleIds.join(',')
+						this.form.roleStringIds = this.form.roleIds.join(',')
 						var res = await this.$API.system.user.save.post(this.form);
 						this.saveLoading = false;
 						if(res.code === 2000){
@@ -171,8 +172,9 @@
 				this.form.scope = data.scope
 				this.form.deptId = data.deptId
 				this.form.deptName = data.deptName
+				this.form.roleIds = data.roleIds
 				// 字符串数组，改成数值数组
-				this.form.roleIds = data.roleIds.split(',').map(Number)
+				//this.form.roleIds = data.roleIds.split(',').map(Number)
 				console.log("编辑===============")
 				console.log(JSON.stringify(this.form))
 				//可以和上面一样单个注入，也可以像下面一样直接合并进去

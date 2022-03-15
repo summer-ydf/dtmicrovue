@@ -38,7 +38,12 @@
 						<el-table-column label="使用范围" prop="scope" width="100" sortable='custom'></el-table-column>
 						<el-table-column label="所属角色" prop="roleNames" width="200" sortable='custom'>
 							<template #default="scope">
-								<el-tag v-for="item in (scope.row.roleNames.split(','))" :key="item">{{item}}</el-tag>
+								<div v-if="scope.row.roleNames !== null">
+									<el-tag v-for="item in (scope.row.roleNames.split(','))" :key="item">{{item}}</el-tag>
+								</div>
+								<div v-else>
+									<el-tag>暂无角色</el-tag>
+								</div>
 							</template>
 						</el-table-column>
 						<el-table-column label="创建时间" prop="createTime" width="150" sortable='custom'></el-table-column>
