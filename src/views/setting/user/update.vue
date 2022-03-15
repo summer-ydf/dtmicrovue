@@ -34,29 +34,8 @@
                                         </el-option>
                                     </el-select>
                                 </el-form-item>
-                                <el-form-item label="所属部门" prop="roleIds">
-<!--                                    <el-select v-model="form.roleIds" multiple placeholder="请选择用户部门">-->
-<!--                                        <el-option-->
-<!--                                            v-for="item in roles"-->
-<!--                                            :key="item.id"-->
-<!--                                            :label="item.name"-->
-<!--                                            :value="item.id"-->
-<!--                                        >-->
-<!--                                        </el-option>-->
-<!--                                    </el-select>-->
-                                    <el-tree :data="treeData"
-                                             :props="treeProps"
-                                             show-checkbox
-                                             check-strictly
-                                             node-key="id"
-                                             default-expand-all
-                                             :expand-on-click-node="false"
-                                             :default-checked-keys="defKeys"
-                                             ref="treeRef"
-                                             @check-change="handleNodeClick"
-                                             empty-text="加载中，请稍后..."
-                                             style="height: 55vh;overflow: auto;"
-                                    ></el-tree>
+                                <el-form-item label="所属部门" prop="deptName">
+									<el-input @click="showDepartmentDialog(form.deptId)" v-model="form.deptName" placeholder="请选择部门"></el-input>
                                 </el-form-item>
                                 <el-form-item label="头像" prop="avatar">
                                     <sc-upload v-model="form.avatar" title="上传头像"></sc-upload>
@@ -67,36 +46,40 @@
                 </el-scrollbar>
             </el-main>
             <el-footer>
-                <el-button v-if="mode!=='show'" :loading="isSaveing" @click="submit()" type="primary" size="small">保 存</el-button>
+                <el-button v-if="mode!=='show'" :loading="saveLoading" @click="submit()" type="primary" size="small">保 存</el-button>
                 <el-button size="small" @click="visible=false">取 消</el-button>
             </el-footer>
         </el-container>
     </el-drawer>
+	<department-dialog v-if="dialog.department" ref="departmentDialog"
+					   @closed="dialog.department=false"
+					   @dept-event="getDeptEvent"
+					   :deptId="defKeys">
+	</department-dialog>
 </template>
 
 <script>
+	import departmentDialog from './department';
 	export default {
 		name: "update.vue",
+		components: {
+			departmentDialog
+		},
 		data() {
 			return {
 				visible: false,
-				isSaveing: false,
+				saveLoading: false,
 				mode: "add",
 				titleMap: {
 					add: '新增用户',
 					edit: '编辑用户',
 					show: '查看'
 				},
-
-                // 所有部门数据
-                treeData: [],
-                // 树形控件的属性绑定对象
-                treeProps: {
-                    children: 'children',
-                    label: 'label'
-                },
-                // 默认选中的节点id值
-                defKeys: [],
+				dialog: {
+					department: false
+				},
+				// 默认选中值
+				defKeys: [],
 				//表单数据
 				form: {
 					id:"",
@@ -104,7 +87,9 @@
 					password: "",
 					avatar: "",
 					scope: "",
-					roleIds: []
+					roleIds: [],
+					deptId: "",
+					deptName: ""
 				},
 				//角色数据
 				roles:[],
@@ -143,7 +128,6 @@
 		},
 		mounted() {
 			this.getRole()
-            this.getTreeData()
 		},
 		methods: {
 			//显示
@@ -161,10 +145,12 @@
 			submit(){
 				this.$refs.dialogForm.validate(async (valid) => {
 					if (valid) {
-						this.isSaveing = true;
-						this.form.roleIds = this.form.roleIds.join(',')
+						console.log("保存===============")
+						console.log(JSON.stringify(this.form))
+						this.saveLoading = true;
+						// this.form.roleIds = this.form.roleIds.join(',')
 						var res = await this.$API.system.user.save.post(this.form);
-						this.isSaveing = false;
+						this.saveLoading = false;
 						if(res.code === 2000){
 							this.$emit('success', this.form, this.mode)
 							this.visible = false;
@@ -183,32 +169,29 @@
 				this.form.username = data.username
 				this.form.avatar = data.avatar
 				this.form.scope = data.scope
+				this.form.deptId = data.deptId
+				this.form.deptName = data.deptName
 				// 字符串数组，改成数值数组
 				this.form.roleIds = data.roleIds.split(',').map(Number)
-
+				console.log("编辑===============")
+				console.log(JSON.stringify(this.form))
 				//可以和上面一样单个注入，也可以像下面一样直接合并进去
 				//Object.assign(this.form, data)
-				console.log("form=========")
-				console.log(data.roleIds.split(',').map(Number))
 			},
-            // 树组件单选实现
-            handleNodeClick(data, checked) {
-                if(checked === true) {
-                    // this.userForm.deptName = data.name
-                    // this.userForm.deptId = data.id
-                    this.$refs.treeRef.setCheckedKeys([data.id]);
-                }
-                // else {
-                //     if (this.userForm.deptId === data.id) {
-                //         this.$refs.treeRef.setCheckedKeys([data.id]);
-                //     }
-                // }
-            },
-            // 获取所有部门信息
-            async getTreeData() {
-                var res = await this.$API.system.dept.list.get();
-                this.treeData = res.data
-            },
+			// 显示部门树
+			showDepartmentDialog(id) {
+				// 父组件向子组件传值
+				this.defKeys = [id]
+				this.dialog.department = true
+				this.$nextTick(() => {
+					this.$refs.departmentDialog.open()
+				})
+			},
+			// 获取子组件选中的部门信息
+			getDeptEvent(data) {
+				this.form.deptId = data.id
+				this.form.deptName = data.label
+			}
 		}
 	}
 </script>

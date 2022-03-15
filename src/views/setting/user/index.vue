@@ -58,33 +58,27 @@
 								</el-popconfirm>
 							</template>
 						</el-table-column>
-
 					</scTable>
 				</el-main>
 		</el-container>
 	</el-container>
 
-<!--	<save-dialog v-if="dialog.save" ref="saveDialog" @success="handleSuccess" @closed="dialog.save=false"></save-dialog>-->
-<!--	<el-drawer title="布局实时演示" v-model="dialog.save" :size="400" append-to-body destroy-on-close>-->
-<!--		<updateDialog></updateDialog>-->
-<!--	</el-drawer>-->
 	<update-dialog v-if="dialog.save" ref="updateDialog" @closed="dialog.save=false"></update-dialog>
 </template>
 
 <script>
-	import saveDialog from './save'
-	import updateDialog from './update'
+	import updateDialog from './update';
 
 	export default {
 		name: 'user',
 		components: {
-			saveDialog,
 			updateDialog
 		},
 		data() {
 			return {
 				dialog: {
-					save: false
+					save: false,
+					department: false
 				},
 				showDeptloading: false,
 				groupFilterText: '',
@@ -116,7 +110,6 @@
 			table_edit(row){
 				this.dialog.save = true
 				this.$nextTick(() => {
-					// this.$refs.saveDialog.open('edit').setData(row)
 					this.$refs.updateDialog.open('edit').setData(row)
 				})
 			},
