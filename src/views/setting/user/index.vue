@@ -28,7 +28,7 @@
 				<el-main class="nopadding">
 					<scTable ref="table" :apiObj="apiObj" @selection-change="selectionChange" stripe remoteSort remoteFilter>
 						<el-table-column type="selection" width="50"></el-table-column>
-						<el-table-column label="ID" prop="id" width="150" sortable='custom'></el-table-column>
+						<el-table-column label="ID" prop="id" width="200" sortable='custom'></el-table-column>
 						<el-table-column label="头像" width="80" column-key="filterAvatar" :filters="[{text: '已上传', value: '1'}, {text: '未上传', value: '0'}]">
 							<template #default="scope">
 								<el-avatar :src="scope.row.avatar" size="small"></el-avatar>

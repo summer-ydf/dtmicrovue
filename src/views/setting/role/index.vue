@@ -16,7 +16,7 @@
 		<el-main class="nopadding">
 			<scTable ref="table" :apiObj="apiObj" row-key="id" @selection-change="selectionChange" hidePagination>
 				<el-table-column type="selection" width="50"></el-table-column>
-				<el-table-column label="#" type="index" width="50"></el-table-column>
+				<el-table-column label="#ID" prop="id" width="200"></el-table-column>
 				<el-table-column label="角色名称" prop="name" width="250"></el-table-column>
 				<el-table-column label="备注" prop="remark" width="150"></el-table-column>
 				<el-table-column label="创建时间" prop="createTime" width="150"></el-table-column>
