@@ -1,6 +1,6 @@
 <template>
 	<el-config-provider :locale="$i18n.messages[$i18n.locale].el" :button="{autoInsertSpace: false}">
-		<router-view></router-view>
+		<router-view v-if="isRouterAlive"></router-view>
 	</el-config-provider>
 </template>
 
@@ -9,6 +9,16 @@
 
 	export default {
 		name: 'App',
+		provide() {
+			return {
+				reload: this.reload
+			}
+		},
+		data() {
+			return{
+				isRouterAlive: true
+			}
+		},
 		created() {
 			//设置主题颜色
 			const app_color = this.$CONFIG.COLOR || this.$TOOL.data.get('APP_COLOR')
@@ -19,6 +29,15 @@
 				}
 				document.documentElement.style.setProperty(`--el-color-primary-darken-1`, colorTool.darken(app_color,0.1));
 			}
+		},
+		methods: {
+			// 动态刷新
+			reload() {
+				this.isRouterAlive = false
+				this.$nextTick(() => {
+					this.isRouterAlive = true
+				});
+			},
 		}
 	}
 </script>

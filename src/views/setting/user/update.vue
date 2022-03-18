@@ -7,7 +7,7 @@
                         <el-col :span="24">
                             <el-form :model="form" :rules="rules" :disabled="mode==='show'" ref="dialogForm" label-width="80px">
                                 <el-form-item label="登录账号" prop="username">
-                                    <el-input v-model="form.username" placeholder="请输入登录账号" clearable></el-input>
+                                    <el-input v-model="form.username" placeholder="请输入登录账号" clearable :disabled="mode==='edit'"></el-input>
                                 </el-form-item>
                                 <template v-if="mode==='add'">
                                     <el-form-item label="登录密码" prop="password">
@@ -24,7 +24,7 @@
                                     </el-radio-group>
                                 </el-form-item>
                                 <el-form-item label="所属角色" prop="roleIds">
-                                    <el-select v-model="form.roleIds" multiple placeholder="请选择用户角色">
+                                    <el-select v-model="form.roleIds" multiple placeholder="请选择用户角色" style="width: 100%">
                                         <el-option
                                             v-for="item in roles"
                                             :key="item.id"
@@ -62,9 +62,8 @@
 	import departmentDialog from './department';
 	export default {
 		name: "update.vue",
-		components: {
-			departmentDialog
-		},
+		components: {departmentDialog},
+		inject: ['reload'],
 		data() {
 			return {
 				visible: false,
@@ -72,8 +71,7 @@
 				mode: "add",
 				titleMap: {
 					add: '新增用户',
-					edit: '编辑用户',
-					show: '查看'
+					edit: '编辑用户'
 				},
 				dialog: {
 					department: false
@@ -88,7 +86,6 @@
 					avatar: "",
 					scope: "",
 					roleIds: [],
-					roleStringIds: [],
 					deptId: "",
 					deptName: ""
 				},
@@ -146,16 +143,14 @@
 			submit(){
 				this.$refs.dialogForm.validate(async (valid) => {
 					if (valid) {
-						console.log("保存===============")
-						console.log(JSON.stringify(this.form))
 						this.saveLoading = true;
-						this.form.roleStringIds = this.form.roleIds.join(',')
 						var res = await this.$API.system.user.save.post(this.form);
 						this.saveLoading = false;
 						if(res.code === 2000){
 							this.$emit('success', this.form, this.mode)
 							this.visible = false;
-							this.$message.success("操作成功")
+							this.$message.success(res.message)
+							this.reload()
 						}else{
 							this.$alert(res.message, "提示", {type: 'error'})
 						}
@@ -173,10 +168,6 @@
 				this.form.deptId = data.deptId
 				this.form.deptName = data.deptName
 				this.form.roleIds = data.roleIds
-				// 字符串数组，改成数值数组
-				//this.form.roleIds = data.roleIds.split(',').map(Number)
-				console.log("编辑===============")
-				console.log(JSON.stringify(this.form))
 				//可以和上面一样单个注入，也可以像下面一样直接合并进去
 				//Object.assign(this.form, data)
 			},

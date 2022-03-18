@@ -38,8 +38,8 @@
 						<el-table-column label="使用范围" prop="scope" width="100" sortable='custom'></el-table-column>
 						<el-table-column label="所属角色" prop="roleNames" width="200" sortable='custom'>
 							<template #default="scope">
-								<div v-if="scope.row.roleNames !== null">
-									<el-tag v-for="item in (scope.row.roleNames.split(','))" :key="item">{{item}}</el-tag>
+								<div v-if="scope.row.roleNames.length > 0">
+									<el-tag v-for="item in scope.row.roleNames" :key="item">{{item}}</el-tag>
 								</div>
 								<div v-else>
 									<el-tag>暂无角色</el-tag>
@@ -56,11 +56,7 @@
 						<el-table-column label="操作" fixed="right" align="right" width="100">
 							<template #default="scope">
 								<el-button type="text" size="small" @click="table_edit(scope.row, scope.$index)">编辑</el-button>
-								<el-popconfirm title="确定删除吗？" @confirm="table_del(scope.row, scope.$index)">
-									<template #reference>
-										<el-button type="text" size="small">删除</el-button>
-									</template>
-								</el-popconfirm>
+								<el-button type="text" size="small" @click="table_del(scope.row, scope.$index)">删除</el-button>
 							</template>
 						</el-table-column>
 					</scTable>
@@ -127,6 +123,13 @@
 			},
 			//删除
 			async table_del(row, index){
+				var confirm = await this.$confirm(`确定删除选中的项吗？`, '提示', {
+					confirmButtonText: 'ok',
+					type: 'warning'
+				}).catch(() => {})
+				if(confirm !== 'confirm'){
+					return false
+				}
 				var res = await this.$API.system.user.delete.delete(row.id);
 				if(res.code === 2000){
 					//这里选择刷新整个表格 OR 插入/编辑现有表格数据
@@ -186,17 +189,6 @@
 			//搜索
 			upsearch(){
 				this.$refs.table.upData(this.search)
-			},
-			//本地更新数据
-			handleSuccess(data, mode){
-				if(mode==='add'){
-					data.id = new Date().getTime()
-					this.$refs.table.tableData.unshift(data)
-				}else if(mode==='edit'){
-					this.$refs.table.tableData.filter(item => item.id===data.id ).forEach(item => {
-						Object.assign(item, data)
-					})
-				}
 			}
 		}
 	}
