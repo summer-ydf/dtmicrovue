@@ -63,7 +63,7 @@
 	export default {
 		name: "update.vue",
 		components: {departmentDialog},
-		inject: ['reload'],
+		emits: ['success', 'closed'],
 		data() {
 			return {
 				visible: false,
@@ -150,7 +150,6 @@
 							this.$emit('success', this.form, this.mode)
 							this.visible = false;
 							this.$message.success(res.message)
-							this.reload()
 						}else{
 							this.$alert(res.message, "提示", {type: 'error'})
 						}

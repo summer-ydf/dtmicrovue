@@ -64,7 +64,7 @@
 		</el-container>
 	</el-container>
 
-	<update-dialog v-if="dialog.save" ref="updateDialog" @closed="dialog.save=false"></update-dialog>
+	<update-dialog v-if="dialog.save" ref="updateDialog" @success="handleSaveSuccess" @closed="dialog.save=false"></update-dialog>
 </template>
 
 <script>
@@ -189,6 +189,12 @@
 			//搜索
 			upsearch(){
 				this.$refs.table.upData(this.search)
+			},
+			//本地更新数据
+			handleSaveSuccess(data, mode){
+				if(mode==='add' || mode==='edit'){
+					this.$refs.table.refresh()
+				}
 			}
 		}
 	}
