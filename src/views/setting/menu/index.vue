@@ -141,10 +141,6 @@
 				if(res.code === 2000){
 					this.$message.success("删除成功")
 					CheckedNodes.forEach(item => {
-						var node = this.$refs.menu.getNode(item)
-						if(node.isCurrent){
-							this.$refs.save.setData({})
-						}
 						this.$refs.menu.remove(item)
 					})
 				}else{
