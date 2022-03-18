@@ -95,7 +95,7 @@ export default {
 			newMenuData.id = res.data
 			this.$refs.dept.append(newMenuData, node)
 			this.$refs.dept.setCurrentKey(newMenuData.id)
-			var pid = node ? node.data.id : "0"
+			var pid = node ? node.data.id : ""
 			this.$refs.save.setData(newMenuData, pid)
 		},
 		//删除
