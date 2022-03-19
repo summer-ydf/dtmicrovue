@@ -13,7 +13,7 @@ module.exports = {
 		port: 2900, //挂载端口
 		proxy: {
 			'/api': {
-				target: 'http://192.168.200.248:9090/api',
+				target: 'http://192.168.31.158:9090/api',
 				ws: true,
 				pathRewrite: {
 					'^/api': '/'

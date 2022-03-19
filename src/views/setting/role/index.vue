@@ -14,26 +14,22 @@
 			</div>
 		</el-header>
 		<el-main class="nopadding">
-			<scTable ref="table" :apiObj="apiObj" row-key="id" @selection-change="selectionChange" hidePagination>
+			<scTable ref="table" :apiObj="apiObj" row-key="id" @selection-change="selectionChange" stripe>
 				<el-table-column type="selection" width="50"></el-table-column>
 				<el-table-column label="#ID" prop="id" width="200"></el-table-column>
 				<el-table-column label="角色名称" prop="name" width="250"></el-table-column>
+				<el-table-column label="角色别名" prop="alias" width="250"></el-table-column>
 				<el-table-column label="备注" prop="remark" width="150"></el-table-column>
 				<el-table-column label="创建时间" prop="createTime" width="150"></el-table-column>
-				<el-table-column label="操作" fixed="right" align="right" width="140">
+				<el-table-column label="操作" fixed="right" align="right" width="200">
 					<template #default="scope">
-						<el-button type="text" size="small" @click="table_show(scope.row, scope.$index)">查看</el-button>
+						<el-button type="text" size="small" @click="table_show(scope.row, scope.$index)">数据权限</el-button>
 						<el-divider direction="vertical"></el-divider>
 						<el-button type="text" size="small" @click="table_edit(scope.row, scope.$index)">编辑</el-button>
 						<el-divider direction="vertical"></el-divider>
-						<el-popconfirm title="确定删除吗？" @confirm="table_del(scope.row, scope.$index)">
-							<template #reference>
-								<el-button type="text" size="small">删除</el-button>
-							</template>
-						</el-popconfirm>
+                        <el-button type="text" size="small" @click="table_del(scope.row, scope.$index)">删除</el-button>
 					</template>
 				</el-table-column>
-
 			</scTable>
 		</el-main>
 	</el-container>
@@ -98,9 +94,15 @@
 			},
 			//删除
 			async table_del(row){
-				var reqData = {id: row.id}
-				var res = await this.$API.demo.post.post(reqData);
-				if(res.code == 200){
+                var confirm = await this.$confirm(`确定删除选中的项吗？如果删除项中含有权限信息将会被一并删除`, '提示', {
+                    confirmButtonText: 'ok',
+                    type: 'warning'
+                }).catch(() => {})
+                if(confirm !== 'confirm'){
+                    return false
+                }
+				var res = await this.$API.system.role.delete.delete(row.id);
+				if(res.code === 2000){
 					this.$refs.table.refresh()
 					this.$message.success("删除成功")
 				}else{
@@ -109,16 +111,25 @@
 			},
 			//批量删除
 			async batch_del(){
-				this.$confirm(`确定删除选中的 ${this.selection.length} 项吗？如果删除项中含有子集将会被一并删除`, '提示', {
-					type: 'warning'
-				}).then(() => {
-					const loading = this.$loading();
-					this.$refs.table.refresh()
-					loading.close();
-					this.$message.success("操作成功")
-				}).catch(() => {
-
-				})
+                var ids = []
+                var confirm = await this.$confirm(`确定删除选中的 ${this.selection.length} 项吗？如果删除项中含有权限信息将会被一并删除`, '提示', {
+                    type: 'warning'
+                }).catch(() => {})
+                if(confirm !== 'confirm'){
+                    return false
+                }
+                this.selection.forEach(item => {
+                    ids.push(item.id)
+                })
+                const loading = this.$loading();
+                var res = await this.$API.system.role.deleteBath.delete(ids)
+                if(res.code === 2000){
+                    loading.close();
+                    this.$refs.table.reload()
+                    this.$message.success("删除成功")
+                }else{
+                    this.$message.warning("删除失败")
+                }
 			},
 			//表格选择后回调事件
 			selectionChange(selection){
@@ -126,7 +137,7 @@
 			},
 			//搜索
 			upsearch(){
-
+                this.$refs.table.upData(this.search)
 			},
 			//根据ID获取树结构
 			filterTree(id){
@@ -146,11 +157,7 @@
 			},
 			//本地更新数据
 			handleSaveSuccess(data, mode){
-				if(mode=='add'){
-					this.$refs.table.refresh()
-				}else if(mode=='edit'){
-					this.$refs.table.refresh()
-				}
+                this.$refs.table.refresh()
 			}
 		}
 	}

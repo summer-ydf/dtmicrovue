@@ -38,7 +38,7 @@
 						<el-table-column label="使用范围" prop="scope" width="100" sortable='custom'></el-table-column>
 						<el-table-column label="所属角色" prop="roleNames" width="200" sortable='custom'>
 							<template #default="scope">
-								<div v-if="scope.row.roleNames.length > 0">
+								<div v-if="scope.row.roleNames">
 									<el-tag v-for="item in scope.row.roleNames" :key="item">{{item}}</el-tag>
 								</div>
 								<div v-else>

@@ -64,8 +64,8 @@ export default {
 	},
 	role: {
 		list: {
-			url: `${config.API_URL}/role/findAll`,
-			name: "获取角色列表",
+			url: `${config.API_URL}/role/page`,
+			name: "获取角色分页列表",
 			get: async function(params){
 				return await http.get(this.url, params);
 			}
@@ -76,7 +76,28 @@ export default {
 			get: async function(params){
 				return await http.get(this.url, params);
 			}
-		}
+		},
+        save: {
+            url: `${config.API_URL}/role/save`,
+            name: "添加角色",
+            post: async function(data={}){
+                return await http.post(this.url, data);
+            }
+        },
+        delete: {
+            url: `${config.API_URL}/role/delete/`,
+            name: "删除角色",
+            delete: async function(data={}){
+                return await http.delete(this.url + data,null);
+            }
+        },
+        deleteBath: {
+            url: `${config.API_URL}/role/delete_bath`,
+            name: "批量删除角色",
+            delete: async function(data={}){
+                return await http.delete(this.url, data);
+            }
+        },
 	},
 	user: {
 		list: {
@@ -101,7 +122,7 @@ export default {
 			}
 		},
 		deleteBath: {
-			url: `${config.API_URL}/operator/deleteBath`,
+			url: `${config.API_URL}/operator/delete_bath`,
 			name: "批量删除用户",
 			delete: async function(data={}){
 				return await http.delete(this.url, data);
