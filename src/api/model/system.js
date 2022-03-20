@@ -77,6 +77,13 @@ export default {
 				return await http.get(this.url, params);
 			}
 		},
+        listTree: {
+            url: `${config.API_URL}/role/list`,
+            name: "获取角色权限树",
+            get: async function(params){
+                return await http.get(this.url, params);
+            }
+        },
         save: {
             url: `${config.API_URL}/role/save`,
             name: "添加角色",
@@ -98,6 +105,20 @@ export default {
                 return await http.delete(this.url, data);
             }
         },
+        getTreeRoleMenuById: {
+            url: `${config.API_URL}/role/getTreeRoleMenuById/`,
+            name: "获取角色拥有的权限信息",
+            get: async function(params){
+                return await http.get(this.url + params, null);
+            }
+        },
+        saveRoleMenu: {
+            url: `${config.API_URL}/role/saveRoleMenu`,
+            name: "添加角色权限信息",
+            post: async function(params={}){
+                return await http.post(this.url, params);
+            }
+        }
 	},
 	user: {
 		list: {

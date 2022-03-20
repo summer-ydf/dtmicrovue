@@ -4,7 +4,6 @@
 			<div class="left-panel">
 				<el-button type="primary" icon="el-icon-plus" @click="add"></el-button>
 				<el-button type="danger" plain icon="el-icon-delete" :disabled="selection.length===0" @click="batch_del"></el-button>
-				<el-button type="primary" plain :disabled="selection.length!==1" @click="permission">权限设置</el-button>
 			</div>
 			<div class="right-panel">
 				<div class="right-panel-search">
@@ -17,12 +16,14 @@
 			<scTable ref="table" :apiObj="apiObj" row-key="id" @selection-change="selectionChange" stripe>
 				<el-table-column type="selection" width="50"></el-table-column>
 				<el-table-column label="#ID" prop="id" width="200"></el-table-column>
-				<el-table-column label="角色名称" prop="name" width="250"></el-table-column>
-				<el-table-column label="角色别名" prop="alias" width="250"></el-table-column>
+				<el-table-column label="角色名称" prop="name" width="150"></el-table-column>
+				<el-table-column label="角色别名" prop="alias" width="150"></el-table-column>
 				<el-table-column label="备注" prop="remark" width="150"></el-table-column>
 				<el-table-column label="创建时间" prop="createTime" width="150"></el-table-column>
-				<el-table-column label="操作" fixed="right" align="right" width="200">
+				<el-table-column label="操作" fixed="right" align="right">
 					<template #default="scope">
+                        <el-button type="text" size="small" @click="table_permission(scope.row, scope.$index)">权限设置</el-button>
+                        <el-divider direction="vertical"></el-divider>
 						<el-button type="text" size="small" @click="table_show(scope.row, scope.$index)">数据权限</el-button>
 						<el-divider direction="vertical"></el-divider>
 						<el-button type="text" size="small" @click="table_edit(scope.row, scope.$index)">编辑</el-button>
@@ -36,7 +37,11 @@
 
 	<save-dialog v-if="dialog.save" ref="saveDialog" @success="handleSaveSuccess" @closed="dialog.save=false"></save-dialog>
 
-	<permission-dialog v-if="dialog.permission" ref="permissionDialog" @closed="dialog.permission=false"></permission-dialog>
+	<permission-dialog v-if="dialog.permission"
+                       ref="permissionDialog"
+                       :menuProps="menuProps"
+                       @closed="dialog.permission=false">
+    </permission-dialog>
 
 </template>
 
@@ -60,7 +65,11 @@
 				selection: [],
 				search: {
 					keyword: null
-				}
+				},
+                menuProps: {
+				    roleId: "",
+                    defKeys: []
+                }
 			}
 		},
 		methods: {
@@ -78,20 +87,26 @@
 					this.$refs.saveDialog.open('edit').setData(row)
 				})
 			},
-			//查看
-			table_show(row){
-				this.dialog.save = true
-				this.$nextTick(() => {
-					this.$refs.saveDialog.open('show').setData(row)
-				})
-			},
 			//权限设置
-			permission(){
-				this.dialog.permission = true
-				this.$nextTick(() => {
-					this.$refs.permissionDialog.open()
-				})
-			},
+            async table_permission(row) {
+                this.dialog.permission = true
+                // 递归获取三级节点id
+                this.menuProps.roleId = row.id
+                this.menuProps.defKeys = []
+                // 获取角色拥有的权限
+                var res = await this.$API.system.role.getTreeRoleMenuById.get(row.id);
+                this.getLeafKeys(res.data,this.menuProps.defKeys)
+                this.$nextTick(() => {
+                    this.$refs.permissionDialog.open()
+                })
+            },
+            //通过递归的形式获取角色下所有权限id
+            getLeafKeys(node,arr) {
+                if(node.children.length === 0) {
+                    return arr.push(node.id)
+                }
+                node.children.forEach(item => this.getLeafKeys(item,arr))
+            },
 			//删除
 			async table_del(row){
                 var confirm = await this.$confirm(`确定删除选中的项吗？如果删除项中含有权限信息将会被一并删除`, '提示', {
