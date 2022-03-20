@@ -1,5 +1,5 @@
 <template>
-	<el-dialog title="角色权限设置" v-model="visible" width="26%" destroy-on-close @closed="$emit('closed')">
+	<el-dialog title="角色权限设置" v-model="visible" width="20%" destroy-on-close @closed="$emit('closed')">
         <el-container>
             <el-main class="nopadding">
                 <el-tree ref="menu"
