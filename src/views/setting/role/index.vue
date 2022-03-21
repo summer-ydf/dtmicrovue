@@ -24,7 +24,7 @@
 					<template #default="scope">
                         <el-button type="text" size="small" @click="table_permission(scope.row, scope.$index)">权限设置</el-button>
                         <el-divider direction="vertical"></el-divider>
-						<el-button type="text" size="small" @click="table_show(scope.row, scope.$index)">数据权限</el-button>
+						<el-button type="text" size="small" @click="table_scopedata(scope.row, scope.$index)">数据权限</el-button>
 						<el-divider direction="vertical"></el-divider>
 						<el-button type="text" size="small" @click="table_edit(scope.row, scope.$index)">编辑</el-button>
 						<el-divider direction="vertical"></el-divider>
@@ -43,15 +43,19 @@
                        @closed="dialog.permission=false">
     </permission-dialog>
 
+    <scopedata-dialog v-if="dialog.scope" ref="scopedataDialog" @closed="dialog.scope=false"></scopedata-dialog>
+
 </template>
 
 <script>
 	import saveDialog from './save'
 	import permissionDialog from './permission'
+    import scopedataDialog from "./scopedata";
 
 	export default {
 		name: 'role',
 		components: {
+            scopedataDialog,
 			saveDialog,
 			permissionDialog
 		},
@@ -59,7 +63,8 @@
 			return {
 				dialog: {
 					save: false,
-					permission: false
+					permission: false,
+                    scope: false
 				},
 				apiObj: this.$API.system.role.list,
 				selection: [],
@@ -87,6 +92,13 @@
 					this.$refs.saveDialog.open('edit').setData(row)
 				})
 			},
+            //数据权限
+            table_scopedata(row) {
+			    this.dialog.scope = true
+                this.$nextTick(() => {
+                    this.$refs.scopedataDialog.open()
+                })
+            },
 			//权限设置
             async table_permission(row) {
                 this.dialog.permission = true
