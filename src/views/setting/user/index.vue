@@ -20,7 +20,7 @@
 					</div>
 					<div class="right-panel">
 						<div class="right-panel-search">
-							<el-input v-model="search.username" placeholder="登录账号" clearable></el-input>
+							<el-input v-model="search.keyword" placeholder="登录账号" clearable></el-input>
 							<el-button type="primary" icon="el-icon-search" @click="upsearch"></el-button>
 						</div>
 					</div>
@@ -87,7 +87,7 @@
 				apiObj: this.$API.system.user.list,
 				selection: [],
 				search: {
-					username: null
+					keyword: null
 				}
 			}
 		},

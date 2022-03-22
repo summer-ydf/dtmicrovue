@@ -82,7 +82,8 @@
 				userInfo: {
 					userid: "",
 					username: "",
-                    deptId: ""
+                    deptId: "",
+					isAdmin: "",
 				},
 				rules: {
 					username: [
@@ -154,10 +155,13 @@
 				console.log(user)
 				console.log(user.access_token === undefined)
 				if(user.access_token !== undefined){
+					console.log("存储用户信息========")
+					console.log(user)
 					// 存储用户基础信息
 					this.userInfo.userid = user.userid
 					this.userInfo.username = user.username
 					this.userInfo.deptId = user.deptId
+					this.userInfo.isAdmin = user.isAdmin
 					this.$TOOL.data.set("TOKEN", user.access_token)
 					this.$TOOL.data.set("USER_INFO", this.userInfo)
 				}else{
