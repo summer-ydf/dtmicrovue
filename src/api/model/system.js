@@ -118,7 +118,14 @@ export default {
             post: async function(params={}){
                 return await http.post(this.url, params);
             }
-        }
+        },
+		saveRoleMenu: {
+			url: `${config.API_URL}/role/saveRoleMenu`,
+			name: "添加角色权限信息",
+			post: async function(params={}){
+				return await http.post(this.url, params);
+			}
+		}
 	},
 	user: {
 		list: {

@@ -96,7 +96,7 @@
             table_scopedata(row) {
 			    this.dialog.scope = true
                 this.$nextTick(() => {
-                    this.$refs.scopedataDialog.open()
+                    this.$refs.scopedataDialog.open().setData(row)
                 })
             },
 			//权限设置
