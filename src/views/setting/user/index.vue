@@ -36,6 +36,7 @@
 						</el-table-column>
 						<el-table-column label="登录账号" prop="username" width="150" sortable='custom' column-key="filterUserName" :filters="[{text: '系统账号', value: '1'}, {text: '普通账号', value: '0'}]"></el-table-column>
 						<el-table-column label="使用范围" prop="scope" width="100" sortable='custom'></el-table-column>
+						<el-table-column label="所属部门" prop="deptName" width="100" sortable='custom'></el-table-column>
 						<el-table-column label="所属角色" prop="roleNames" width="200" sortable='custom'>
 							<template #default="scope">
 								<div v-if="scope.row.roleNames">

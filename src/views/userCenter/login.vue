@@ -84,6 +84,12 @@
 					username: "",
                     deptId: "",
 					isAdmin: "",
+					roles: [
+						{
+							roleId: 0,
+							dataScope: 0
+						}
+					]
 				},
 				rules: {
 					username: [
@@ -162,6 +168,7 @@
 					this.userInfo.username = user.username
 					this.userInfo.deptId = user.deptId
 					this.userInfo.isAdmin = user.isAdmin
+					this.userInfo.roles = user.roles
 					this.$TOOL.data.set("TOKEN", user.access_token)
 					this.$TOOL.data.set("USER_INFO", this.userInfo)
 				}else{
