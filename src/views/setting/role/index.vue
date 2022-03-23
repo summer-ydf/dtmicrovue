@@ -40,10 +40,11 @@
 	<permission-dialog v-if="dialog.permission"
                        ref="permissionDialog"
                        :menuProps="menuProps"
+					   @success="handlePermissionSuccess"
                        @closed="dialog.permission=false">
     </permission-dialog>
 
-    <scopedata-dialog v-if="dialog.scope" ref="scopedataDialog" @closed="dialog.scope=false"></scopedata-dialog>
+    <scopedata-dialog v-if="dialog.scope" ref="scopedataDialog" @success="handleDataSuccess" @closed="dialog.scope=false"></scopedata-dialog>
 
 </template>
 
@@ -166,25 +167,15 @@
 			upsearch(){
                 this.$refs.table.upData(this.search)
 			},
-			//根据ID获取树结构
-			filterTree(id){
-				var target = null;
-				function filter(tree){
-					tree.forEach(item => {
-						if(item.id == id){
-							target = item
-						}
-						if(item.children){
-							filter(item.children)
-						}
-					})
-				}
-				filter(this.$refs.table.tableData)
-				return target
-			},
 			//本地更新数据
-			handleSaveSuccess(data, mode){
+			handleSaveSuccess(){
                 this.$refs.table.refresh()
+			},
+			handlePermissionSuccess(){
+				this.$refs.table.refresh()
+			},
+			handleDataSuccess(){
+				this.$refs.table.refresh()
 			}
 		}
 	}

@@ -1,5 +1,5 @@
 <template>
-    <el-dialog title="数据权限设置" v-model="visible" width="30%" destroy-on-close @closed="$emit('closed')">
+    <el-dialog title="数据权限设置" v-model="visible" width="25%" destroy-on-close @closed="$emit('closed')">
         <el-container>
             <el-main class="nopadding">
                 <el-form :model="form" :rules="rules" ref="dialogForm" label-width="80px">
@@ -7,7 +7,7 @@
                         <el-input v-model="form.roleName" disabled></el-input>
                     </el-form-item>
                     <el-form-item label="权限范围" prop="dataScope">
-                        <el-select v-model="form.dataScope" @change="changeScopeData">
+                        <el-select v-model="form.dataScope">
                             <el-option label="全部数据权限" :value=1></el-option>
                             <el-option label="自定义数据权限" :value=2></el-option>
                             <el-option label="本部门数据权限" :value=3></el-option>
@@ -15,7 +15,7 @@
                             <el-option label="仅本人数据权限" :value=5></el-option>
                         </el-select>
                     </el-form-item>
-                    <el-form-item v-if="form.dataScope === 2" label="数据权限" prop="remark">
+                    <el-form-item v-if="form.dataScope === 2" label="数据权限" prop="dataScope">
 						<el-tree ref="dept"
 								 node-key="id"
 								 :data="treeData"
@@ -52,17 +52,15 @@
                     deptIds: []
                 },
 				treeData: [],
-				// 树形控件的属性绑定对象
+				//树形控件的属性绑定对象
 				treeProps: {
 					children: 'children',
 					label: 'label'
 				},
-				// 默认选中的节点id值
-				defKeys: [1000000204663981,1000001200689941],
+				//默认选中的字节点id值（后台筛选过滤）
+				defKeys: [],
                 //验证规则
-                rules: {
-
-                }
+                rules: {}
             }
         },
 		created() {
@@ -73,39 +71,36 @@
                 this.visible = true
                 return this
             },
-            changeScopeData(v) {
-                // alert(v)
-            },
 			handleNodeClick(data, checked) {
 			},
-			// 获取所有部门信息
+			//获取所有部门信息
 			async getTreeData() {
 				var res = await this.$API.system.dept.list.get();
 				this.treeData = res.data
 			},
             //表单提交方法
             async submit() {
-                // 选中的子节点id
-                let checkIds = this.$refs.dept.getCheckedKeys()
                 let ids = []
-                let treeNodes = this.$refs.dept.getCheckedNodes(false, true)
-                // 选中子节点的父节点id
-                for(var i = 0; i < treeNodes.length; i++) {
-                    if(treeNodes[i].parentId !== '0') {
-                        ids.push(treeNodes[i].parentId);
-                    }
-                }
-                // 去重
-                let parentIds = Array.from(new Set(ids));
-                let menuIds = checkIds.concat(parentIds)
-                let menuList = Array.from(new Set(menuIds));
+				if(this.form.dataScope === 2) {
+					// 1. 是否只是叶子节点，默认值为 false 2. 是否包含半选节点，默认值为 false
+					let treeNodes = this.$refs.dept.getCheckedNodes(false, true)
+					for(var i = 0; i < treeNodes.length; i++) {
+						if(treeNodes[i].parentId !== '0') {
+							ids.push(treeNodes[i].id);
+						}
+					}
+				    if (ids.length <= 0) {
+						this.$message.error("请选择数据权限！")
+						return
+					}
+				}
                 this.saveLoading = true;
                 let data = {
                     roleId: this.form.roleId,
                     dataScope: this.form.dataScope,
-                    deptIds: menuList
+                    deptIds: ids
                 }
-                var res = await this.$API.system.role.saveRoleMenu.post(data);
+                var res = await this.$API.system.role.saveRoleDataScope.post(data);
                 this.saveLoading = false;
                 if (res.code === 2000) {
                     this.$emit('success', this.form, this.mode)
@@ -117,13 +112,11 @@
             },
 			//表单注入数据
 			setData(data){
-            	console.log("数据======")
-				console.log(JSON.stringify(data))
 				this.form.id = data.id
 				this.form.roleId = data.id
 				this.form.roleName = data.name
 				this.form.dataScope = data.dataScope
-				//this.defKeys = data.deptIds
+				this.defKeys = data.deptIds
 			}
         }
     }
