@@ -300,6 +300,9 @@ export default {
 				'sc-icon-menu',
 				'sc-icon-user',
 				'sc-icon-role',
+                'sc-icon-log',
+                'sc-icon-login-log',
+                'sc-icon-operation-log',
 			]
 		}
 	]
