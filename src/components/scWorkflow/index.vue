@@ -135,8 +135,8 @@
 	.add-node-popover-body li p {font-size: 12px;margin-top: 5px;}
 	.node-wrap-drawer__title {padding-right:40px;}
 	.node-wrap-drawer__title label {cursor: pointer;}
-	.node-wrap-drawer__title label:hover {border-bottom: 1px dashed #409eff;}
-	.node-wrap-drawer__title .node-wrap-drawer__title-edit {color: #409eff;margin-left: 10px;vertical-align: middle;}
+	.node-wrap-drawer__title label:hover {border-bottom: 1px dashed #0060ff;}
+	.node-wrap-drawer__title .node-wrap-drawer__title-edit {color: #0060ff;margin-left: 10px;vertical-align: middle;}
 
 	[data-theme='dark'] .sc-workflow-design {
 		.node-wrap-box,.auto-judge {background: #2b2b2b;}

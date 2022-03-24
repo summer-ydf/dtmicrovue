@@ -99,7 +99,7 @@
 	.sc-filter-my-list {list-style-type: none;background: #fff;border-bottom: 1px solid #e6e6e6;}
 	.sc-filter-my-list h2 {font-size: 12px;color: #999;font-weight: normal;padding:20px;}
 	.sc-filter-my-list li {padding:12px 20px;cursor: pointer;position: relative;color: #3c4a54;padding-right:80px;}
-	.sc-filter-my-list li:hover {background: #ecf5ff;color: #409EFF;}
+	.sc-filter-my-list li:hover {background: #ecf5ff;color: #0060ff;}
 	.sc-filter-my-list li label {cursor: pointer;font-size: 14px;line-height: 1.8;}
 	.sc-filter-my-list li label span {color: #999;margin-right: 10px;}
 	.sc-filter-my-list li .del {position: absolute;right:20px;top:8px;border-radius:50%;width: 32px;height: 32px;display: flex;align-items: center;justify-content: center;color: #999;}

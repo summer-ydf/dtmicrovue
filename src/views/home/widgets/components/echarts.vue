@@ -58,7 +58,7 @@
 						symbol: 'none',
 						lineStyle: {
 							width: 1,
-							color: '#409EFF'
+							color: '#0060ff'
 						},
 						areaStyle: {
 							opacity: 0.1,

@@ -254,7 +254,7 @@
 	.sc-user-select__selected ul {height:300px;overflow: auto;}
 	.sc-user-select__selected li {display: flex;align-items: center;justify-content: space-between;padding:5px 5px 5px 15px;height:38px;}
 	.sc-user-select__selected li .name {display: flex;align-items: center;}
-	.sc-user-select__selected li .name .el-avatar {background: #409eff;margin-right: 10px;}
+	.sc-user-select__selected li .name .el-avatar {background: #0060ff;margin-right: 10px;}
 	.sc-user-select__selected li .name label {}
 	.sc-user-select__selected li .delete {display: none;}
 	.sc-user-select__selected li:hover {background: var(--el-color-primary-light-9);}

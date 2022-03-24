@@ -45,8 +45,8 @@
 				layoutTags: this.$store.state.global.layoutTags,
 				lang: this.$TOOL.data.get('APP_LANG') || this.$CONFIG.LANG,
 				theme: this.$TOOL.data.get('APP_THEME') || 'default',
-				colorList: ['#409EFF', '#009688', '#536dfe', '#ff5c93', '#c62f2f', '#fd726d'],
-				colorPrimary: this.$TOOL.data.get('APP_COLOR') || this.$CONFIG.COLOR || '#409EFF'
+				colorList: ['#0060ff', '#009688', '#536dfe', '#ff5c93', '#c62f2f', '#fd726d'],
+				colorPrimary: this.$TOOL.data.get('APP_COLOR') || this.$CONFIG.COLOR || '#0060ff'
 			}
 		},
 		watch: {

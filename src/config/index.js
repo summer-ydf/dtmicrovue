@@ -15,7 +15,7 @@ const DEFAULT_CONFIG = {
 	API_URL: "/api",
 
 	//授权相关地址
-	AUTH_URL: "http://192.168.200.248:9090/auth",
+	AUTH_URL: "http://192.168.31.158:9090/auth",
 	CLIENT_ID: "cms",
 	CLIENT_SECRET: "dt%24pwd123",
 	GRANT_TYPE: "password",
@@ -53,7 +53,7 @@ const DEFAULT_CONFIG = {
 	LANG: 'zh-cn',
 
 	//主题颜色
-	COLOR: '',
+	COLOR: '#0060ff',
 
 	//控制台首页默认布局
 	DEFAULT_GRID: {

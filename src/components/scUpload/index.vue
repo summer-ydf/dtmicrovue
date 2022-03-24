@@ -203,11 +203,11 @@
 	.sc-upload-file .image {width: 100%;height: 100%;}
 	.sc-upload-file .image img {vertical-align: bottom;}
 	.sc-upload-file .file {width: 100%;height: 100%;display: flex;flex-direction: column;align-items: center;justify-content: center;border: 1px solid #DCDFE6;}
-	.sc-upload-file .file i {font-size: 30px;color: #409EFF;}
+	.sc-upload-file .file i {font-size: 30px;color: #0060ff;}
 	.sc-upload-file:hover .mask {display: inline-block;}
 
 	.sc-upload-uploader {border: 1px dashed #d9d9d9;box-sizing: border-box;width: 100%;height: 100%;}
-	.sc-upload-uploader:hover {border: 1px dashed #409eff;}
+	.sc-upload-uploader:hover {border: 1px dashed #0060ff;}
 	.sc-upload-uploader .uploader {width: 100%;height: 100%;}
 	.sc-upload-uploader:deep(.el-upload) {width: 100%;height: 100%;}
 

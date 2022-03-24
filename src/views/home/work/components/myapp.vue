@@ -124,7 +124,7 @@
 
 	.modItem-add {border: 1px dashed #ddd;cursor: pointer;}
 	.modItem-add i {font-size: 30px;color: #999!important;}
-	.modItem-add:hover,.modItem-add:hover i {border-color: #409EFF;color: #409EFF!important;}
+	.modItem-add:hover,.modItem-add:hover i {border-color: #0060ff;color: #0060ff!important;}
 
 	.setMods {padding:0 20px;}
 	.setMods h4 {font-size: 14px;font-weight: normal;}

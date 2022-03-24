@@ -214,7 +214,7 @@
 	.sc-upload-list .image-slot i {font-size: 20px;}
 
 	.sc-upload-uploader {border: 1px dashed #d9d9d9;width: 120px;height: 120px;display: inline-block;vertical-align: top;box-sizing: border-box;}
-	.sc-upload-uploader:hover {border: 1px dashed #409eff;}
+	.sc-upload-uploader:hover {border: 1px dashed #0060ff;}
 	.sc-upload-uploader .uploader {width: 100%;height: 100%;}
 	.sc-upload-uploader:deep(.el-upload) {width: 100%;height: 100%;}
 

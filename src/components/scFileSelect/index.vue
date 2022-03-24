@@ -265,7 +265,7 @@
 	.sc-file-select__item.active .sc-file-select__item__select {display: flex;}
 	.sc-file-select__item__file .item-file {width:110px;height:110px;display: flex;flex-direction: column;align-items: center;justify-content: center;}
 	.sc-file-select__item__file .item-file i {font-size: 40px;}
-	.sc-file-select__item__file .item-file.item-file-doc {color: #409eff;}
+	.sc-file-select__item__file .item-file.item-file-doc {color: #0060ff;}
 
 	.sc-file-select__item__upload {position: absolute;top:0;right:0;bottom:0;left:0;z-index: 1;background: rgba(255,255,255,0.7);display: flex;flex-direction: column;align-items: center;justify-content: center;}
 

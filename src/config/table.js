@@ -4,7 +4,7 @@ import tool from '@/utils/tool'
 
 export default {
 	successCode: 2000,					//请求完成代码
-	pageSize: 5,						//表格每一页条数
+	pageSize: 10,						//表格每一页条数
 	parseData: function (res) {			//数据分析
 		return {
 			data: res.data,				//分析无分页的数据字段结构

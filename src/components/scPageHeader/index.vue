@@ -41,7 +41,7 @@
 <style scoped>
 	.sc-page-header {background: #fff;border-bottom: 1px solid #e6e6e6;padding:20px 25px;display: flex;}
 	.sc-page-header__icon {width: 50px;}
-	.sc-page-header__icon span {display: inline-block;width: 30px;height: 30px;background: #409EFF;border-radius: 40%;display: flex;align-items: center;justify-content: center;}
+	.sc-page-header__icon span {display: inline-block;width: 30px;height: 30px;background: #0060ff;border-radius: 40%;display: flex;align-items: center;justify-content: center;}
 	.sc-page-header__icon span i {color: #fff;font-size: 14px;}
 	.sc-page-header__title {flex: 1;}
 	.sc-page-header__title h2 {font-size: 17px;color: #3c4a54;font-weight: bold;margin-top: 3px;}

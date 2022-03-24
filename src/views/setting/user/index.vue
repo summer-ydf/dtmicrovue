@@ -28,13 +28,13 @@
 				<el-main class="nopadding">
 					<scTable ref="table" :apiObj="apiObj" @selection-change="selectionChange" stripe remoteSort remoteFilter>
 						<el-table-column type="selection" width="50"></el-table-column>
-						<el-table-column label="ID" prop="id" width="200" sortable='custom'></el-table-column>
+						<el-table-column label="ID" prop="id" width="160" sortable='custom'></el-table-column>
 						<el-table-column label="头像" width="80" column-key="filterAvatar" :filters="[{text: '已上传', value: '1'}, {text: '未上传', value: '0'}]">
 							<template #default="scope">
 								<el-avatar :src="scope.row.avatar" size="small"></el-avatar>
 							</template>
 						</el-table-column>
-						<el-table-column label="登录账号" prop="username" width="150" sortable='custom' column-key="filterUserName" :filters="[{text: '系统账号', value: '1'}, {text: '普通账号', value: '0'}]"></el-table-column>
+						<el-table-column label="登录账号" prop="username" width="100" sortable='custom' column-key="filterUserName" :filters="[{text: '系统账号', value: '1'}, {text: '普通账号', value: '0'}]"></el-table-column>
 						<el-table-column label="使用范围" prop="scope" width="100" sortable='custom'></el-table-column>
 						<el-table-column label="所属部门" prop="deptName" width="100" sortable='custom'></el-table-column>
 						<el-table-column label="所属角色" prop="roleNames" width="200" sortable='custom'>

@@ -8,7 +8,7 @@
 			</el-header>
 			<el-main>
 				<el-scrollbar>
-					<el-menu :default-active="$route.meta.active || $route.fullPath" @select="select" router background-color="#212d3d" text-color="#fff" active-text-color="#409EFF">
+					<el-menu :default-active="$route.meta.active || $route.fullPath" @select="select" router background-color="#212d3d" text-color="#fff" active-text-color="#0060ff">
 						<NavMenu :navMenus="menu"></NavMenu>
 					</el-menu>
 				</el-scrollbar>
@@ -123,7 +123,7 @@
 </script>
 
 <style scoped>
-	.mobile-nav-button {position: fixed;bottom:10px;left:10px;z-index: 10;width: 50px;height: 50px;background: #409EFF;box-shadow: 0 2px 12px 0 rgba(64, 158, 255, 1);border-radius: 50%;display: flex;align-items: center;justify-content: center;}
+	.mobile-nav-button {position: fixed;bottom:10px;left:10px;z-index: 10;width: 50px;height: 50px;background: #0060ff;box-shadow: 0 2px 12px 0 rgba(64, 158, 255, 1);border-radius: 50%;display: flex;align-items: center;justify-content: center;}
 	.mobile-nav-button i {color: #fff;font-size: 20px;}
 
 	.mobile-nav {background: #212d3d;}
