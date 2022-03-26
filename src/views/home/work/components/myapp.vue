@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<ul class="myMods">
-			<li v-for="mod in myMods" :key="mod.path" :style="{background:mod.meta.color||'#0060ff'}">
+			<li v-for="mod in myMods" :key="mod.path" style="background: #0060ff;">
 				<a v-if="mod.meta.type==='link'" :href="mod.path" target="_blank">
 					<el-icon><component :is="mod.meta.icon||el-icon-menu" /></el-icon>
 					<p>{{ mod.meta.title }}</p>
@@ -26,7 +26,7 @@
 							<h4>我的常用 ( {{myMods.length}} )</h4>
 							<draggable tag="ul" v-model="myMods" animation="200" item-key="path" group="people">
 								<template #item="{ element }">
-									<li :style="{background:element.meta.color||'#909399'}">
+									<li style="background: #0060ff;">
 										<el-icon><component :is="element.meta.icon||el-icon-menu" /></el-icon>
 										<p>{{element.meta.title}}</p>
 									</li>
@@ -37,7 +37,7 @@
 							<h4>全部应用 ( {{filterMods.length}} )</h4>
 							<draggable tag="ul" v-model="filterMods" animation="200" item-key="path" :sort="false" group="people">
 								<template #item="{ element }">
-									<li :style="{background:element.meta.color||'#909399'}">
+									<li style="background: #909399;">
 										<el-icon><component :is="element.meta.icon||el-icon-menu" /></el-icon>
 										<p>{{element.meta.title}}</p>
 									</li>
@@ -47,7 +47,7 @@
 					</el-scrollbar>
 				</el-main>
 				<el-footer>
-					<el-button type="primary" size="small" @click="saveMods">保存</el-button>
+					<el-button type="primary" size="small" :loading="saveLoading" @click="saveMods">保存</el-button>
 				</el-footer>
 			</el-container>
 		</el-drawer>
@@ -67,28 +67,44 @@
 				myMods: [],
 				myModsName: [],
 				filterMods: [],
-				modsDrawer: false
+				modsDrawer: false,
+                saveLoading: false,
+                //表单数据
+                form: {
+                    id:"",
+                    userId: "",
+                    app: "",
+                },
 			}
 		},
-		mounted(){
+        created() {
+            var userinfo = this.$TOOL.data.get("USER_INFO")
+            this.form.userId = userinfo.userid
+        },
+        mounted(){
 			this.getMods()
 		},
 		methods: {
 			addMods(){
 				this.modsDrawer = true
 			},
-			getMods(){
-				//这里可用改为读取远程数据
-				this.myModsName = this.$TOOL.data.get("my-mods") || []
-				var menuTree = this.$TOOL.data.get("MENU")
-				this.filterMenu(menuTree)
-				this.myMods = this.mods.filter(item => {
-					return this.myModsName.includes(item.name)
-				})
-				this.filterMods =  this.mods.filter(item => {
-					return !this.myModsName.includes(item.name)
-				})
-			},
+			async getMods() {
+                var res = await this.$API.system.setting.get_my_setting.get(this.form.userId);
+                if (res.code === 2000) {
+                    if(res.data !== null) {
+                        this.myModsName = res.data.app
+                        this.form.id = res.data.id
+                    }
+                }
+                var menuTree = this.$TOOL.data.get("MENU")
+                this.filterMenu(menuTree)
+                this.myMods = this.mods.filter(item => {
+                    return this.myModsName.includes(item.name)
+                })
+                this.filterMods = this.mods.filter(item => {
+                    return !this.myModsName.includes(item.name)
+                })
+            },
 			filterMenu(map){
 				map.forEach(item => {
 					if(item.meta.hidden){
@@ -104,12 +120,23 @@
 					}
 				})
 			},
-			saveMods(){
-				const myModsName = this.myMods.map(v => v.name)
-				this.$TOOL.data.set("my-mods", myModsName)
-				this.$message.success("设置常用成功")
-				this.modsDrawer = false
-			}
+			async saveMods() {
+                const myModsName = this.myMods.map(v => v.name)
+                if (myModsName.length > 5) {
+                    this.$alert("常用应用最多只能加5个", "提示", {type: 'warning'})
+                    return false
+                }
+                this.form.app = myModsName.join(",");
+                this.saveLoading = true;
+                var res = await this.$API.system.setting.save.post(this.form);
+                this.saveLoading = false;
+                if (res.code === 2000) {
+                    this.$message.success("设置常用成功")
+                    this.modsDrawer = false
+                } else {
+                    this.$alert(res.message, "提示", {type: 'error'})
+                }
+            }
 		}
 	}
 </script>

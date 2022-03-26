@@ -233,20 +233,20 @@ export default {
             }
         },
 	},
-	table: {
-		list: {
-			url: `${config.API_URL}/system/table/list`,
-			name: "表格列管理列表",
+	setting: {
+        get_my_setting: {
+			url: `${config.API_URL}/setting/get_my_setting/`,
+			name: "获取我的常用应用",
 			get: async function(params){
-				return await http.get(this.url, params);
+				return await http.get(this.url + params, null);
 			}
 		},
-		info: {
-			url: `${config.API_URL}/system/table/info`,
-			name: "表格列管理详情",
-			get: async function(params){
-				return await http.get(this.url, params);
-			}
+		save: {
+			url: `${config.API_URL}/setting/save`,
+			name: "添加我的常用应用",
+            post: async function(data={}){
+                return await http.post(this.url, data);
+            }
 		}
 	}
 }
