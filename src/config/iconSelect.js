@@ -303,6 +303,8 @@ export default {
                 'sc-icon-log',
                 'sc-icon-login-log',
                 'sc-icon-operation-log',
+                'sc-icon-task',
+                'sc-icon-config',
 			]
 		}
 	]
