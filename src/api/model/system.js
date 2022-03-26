@@ -203,7 +203,35 @@ export default {
             get: async function(params){
                 return await http.get(this.url, params);
             }
-        }
+        },
+        delete_login: {
+            url: `${config.API_URL}/log/delete_login/`,
+            name: "单个删除登录日志",
+            delete: async function(data={}){
+                return await http.delete(this.url + data, null);
+            }
+        },
+        delete_operator: {
+            url: `${config.API_URL}/log/delete_operator/`,
+            name: "单个删除操作日志",
+            delete: async function(data={}){
+                return await http.delete(this.url + data, null);
+            }
+        },
+        bath_delete_login: {
+            url: `${config.API_URL}/log/bath_delete_login`,
+            name: "批量删除登录日志",
+            delete: async function(data={}){
+                return await http.delete(this.url, data);
+            }
+        },
+        bath_delete_operator: {
+            url: `${config.API_URL}/log/bath_delete_operator`,
+            name: "批量删除操作日志",
+            delete: async function(data={}){
+                return await http.delete(this.url, data);
+            }
+        },
 	},
 	table: {
 		list: {

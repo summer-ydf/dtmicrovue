@@ -2,7 +2,6 @@
     <el-container>
         <el-header>
             <div class="left-panel">
-                <el-button type="primary" icon="el-icon-plus" @click="add"></el-button>
                 <el-button type="danger" plain icon="el-icon-delete" :disabled="selection.length===0" @click="batch_del"></el-button>
             </div>
             <div class="right-panel">
@@ -42,7 +41,6 @@
         </el-main>
     </el-container>
 </template>
-
 <script>
     export default {
         name: "index",
@@ -58,14 +56,14 @@
         methods: {
             //删除
             async table_del(row){
-                var confirm = await this.$confirm(`确定删除选中的项吗？如果删除项中含有权限信息将会被一并删除`, '提示', {
+                var confirm = await this.$confirm(`确定删除选中的项吗？`, '提示', {
                     confirmButtonText: 'ok',
                     type: 'warning'
                 }).catch(() => {})
                 if(confirm !== 'confirm'){
                     return false
                 }
-                var res = await this.$API.system.role.delete.delete(row.id);
+                var res = await this.$API.system.log.delete_login.delete(row.id);
                 if(res.code === 2000){
                     this.$refs.table.refresh()
                     this.$message.success("删除成功")
@@ -76,7 +74,7 @@
             //批量删除
             async batch_del(){
                 var ids = []
-                var confirm = await this.$confirm(`确定删除选中的 ${this.selection.length} 项吗？如果删除项中含有权限信息将会被一并删除`, '提示', {
+                var confirm = await this.$confirm(`确定删除选中的 ${this.selection.length} 项吗？`, '提示', {
                     type: 'warning'
                 }).catch(() => {})
                 if(confirm !== 'confirm'){
@@ -86,7 +84,7 @@
                     ids.push(item.id)
                 })
                 const loading = this.$loading();
-                var res = await this.$API.system.role.deleteBath.delete(ids)
+                var res = await this.$API.system.log.bath_delete_login.delete(ids)
                 if(res.code === 2000){
                     loading.close();
                     this.$refs.table.reload()

@@ -22,6 +22,7 @@
 		"tinymce": "5.10.2",
 		"vue": "3.2.23",
 		"vue-i18n": "9.1.9",
+		"vue-json-viewer": "^2.2.22",
 		"vue-router": "4.0.12",
 		"vuedraggable": "4.0.3",
 		"vuex": "4.0.2",
@@ -59,7 +60,7 @@
 			"no-tabs": 0,
 			"no-mixed-spaces-and-tabs": 0,
 			"vue/no-unused-components": "off",
-            "no-unused-vars": "off"
+			"no-unused-vars": "off"
 		}
 	},
 	"browserslist": [
