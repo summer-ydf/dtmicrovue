@@ -1,6 +1,5 @@
 export default {
 	login: {
-		slogan: '高性能 / 精致 / 优雅',
 		describe: '基于Vue3 + Element-Plus 的中后台前端解决方案。',
 		rememberMe: '记住我',
 		forgetPassword: '忘记密码',

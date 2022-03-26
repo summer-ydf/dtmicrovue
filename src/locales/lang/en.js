@@ -1,6 +1,5 @@
 export default {
 	login: {
-		slogan: 'High performance / delicate / grace',
 		describe: 'Vue3 + element plus based front-end solutions in the background.',
 		rememberMe: 'Remember me',
 		forgetPassword: 'Forget password',

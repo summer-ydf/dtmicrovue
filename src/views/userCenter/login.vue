@@ -4,7 +4,6 @@
 		background-size:100% 100%;background-repeat:no-repeat;">
 			<div class="login_adv__title">
 				<h2>DT Admin</h2>
-				<h4>{{ $t('login.slogan') }}</h4>
 				<p>{{ $t('login.describe') }}</p>
 			</div>
 			<div class="login_adv__bottom">
@@ -28,7 +27,7 @@
 			<div class="login-form">
 				<div class="login-header">
 					<div class="logo">
-						<img :alt="$CONFIG.APP_NAME" src="img/logo.png">
+						<img :alt="$CONFIG.APP_NAME" src="img/syslogo_blue.png">
 						<label>{{$CONFIG.APP_NAME}}</label>
 					</div>
 				</div>

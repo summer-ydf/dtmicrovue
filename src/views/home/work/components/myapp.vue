@@ -1,8 +1,8 @@
 <template>
 	<div>
 		<ul class="myMods">
-			<li v-for="mod in myMods" :key="mod.path" :style="{background:mod.meta.color||'#909399'}">
-				<a v-if="mod.meta.type=='link'" :href="mod.path" target="_blank">
+			<li v-for="mod in myMods" :key="mod.path" :style="{background:mod.meta.color||'#0060ff'}">
+				<a v-if="mod.meta.type==='link'" :href="mod.path" target="_blank">
 					<el-icon><component :is="mod.meta.icon||el-icon-menu" /></el-icon>
 					<p>{{ mod.meta.title }}</p>
 				</a>
@@ -18,7 +18,7 @@
 			</li>
 		</ul>
 
-		<el-drawer title="添加应用" v-model="modsDrawer" :size="570" destroy-on-close>
+		<el-drawer title="添加应用" v-model="modsDrawer" :size="390" destroy-on-close>
 			<el-container>
 				<el-main class="nopadding">
 					<el-scrollbar>
@@ -94,7 +94,7 @@
 					if(item.meta.hidden){
 						return false
 					}
-					if(item.meta.type=='iframe'){
+					if(item.meta.type==='iframe'){
 						item.path = `/i/${item.name}`
 					}
 					if(item.children&&item.children.length > 0){
@@ -116,11 +116,11 @@
 
 <style scoped>
 	.myMods {list-style:none;margin:-10px;}
-	.myMods li {display: inline-block;width: 100px;height:100px;vertical-align: top;transition:all 0.3s ease;margin:10px;border-radius:5px;}
+	.myMods li {display: inline-block;width: 80px;height:80px;vertical-align: top;transition:all 0.3s ease;margin:10px;border-radius:5px;}
 	.myMods li:hover {opacity: 0.8;}
 	.myMods li a {width: 100%;height: 100%;padding:10px;display: flex;flex-direction: column;align-items: center;justify-content: center;text-align: center;color: #fff;}
-	.myMods li i {font-size: 26px;color: #fff;}
-	.myMods li p {font-size: 12px;color: #fff;margin-top: 10px;width: 100%;white-space:nowrap;text-overflow:ellipsis;overflow: hidden;}
+	.myMods li i {font-size: 20px;color: #fff;}
+	.myMods li p {font-size: 10px;color: #fff;margin-top: 10px;width: 100%;white-space:nowrap;text-overflow:ellipsis;overflow: hidden;}
 
 	.modItem-add {border: 1px dashed #ddd;cursor: pointer;}
 	.modItem-add i {font-size: 30px;color: #999!important;}

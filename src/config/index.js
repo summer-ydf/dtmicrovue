@@ -60,11 +60,11 @@ const DEFAULT_CONFIG = {
 		//默认分栏数量和宽度 例如 [24] [18,6] [8,8,8] [6,12,6]
 		layout: [12, 6, 6],
 		//小组件分布，com取值:views/home/components 文件名
-		copmsList: [
-			['welcome'],
-			['about', 'ver'],
-			['time', 'progress']
-		]
+		// copmsList: [
+		// 	['welcome'],
+		// 	// ['about', 'ver'],
+		// 	// ['time', 'progress']
+		// ]
 	}
 }
 

@@ -4,11 +4,11 @@
 		<header class="adminui-header">
 			<div class="adminui-header-left">
 				<div class="logo-bar">
-					<img class="logo" src="img/logo.png">
+					<img class="logo" src="img/syslogo_white.png">
 					<span>{{ $CONFIG.APP_NAME }}</span>
 				</div>
 				<ul v-if="!ismobile" class="nav">
-					<li v-for="item in menu" :key="item" :class="pmenu.path==item.path?'active':''" @click="showMenu(item)">
+					<li v-for="item in menu" :key="item" :class="pmenu.path===item.path?'active':''" @click="showMenu(item)">
 						<el-icon><component :is="item.meta.icon || el-icon-menu" /></el-icon>
 						<span>{{ item.meta.title }}</span>
 					</li>
@@ -55,7 +55,7 @@
 		<header class="adminui-header">
 			<div class="adminui-header-left">
 				<div class="logo-bar">
-					<img class="logo" src="img/logo.png">
+					<img class="logo" src="img/syslogo_white.png">
 					<span>{{ $CONFIG.APP_NAME }}</span>
 				</div>
 			</div>
@@ -97,7 +97,7 @@
 		<header class="adminui-header">
 			<div class="adminui-header-left">
 				<div class="logo-bar">
-					<img class="logo" src="img/logo.png">
+					<img class="logo" src="img/syslogo_white.png">
 					<span>{{ $CONFIG.APP_NAME }}</span>
 				</div>
 			</div>
@@ -131,7 +131,7 @@
 			<div v-if="!ismobile" class="aminui-side-split">
 				<div class="aminui-side-split-top">
 					<router-link :to="$CONFIG.DASHBOARD_URL">
-						<img class="logo" :title="$CONFIG.APP_NAME" src="img/logo-r.png">
+						<img class="logo" :title="$CONFIG.APP_NAME" src="img/syslogo_white.png">
 					</router-link>
 				</div>
 				<div class="adminui-side-split-scroll">
