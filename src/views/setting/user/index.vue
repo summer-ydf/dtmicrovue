@@ -13,10 +13,8 @@
 		<el-container>
 				<el-header>
 					<div class="left-panel">
-						<el-button type="primary" icon="el-icon-plus" @click="add"></el-button>
-						<el-button type="danger" plain icon="el-icon-delete" :disabled="selection.length==0" @click="batch_del"></el-button>
-						<el-button type="primary" plain :disabled="selection.length==0">分配角色</el-button>
-						<el-button type="primary" plain :disabled="selection.length==0">密码重置</el-button>
+						<el-button v-if="$AUTH('user.add')" type="primary" icon="el-icon-plus" @click="add"></el-button>
+						<el-button v-if="$AUTH('user.batch.delete')" type="danger" plain icon="el-icon-delete" :disabled="selection.length===0" @click="batch_del"></el-button>
 					</div>
 					<div class="right-panel">
 						<div class="right-panel-search">
@@ -49,10 +47,10 @@
 								<el-button type="danger" plain size="small" v-else>禁用</el-button>
 							</template>
 						</el-table-column>
-						<el-table-column label="操作" fixed="right" align="right" width="100">
+						<el-table-column v-if="$AUTH('user.edit') || $AUTH('user.delete')" label="操作" fixed="right" align="right" width="100">
 							<template #default="scope">
-								<el-button type="text" size="small" @click="table_edit(scope.row, scope.$index)">编辑</el-button>
-								<el-button type="text" size="small" @click="table_del(scope.row, scope.$index)">删除</el-button>
+								<el-button v-if="$AUTH('user.edit')" type="text" size="small" @click="table_edit(scope.row, scope.$index)">编辑</el-button>
+								<el-button v-if="$AUTH('user.delete')" type="text" size="small" @click="table_del(scope.row, scope.$index)">删除</el-button>
 							</template>
 						</el-table-column>
 					</scTable>
@@ -83,7 +81,8 @@
 				apiObj: this.$API.system.user.list,
 				selection: [],
 				search: {
-					keyword: null
+					keyword: null,
+                    deptId: null
 				}
 			}
 		},
@@ -108,13 +107,6 @@
 				this.dialog.save = true
 				this.$nextTick(() => {
 					this.$refs.updateDialog.open('edit').setData(row)
-				})
-			},
-			//查看
-			table_show(row){
-				this.dialog.save = true
-				this.$nextTick(() => {
-					this.$refs.saveDialog.open('show').setData(row)
 				})
 			},
 			//删除
@@ -177,10 +169,8 @@
 			},
 			//树点击事件
 			groupClick(data){
-				var params = {
-					groupId: data.id
-				}
-				this.$refs.table.reload(params)
+			    this.search.deptId = data.id
+                this.$refs.table.upData(this.search)
 			},
 			//搜索
 			upsearch(){

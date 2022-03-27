@@ -24,8 +24,8 @@
 					</el-tree>
 				</el-main>
 				<el-footer style="height:51px;">
-					<el-button type="primary" size="mini" icon="el-icon-plus" @click="add()"></el-button>
-					<el-button type="danger" size="mini" plain icon="el-icon-delete" @click="delMenu"></el-button>
+					<el-button v-if="$AUTH('menu.add')" type="primary" size="mini" icon="el-icon-plus" @click="add()"></el-button>
+					<el-button v-if="$AUTH('menu.batch.delete')" type="danger" size="mini" plain icon="el-icon-delete" @click="delMenu"></el-button>
 				</el-footer>
 			</el-container>
 		</el-aside>

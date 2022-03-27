@@ -2,7 +2,7 @@
     <el-container>
         <el-header>
             <div class="left-panel">
-                <el-button type="danger" plain icon="el-icon-delete" :disabled="selection.length===0" @click="batch_del"></el-button>
+                <el-button v-if="$AUTH('log.oper.batch.delete')" type="danger" plain icon="el-icon-delete" :disabled="selection.length===0" @click="batch_del"></el-button>
             </div>
             <div class="right-panel">
                 <div class="right-panel-search">
@@ -30,7 +30,7 @@
                     <template #default="scope">
                         <el-button type="text" size="small" @click="table_show(scope.row, scope.$index)">查看详情</el-button>
                         <el-divider direction="vertical"></el-divider>
-                        <el-button type="text" size="small" @click="table_del(scope.row, scope.$index)">删除</el-button>
+                        <el-button v-if="$AUTH('log.oper.delete')" type="text" size="small" @click="table_del(scope.row, scope.$index)">删除</el-button>
                     </template>
                 </el-table-column>
             </scTable>

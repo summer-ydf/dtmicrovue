@@ -23,8 +23,8 @@
 					</el-tree>
 				</el-main>
 				<el-footer style="height:51px;">
-					<el-button type="primary" size="mini" icon="el-icon-plus" @click="add()"></el-button>
-					<el-button type="danger" size="mini" plain icon="el-icon-delete" @click="delMenu"></el-button>
+					<el-button v-if="$AUTH('dept.add')" type="primary" size="mini" icon="el-icon-plus" @click="add()"></el-button>
+					<el-button v-if="$AUTH('dept.batch.delete')" type="danger" size="mini" plain icon="el-icon-delete" @click="delDept"></el-button>
 				</el-footer>
 			</el-container>
 		</el-aside>
@@ -99,7 +99,7 @@ export default {
 			this.$refs.save.setData(newMenuData, pid)
 		},
 		//删除
-		async delMenu(){
+		async delDept(){
 			var CheckedNodes = this.$refs.dept.getCheckedNodes()
 			if(CheckedNodes.length === 0){
 				this.$message.warning("请选择需要删除的项")

@@ -7,7 +7,7 @@
                          :data="menu.list"
                          :default-checked-keys="menu.checked"
                          :props="menu.props"
-                         :default-expand-all="true"
+                         :default-expand-all="false"
                          @check-change="handleNodeClick"
                          show-checkbox>
                 </el-tree>

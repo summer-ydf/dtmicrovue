@@ -2,8 +2,8 @@
 	<el-container>
 		<el-header>
 			<div class="left-panel">
-				<el-button type="primary" icon="el-icon-plus" @click="add"></el-button>
-				<el-button type="danger" plain icon="el-icon-delete" :disabled="selection.length===0" @click="batch_del"></el-button>
+				<el-button v-if="$AUTH('role.add')" type="primary" icon="el-icon-plus" @click="add"></el-button>
+				<el-button v-if="$AUTH('role.batch.delete')" type="danger" plain icon="el-icon-delete" :disabled="selection.length===0" @click="batch_del"></el-button>
 			</div>
 			<div class="right-panel">
 				<div class="right-panel-search">
@@ -22,13 +22,13 @@
 				<el-table-column label="创建时间" prop="createTime" width="150"></el-table-column>
 				<el-table-column label="操作" fixed="right" align="right">
 					<template #default="scope">
-                        <el-button type="text" size="small" @click="table_permission(scope.row, scope.$index)">权限设置</el-button>
+                        <el-button v-if="$AUTH('role.auth')" type="text" size="small" @click="table_permission(scope.row, scope.$index)">权限设置</el-button>
                         <el-divider direction="vertical"></el-divider>
-						<el-button type="text" size="small" @click="table_scopedata(scope.row, scope.$index)">数据权限</el-button>
+						<el-button v-if="$AUTH('role.data.scope')" type="text" size="small" @click="table_scopedata(scope.row, scope.$index)">数据权限</el-button>
 						<el-divider direction="vertical"></el-divider>
-						<el-button type="text" size="small" @click="table_edit(scope.row, scope.$index)">编辑</el-button>
+						<el-button v-if="$AUTH('role.edit')" type="text" size="small" @click="table_edit(scope.row, scope.$index)">编辑</el-button>
 						<el-divider direction="vertical"></el-divider>
-                        <el-button type="text" size="small" @click="table_del(scope.row, scope.$index)">删除</el-button>
+                        <el-button v-if="$AUTH('role.delete')" type="text" size="small" @click="table_del(scope.row, scope.$index)">删除</el-button>
 					</template>
 				</el-table-column>
 			</scTable>

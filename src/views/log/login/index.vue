@@ -2,7 +2,7 @@
     <el-container>
         <el-header>
             <div class="left-panel">
-                <el-button type="danger" plain icon="el-icon-delete" :disabled="selection.length===0" @click="batch_del"></el-button>
+                <el-button v-if="$AUTH('log.login.batch.delete')" type="danger" plain icon="el-icon-delete" :disabled="selection.length===0" @click="batch_del"></el-button>
             </div>
             <div class="right-panel">
                 <div class="right-panel-search">
@@ -32,7 +32,7 @@
                         <el-button type="danger" plain size="small" v-else>退出系统</el-button>
                     </template>
                 </el-table-column>
-                <el-table-column label="操作" fixed="right" align="right">
+                <el-table-column v-if="$AUTH('log.login.delete')" label="操作" fixed="right" align="right">
                     <template #default="scope">
                         <el-button type="text" size="small" @click="table_del(scope.row, scope.$index)">删除</el-button>
                     </template>
