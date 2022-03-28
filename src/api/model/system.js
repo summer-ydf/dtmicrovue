@@ -192,14 +192,14 @@ export default {
 	log: {
 		login_list: {
             url: `${config.API_URL}/log/login_page`,
-            name: "获取登录日志页列表",
+            name: "获取登录日志分页列表",
             get: async function(params){
                 return await http.get(this.url, params);
             }
 		},
         operator_list: {
             url: `${config.API_URL}/log/operator_page`,
-            name: "获取操作日志页列表",
+            name: "获取操作日志分页列表",
             get: async function(params){
                 return await http.get(this.url, params);
             }
@@ -248,5 +248,14 @@ export default {
                 return await http.post(this.url, data);
             }
 		}
-	}
+	},
+    task: {
+        list: {
+            url: `${config.API_URL}/job/page`,
+            name: "获取任务调度分页列表",
+            get: async function(params){
+                return await http.get(this.url, params);
+            }
+        },
+    }
 }
