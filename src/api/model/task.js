@@ -10,5 +10,12 @@ export default {
 				return await http.get(this.url, params);
 			}
 		},
+		save: {
+			url: `${config.JOB_URL}/job/addScheduleJob`,
+			name: "添加任务",
+			post: async function(data={}){
+				return await http.post(this.url, data);
+			}
+		},
 	}
 }

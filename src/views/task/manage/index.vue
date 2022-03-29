@@ -2,6 +2,7 @@
     <el-container>
         <el-header>
             <div class="left-panel">
+				<el-button type="primary" icon="el-icon-plus" @click="add"></el-button>
                 <el-button type="danger" plain icon="el-icon-delete" :disabled="selection.length===0" @click="batch_del"></el-button>
             </div>
             <div class="right-panel">
@@ -15,19 +16,22 @@
             <scTable ref="table" :apiObj="apiObj" row-key="id" @selection-change="selectionChange" stripe>
                 <el-table-column type="selection" width="50"></el-table-column>
                 <el-table-column label="任务ID" prop="taskId" width="150"></el-table-column>
-                <el-table-column label="任务名称" prop="taskName" width="100"></el-table-column>
+                <el-table-column label="任务名称" prop="taskName" width="200"></el-table-column>
                 <el-table-column label="任务组名称" prop="taskGroupName" width="100"></el-table-column>
-                <el-table-column label="任务类" prop="jobClass" width="200"></el-table-column>
-                <el-table-column label="执行表达式" prop="cronExpression" width="80"></el-table-column>
+                <el-table-column label="任务类名" prop="jobClass" width="150"></el-table-column>
+                <el-table-column label="cron表达式" prop="cronExpression" width="200"></el-table-column>
                 <el-table-column label="状态" prop="type" width="100">
                     <template #default="scope">
                         <el-button type="primary" plain size="small" v-if="scope.row.status === 1">运行中</el-button>
                         <el-button type="danger" plain size="small" v-else>已暂停</el-button>
                     </template>
                 </el-table-column>
-                <el-table-column label="创建时间" prop="createTime" width="100"></el-table-column>
+                <el-table-column label="创建时间" prop="createTime" width="150"></el-table-column>
                 <el-table-column label="操作" fixed="right" align="right">
                     <template #default="scope">
+						<el-button type="success" size="small" :icon="Edit" circle v-if="scope.row.status === 1"/>
+						<el-button type="success" size="small" :icon="Edit" circle v-if="scope.row.status === 0"/>
+						<el-divider direction="vertical"></el-divider>
                         <el-button type="text" size="small" @click="table_edit(scope.row, scope.$index)">编辑</el-button>
                         <el-divider direction="vertical"></el-divider>
                         <el-button type="text" size="small" @click="table_del(scope.row, scope.$index)">删除</el-button>
@@ -36,20 +40,48 @@
             </scTable>
         </el-main>
     </el-container>
+	<save-dialog v-if="dialog.save" ref="saveDialog" @success="handleSaveSuccess" @closed="dialog.save=false"></save-dialog>
 </template>
 <script>
+import saveDialog from "./save"
+import {
+	Check,
+	Delete,
+	Edit,
+	Message,
+	Search,
+	Star,
+} from '@element-plus/icons-vue'
 export default {
     name: "index",
+	components: {saveDialog,Edit},
     data() {
         return {
             apiObj: this.$API.task.job.list,
             selection: [],
             search: {
                 keyword: null
-            }
+            },
+			dialog: {
+				save: false
+			},
         }
     },
     methods: {
+		//添加
+		add(){
+			this.dialog.save = true
+			this.$nextTick(() => {
+				this.$refs.saveDialog.open()
+			})
+		},
+		//编辑
+		table_edit(row){
+			this.dialog.save = true
+			this.$nextTick(() => {
+				this.$refs.saveDialog.open('edit').setData(row)
+			})
+		},
         //删除
         async table_del(row){
             var confirm = await this.$confirm(`确定删除选中的项吗？`, '提示', {
@@ -97,6 +129,12 @@ export default {
         upsearch(){
             this.$refs.table.upData(this.search)
         },
+		//本地更新数据
+		handleSaveSuccess(data, mode){
+			if(mode==='add' || mode==='edit'){
+				this.$refs.table.refresh()
+			}
+		}
     }
 }
 </script>

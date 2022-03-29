@@ -12,9 +12,9 @@ const DEFAULT_CONFIG = {
 	CORE_VER: "1.4.2",
 
 	//系统配置接口地址
-	API_URL: "/manage/api/",
+	API_URL: "/manage/api",
 	//任务调度接口地址
-	JOB_URL: "/task/api/",
+	JOB_URL: "/task/api",
 	//Oauth2授权接口地址
 	AUTH_URL: "/auth",
 	//客户端授权秘钥
