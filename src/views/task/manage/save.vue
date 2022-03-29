@@ -17,8 +17,8 @@
 								<el-form-item label="任务类名" prop="jobClass">
 									<el-input v-model="form.jobClass" placeholder="请输入任务类名" clearable></el-input>
 								</el-form-item>
-								<el-form-item label="cron表达式" prop="cronExpression">
-									<el-input v-model="form.cronExpression" placeholder="请输入时间表达式" clearable></el-input>
+								<el-form-item label="表达式" prop="cronExpression">
+                                    <el-input v-model="form.cronExpression" placeholder="请输入定时策略" clearable></el-input>
 								</el-form-item>
 								<el-form-item label="参数" prop="params">
 									<el-input type="textarea" :rows="2" v-model="form.params" placeholder="请输入json格式的参数" clearable></el-input>
@@ -86,17 +86,22 @@
 				this.$refs.dialogForm.validate(async (valid) => {
 					if (valid) {
 						this.saveLoading = true;
-						console.log("开始提交==========")
-						console.log(JSON.stringify(this.form))
-						var res = await this.$API.task.job.save.post(this.form);
-						this.saveLoading = false;
-						if(res.code === 2000){
-							this.$emit('success', this.form, this.mode)
-							this.visible = false;
-							this.$message.success(res.message)
-						}else{
-							this.$alert(res.message, "提示", {type: 'error'})
-						}
+                        var res = null
+                        if (this.form.id !== '') {
+                            res = await this.$API.task.job.update.post(this.form);
+                        }else {
+                            res = await this.$API.task.job.save.post(this.form);
+                        }
+                        if (res !== null) {
+                            this.saveLoading = false;
+                            if(res.code === 2000){
+                                this.$emit('success', this.form, this.mode)
+                                this.visible = false;
+                                this.$message.success(res.message)
+                            }else{
+                                this.$alert(res.message, "提示", {type: 'error'})
+                            }
+                        }
 					}else{
 						return false;
 					}
@@ -110,6 +115,8 @@
 				this.form.taskGroupName = data.taskGroupName
 				this.form.jobClass = data.jobClass
 				this.form.cronExpression = data.cronExpression
+				this.form.params = data.params
+				this.form.status = data.status
 			},
 		}
 	}
