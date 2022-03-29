@@ -4,8 +4,11 @@
 
 const APP_CONFIG = {
 	//标题
-	APP_NAME: "ADMIN",
-
-	//接口地址，如遇跨域需使用nginx代理
-	API_URL: "https://www.fastmock.site/mock/5039c4361c39a7e3252c5b55971f1bd3/api"
+	APP_NAME: "DT Admin 后台管理端",
+	//系统配置接口地址，如遇跨域需使用nginx代理
+	API_URL: "https://www.fastmock.site/mock/manage/api/",
+	//任务调度接口地址
+	JOB_URL: "https://www.fastmock.site/mock/task/api/",
+	//Oauth2授权接口地址
+	AUTH_URL: "https://www.fastmock.site/mock/auth",
 }

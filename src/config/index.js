@@ -11,11 +11,13 @@ const DEFAULT_CONFIG = {
 	//内核版本号
 	CORE_VER: "1.4.2",
 
-	//接口地址
-	API_URL: "/api",
-
-	//授权相关地址
-	AUTH_URL: "http://192.168.31.158:9090/auth",
+	//系统配置接口地址
+	API_URL: "/manage/api/",
+	//任务调度接口地址
+	JOB_URL: "/task/api/",
+	//Oauth2授权接口地址
+	AUTH_URL: "/auth",
+	//客户端授权秘钥
 	CLIENT_ID: "cms",
 	CLIENT_SECRET: "dt%24pwd123",
 	GRANT_TYPE: "password",
@@ -36,8 +38,7 @@ const DEFAULT_CONFIG = {
 	//请求是否开启缓存
 	REQUEST_CACHE: false,
 
-	//布局 默认：default | 通栏：header | 经典：menu | 功能坞：dock
-	//dock将关闭标签和面包屑栏
+	//布局 默认：default | 通栏：header | 经典：menu | 功能坞：dock (dock将关闭标签和面包屑栏)
 	LAYOUT: 'default',
 
 	//菜单是否折叠
@@ -58,7 +59,7 @@ const DEFAULT_CONFIG = {
 	//控制台首页默认布局
 	DEFAULT_GRID: {
 		//默认分栏数量和宽度 例如 [24] [18,6] [8,8,8] [6,12,6]
-		layout: [12, 6, 6],
+		//layout: [12, 6, 6],
 		//小组件分布，com取值:views/home/components 文件名
 		// copmsList: [
 		// 	['welcome'],

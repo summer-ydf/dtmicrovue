@@ -42,7 +42,7 @@ export default {
     name: "index",
     data() {
         return {
-            apiObj: this.$API.system.task.list,
+            apiObj: this.$API.task.job.list,
             selection: [],
             search: {
                 keyword: null

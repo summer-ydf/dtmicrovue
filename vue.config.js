@@ -12,12 +12,20 @@ module.exports = {
 		open: false, //运行后自动打开浏览器
 		port: 2900, //挂载端口
 		proxy: {
-			'/api': {
-				target: 'http://192.168.31.158:9090/api',
+			'/manage/api/': {
+				target: 'http://192.168.200.248:9090/',
 				ws: true,
-				pathRewrite: {
-					'^/api': '/'
-				}
+				changeOrigin: true
+			},
+			'/task/api/': {
+				target: 'http://192.168.200.248:9090/',
+				ws: true,
+				changeOrigin: true
+			},
+			'/auth/': {
+				target: 'http://192.168.200.248:9090/',
+				ws: true,
+				changeOrigin: true
 			}
 		}
 	},

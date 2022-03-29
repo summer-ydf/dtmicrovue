@@ -17,13 +17,6 @@ export default {
 				return await http.get(this.url);
 			}
 		},
-		generateId: {
-			url: `${config.API_URL}/menu/generateId`,
-			name: "生成唯一ID",
-			get: async function(){
-				return await http.get(this.url);
-			}
-		},
 		save: {
 			url: `${config.API_URL}/menu/save`,
 			name: "添加菜单",
