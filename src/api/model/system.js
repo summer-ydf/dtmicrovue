@@ -33,27 +33,41 @@ export default {
         },
 	},
 	dic: {
-		tree: {
-			url: `${config.API_URL}/system/dic/tree`,
-			name: "获取字典树",
-			get: async function(){
-				return await http.get(this.url);
-			}
-		},
 		list: {
-			url: `${config.API_URL}/system/dic/list`,
-			name: "字典明细",
+			url: `${config.API_URL}/dic/page`,
+			name: "字典分页列表",
 			get: async function(params){
 				return await http.get(this.url, params);
 			}
 		},
-		get: {
-			url: `${config.API_URL}/system/dic/get`,
-			name: "获取字典数据",
-			get: async function(params){
-				return await http.get(this.url, params);
+		save: {
+			url: `${config.API_URL}/dic/save`,
+			name: "添加字典",
+			post: async function(data={}){
+				return await http.post(this.url, data);
 			}
-		}
+		},
+		delete: {
+			url: `${config.API_URL}/dic/delete/`,
+			name: "删除字典",
+			delete: async function(data={}){
+				return await http.delete(this.url + data,null);
+			}
+		},
+		deleteBath: {
+			url: `${config.API_URL}/dic/delete_bath`,
+			name: "批量删除字典",
+			delete: async function(data={}){
+				return await http.delete(this.url, data);
+			}
+		},
+		updateEnabled: {
+			url: `${config.API_URL}/dic/update_enabled/`,
+			name: "修改字典状态",
+			post: async function(data={}){
+				return await http.delete(this.url + data.id + "/" + data.enabled,null);
+			}
+		},
 	},
 	role: {
 		list: {

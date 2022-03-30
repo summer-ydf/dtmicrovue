@@ -17,7 +17,7 @@
                 <el-table-column label="任务ID" prop="taskId" width="150"></el-table-column>
                 <el-table-column label="任务名称" prop="taskName" width="150"></el-table-column>
                 <el-table-column label="任务组名称" prop="taskGroupName" width="100"></el-table-column>
-                <el-table-column label="任务类名" prop="jobClass" width="250"></el-table-column>
+                <el-table-column label="任务类名" prop="jobClass" width="270"></el-table-column>
                 <el-table-column label="cron表达式" prop="cronExpression" width="150"></el-table-column>
                 <el-table-column label="状态" prop="type" width="100">
                     <template #default="scope">
