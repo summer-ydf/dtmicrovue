@@ -180,7 +180,7 @@ export default {
 				setTimeout(()=>{
 					delete row.$switch_yx;
 					row.yx = val;
-					this.$message.success(`操作成功id:${row.id} val:${val}`)
+					this.$message.success(res.message)
 				}, 100)
 			}
 		},

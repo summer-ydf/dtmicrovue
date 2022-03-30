@@ -163,6 +163,13 @@ export default {
 				return await http.delete(this.url, data);
 			}
 		},
+		updateEnabled: {
+			url: `${config.API_URL}/operator/update_enabled/`,
+			name: "修改用户状态",
+			post: async function(data={}){
+				return await http.delete(this.url + data.id + "/" + data.enabled,null);
+			}
+		},
 	},
 	dept: {
 		list: {

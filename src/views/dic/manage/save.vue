@@ -7,7 +7,7 @@
 						<el-col :span="24">
 							<el-form :model="form" :rules="rules" :disabled="mode==='show'" ref="dialogForm" label-width="80px">
 								<el-form-item label="代码" prop="code">
-									<el-input v-model="form.code" placeholder="请输入3位数字的代码" clearable></el-input>
+									<el-input type="number" v-model="form.code" placeholder="请输入3位数字的代码" clearable></el-input>
 								</el-form-item>
 								<el-form-item label="名称" prop="name">
 									<el-input v-model="form.name" placeholder="请输入名称" clearable></el-input>

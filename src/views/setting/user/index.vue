@@ -43,8 +43,7 @@
 						<el-table-column label="创建时间" prop="createTime" width="150" sortable='custom'></el-table-column>
 						<el-table-column label="账号状态" prop="enabled" width="100" sortable='custom'>
 							<template #default="scope">
-								<el-button type="primary" plain size="small" v-if="scope.row.enabled">开启</el-button>
-								<el-button type="danger" plain size="small" v-else>禁用</el-button>
+								<el-switch v-model="scope.row.enabled" @change="changeSwitch($event, scope.row)" :loading="scope.row.$switch_yx" :active-value="true" :inactive-value="false"></el-switch>
 							</template>
 						</el-table-column>
 						<el-table-column v-if="$AUTH('user.edit') || $AUTH('user.delete')" label="操作" fixed="right" align="right" width="100">
@@ -171,6 +170,23 @@
 			groupClick(data){
 			    this.search.deptId = data.id
                 this.$refs.table.upData(this.search)
+			},
+			//表格内开关事件
+			async changeSwitch(val, row){
+				//1.执行加载
+				row.$switch_yx = true;
+				var res = await this.$API.system.user.updateEnabled.post({
+					"id": row.id,
+					"enabled": val
+				})
+				if (res.code === 2000) {
+					//2.等待接口返回后改变值
+					setTimeout(()=>{
+						delete row.$switch_yx;
+						row.yx = val;
+						this.$message.success(res.message)
+					}, 100)
+				}
 			},
 			//搜索
 			upsearch(){
