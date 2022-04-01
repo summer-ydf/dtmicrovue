@@ -305,6 +305,7 @@ export default {
                 'sc-icon-operation-log',
                 'sc-icon-task',
                 'sc-icon-config',
+                'sc-icon-queue',
 			]
 		}
 	]
