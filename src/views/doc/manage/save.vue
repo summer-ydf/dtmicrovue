@@ -3,10 +3,13 @@
 		<el-container>
 			<el-main class="nopadding" style="text-align: center">
 				<el-upload
-					class="upload-demo"
+					ref="upload"
 					drag
 					:action="uploadUrl"
+					:data="{bucketName:bucketName}"
+					:limit="1"
 					:auto-upload="false"
+					:on-success="handleSuccess"
 				>
 					<el-icon class="el-icon--upload"><upload-filled /></el-icon>
 					<div class="el-upload__text">
@@ -29,6 +32,7 @@
 
 <script>
 import { UploadFilled } from '@element-plus/icons-vue'
+import config from "@/config"
 export default {
 	name: "save",
 	emits: ['closed'],
@@ -38,7 +42,10 @@ export default {
 	data() {
 		return {
 			visible: false,
-			uploadUrl: ""
+			// 上传地址
+			uploadUrl: "",
+			// 携带参数
+			bucketName: "default"
 		}
 	},
 	methods: {
@@ -47,10 +54,14 @@ export default {
 			return this
 		},
 		submit() {
-			this.uploadUrl = '/upload'
+			this.uploadUrl = `${config.DOC_URL}/file/uploadFile`
 			this.$nextTick(() => {
 				this.$refs.upload.submit()
 			})
+		},
+		handleSuccess(response){
+			console.log("上传成功==========")
+			console.log(response)
 		}
 	}
 }
