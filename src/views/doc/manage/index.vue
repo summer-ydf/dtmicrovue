@@ -180,10 +180,8 @@ export default {
 			}
 		},
 		//本地更新数据
-		handleSaveSuccess(data, mode){
-			if(mode==='add' || mode==='edit'){
-				this.$refs.table.refresh()
-			}
+		handleSaveSuccess(){
+            this.$refs.table.refresh()
 		}
 	}
 }
