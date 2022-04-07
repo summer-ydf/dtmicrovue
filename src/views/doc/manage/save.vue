@@ -1,20 +1,20 @@
 <template>
 	<el-dialog title="上传文件" v-model="visible" width="25%" destroy-on-close @closed="$emit('closed')">
 		<el-container>
-			<el-main class="nopadding">
+			<el-main class="nopadding" style="text-align: center">
 				<el-upload
 					class="upload-demo"
 					drag
-					action="https://jsonplaceholder.typicode.com/posts/"
-					multiple
+					:action="uploadUrl"
+					:auto-upload="false"
 				>
 					<el-icon class="el-icon--upload"><upload-filled /></el-icon>
 					<div class="el-upload__text">
-						Drop file here or <em>click to upload</em>
+						 <em>将文件拖拽到特定区域上传 或 点击上传</em>
 					</div>
 					<template #tip>
 						<div class="el-upload__tip">
-							jpg/png files with a size less than 500kb
+							文件大小限制： 最大不能超过1G
 						</div>
 					</template>
 				</el-upload>
@@ -38,20 +38,7 @@ export default {
 	data() {
 		return {
 			visible: false,
-			//表单数据
-			form: {
-				title: "",
-				businessType: "",
-				requestMethodName: "",
-				requestMethodType: "",
-				requestUserName: "",
-				requestUrl: "",
-				requestIp: "",
-				requestParam: "",
-				responseParam: "",
-				status: 0,
-				errorInfo: ""
-			},
+			uploadUrl: ""
 		}
 	},
 	methods: {
@@ -59,6 +46,12 @@ export default {
 			this.visible = true
 			return this
 		},
+		submit() {
+			this.uploadUrl = '/upload'
+			this.$nextTick(() => {
+				this.$refs.upload.submit()
+			})
+		}
 	}
 }
 </script>
