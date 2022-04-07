@@ -3,7 +3,7 @@ import http from "@/utils/request"
 
 export default {
 	upload: {
-		url: `${config.API_URL}/upload`,
+		url: `${config.DOC_URL}/upload`,
 		name: "文件上传",
 		post: async function(data, config={}){
 			return await http.post(this.url, data, config);
@@ -11,15 +11,15 @@ export default {
 	},
 	file: {
 		menu: {
-			url: `${config.API_URL}/file/menu`,
+			url: `${config.DOC_URL}/file/listBucketNames`,
 			name: "获取文件分类",
 			get: async function(){
 				return await http.get(this.url);
 			}
 		},
 		list: {
-			url: `${config.API_URL}/file/list`,
-			name: "获取文件列表",
+			url: `${config.DOC_URL}/file/page`,
+			name: "获取文件分页列表",
 			get: async function(params){
 				return await http.get(this.url, params);
 			}

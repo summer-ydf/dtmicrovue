@@ -15,6 +15,8 @@ const DEFAULT_CONFIG = {
 	API_URL: "/manage/api",
 	//任务调度接口地址
 	JOB_URL: "/task/api",
+	//分布式文件接口地址
+	DOC_URL: "/doc/api",
 	//Oauth2授权接口地址
 	AUTH_URL: "/auth",
 	//客户端授权秘钥

@@ -13,17 +13,22 @@ module.exports = {
 		port: 2900, //挂载端口
 		proxy: {
 			'/manage/api/': {
-				target: 'http://192.168.31.158:9090/',
+				target: 'http://192.168.200.248:9090/',
 				ws: true,
 				changeOrigin: true
 			},
 			'/task/api/': {
-				target: 'http://192.168.31.158:9090/',
+				target: 'http://192.168.200.248:9090/',
+				ws: true,
+				changeOrigin: true
+			},
+			'/doc/api/': {
+				target: 'http://192.168.200.248:9090/',
 				ws: true,
 				changeOrigin: true
 			},
 			'/auth/': {
-				target: 'http://192.168.31.158:9090/',
+				target: 'http://192.168.200.248:9090/',
 				ws: true,
 				changeOrigin: true
 			}
