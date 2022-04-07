@@ -38,7 +38,7 @@
 						</template>
 					</el-table-column>
 					<el-table-column label="上传时间" prop="createTime" width="150"></el-table-column>
-					<el-table-column label="操作" fixed="right" align="right" width="300">
+					<el-table-column label="操作" fixed="right" align="right" width="200">
 						<template #default="scope">
 							<el-button type="text" size="small" @click="table_del(scope.row, scope.$index)">删除</el-button>
 							<el-divider direction="vertical"></el-divider>

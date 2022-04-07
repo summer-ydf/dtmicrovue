@@ -1,5 +1,14 @@
 <template>
-    <div>ok1</div>
+    <el-container>
+        <el-header>
+            <div class="left-panel">
+                <el-button type="primary" @click="add">添加</el-button>
+            </div>
+        </el-header>
+        <el-main class="nopadding">
+            ok
+        </el-main>
+    </el-container>
 </template>
 
 <script>

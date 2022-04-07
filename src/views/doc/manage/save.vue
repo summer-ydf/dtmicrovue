@@ -1,5 +1,5 @@
 <template>
-	<el-dialog title="上传文件" v-model="visible" width="25%" destroy-on-close @closed="$emit('closed')">
+	<el-dialog title="上传文件" v-model="visible" width="27%" destroy-on-close @closed="$emit('closed')">
 		<el-container>
 			<el-main class="nopadding" style="text-align: center">
 				<el-upload

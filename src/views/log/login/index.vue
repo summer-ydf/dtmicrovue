@@ -18,7 +18,7 @@
                 <el-table-column label="登录账号" prop="loginUserName" width="80"></el-table-column>
                 <el-table-column label="登录IP" prop="loginIp" width="150"></el-table-column>
                 <el-table-column label="标题" prop="title" width="300"></el-table-column>
-                <el-table-column label="浏览器" prop="browser" width="80"></el-table-column>
+                <el-table-column label="浏览器" prop="browser" width="100"></el-table-column>
                 <el-table-column label="操作系统" prop="operatingSystem" width="100"></el-table-column>
                 <el-table-column label="状态" prop="status" width="100">
                     <template #default="scope">

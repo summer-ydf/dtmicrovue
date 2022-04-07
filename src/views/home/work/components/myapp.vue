@@ -11,7 +11,7 @@
 					<p>{{ mod.meta.title }}</p>
 				</router-link>
 			</li>
-			<li class="modItem-add" @click="addMods">
+			<li class="modItem-add"  @click="addMods">
 				<a href="javascript:void(0)">
 					<el-icon><el-icon-plus /></el-icon>
 				</a>

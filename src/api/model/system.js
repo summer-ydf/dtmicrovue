@@ -170,6 +170,13 @@ export default {
 				return await http.delete(this.url + data.id + "/" + data.enabled,null);
 			}
 		},
+        getById: {
+            url: `${config.API_URL}/operator/getById/`,
+            name: "根据ID获取用户信息",
+            get: async function(params){
+                return await http.get(this.url + params, null);
+            }
+        }
 	},
 	dept: {
 		list: {

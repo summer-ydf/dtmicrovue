@@ -1,69 +1,26 @@
 <template>
 	<el-main>
 		<el-row :gutter="15">
-			<el-col :lg="8">
-				<el-card shadow="never">
-					<div class="user-info">
-						<div class="user-info-top">
-							<el-avatar :size="80" src="img/avatar.jpg"></el-avatar>
-							<h2>{{ form.name||'-' }}</h2>
-							<p>{{ form.about||'无签名' }}</p>
-							<el-button type="primary" round icon="el-icon-collection-tag" size="medium">Administrator</el-button>
-						</div>
-						<div class="user-info-main">
-							<ul>
-								<li><label><el-icon><el-icon-user /></el-icon></label><span>81883387@qq.com</span></li>
-								<li><label><el-icon><el-icon-present /></el-icon></label><span>1988-05-07</span></li>
-								<li><label><el-icon><el-icon-male /></el-icon></label><span>男</span></li>
-								<li><label><el-icon><el-icon-location /></el-icon></label><span>中国/上海/金山</span></li>
-								<li><label><el-icon><el-icon-office-building /></el-icon></label><span>集团/上海分公司/软件研发部/摸鱼组</span></li>
-								<li><label><el-icon><el-icon-coin /></el-icon></label><span>超级管理员</span></li>
-							</ul>
-						</div>
-						<div class="user-info-bottom">
-							<h2>当前账号权限</h2>
-							<el-space wrap>
-								<el-tag v-auth="'user.list'">列表</el-tag>
-								<el-tag v-auth="'user.add'">添加</el-tag>
-								<el-tag v-if="$AUTH('user.list')">user.list</el-tag>
-								<el-tag v-if="$AUTH('user.add')">user.add</el-tag>
-							</el-space>
-						</div>
-					</div>
-				</el-card>
-			</el-col>
-			<el-col :lg="16">
+			<el-col :lg="24">
 				<el-card shadow="never">
 					<el-tabs tab-position="top">
-						<el-tab-pane :label="$t('user.dynamic')">
-							<el-timeline style="margin-top:20px;padding-left:10px;">
-								<el-timeline-item v-for="(activity, index) in activities" :key="index" :timestamp="activity.timestamp" placement="top">
-									<div class="activity-item">
-										<el-avatar class="avatar" :size="24" src="img/avatar.jpg"></el-avatar>
-										<label>{{activity.operate}}</label><el-tag v-if="activity.mod" size="mini">{{activity.mod}}</el-tag>{{activity.describe}}
-									</div>
-								</el-timeline-item>
-							</el-timeline>
-						</el-tab-pane>
 						<el-tab-pane :label="$t('user.info')">
 							<el-form ref="form" :model="form" label-width="80px" style="width: 460px;margin-top:20px;">
-								<el-form-item label="账号">
-									<el-input v-model="form.user" disabled></el-input>
+								<el-form-item label="登录账号">
+									<el-input v-model="form.username" disabled></el-input>
 									<div class="el-form-item-msg">账号信息用于登录，系统不允许修改</div>
 								</el-form-item>
-								<el-form-item label="姓名">
-									<el-input v-model="form.name"></el-input>
+								<el-form-item label="权限范围">
+									<el-input v-model="form.scope" disabled></el-input>
 								</el-form-item>
-								<el-form-item label="性别">
-									<el-select v-model="form.sex" placeholder="请选择">
-										<el-option label="保密" value="0"></el-option>
-										<el-option label="男" value="1"></el-option>
-										<el-option label="女" value="2"></el-option>
-									</el-select>
-								</el-form-item>
-								<el-form-item label="个性签名">
-									<el-input v-model="form.about" type="textarea"></el-input>
-								</el-form-item>
+                                <el-form-item label="所属部门">
+                                    <el-input v-model="form.deptName" disabled></el-input>
+                                </el-form-item>
+                                <el-form-item label="个人头像">
+<!--                                    <sc-upload v-model="form.avatar" title="上传头像"></sc-upload>-->
+                                    <img :src="form.avatar"/>
+                                    <im src="http://42.192.121.230:9000/default-bucket/20220406/9304e54186a54ef784dfbb20afe6d55d.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=admin%2F20220406%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20220406T120925Z&X-Amz-Expires=7200&X-Amz-SignedHeaders=host&X-Amz-Signature=7546f0c76378f05dd98d6c129f05ce0424f65c6f489757eabe3f03b4173d46ec"/>
+                                </el-form-item>
 								<el-form-item>
 									<el-button type="primary">保存</el-button>
 								</el-form-item>
@@ -102,55 +59,13 @@
 		name: 'userCenter',
 		data() {
 			return {
-				activities: [
-					{
-						operate: '更改了',
-						mod: '系统配置',
-						describe: 'systemName 为 SCUI',
-						type: 'edit',
-						timestamp: '刚刚'
-					},
-					{
-						operate: '删除了',
-						mod: '用户',
-						describe: 'USER',
-						type: 'del',
-						timestamp: '5分钟前'
-					},
-					{
-						operate: '禁用了',
-						mod: '用户',
-						describe: 'USER',
-						type: 'del',
-						timestamp: '5分钟前'
-					},
-					{
-						operate: '创建了',
-						mod: '用户',
-						describe: 'USER',
-						type: 'add',
-						timestamp: '5分钟前'
-					},
-					{
-						operate: '审核了',
-						mod: '用户',
-						describe: 'lolowan 为 通过',
-						type: 'add',
-						timestamp: '10分钟前'
-					},
-					{
-						operate: '登录',
-						mod: '',
-						describe: '成功',
-						type: 'do',
-						timestamp: '1小时前'
-					},
-				],
 				form: {
-					user: "81883387@qq.com",
-					name: "Sakuya",
-					sex: "1",
-					about: "正所谓富贵险中求"
+					id: "",
+                    username: "",
+					scope: "",
+                    avatar: "",
+                    isAdmin: "",
+                    deptName: ""
 				},
 				colorList: ['#409EFF', '#009688', '#536dfe', '#ff5c93', '#c62f2f', '#fd726d'],
 				config: {
@@ -192,8 +107,18 @@
 				}
 			})
 		},
-		methods: {
-
+        created() {
+            let userInfo = this.$TOOL.data.get("USER_INFO");
+		    this.getUser(userInfo.userid)
+        },
+        methods: {
+		    // 获取个人信息
+            async getUser(v) {
+                var res = await this.$API.system.user.getById.get(v);
+                if (res.code === 2000) {
+                    this.form = res.data
+                }
+            }
 		}
 	}
 </script>
