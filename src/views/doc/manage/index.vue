@@ -6,7 +6,13 @@
 					<el-input placeholder="输入关键字进行过滤" v-model="dicFilterText" clearable></el-input>
 				</el-header>
 				<el-main class="nopadding">
-					<el-tree ref="dic" class="menu" node-key="code" :data="dicList" :current-node-key="''" :highlight-current="true" :filter-node-method="dicFilterNode" @node-click="dicClick"></el-tree>
+					<el-tree ref="dic" class="menu" node-key="code" :data="dicList" :current-node-key="''" :highlight-current="true" :filter-node-method="dicFilterNode" @node-click="dicClick">
+                        <template #default="{ node }">
+						<span class="el-tree-node__label">
+							<el-icon class="icon"><el-icon-folder /></el-icon>{{node.label}}
+						</span>
+                        </template>
+                    </el-tree>
 				</el-main>
 			</el-container>
 		</el-aside>
@@ -18,7 +24,7 @@
 				</div>
 				<div class="right-panel">
 					<div class="right-panel-search">
-						<el-input v-model="search.keyword" placeholder="字典名称" clearable></el-input>
+						<el-input v-model="search.keyword" placeholder="文件搜索" clearable></el-input>
 						<el-button type="primary" icon="el-icon-search" @click="upsearch"></el-button>
 					</div>
 				</div>
@@ -79,7 +85,7 @@ export default {
 					code: "",
 				},
 				{
-					label: "default",
+					label: "公共组",
 					code: "default",
 				}
 			]
