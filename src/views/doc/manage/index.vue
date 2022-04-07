@@ -13,7 +13,7 @@
 		<el-container class="is-vertical">
 			<el-header>
 				<div class="left-panel">
-					<el-button type="primary" icon="el-icon-plus" @click="add"></el-button>
+					<el-button type="primary" icon="el-icon-upload" @click="add">上传文件</el-button>
 					<el-button type="danger" plain icon="el-icon-delete" :disabled="selection.length===0" @click="batch_del"></el-button>
 				</div>
 				<div class="right-panel">
@@ -53,10 +53,14 @@
 			</el-main>
 		</el-container>
 	</el-container>
-<!--	<save-dialog v-if="dialog.save" ref="saveDialog" @success="handleSaveSuccess" @closed="dialog.save=false"></save-dialog>-->
+	<save-dialog v-if="dialog.save" ref="saveDialog" @success="handleSaveSuccess" @closed="dialog.save=false"></save-dialog>
 </template>
 <script>
+import saveDialog from "./save";
 export default {
+	components: {
+		saveDialog
+	},
 	data() {
 		return {
 			apiObj: this.$API.common.file.list,
@@ -90,22 +94,15 @@ export default {
 
 	},
 	methods: {
-		// 保留两位小数
+		//保留两位小数
 		towNumber(val) {
 			return val.toFixed(2)
 		},
-		//添加
+		//上传文件
 		add(){
 			this.dialog.save = true
 			this.$nextTick(() => {
 				this.$refs.saveDialog.open()
-			})
-		},
-		//编辑
-		table_edit(row){
-			this.dialog.save = true
-			this.$nextTick(() => {
-				this.$refs.saveDialog.open('edit').setData(row)
 			})
 		},
 		//删除
