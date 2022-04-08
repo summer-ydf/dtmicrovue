@@ -52,7 +52,7 @@
 								<el-divider direction="vertical"></el-divider>
 								<el-button type="text" size="small" @click="table_download(scope.row, scope.$index)">下载</el-button>
 								<el-divider direction="vertical"></el-divider>
-								<el-button type="text" size="small" @click="table_edit(scope.row, scope.$index)">分享</el-button>
+								<el-button type="text" size="small" @click="table_share(scope.row, scope.$index)">分享</el-button>
 								<el-divider direction="vertical"></el-divider>
 								<el-button type="text" size="small" @click="table_edit(scope.row, scope.$index)">查看</el-button>
 							</div>
@@ -63,14 +63,17 @@
 		</el-container>
 	</el-container>
     <save-dialog v-if="dialog.save" ref="saveDialog" @success="handleSaveSuccess" @closed="dialog.save=false"></save-dialog>
+    <share-dialog v-if="share.save" ref="shareDialog" @closed="share.save=false"></share-dialog>
 </template>
 <script>
 import saveDialog from "./save";
+import shareDialog from "./share";
 import axios from "axios";
 import config from "@/config";
 export default {
 	components: {
-		saveDialog
+		saveDialog,
+        shareDialog
 	},
 	data() {
 		return {
@@ -78,6 +81,9 @@ export default {
 			dialog: {
 				save: false
 			},
+            share: {
+			  save: false
+            },
 			search: {
 				keyword: null,
 				category: null
@@ -188,6 +194,13 @@ export default {
 				this.$alert(res.message, "提示", {type: 'error'})
 			}
 		},
+        //分享文件
+        table_share(row){
+            this.share.save = true
+            this.$nextTick(() => {
+                this.$refs.shareDialog.open().setData(row)
+            })
+        },
 		//树过滤
 		dicFilterNode(value, data){
 			if (!value) return true;
@@ -222,7 +235,7 @@ export default {
 		//本地更新数据
 		handleSaveSuccess(){
             this.$refs.table.refresh()
-		}
+		},
 	}
 }
 </script>
