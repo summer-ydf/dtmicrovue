@@ -11,7 +11,7 @@
                     <el-form-item label="分享链接" prop="fileUrl">
                         <el-input v-model="form.fileUrl" clearable></el-input>
                     </el-form-item>
-                    <el-form-item label="过期时间 (最大七天),单位/s" prop="exp">
+                    <el-form-item label="有效时间 (最长七天),单位/s" prop="exp">
                         <el-input type="number" v-model="form.exp" @keyup.enter.native="onkeyup($event)" placeholder="请输入过期时间设置，单位s" clearable></el-input>
                     </el-form-item>
                 </el-form>
@@ -71,6 +71,10 @@ export default {
         async onkeyup(event) {
             if (this.form.exp === null || this.form.exp === 0) {
                 this.$message.error("请输入有效时长")
+                return
+            }
+            if (this.form.exp > 604800) {
+                this.$message.error("有效时长不能大于七天")
                 return
             }
             var res = await this.$API.common.file.shareFile.post(this.form);
