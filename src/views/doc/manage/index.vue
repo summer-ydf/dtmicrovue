@@ -46,13 +46,16 @@
 					<el-table-column label="上传时间" prop="createTime" width="150"></el-table-column>
 					<el-table-column label="操作" fixed="right" align="right" width="200">
 						<template #default="scope">
-							<el-button type="text" size="small" @click="table_del(scope.row, scope.$index)">删除</el-button>
-							<el-divider direction="vertical"></el-divider>
-							<el-button type="text" size="small" @click="table_download(scope.row, scope.$index)">下载</el-button>
-							<el-divider direction="vertical"></el-divider>
-							<el-button type="text" size="small" @click="table_edit(scope.row, scope.$index)">分享</el-button>
-							<el-divider direction="vertical"></el-divider>
-							<el-button type="text" size="small" @click="table_edit(scope.row, scope.$index)">查看</el-button>
+							<el-progress v-show="scope.row.id === this.downloadId" :text-inside="true" :stroke-width="20" :percentage="percentage"></el-progress>
+							<div v-show="scope.row.id !== this.downloadId">
+								<el-button type="text" size="small" @click="table_del(scope.row, scope.$index)">删除</el-button>
+								<el-divider direction="vertical"></el-divider>
+								<el-button type="text" size="small" @click="table_download(scope.row, scope.$index)">下载</el-button>
+								<el-divider direction="vertical"></el-divider>
+								<el-button type="text" size="small" @click="table_edit(scope.row, scope.$index)">分享</el-button>
+								<el-divider direction="vertical"></el-divider>
+								<el-button type="text" size="small" @click="table_edit(scope.row, scope.$index)">查看</el-button>
+							</div>
 						</template>
 					</el-table-column>
 				</scTable>
@@ -80,6 +83,8 @@ export default {
 				keyword: null,
 				category: null
 			},
+			downloadId: null,
+			percentage: 0,
 			dicFilterText: '',
 			dicList: [
 				{
@@ -114,17 +119,42 @@ export default {
 			})
 		},
 		//下载文件
-		async table_download(row){
+		table_download(row) {
+			// 按钮显示
+			this.downloadId = row.id
+			this.percentage= 0;
 			var params={
 				bucket: row.bucket,
 				objectName: row.objectName
 			}
 			axios.get(`${config.DOC_URL}/file/downloadFile`,{
+				// 设置携带参数
 				params: params,
-				responseType: 'blob'   // 首先设置responseType字段格式为blob
+				// 设置responseType字段格式为blob
+				responseType: 'blob',
+				// xml返回数据的钩子函数，可以用来获取数据的进度
+				onDownloadProgress:(progressEvent)=>{
+					//progressEvent.loaded 下载文件的当前大小
+					//progressEvent.total  下载文件的总大小 如果后端没有返回 请让他加上！
+					console.log("下载文件=======")
+					console.log(progressEvent.loaded)
+					console.log(progressEvent.total)
+					let progressBar = Math.round( progressEvent.loaded / progressEvent.total*100);
+					//接收进度为99%的时候需要留一点前端编译的时间
+					if(progressBar >= 99){
+						this.percentage = 99;
+						this.title = '下载完成，文件正在编译。';
+					}else{
+						this.percentage = progressBar;
+						this.title = '正在下载，请稍等。';
+					}
+				}
 			}).then(res => {
+				console.log(res)
 				const fileName = res.headers["content-disposition"].split("=")[1]
 				const fileType = fileName.substring(fileName.lastIndexOf('.')+1)
+				console.log(fileName)
+				console.log(fileType)
 				let blob = new Blob([res.data],{type: "application/"+fileType}); // 为blob设置文件类型
 				let url = window.URL.createObjectURL(blob); // 创建一个临时的url指向blob对象
 				let a = document.createElement("a");
@@ -133,6 +163,10 @@ export default {
 				a.click();
 				// 释放这个临时的对象url
 				window.URL.revokeObjectURL(url);
+				//编译文件完成后，进度条展示为100%100
+				this.percentage =100;
+				//下载完成 可以重新点击按钮下载
+				this.downloadId= null;
 			});
 		},
 		//删除
