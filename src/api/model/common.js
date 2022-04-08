@@ -23,7 +23,7 @@ export default {
 			get: async function(params){
 				return await http.get(this.url, params);
 			}
-		}
+		},
 	},
 	generateId: {
 		url: `${config.AUTH_URL}/anonymous/generate_id`,

@@ -48,7 +48,7 @@
 						<template #default="scope">
 							<el-button type="text" size="small" @click="table_del(scope.row, scope.$index)">删除</el-button>
 							<el-divider direction="vertical"></el-divider>
-							<el-button type="text" size="small" @click="table_edit(scope.row, scope.$index)">下载</el-button>
+							<el-button type="text" size="small" @click="table_download(scope.row, scope.$index)">下载</el-button>
 							<el-divider direction="vertical"></el-divider>
 							<el-button type="text" size="small" @click="table_edit(scope.row, scope.$index)">分享</el-button>
 							<el-divider direction="vertical"></el-divider>
@@ -63,6 +63,8 @@
 </template>
 <script>
 import saveDialog from "./save";
+import axios from "axios";
+import config from "@/config";
 export default {
 	components: {
 		saveDialog
@@ -110,6 +112,28 @@ export default {
 			this.$nextTick(() => {
 				this.$refs.saveDialog.open()
 			})
+		},
+		//下载文件
+		async table_download(row){
+			var params={
+				bucket: row.bucket,
+				objectName: row.objectName
+			}
+			axios.get(`${config.DOC_URL}/file/downloadFile`,{
+				params: params,
+				responseType: 'blob'   // 首先设置responseType字段格式为blob
+			}).then(res => {
+				const fileName = res.headers["content-disposition"].split("=")[1]
+				const fileType = fileName.substring(fileName.lastIndexOf('.')+1)
+				let blob = new Blob([res.data],{type: "application/"+fileType}); // 为blob设置文件类型
+				let url = window.URL.createObjectURL(blob); // 创建一个临时的url指向blob对象
+				let a = document.createElement("a");
+				a.href = url;
+				a.download = fileName;
+				a.click();
+				// 释放这个临时的对象url
+				window.URL.revokeObjectURL(url);
+			});
 		},
 		//删除
 		async table_del(row){
