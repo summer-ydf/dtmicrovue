@@ -3,16 +3,16 @@
         <el-container>
             <el-main class="nopadding" style="text-align: center">
                 <el-form :model="form" ref="dialogForm" label-position="top">
-                    <el-form-item label="分享对象" prop="taskName">
+                    <el-form-item label="分享对象">
                         <el-card shadow="never">
                             <sc-qr-code :text="form.fileUrl" :size="150" colorDark="#000" colorLight="#fff"></sc-qr-code>
                         </el-card>
                     </el-form-item>
-                    <el-form-item label="分享链接" prop="taskName">
-                        <el-input v-model="form.fileUrl" placeholder="请输入任务名称" clearable></el-input>
+                    <el-form-item label="分享链接" prop="fileUrl">
+                        <el-input v-model="form.fileUrl" clearable></el-input>
                     </el-form-item>
-                    <el-form-item label="过期时间 (最大七天)" prop="cronExpression">
-                        <el-input v-model="form.exp" placeholder="请输入过期时间设置，单位s" clearable></el-input>
+                    <el-form-item label="过期时间 (最大七天),单位/s" prop="exp">
+                        <el-input type="number" v-model="form.exp" @keyup.enter.native="onkeyup($event)" placeholder="请输入过期时间设置，单位s" clearable></el-input>
                     </el-form-item>
                 </el-form>
             </el-main>
@@ -33,13 +33,12 @@ export default {
         return {
             visible: false,
             isSaveing: false,
-            qrcode: "scui",
             form: {
                 id: "",
                 bucket: "",
                 objectName: "",
                 fileUrl: "",
-                exp: ""
+                exp: null
             }
         }
     },
@@ -67,6 +66,20 @@ export default {
                 clipboard.destroy()
             })
             clipboard.onClick(e)
+        },
+        //更新链接
+        async onkeyup(event) {
+            if (this.form.exp === null || this.form.exp === 0) {
+                this.$message.error("请输入有效时长")
+                return
+            }
+            var res = await this.$API.common.file.shareFile.post(this.form);
+            if (res.code === 2000) {
+                this.$message.success("链接已更新")
+                this.form.fileUrl = res.data
+            } else {
+                this.$alert(res.message, "提示", {type: 'error'})
+            }
         },
         //表单注入数据
         setData(data){

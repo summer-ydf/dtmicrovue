@@ -31,6 +31,13 @@ export default {
                 return await http.post(this.url,data);
             }
         },
+        shareFile: {
+            url: `${config.DOC_URL}/file/shareFile`,
+            name: "分享文件",
+            post: async function(data={}){
+                return await http.post(this.url,data);
+            }
+        },
 	},
 	generateId: {
 		url: `${config.AUTH_URL}/anonymous/generate_id`,
