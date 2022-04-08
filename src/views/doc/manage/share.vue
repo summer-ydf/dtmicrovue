@@ -19,12 +19,13 @@
         </el-container>
         <template #footer>
             <el-button @click="visible=false" >取 消</el-button>
-            <el-button type="primary" :loading="isSaveing" @click="submit()">复 制</el-button>
+            <el-button type="primary" @click="copy($event,form.fileUrl)">一键复制</el-button>
         </template>
     </el-dialog>
 </template>
 
 <script>
+import Clipboard from 'clipboard'
 export default {
     name: "share",
     emits: ['closed'],
@@ -47,8 +48,25 @@ export default {
             this.visible = true
             return this
         },
-        submit() {
-
+        //一键复制
+        copy(e, text) {
+            const clipboard = new Clipboard(e.target, { text: () => text })
+            clipboard.on('success', e => {
+                this.$message.success("复制成功")
+                // 释放内存
+                clipboard.off('error')
+                clipboard.off('success')
+                clipboard.destroy()
+            })
+            clipboard.on('error', e => {
+                // 不支持复制
+                this.$message.success("手机权限不支持复制功能")
+                // 释放内存
+                clipboard.off('error')
+                clipboard.off('success')
+                clipboard.destroy()
+            })
+            clipboard.onClick(e)
         },
         //表单注入数据
         setData(data){
