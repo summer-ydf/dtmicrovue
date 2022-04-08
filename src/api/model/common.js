@@ -24,6 +24,13 @@ export default {
 				return await http.get(this.url, params);
 			}
 		},
+        delFile: {
+            url: `${config.DOC_URL}/file/delFile`,
+            name: "删除文件",
+            post: async function(data={}){
+                return await http.post(this.url,data);
+            }
+        },
 	},
 	generateId: {
 		url: `${config.AUTH_URL}/anonymous/generate_id`,

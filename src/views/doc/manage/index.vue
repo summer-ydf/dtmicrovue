@@ -20,7 +20,6 @@
 			<el-header>
 				<div class="left-panel">
 					<el-button type="primary" icon="el-icon-upload" @click="add">上传文件</el-button>
-					<el-button type="danger" plain icon="el-icon-delete" :disabled="selection.length===0" @click="batch_del"></el-button>
 				</div>
 				<div class="right-panel">
 					<div class="right-panel-search">
@@ -30,8 +29,8 @@
 				</div>
 			</el-header>
 			<el-main class="nopadding">
-				<scTable ref="table" :apiObj="apiObj" row-key="id" @selection-change="selectionChange" stripe remoteSort remoteFilter>
-					<el-table-column type="selection" width="50"></el-table-column>
+				<scTable ref="table" :apiObj="apiObj" row-key="id" stripe remoteSort remoteFilter>
+					<el-table-column label="#" align="center" type="index" width="50"></el-table-column>
 					<el-table-column label="文件名称" prop="objectName" width="400"></el-table-column>
 					<el-table-column label="文件后缀" prop="suffix" width="100">
 						<template #default="scope">
@@ -40,13 +39,14 @@
 					</el-table-column>
 					<el-table-column label="文件大小" prop="size" width="150">
 						<template #default="scope">
-							<span>{{towNumber(scope.row.size / 1024)}} KB</span>
+							<span v-if="scope.row.size / 1024 > 1024">{{towNumber(scope.row.size / 1024 / 1024)}} M</span>
+							<span v-if="scope.row.size / 1024 < 1024">{{towNumber(scope.row.size / 1024)}} KB</span>
 						</template>
 					</el-table-column>
 					<el-table-column label="上传时间" prop="createTime" width="150"></el-table-column>
-					<el-table-column label="操作" fixed="right" align="right" width="200">
+					<el-table-column label="操作" fixed="right" align="center" width="200">
 						<template #default="scope">
-							<el-progress v-show="scope.row.id === this.downloadId" :text-inside="true" :stroke-width="20" :percentage="percentage"></el-progress>
+							<el-progress v-show="scope.row.id === this.downloadId" :text-inside="true" :stroke-width="15" :percentage="percentage"></el-progress>
 							<div v-show="scope.row.id !== this.downloadId">
 								<el-button type="text" size="small" @click="table_del(scope.row, scope.$index)">删除</el-button>
 								<el-divider direction="vertical"></el-divider>
@@ -62,7 +62,7 @@
 			</el-main>
 		</el-container>
 	</el-container>
-	<save-dialog v-if="dialog.save" ref="saveDialog" @success="handleSaveSuccess" @closed="dialog.save=false"></save-dialog>
+    <save-dialog v-if="dialog.save" ref="saveDialog" @success="handleSaveSuccess" @closed="dialog.save=false"></save-dialog>
 </template>
 <script>
 import saveDialog from "./save";
@@ -75,7 +75,6 @@ export default {
 	data() {
 		return {
 			apiObj: this.$API.common.file.list,
-			selection: [],
 			dialog: {
 				save: false
 			},
@@ -120,52 +119,55 @@ export default {
 		},
 		//下载文件
 		table_download(row) {
+		    // 保证单线程下载文件
+		    if (this.downloadId !== null) {
+                this.$message.error("当前队列中有文件正在下载")
+		        return;
+            }
 			// 按钮显示
+            this.$notify({
+                title: '注意',
+                message: '文件已经加入队列中下载，下载过程中，切勿退出程序或者刷新！',
+                type: 'warning',
+                duration: 0
+            });
 			this.downloadId = row.id
 			this.percentage= 0;
-			var params={
-				bucket: row.bucket,
-				objectName: row.objectName
-			}
 			axios.get(`${config.DOC_URL}/file/downloadFile`,{
 				// 设置携带参数
-				params: params,
+				params: {bucket: row.bucket,objectName: row.objectName},
 				// 设置responseType字段格式为blob
 				responseType: 'blob',
+                // 设置连接超时，30分钟
+                timeout: 30 * 60 * 1000,
 				// xml返回数据的钩子函数，可以用来获取数据的进度
 				onDownloadProgress:(progressEvent)=>{
-					//progressEvent.loaded 下载文件的当前大小
-					//progressEvent.total  下载文件的总大小 如果后端没有返回 请让他加上！
-					console.log("下载文件=======")
-					console.log(progressEvent.loaded)
-					console.log(progressEvent.total)
+					// progressEvent.loaded 下载文件的当前大小
+					// progressEvent.total  下载文件的总大小
 					let progressBar = Math.round( progressEvent.loaded / progressEvent.total*100);
 					//接收进度为99%的时候需要留一点前端编译的时间
 					if(progressBar >= 99){
 						this.percentage = 99;
-						this.title = '下载完成，文件正在编译。';
 					}else{
 						this.percentage = progressBar;
-						this.title = '正在下载，请稍等。';
 					}
 				}
 			}).then(res => {
-				console.log(res)
 				const fileName = res.headers["content-disposition"].split("=")[1]
 				const fileType = fileName.substring(fileName.lastIndexOf('.')+1)
-				console.log(fileName)
-				console.log(fileType)
-				let blob = new Blob([res.data],{type: "application/"+fileType}); // 为blob设置文件类型
-				let url = window.URL.createObjectURL(blob); // 创建一个临时的url指向blob对象
+                // 为blob设置文件类型
+				let blob = new Blob([res.data],{type: "application/"+fileType});
+                // 创建一个临时的url指向blob对象
+				let url = window.URL.createObjectURL(blob);
 				let a = document.createElement("a");
 				a.href = url;
 				a.download = fileName;
 				a.click();
 				// 释放这个临时的对象url
 				window.URL.revokeObjectURL(url);
-				//编译文件完成后，进度条展示为100%100
-				this.percentage =100;
-				//下载完成 可以重新点击按钮下载
+				// 编译文件完成后，进度条展示为100%100
+				this.percentage = 100;
+				// 下载完成 可以重新点击按钮下载
 				this.downloadId= null;
 			});
 		},
@@ -178,34 +180,12 @@ export default {
 			if(confirm !== 'confirm'){
 				return false
 			}
-			var res = await this.$API.system.dic.delete.delete(row.id);
+			var res = await this.$API.common.file.delFile.post(row);
 			if(res.code === 2000){
 				this.$refs.table.refresh()
 				this.$message.success("删除成功")
 			}else{
 				this.$alert(res.message, "提示", {type: 'error'})
-			}
-		},
-		//批量删除
-		async batch_del(){
-			var ids = []
-			var confirm = await this.$confirm(`确定删除选中的 ${this.selection.length} 项吗？`, '提示', {
-				type: 'warning'
-			}).catch(() => {})
-			if(confirm !== 'confirm'){
-				return false
-			}
-			this.selection.forEach(item => {
-				ids.push(item.id)
-			})
-			const loading = this.$loading();
-			var res = await this.$API.system.dic.deleteBath.delete(ids)
-			if(res.code === 2000){
-				loading.close();
-				this.$refs.table.reload()
-				this.$message.success("删除成功")
-			}else{
-				this.$message.warning("删除失败")
 			}
 		},
 		//树过滤
@@ -221,10 +201,6 @@ export default {
 		//搜索
 		upsearch(){
 			this.$refs.table.upData(this.search)
-		},
-		//表格选择后回调事件
-		selectionChange(selection){
-			this.selection = selection;
 		},
 		//表格内开关事件
 		async changeSwitch(val, row){
