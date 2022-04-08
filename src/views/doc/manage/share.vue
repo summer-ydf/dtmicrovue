@@ -12,7 +12,7 @@
                         <el-input v-model="form.fileUrl" clearable></el-input>
                     </el-form-item>
                     <el-form-item label="有效时间 (最长七天),单位/s" prop="exp">
-                        <el-input type="number" v-model="form.exp" @keyup.enter.native="onkeyup($event)" placeholder="请输入过期时间设置，单位s" clearable></el-input>
+                        <el-input type="number" v-model="form.exp" @keyup.enter="onkeyup($event)" placeholder="请输入过期时间设置，单位s" clearable></el-input>
                     </el-form-item>
                 </el-form>
             </el-main>
