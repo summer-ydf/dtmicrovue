@@ -38,6 +38,13 @@ export default {
                 return await http.post(this.url,data);
             }
         },
+        getHttpUrl: {
+            url: `${config.DOC_URL}/file/getHttpUrl`,
+            name: "查看文件",
+            post: async function(data){
+                return await http.post(this.url,data);
+            }
+        }
 	},
 	generateId: {
 		url: `${config.AUTH_URL}/anonymous/generate_id`,

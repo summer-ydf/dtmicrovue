@@ -53,8 +53,6 @@
 								<el-button type="text" size="small" @click="table_download(scope.row, scope.$index)">下载</el-button>
 								<el-divider direction="vertical"></el-divider>
 								<el-button type="text" size="small" @click="table_share(scope.row, scope.$index)">分享</el-button>
-								<el-divider direction="vertical"></el-divider>
-								<el-button type="text" size="small" @click="table_edit(scope.row, scope.$index)">查看</el-button>
 							</div>
 						</template>
 					</el-table-column>
@@ -218,23 +216,6 @@ export default {
 		//搜索
 		upsearch(){
 			this.$refs.table.upData(this.search)
-		},
-		//表格内开关事件
-		async changeSwitch(val, row){
-			//1.执行加载
-			row.$switch_yx = true;
-			var res = await this.$API.system.dic.updateEnabled.post({
-				"id": row.id,
-				"enabled": val
-			})
-			if (res.code === 2000) {
-				//2.等待接口返回后改变值
-				setTimeout(()=>{
-					delete row.$switch_yx;
-					row.yx = val;
-					this.$message.success(res.message)
-				}, 100)
-			}
 		},
 		//本地更新数据
 		handleSaveSuccess(){
