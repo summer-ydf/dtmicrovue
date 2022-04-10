@@ -15,7 +15,7 @@
         </el-container>
 		<template #footer>
 			<el-button @click="visible=false" >取 消</el-button>
-			<el-button type="primary" :loading="isSaveing" @click="submit()">保 存</el-button>
+			<el-button type="primary" :loading="saveLoading" @click="submit()">保 存</el-button>
 		</template>
 	</el-dialog>
 </template>
@@ -32,7 +32,7 @@
 		data() {
 			return {
 				visible: false,
-				isSaveing: false,
+                saveLoading: false,
 				menu: {
 					list: [],
 					checked: [],
