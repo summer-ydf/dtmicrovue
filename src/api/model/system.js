@@ -278,5 +278,28 @@ export default {
                 return await http.get(this.url, params);
             }
         },
-    }
+    },
+	message: {
+		list: {
+			url: `${config.API_URL}/message/page`,
+			name: "获取MQ消息日志分页列表",
+			get: async function(params){
+				return await http.get(this.url, params);
+			}
+		},
+		delete: {
+			url: `${config.API_URL}/message/delete/`,
+			name: "单个删除MQ消息日志",
+			delete: async function(data={}){
+				return await http.delete(this.url + data, null);
+			}
+		},
+		bath_delete: {
+			url: `${config.API_URL}/message/bath_delete`,
+			name: "批量删除MQ消息日志",
+			delete: async function(data={}){
+				return await http.delete(this.url, data);
+			}
+		},
+	},
 }
