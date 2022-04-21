@@ -302,4 +302,20 @@ export default {
 			}
 		},
 	},
+    config: {
+        list: {
+            url: `${config.API_URL}/config/list`,
+            name: "获取系统配置信息",
+            get: async function(){
+                return await http.get(this.url);
+            }
+        },
+        save: {
+            url: `${config.API_URL}/config/save`,
+            name: "添加系统配置信息",
+            post: async function(data={}){
+                return await http.post(this.url, data);
+            }
+        }
+    },
 }
