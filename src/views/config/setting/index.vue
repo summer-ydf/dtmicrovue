@@ -35,7 +35,6 @@
 
 <script>
 export default {
-    name: 'system',
     data() {
         return {
             configData: [],

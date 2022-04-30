@@ -6,6 +6,9 @@
                     <el-row class="drawer-table">
                         <el-col :span="24">
                             <el-form :model="form" :rules="rules" :disabled="mode==='show'" ref="dialogForm" label-width="80px">
+                                <el-form-item label="真实姓名" prop="name">
+                                    <el-input v-model="form.name" placeholder="请输入真实姓名" clearable></el-input>
+                                </el-form-item>
                                 <el-form-item label="登录账号" prop="username">
                                     <el-input v-model="form.username" placeholder="请输入登录账号" clearable :disabled="mode==='edit'"></el-input>
                                 </el-form-item>
@@ -17,6 +20,15 @@
                                         <el-input type="password" v-model="form.password2" placeholder="请确认密码" clearable show-password></el-input>
                                     </el-form-item>
                                 </template>
+                                <el-form-item label="手机号码" prop="mobile">
+                                    <el-input v-model="form.mobile" placeholder="请输入手机号码" clearable></el-input>
+                                </el-form-item>
+                                <el-form-item label="身份证号" prop="idno">
+                                    <el-input v-model="form.idno" placeholder="请输入身份证号" clearable></el-input>
+                                </el-form-item>
+                                <el-form-item label="openid" prop="openid">
+                                    <el-input v-model="form.openid" placeholder="请输入openid" clearable></el-input>
+                                </el-form-item>
                                 <el-form-item label="使用范围" prop="scope">
                                     <el-radio-group v-model="form.scope">
                                         <el-radio label="web">PC端</el-radio>
@@ -81,7 +93,11 @@
 				//表单数据
 				form: {
 					id:"",
+                    name: "",
 					username: "",
+                    mobile: "",
+                    idno: "",
+                    openid: "",
 					password: "",
 					avatar: "",
 					scope: "",
@@ -93,9 +109,18 @@
 				roles:[],
 				//验证规则
 				rules: {
+                    name: [
+                        {required: true, message: '请输入真实姓名'}
+                    ],
 					username: [
 						{required: true, message: '请输入登录账号'}
 					],
+                    mobile: [
+                        {required: true, message: '请输入11有效手机号码'}
+                    ],
+                    idno: [
+                        {required: true, message: '请输入正确的身份证号码'}
+                    ],
 					scope: [
 						{required: true, message: '请输入使用范围'}
 					],

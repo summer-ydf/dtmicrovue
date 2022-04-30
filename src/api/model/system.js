@@ -318,4 +318,34 @@ export default {
             }
         }
     },
+    client: {
+        list: {
+            url: `${config.API_URL}/client/page`,
+            name: "客户端分页列表",
+            get: async function(params){
+                return await http.get(this.url,params);
+            }
+        },
+        save: {
+            url: `${config.API_URL}/client/save`,
+            name: "添加客户端配置信息",
+            post: async function(data={}){
+                return await http.post(this.url, data);
+            }
+        },
+        delete: {
+            url: `${config.API_URL}/client/delete/`,
+            name: "删除客户端配置项",
+            delete: async function(data={}){
+                return await http.delete(this.url + data, null);
+            }
+        },
+        refresh: {
+            url: `${config.AUTH_URL}/oauth/token`,
+            name: "刷新令牌",
+            post: async function(data={}) {
+                return await http.post(this.url, data);
+            }
+        },
+    },
 }

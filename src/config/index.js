@@ -20,10 +20,10 @@ const DEFAULT_CONFIG = {
 	//Oauth2授权接口地址
 	AUTH_URL: "/auth",
 	//客户端授权秘钥
-	CLIENT_ID: "cms",
-	CLIENT_SECRET: "dt%24pwd123",
+	CLIENT_ID: "cms-web",
+	CLIENT_SECRET: "dt$pwd123",
 	GRANT_TYPE: "password",
-	SCOP: "web",
+	SCOP: "all",
 
 	//请求超时
 	TIMEOUT: 10000,

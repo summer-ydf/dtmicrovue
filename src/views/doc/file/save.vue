@@ -54,7 +54,7 @@ export default {
 		}
 	},
     created() {
-        let token = tool.data.get("TOKEN");
+        let token = tool.data.get("CMS_ACCESS_TOKEN");
         if (token) {
             let tokenValue = config.TOKEN_PREFIX + token
             this.importHeaders = {"Authorization" : tokenValue}

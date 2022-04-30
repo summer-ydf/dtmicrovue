@@ -132,7 +132,8 @@
 		},
 		created: function() {
 			this.codeSrc = `${config.AUTH_URL}/anonymous/valid_code?t=`+ new Date().getTime()
-			this.$TOOL.data.remove("TOKEN")
+			this.$TOOL.data.remove("CMS_ACCESS_TOKEN")
+			this.$TOOL.data.remove("CMS_REFRESH_TOKEN")
 			this.$TOOL.data.remove("USER_INFO")
 			this.$TOOL.data.remove("MENU")
 			this.$TOOL.data.remove("PERMISSIONS")
@@ -168,7 +169,8 @@
 					this.userInfo.deptId = user.deptId
 					this.userInfo.isAdmin = user.isAdmin
 					this.userInfo.roles = user.roles
-					this.$TOOL.data.set("TOKEN", user.access_token)
+					this.$TOOL.data.set("CMS_ACCESS_TOKEN", user.access_token)
+					this.$TOOL.data.set("CMS_REFRESH_TOKEN", user.refresh_token)
 					this.$TOOL.data.set("USER_INFO", this.userInfo)
 				}else{
 					this.islogin = false
