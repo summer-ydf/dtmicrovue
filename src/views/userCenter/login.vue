@@ -32,21 +32,36 @@
 					</div>
 				</div>
 				<el-form ref="loginForm" :model="ruleForm" :rules="rules" label-width="0" size="large">
-					<el-form-item prop="username">
-						<el-input v-model="ruleForm.username" prefix-icon="el-icon-user" clearable :placeholder="$t('login.userPlaceholder')"></el-input>
-					</el-form-item>
-					<el-form-item prop="password">
-						<el-input v-model="ruleForm.password" prefix-icon="el-icon-lock" clearable show-password :placeholder="$t('login.PWPlaceholder')"></el-input>
-					</el-form-item>
-					<el-form-item prop="code">
-						<el-input v-model="ruleForm.code" prefix-icon="el-icon-lock" clearable :placeholder="$t('login.codePlaceholder')">
-							<template #append>
-								<div style="width: 130px;">
-									<img class="login-code" :src="codeSrc" @click="refreshValid()" alt="验证码"/>
-								</div>
-							</template>
-						</el-input>
-					</el-form-item>
+                    <el-form-item prop="model">
+                        <el-select v-model="ruleForm.model" placeholder="请选择登录模式" style="width: 100%">
+                            <el-option
+                                v-for="item in models"
+                                :key="item.v"
+                                :label="item.k"
+                                :value="item.v"
+                            >
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+					<div v-if="ruleForm.model === 'password' || ruleForm.model === 'captcha'">
+                        <el-form-item prop="username">
+                            <el-input v-model="ruleForm.username" prefix-icon="el-icon-user" clearable :placeholder="$t('login.userPlaceholder')"></el-input>
+                        </el-form-item>
+                        <el-form-item prop="password">
+                            <el-input v-model="ruleForm.password" prefix-icon="el-icon-lock" clearable show-password :placeholder="$t('login.PWPlaceholder')"></el-input>
+                        </el-form-item>
+                    </div>
+					<div v-if="ruleForm.model === 'captcha'">
+                        <el-form-item prop="code">
+                            <el-input v-model="ruleForm.code" prefix-icon="el-icon-lock" clearable :placeholder="$t('login.codePlaceholder')">
+                                <template #append>
+                                    <div style="width: 130px;">
+                                        <img class="login-code" :src="codeSrc" @click="refreshValid()" alt="验证码"/>
+                                    </div>
+                                </template>
+                            </el-input>
+                        </el-form-item>
+                    </div>
 					<el-form-item style="margin-bottom: 10px;">
 						<el-row>
 							<el-col :span="12">
@@ -73,11 +88,19 @@
 		data() {
 			return {
 				ruleForm: {
+                    model: 'password',
 					username: "dt",
 					password: "dt",
 					code: null,
 					autologin: false
 				},
+                models: [
+                    {k:"授权码模式",v:"authorization_code"},
+                    {k:"密码模式",v:"password"},
+                    {k:"验证码模式",v:"captcha"},
+                    {k:"手机号码模式",v:"sms_code"},
+                    {k:"身份证模式",v:"id_card"},
+                ],
 				userInfo: {
 					userid: "",
 					username: "",
@@ -88,17 +111,6 @@
 							roleId: 0,
 							dataScope: 0
 						}
-					]
-				},
-				rules: {
-					username: [
-						{required: true, message: this.$t('login.userError'), trigger: 'blur'}
-					],
-					password: [
-						{required: true, message: this.$t('login.PWError'), trigger: 'blur'}
-					],
-					code: [
-						{required: true, message: this.$t('login.codeError'), trigger: 'blur'}
 					]
 				},
 				islogin: false,

@@ -11,6 +11,9 @@ import {beforeEach, afterEach} from './scrollBehavior';
 //系统路由
 const routes = systemRouter
 
+console.log("系统路由======")
+console.log(routes)
+
 //系统特殊路由
 const routes_404 = {
 	path: "/:pathMatch(.*)*",
@@ -38,7 +41,10 @@ router.beforeEach(async (to, from, next) => {
 
 	let token = tool.data.get("CMS_ACCESS_TOKEN");
 
-	if(to.path === "/login"){
+	console.log("当前路由============")
+    console.log(to.path)
+
+	if(to.path === "/login" || to.path === "/authorize"){
 		//删除路由(替换当前layout路由)
 		router.addRoute(routes[0])
 		//删除路由(404)

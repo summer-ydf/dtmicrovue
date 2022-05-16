@@ -15,7 +15,14 @@ const routes = [
 		meta: {
 			title: "登录"
 		}
-	}
+	},
+    {
+        path: "/authorize",
+        component: () => import(/* webpackChunkName: "authorize" */ '@/views/userCenter/authorize'),
+        meta: {
+            title: "认证中心"
+        }
+    }
 ]
 
 export default routes;

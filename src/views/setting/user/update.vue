@@ -6,11 +6,11 @@
                     <el-row class="drawer-table">
                         <el-col :span="24">
                             <el-form :model="form" :rules="rules" :disabled="mode==='show'" ref="dialogForm" label-width="80px">
-                                <el-form-item label="真实姓名" prop="name">
-                                    <el-input v-model="form.name" placeholder="请输入真实姓名" clearable></el-input>
-                                </el-form-item>
                                 <el-form-item label="登录账号" prop="username">
                                     <el-input v-model="form.username" placeholder="请输入登录账号" clearable :disabled="mode==='edit'"></el-input>
+                                </el-form-item>
+                                <el-form-item label="真实姓名" prop="name">
+                                    <el-input v-model="form.name" placeholder="请输入真实姓名" clearable></el-input>
                                 </el-form-item>
                                 <template v-if="mode==='add'">
                                     <el-form-item label="登录密码" prop="password">
@@ -28,12 +28,6 @@
                                 </el-form-item>
                                 <el-form-item label="openid" prop="openid">
                                     <el-input v-model="form.openid" placeholder="请输入openid" clearable></el-input>
-                                </el-form-item>
-                                <el-form-item label="使用范围" prop="scope">
-                                    <el-radio-group v-model="form.scope">
-                                        <el-radio label="web">PC端</el-radio>
-                                        <el-radio label="app">手机端</el-radio>
-                                    </el-radio-group>
                                 </el-form-item>
                                 <el-form-item label="所属角色" prop="roleIds">
                                     <el-select v-model="form.roleIds" multiple placeholder="请选择用户角色" style="width: 100%">
@@ -100,7 +94,6 @@
                     openid: "",
 					password: "",
 					avatar: "",
-					scope: "",
 					roleIds: [],
 					deptId: "",
 					deptName: ""
@@ -121,9 +114,6 @@
                     idno: [
                         {required: true, message: '请输入正确的身份证号码'}
                     ],
-					scope: [
-						{required: true, message: '请输入使用范围'}
-					],
 					password: [
 						{required: true, message: '请输入登录密码'},
 						{validator: (rule, value, callback) => {
@@ -185,15 +175,15 @@
 			},
 			//表单注入数据
 			setData(data){
-				this.form.id = data.id
-				this.form.username = data.username
-				this.form.avatar = data.avatar
-				this.form.scope = data.scope
-				this.form.deptId = data.deptId
-				this.form.deptName = data.deptName
-				this.form.roleIds = data.roleIds
+				// this.form.id = data.id
+				// this.form.username = data.username
+				// this.form.avatar = data.avatar
+				// this.form.scope = data.scope
+				// this.form.deptId = data.deptId
+				// this.form.deptName = data.deptName
+				// this.form.roleIds = data.roleIds
 				//可以和上面一样单个注入，也可以像下面一样直接合并进去
-				//Object.assign(this.form, data)
+				Object.assign(this.form, data)
 			},
 			// 显示部门树
 			showDepartmentDialog(id) {

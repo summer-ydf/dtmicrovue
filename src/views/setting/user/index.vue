@@ -27,8 +27,10 @@
 					<scTable ref="table" :apiObj="apiObj" @selection-change="selectionChange" stripe remoteSort remoteFilter>
 						<el-table-column type="selection" width="50"></el-table-column>
 						<el-table-column label="ID" prop="id" width="160" sortable='custom'></el-table-column>
+                        <el-table-column label="姓名" prop="name" width="100" sortable='custom'></el-table-column>
 						<el-table-column label="登录账号" prop="username" width="100" sortable='custom'></el-table-column>
-						<el-table-column label="使用范围" prop="scope" width="100" sortable='custom'></el-table-column>
+						<el-table-column label="手机号" prop="mobile" width="100" sortable='custom'></el-table-column>
+						<el-table-column label="登录账号" prop="username" width="100" sortable='custom'></el-table-column>
 						<el-table-column label="所属部门" prop="deptName" width="100" sortable='custom'></el-table-column>
 						<el-table-column label="所属角色" prop="roleNames" width="200" sortable='custom'>
 							<template #default="scope">
