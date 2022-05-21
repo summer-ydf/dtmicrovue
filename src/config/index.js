@@ -1,15 +1,15 @@
 const DEFAULT_CONFIG = {
 	//标题
-	APP_NAME: "DT Admin 后台管理端",
+	APP_NAME: "DT MICRO 管 理 端",
 
 	//首页地址
 	DASHBOARD_URL: "/dashboard",
 
 	//版本号
-	APP_VER: "1.4.2",
+	APP_VER: "V22.1.0",
 
 	//内核版本号
-	CORE_VER: "1.4.2",
+	CORE_VER: "V22.1.0",
 
 	//系统配置接口地址
 	API_URL: "/manage/api",
@@ -20,7 +20,7 @@ const DEFAULT_CONFIG = {
 	//Oauth2授权接口地址
 	AUTH_URL: "/auth",
 	//客户端授权秘钥
-	CLIENT_ID: "cms-web",
+	CLIENT_ID: "cms-admin-web",
 	CLIENT_SECRET: "dt$pwd123",
 	GRANT_TYPE: "password",
 	SCOP: "all",

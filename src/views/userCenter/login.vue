@@ -3,7 +3,7 @@
 		<div class="login_adv" style="background-image: url(img/1.svg);
 		background-size:100% 100%;background-repeat:no-repeat;">
 			<div class="login_adv__title">
-				<h2>DT Admin</h2>
+				<h2>D T M I C R O</h2>
 				<p>{{ $t('login.describe') }}</p>
 			</div>
 			<div class="login_adv__bottom">
@@ -88,10 +88,10 @@
 		data() {
 			return {
 				ruleForm: {
-                    model: 'password',
+                    model: 'captcha',
 					username: "dt",
 					password: "dt",
-					code: null,
+					code: "",
 					autologin: false
 				},
                 models: [
@@ -155,67 +155,57 @@
 			this.$store.commit("clearIframeList")
 		},
 		methods: {
-			async login(){
-				var validate = await this.$refs.loginForm.validate().catch(()=>{})
-				if(!validate){ return false }
-				this.islogin = true
-				var data = "client_id="+this.$CONFIG.CLIENT_ID+
-					"&"+"client_secret="+this.$CONFIG.CLIENT_SECRET+
-					"&"+"grant_type="+this.$CONFIG.GRANT_TYPE+
-					"&"+"scope="+this.$CONFIG.SCOP+
-					"&"+"username="+this.ruleForm.username+
-					"&"+"password="+this.ruleForm.password+
-					"&"+"valid_code="+this.ruleForm.code+
-					"&"+"claims={'username':'"+this.ruleForm.username+"','openid':'"+this.ruleForm.username+"','scope':'"+this.$CONFIG.SCOP+"'}"
-				//获取token
-				var user = await this.$API.auth.token.post(data)
-				console.log("开始登录==============")
-				console.log(user)
-				console.log(user.access_token === undefined)
-				if(user.access_token !== undefined){
-					console.log("存储用户信息========")
-					console.log(user)
-					// 存储用户基础信息
-					this.userInfo.userid = user.userid
-					this.userInfo.username = user.username
-					this.userInfo.deptId = user.deptId
-					this.userInfo.isAdmin = user.isAdmin
-					this.userInfo.roles = user.roles
-					this.$TOOL.data.set("CMS_ACCESS_TOKEN", user.access_token)
-					this.$TOOL.data.set("CMS_REFRESH_TOKEN", user.refresh_token)
-					this.$TOOL.data.set("USER_INFO", this.userInfo)
-				}else{
-					this.islogin = false
-					this.$message.warning(user.message)
-					return false
-				}
-				//获取菜单
-				let menu = await this.$API.auth.myMenus.get(this.userInfo.userid)
-				console.log("开始获取菜单==============")
-				console.log(menu)
-				if(menu.code === 2000){
-					if(menu.data.menu.length===0){
-						this.islogin = false
-						this.$alert("当前用户无任何菜单权限，请联系系统管理员", "无权限访问", {
-							type: 'error',
-							center: true
-						})
-						return false
-					}
-					this.$TOOL.data.set("MENU", menu.data.menu)
-					this.$TOOL.data.set("PERMISSIONS", menu.data.permissions)
-				}else{
-					this.islogin = false
-					this.$message.warning(menu.message)
-					return false
-				}
+            login: async function () {
+                this.islogin = true
+                var data = "client_id=" + this.$CONFIG.CLIENT_ID +
+                    "&" + "client_secret=" + this.$CONFIG.CLIENT_SECRET +
+                    "&" + "grant_type=" + this.$CONFIG.GRANT_TYPE +
+                    "&" + "scope=" + this.$CONFIG.SCOP +
+                    "&" + "username=" + this.ruleForm.username +
+                    "&" + "password=" + this.ruleForm.password +
+                    "&" + "valid_code=" + this.ruleForm.code;
+                // 从Oauth2.0中获取token
+                var user = await this.$API.auth.token.post(data)
+                if (user.access_token !== undefined) {
+                    // 存储用户基础信息
+                    this.userInfo.userid = user.userid
+                    this.userInfo.username = user.username
+                    this.userInfo.deptId = user.deptId
+                    this.userInfo.isAdmin = user.isAdmin
+                    this.userInfo.roles = user.roles
+                    this.$TOOL.data.set("CMS_ACCESS_TOKEN", user.access_token)
+                    this.$TOOL.data.set("CMS_REFRESH_TOKEN", user.refresh_token)
+                    this.$TOOL.data.set("USER_INFO", this.userInfo)
+                } else {
+                    this.islogin = false
+                    this.$message.warning(user.message)
+                    return false
+                }
+                //获取菜单
+                let menu = await this.$API.auth.myMenus.get(this.userInfo.userid)
+                if (menu.code === 2000) {
+                    if (menu.data.menu.length === 0) {
+                        this.islogin = false
+                        this.$alert("当前用户无任何菜单权限，请联系系统管理员", "无权限访问", {
+                            type: 'error',
+                            center: true
+                        })
+                        return false
+                    }
+                    this.$TOOL.data.set("MENU", menu.data.menu)
+                    this.$TOOL.data.set("PERMISSIONS", menu.data.permissions)
+                } else {
+                    this.islogin = false
+                    this.$message.warning(menu.message)
+                    return false
+                }
 
-				this.$router.replace({
-					path: '/'
-				})
-				this.$message.success("Login Success 登录成功")
-				this.islogin = false
-			},
+                this.$router.replace({
+                    path: '/'
+                })
+                this.$message.success("CMS MICRO 登录成功")
+                this.islogin = false
+            },
 			// 主题切换模式
 			configTheme(){
 				this.config.theme = this.config.theme==='default'?'dark':'default'

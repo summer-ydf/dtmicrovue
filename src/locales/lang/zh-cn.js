@@ -1,6 +1,6 @@
 export default {
 	login: {
-		describe: '基于Vue3 + Element-Plus 的中后台前端解决方案。',
+		describe: '基于Vue3 + Element-Plus 的中后台微服务解决方案。',
 		rememberMe: '记住我',
 		forgetPassword: '忘记密码',
 		signIn: '登 录',

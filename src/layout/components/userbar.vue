@@ -67,26 +67,26 @@
 					{
 						id: 1,
 						type: 'user',
-						avatar: "img/avatar.jpg",
-						title: "Skuya",
+						avatar: "img/avatar2.gif",
+						title: "前端版本V1.0",
 						describe: "如果喜欢就点个星星支持一下哦",
-						link: "https://gitee.com/lolicode/scui",
+						link: "https://gitee.com/summerydf/dtmicroservice",
 						time: "5分钟前"
 					},
 					{
 						id: 2,
 						type: 'user',
 						avatar: "img/avatar2.gif",
-						title: "Lolowan",
+						title: "后端版本V1.0",
 						describe: "点进去Gitee获取最新开源版本",
-						link: "https://gitee.com/lolicode/scui",
-						time: "14分钟前"
+						link: "https://gitee.com/summerydf/dtmicroservice",
+						time: "3分钟前"
 					},
 					{
 						id: 3,
 						type: 'system',
-						avatar: "img/logo.png",
-						title: "感谢登录SCUI Admin",
+						avatar: "img/avatar2.gif",
+						title: "SCUI开源",
 						describe: "Vue 3.0 + Vue-Router 4.0 + ElementPlus + Axios 后台管理系统。",
 						link: "https://gitee.com/lolicode/scui",
 						time: "2020年7月24日"
