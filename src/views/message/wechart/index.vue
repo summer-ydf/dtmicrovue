@@ -29,7 +29,7 @@
                 </el-table-column>
                 <el-table-column label="消息类型" prop="category" width="100">
                     <template #default="scope">
-                        <el-button type="primary" size="small" v-if="scope.row.category === 1">微信公众号</el-button>
+                        <el-button type="primary" size="small" v-if="scope.row.category === '1'">微信公众号</el-button>
                         <el-button type="primary" size="small" v-else>企业微信</el-button>
                     </template>
                 </el-table-column>

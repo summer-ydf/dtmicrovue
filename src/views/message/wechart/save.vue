@@ -6,6 +6,12 @@
                     <el-row class="drawer-table">
                         <el-col :span="24">
                             <el-form :model="form" :rules="rules" :disabled="mode==='show'" ref="dialogForm" label-width="80px">
+                                <el-form-item label="发送渠道" prop="category">
+                                    <el-select v-model="form.category" style="width: 100%">
+                                        <el-option label="微信公众号" value="1"></el-option>
+                                        <el-option label="企业微信" value="2"></el-option>
+                                    </el-select>
+                                </el-form-item>
                                 <el-form-item label="接收群体" prop="receiverIds">
                                     <el-select v-model="form.receiverIds" multiple placeholder="请选择用户" style="width: 100%">
                                         <el-option
@@ -45,6 +51,7 @@ export default {
             //表单数据
             form: {
                 id:"",
+                category: "1",
                 receiverIds: ""
             },
             users: [],
@@ -78,7 +85,7 @@ export default {
             this.$refs.dialogForm.validate(async (valid) => {
                 if (valid) {
                     this.saveLoading = true;
-                    var res = await this.$API.message.msg.wx_send_message.post(this.form.receiverIds);
+                    var res = await this.$API.message.msg.wx_send_message.post(this.form);
                     if (res !== null) {
                         this.saveLoading = false;
                         if(res.code === 2000){
