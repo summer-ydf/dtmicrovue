@@ -176,7 +176,14 @@ export default {
             get: async function(params){
                 return await http.get(this.url + params, null);
             }
-        }
+        },
+        findAll: {
+            url: `${config.API_URL}/operator/findAll`,
+            name: "获取用户列表",
+            get: async function(params){
+                return await http.get(this.url, params);
+            }
+        },
 	},
 	dept: {
 		list: {

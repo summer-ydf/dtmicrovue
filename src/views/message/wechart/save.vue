@@ -6,8 +6,16 @@
                     <el-row class="drawer-table">
                         <el-col :span="24">
                             <el-form :model="form" :rules="rules" :disabled="mode==='show'" ref="dialogForm" label-width="80px">
-                                <el-form-item label="接收人" prop="receiverId">
-                                    <el-input v-model="form.receiverId" placeholder="请输入接收人Openid" clearable></el-input>
+                                <el-form-item label="接收群体" prop="receiverIds">
+                                    <el-select v-model="form.receiverIds" multiple placeholder="请选择用户" style="width: 100%">
+                                        <el-option
+                                            v-for="item in users"
+                                            :key="item.id"
+                                            :label="item.name"
+                                            :value="item.id"
+                                        >
+                                        </el-option>
+                                    </el-select>
                                 </el-form-item>
                             </el-form>
                         </el-col>
@@ -37,17 +45,28 @@ export default {
             //表单数据
             form: {
                 id:"",
-                receiverId: ""
+                receiverIds: ""
             },
+            users: [],
             //验证规则
             rules: {
-                receiverId: [
-                    {required: true, message: '请输入接收人openid'}
+                receiverIds: [
+                    {required: true, message: '请选择接收群体',trigger: 'blur'}
                 ],
             },
         }
     },
+    created() {
+        this.getUsers()
+    },
     methods: {
+        //获取用户群体
+        async getUsers() {
+            var res = await this.$API.system.user.findAll.get()
+            if (res.code === 2000) {
+                this.users = res.data
+            }
+        },
         //显示
         open(mode = 'add'){
             this.mode = mode;
@@ -59,7 +78,7 @@ export default {
             this.$refs.dialogForm.validate(async (valid) => {
                 if (valid) {
                     this.saveLoading = true;
-                    var res = await this.$API.message.msg.wx_send_message.post(this.form);
+                    var res = await this.$API.message.msg.wx_send_message.post(this.form.receiverIds);
                     if (res !== null) {
                         this.saveLoading = false;
                         if(res.code === 2000){

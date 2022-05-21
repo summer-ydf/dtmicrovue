@@ -15,14 +15,11 @@
         <el-main class="nopadding">
             <scTable ref="table" :apiObj="apiObj" row-key="id" @selection-change="selectionChange" stripe>
                 <el-table-column type="selection" width="50"></el-table-column>
-                <el-table-column label="#ID" prop="id" width="100"></el-table-column>
-                <el-table-column label="发送人ID" prop="senderId" width="100"></el-table-column>
-                <el-table-column label="接收人ID" prop="receiverId" width="100"></el-table-column>
+                <el-table-column label="#ID" prop="id" width="150"></el-table-column>
                 <el-table-column label="接收人" prop="receiverName" width="100"></el-table-column>
-                <el-table-column label="模板ID" prop="tempId" width="100"></el-table-column>
                 <el-table-column label="发送报文" prop="sendData" width="200"></el-table-column>
                 <el-table-column label="响应报文" prop="backData" width="100"></el-table-column>
-                <el-table-column label="发送时间" prop="sendDate" width="100"></el-table-column>
+                <el-table-column label="发送时间" prop="sendDate" width="150"></el-table-column>
                 <el-table-column label="状态" prop="status" width="100">
                     <template #default="scope">
                         <el-button type="primary" plain size="small" v-if="scope.row.status === 0">待发送</el-button>
