@@ -96,8 +96,6 @@
 		},
 		created() {
 			let userInfo = this.$TOOL.data.get("USER_INFO");
-			console.log("CMS登录成功获取用户信息>>>>>>>>>>>>>>>>>>>>>>>>>")
-			console.log(userInfo)
 			this.userName = userInfo.username;
 		},
 		methods: {

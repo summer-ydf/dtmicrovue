@@ -10,16 +10,17 @@
 									<el-input v-model="form.username" disabled></el-input>
 									<div class="el-form-item-msg">账号信息用于登录，系统不允许修改</div>
 								</el-form-item>
-								<el-form-item label="权限范围">
-									<el-input v-model="form.scope" disabled></el-input>
+								<el-form-item label="真实姓名">
+									<el-input v-model="form.name"></el-input>
 								</el-form-item>
-                                <el-form-item label="所属部门">
-                                    <el-input v-model="form.deptName" disabled></el-input>
+                                <el-form-item label="电话号码">
+                                    <el-input v-model="form.mobile"></el-input>
                                 </el-form-item>
-                                <el-form-item label="个人头像">
-<!--                                    <sc-upload v-model="form.avatar" title="上传头像"></sc-upload>-->
-                                    <img :src="form.avatar"/>
-                                    <im src="http://42.192.121.230:9000/default-bucket/20220406/9304e54186a54ef784dfbb20afe6d55d.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=admin%2F20220406%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20220406T120925Z&X-Amz-Expires=7200&X-Amz-SignedHeaders=host&X-Amz-Signature=7546f0c76378f05dd98d6c129f05ce0424f65c6f489757eabe3f03b4173d46ec"/>
+                                <el-form-item label="身份证号">
+                                    <el-input v-model="form.idno"></el-input>
+                                </el-form-item>
+                                <el-form-item label="openid">
+                                    <el-input v-model="form.openid"></el-input>
                                 </el-form-item>
 								<el-form-item>
 									<el-button type="primary">保存</el-button>
@@ -62,10 +63,10 @@
 				form: {
 					id: "",
                     username: "",
-					scope: "",
-                    avatar: "",
-                    isAdmin: "",
-                    deptName: ""
+					name: "",
+                    mobile: "",
+                    idno: "",
+                    openid: ""
 				},
 				colorList: ['#409EFF', '#009688', '#536dfe', '#ff5c93', '#c62f2f', '#fd726d'],
 				config: {
@@ -92,20 +93,6 @@
 				document.documentElement.style.setProperty(`--el-color-primary-darken-1`, colorTool.darken(val,0.1));
 				this.$TOOL.data.set("APP_COLOR", val);
 			}
-		},
-		//路由跳转进来 判断from是否有特殊标识做特殊处理
-		beforeRouteEnter (to, from, next){
-			next((vm)=>{
-				if(from.is){
-					//删除特殊标识，防止标签刷新重复执行
-					delete from.is
-					//执行特殊方法
-					vm.$alert('路由跳转过来后含有特殊标识，做特殊处理', '提示', {
-						type: 'success',
-						center: true
-					}).then(() => {}).catch(() => {})
-				}
-			})
 		},
         created() {
             let userInfo = this.$TOOL.data.get("USER_INFO");
