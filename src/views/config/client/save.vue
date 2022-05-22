@@ -65,6 +65,7 @@ export default {
                 {code: 4, value: 'sms_code',label: "手机验证码模式"},
                 {code: 5, value: 'wechat',label: "微信模式"},
                 {code: 6, value: 'id_card',label: "身份证模式"},
+                {code: 7, value: 'authorization_code',label: "授权码模式"}
             ],
             //表单数据
             form: {
