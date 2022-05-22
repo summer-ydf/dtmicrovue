@@ -1,17 +1,22 @@
 <template>
     <el-main>
         <el-row :gutter="15">
-            <el-col :lg="8">
+            <el-col :lg="6">
                 <el-card shadow="never">
                     <scEcharts height="300px" :option="option"></scEcharts>
                 </el-card>
             </el-col>
-            <el-col :lg="8">
+            <el-col :lg="6">
+                <el-card shadow="never">
+                    <scEcharts height="300px" :option="option6"></scEcharts>
+                </el-card>
+            </el-col>
+            <el-col :lg="6">
                 <el-card shadow="never">
                     <scEcharts height="300px" :option="option2"></scEcharts>
                 </el-card>
             </el-col>
-            <el-col :lg="8">
+            <el-col :lg="6">
                 <el-card shadow="never">
                     <scEcharts height="300px" :option="option6"></scEcharts>
                 </el-card>

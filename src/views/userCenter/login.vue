@@ -1,6 +1,6 @@
 <template>
 	<div class="login_bg">
-		<div class="login_adv" style="background-image: url(img/1.svg);
+		<div class="login_adv" style="background-image: url(img/login.svg);
 		background-size:100% 100%;background-repeat:no-repeat;">
 			<div class="login_adv__title">
 				<h2>D T M I C R O</h2>
