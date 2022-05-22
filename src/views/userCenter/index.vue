@@ -23,7 +23,7 @@
                                     <el-input v-model="form.openid"></el-input>
                                 </el-form-item>
 								<el-form-item>
-									<el-button type="primary">保存</el-button>
+									<el-button type="primary" @click="submit()">保存</el-button>
 								</el-form-item>
 							</el-form>
 						</el-tab-pane>
@@ -105,7 +105,19 @@
                 if (res.code === 2000) {
                     this.form = res.data
                 }
-            }
+            },
+            // 表单提交方法
+            async submit() {
+                this.saveLoading = true;
+                var res = await this.$API.system.user.updateMyInfo.post(this.form);
+                this.saveLoading = false;
+                if (res.code === 2000) {
+                    this.visible = false;
+                    this.$message.success(res.message)
+                } else {
+                    this.$alert(res.message, "提示", {type: 'error'})
+                }
+            },
 		}
 	}
 </script>

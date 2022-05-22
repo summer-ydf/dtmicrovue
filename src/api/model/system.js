@@ -149,6 +149,13 @@ export default {
 				return await http.post(this.url, data);
 			}
 		},
+        updateMyInfo: {
+            url: `${config.API_URL}/operator/updateMyInfo`,
+            name: "更新个人信息",
+            post: async function(data={}){
+                return await http.post(this.url, data);
+            }
+        },
 		delete: {
 			url: `${config.API_URL}/operator/delete/`,
 			name: "删除用户",
