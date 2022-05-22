@@ -89,7 +89,7 @@ export default {
                     if (res !== null) {
                         this.saveLoading = false;
                         if(res.code === 2000){
-                            this.$emit('success', this.form, this.mode)
+                            this.$emit('success')
                             this.visible = false;
                             this.$message.success(res.message)
                         }else{

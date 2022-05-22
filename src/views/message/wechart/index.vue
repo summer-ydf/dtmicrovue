@@ -15,19 +15,27 @@
         <el-main class="nopadding">
             <scTable ref="table" :apiObj="apiObj" row-key="id" @selection-change="selectionChange" stripe>
                 <el-table-column type="selection" width="50"></el-table-column>
-                <el-table-column label="#ID" prop="id" width="150"></el-table-column>
-                <el-table-column label="接收人" prop="receiverName" width="100"></el-table-column>
-                <el-table-column label="发送报文" prop="sendData" width="200"></el-table-column>
-                <el-table-column label="响应报文" prop="backData" width="100"></el-table-column>
-                <el-table-column label="发送时间" prop="sendDate" width="150"></el-table-column>
-                <el-table-column label="状态" prop="status" width="100">
+                <el-table-column type="expand">
+                    <template #default="scope">
+                        <div>
+                            <el-divider content-position="left">响应报文：</el-divider>
+                        </div>
+                        <div>
+                            <pre>{{scope.row.sendData}}</pre>
+                        </div>
+                    </template>
+                </el-table-column>
+                <el-table-column label="#ID" prop="id" width="200"></el-table-column>
+                <el-table-column label="接收人" prop="receiverName" width="150"></el-table-column>
+                <el-table-column label="发送时间" prop="sendDate" width="200"></el-table-column>
+                <el-table-column label="状态" prop="status" width="150">
                     <template #default="scope">
                         <el-button type="primary" plain size="small" v-if="scope.row.status === 0">待发送</el-button>
                         <el-button type="primary" plain size="small" v-if="scope.row.status === 1">成功</el-button>
                         <el-button type="danger" plain size="small" v-if="scope.row.status === 2">失败</el-button>
                     </template>
                 </el-table-column>
-                <el-table-column label="消息类型" prop="category" width="100">
+                <el-table-column label="消息类型" prop="category" width="200">
                     <template #default="scope">
                         <el-button type="primary" size="small" v-if="scope.row.category === '1'">微信公众号</el-button>
                         <el-button type="primary" size="small" v-else>企业微信</el-button>
@@ -116,15 +124,24 @@ export default {
             this.$refs.table.upData(this.search)
         },
         //本地更新数据
-        handleSaveSuccess(data, mode){
-            if(mode==='add' || mode==='edit'){
-                this.$refs.table.refresh()
-            }
+        handleSaveSuccess(){
+            this.$refs.table.refresh()
         }
     }
 }
 </script>
 
 <style scoped>
-
+    .demo-table-expand {
+        font-size: 0;
+    }
+    .demo-table-expand label {
+        width: 90px;
+        color: #99a9bf;
+    }
+    .demo-table-expand .el-form-item {
+        margin-right: 0;
+        margin-bottom: 0;
+        width: 50%;
+    }
 </style>
