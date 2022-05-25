@@ -43,9 +43,6 @@
                                 <el-form-item label="所属部门" prop="deptName">
 									<el-input @click="showDepartmentDialog(form.deptId)" v-model="form.deptName" placeholder="请选择部门"></el-input>
                                 </el-form-item>
-                                <el-form-item label="头像" prop="avatar">
-                                    <sc-upload v-model="form.avatar" title="上传头像"></sc-upload>
-                                </el-form-item>
                             </el-form>
                         </el-col>
                     </el-row>
@@ -93,7 +90,6 @@
                     idno: "",
                     openid: "",
 					password: "",
-					avatar: "",
 					roleIds: [],
 					deptId: "",
 					deptName: ""
