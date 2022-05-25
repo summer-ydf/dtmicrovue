@@ -27,16 +27,14 @@
 					</el-form-item>
 					<el-form-item label="权限标识" prop="code">
 						<el-input v-model="form.code" clearable placeholder="权限标识"></el-input>
-						<div class="el-form-item-msg">系统菜单或者按钮权限标识代码，格式为：xxx:xxx，如：sys:add</div>
+						<div class="el-form-item-msg">系统菜单或者按钮权限标识代码，格式为：xxx:xxx:xxx，如：sys:user:add</div>
 					</el-form-item>
 					<el-form-item label="菜单图标" prop="meta.icon">
 						<sc-icon-select v-model="form.meta.icon" clearable></sc-icon-select>
 					</el-form-item>
 					<el-form-item label="路由地址" prop="path">
 						<el-input v-model="form.path" clearable placeholder=""></el-input>
-					</el-form-item>
-					<el-form-item label="重定向" prop="redirect">
-						<el-input v-model="form.redirect" clearable placeholder=""></el-input>
+                        <div class="el-form-item-msg">当菜单类型为【iframe或者link】时，将路由地址设置为目标地址即可，并且视图路径可不填</div>
 					</el-form-item>
 					<el-form-item label="视图" prop="component">
 						<el-input v-model="form.component" clearable placeholder="">
@@ -79,7 +77,6 @@
 					code: "",
 					path: "",
 					component: "",
-					redirect: "",
 					meta:{
 						title: "",
 						icon: "",
