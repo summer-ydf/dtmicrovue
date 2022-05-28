@@ -62,16 +62,6 @@
                             </el-input>
                         </el-form-item>
                     </div>
-					<el-form-item style="margin-bottom: 10px;">
-						<el-row>
-							<el-col :span="12">
-								<el-checkbox :label="$t('login.rememberMe')" v-model="ruleForm.autologin"></el-checkbox>
-							</el-col>
-							<el-col :span="12" style="text-align: right;">
-								<el-button type="text">{{ $t('login.forgetPassword') }}？</el-button>
-							</el-col>
-						</el-row>
-					</el-form-item>
 					<el-form-item>
 						<el-button type="primary" style="width: 100%;" :loading="islogin" @click="login">{{ $t('login.signIn') }}</el-button>
 					</el-form-item>
