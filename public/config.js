@@ -4,7 +4,7 @@
 
 const APP_CONFIG = {
 	//标题
-	APP_NAME: "DT Admin 后台管理端",
+	APP_NAME: "DT MICRO",
 	//系统配置接口地址，如遇跨域需使用nginx代理
 	API_URL: "https://www.fastmock.site/mock/manage/api/",
 	//任务调度接口地址

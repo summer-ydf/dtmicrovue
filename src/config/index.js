@@ -1,6 +1,6 @@
 const DEFAULT_CONFIG = {
 	//标题
-	APP_NAME: "DT MICRO 管 理 端",
+	APP_NAME: "DT MICRO",
 
 	//首页地址
 	DASHBOARD_URL: "/dashboard",
