@@ -44,7 +44,7 @@ router.beforeEach(async (to, from, next) => {
 	console.log("当前路由============")
     console.log(to.path)
 
-	if(to.path === "/login" || to.path === "/authorize"){
+	if(to.path === "/login"){
 		//删除路由(替换当前layout路由)
 		router.addRoute(routes[0])
 		//删除路由(404)
