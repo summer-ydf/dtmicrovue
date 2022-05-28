@@ -71,6 +71,30 @@ npm run build
   
 </table>
 
-## 联系我们
+## 多种模式切换
+<table>
+    <tr>
+        <td><img src="https://img-blog.csdnimg.cn/02e208dad47a4824bd910ded55fd7a7b.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARFTovrDnmb0=,size_20,color_FFFFFF,t_70,g_se,x_16"></img></td>
+        <td><img src="https://img-blog.csdnimg.cn/29f1dafd611c4c92a55dabb8fcb08747.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARFTovrDnmb0=,size_20,color_FFFFFF,t_70,g_se,x_16"></img></td>
+    </tr>
 
-1973984292@qq.com
+<tr>
+        <td><img src="https://img-blog.csdnimg.cn/1aab1fd2cb74451496f925a4b70458c6.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARFTovrDnmb0=,size_20,color_FFFFFF,t_70,g_se,x_16"></img></td>
+        <td><img src="https://img-blog.csdnimg.cn/69f3a145396e4c3693c5adfb76273cd7.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARFTovrDnmb0=,size_20,color_FFFFFF,t_70,g_se,x_16"></img></td>
+    </tr>
+
+<tr>
+        <td><img src="https://img-blog.csdnimg.cn/af292547630d4bcdb30cdf262e9dc8bc.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARFTovrDnmb0=,size_20,color_FFFFFF,t_70,g_se,x_16"></img></td>
+        <td><img src="https://img-blog.csdnimg.cn/01dd1d632db744d79caf5e02b33d7273.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARFTovrDnmb0=,size_20,color_FFFFFF,t_70,g_se,x_16"></img></td>
+    </tr>
+
+<tr>
+        <td><img src="https://img-blog.csdnimg.cn/b19412eee62f4abcb3c691e5e8fc68ba.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARFTovrDnmb0=,size_20,color_FFFFFF,t_70,g_se,x_16"></img></td>
+        <td><img src="https://img-blog.csdnimg.cn/296af30912514952b5fb61972bbfea53.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARFTovrDnmb0=,size_20,color_FFFFFF,t_70,g_se,x_16"></img></td>
+    </tr>
+  
+</table>
+
+## 联系微信加群
+
+13550001448
