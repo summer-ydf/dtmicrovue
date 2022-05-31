@@ -30,7 +30,7 @@
 
 框架组成SpringCloud、Nacos、GateWay、Sentinel、Seata、Oauth2.0，消息队列采用RabbitMQ，数据库采用MySQL、Redis，mongodb，文件服务器：Minio，前端UI：Vue3、ElementUI
 
-SpringCloud后台管理，Gitee地址源码：[点击进入](https://gitee.com/summerydf/dtmicroservice)
+SpringCloud后台管理，Gitee地址源码：[点击进入](https://gitee.com/summerydf/dtmicroservice) 帅哥，先给个start吧，拜托了。
 
 
 ## 项目安装
